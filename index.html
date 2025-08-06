@@ -823,27 +823,41 @@
     <div class="api-tester">
         <div class="api-controls">
             <select id="api-method">
-                <option>GET</option>
-                <option>POST</option>
-                <option>PUT</option>
-                <option>DELETE</option>
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
             </select>
-            <input type="text" id="api-url" placeholder="https://api.example.com/data">
-            <button onclick="testAPI()">Отправить</button>
+            
+            <input type="text" id="api-url" placeholder="https://api.example.com/data" value="https://jsonplaceholder.typicode.com/posts">
+            
+            <button onclick="testAPI()">
+                <i class="fas fa-paper-plane"></i> Отправить
+            </button>
         </div>
         
         <div class="api-response">
-            <pre id="api-response-output">{...}</pre>
+            <pre id="api-response-output">Ответ появится здесь...</pre>
         </div>
     </div>
     
     <div class="highlight-box">
-        <h3>Примеры публичных API для тестирования:</h3>
+        <h3><i class="fas fa-lightbulb"></i> Примеры публичных API для тестирования:</h3>
         <ul>
-            <li>JSONPlaceholder - https://jsonplaceholder.typicode.com/</li>
-            <li>OpenWeatherMap - https://openweathermap.org/api</li>
-            <li>GitHub API - https://api.github.com/</li>
+            <li><strong>JSONPlaceholder:</strong> <span class="api-url">https://jsonplaceholder.typicode.com/posts</span></li>
+            <li><strong>ReqRes:</strong> <span class="api-url">https://reqres.in/api/users</span></li>
+            <li><strong>HTTPBin:</strong> <span class="api-url">https://httpbin.org/get</span></li>
+            <li><strong>DummyJSON:</strong> <span class="api-url">https://dummyjson.com/products/1</span></li>
         </ul>
+        
+        <div class="api-tips">
+            <p><i class="fas fa-info-circle"></i> Советы:</p>
+            <ul>
+                <li>Для POST/PUT запросов автоматически отправляется тестовое тело</li>
+                <li>Кликните на URL в примерах, чтобы вставить его в поле ввода</li>
+                <li>API могут блокировать CORS запросы - используйте расширение для браузера при проблемах</li>
+            </ul>
+        </div>
     </div>
 </section>
 
