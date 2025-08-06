@@ -498,6 +498,35 @@
         <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
     </ul>
 </div>
+            <!-- Обновленная навигация -->
+<div class="category">
+    <h3>Аналитика</h3>
+    <ul class="nav-links">
+        <li><a href="#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
+        <li><a href="#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
+    </ul>
+</div>
+
+<div class="category">
+    <h3>Документация</h3>
+    <ul class="nav-links">
+        <li><a href="#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
+    </ul>
+</div>
+
+<div class="category">
+    <h3>Карьера</h3>
+    <ul class="nav-links">
+        <li><a href="#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
+    </ul>
+</div>
+
+<div class="category">
+    <h3>Инструменты</h3>
+    <ul class="nav-links">
+        <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
+    </ul>
+</div>
             
             <div class="category">
                 <h3>Инструменты</h3>
@@ -544,6 +573,26 @@
             <a href="https://analyst.by/articles/kak-poluchit-zadachu-i-chto-s-nej-delat" class="resource-link" target="_blank">
                 <i class="fas fa-external-link-alt"></i> Как получить задачу и что с ней делать
             </a>
+<h3>Приоритизация задач</h3>
+    <div class="example">
+        <div class="example-header"><i class="fas fa-table"></i> Матрица приоритезации (Value vs Effort)</div>
+        <table style="width:100%; border-collapse: collapse; margin: 10px 0;">
+            <tr>
+                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffcccc;">Низкая ценность<br>Высокая сложность</td>
+                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ccffcc;">Высокая ценность<br>Высокая сложность</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffe6cc;">Низкая ценность<br>Низкая сложность</td>
+                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffffcc;">Высокая ценность<br>Низкая сложность</td>
+            </tr>
+        </table>
+        <p style="text-align:center; margin-top:10px;">
+            <span style="background:#ffffcc; padding:2px 5px;">✓ Сделать в первую очередь</span> |
+            <span style="background:#ccffcc; padding:2px 5px;">✓ Планировать</span> |
+            <span style="background:#ffe6cc; padding:2px 5px;">✓ Возможно позже</span> |
+            <span style="background:#ffcccc; padding:2px 5px;">× Избегать</span>
+        </p>
+    </div>
         </section>
 
         <!-- GraphQL Section -->
@@ -612,6 +661,226 @@
         </tr>
     </table>
 </section>
+
+        <!-- Metrics Section -->
+<section id="metrics" class="section">
+    <h2><i class="fas fa-chart-line"></i> Ключевые метрики для аналитика</h2>
+    
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+        <div>
+            <h3>Проектные метрики</h3>
+            <ul>
+                <li><strong>Velocity</strong> - скорость выполнения задач</li>
+                <li><strong>Lead Time</strong> - время от запроса до реализации</li>
+                <li><strong>Cycle Time</strong> - время выполнения задачи</li>
+                <li><strong>Burndown Rate</strong> - скорость закрытия задач</li>
+                <li><strong>Defect Density</strong> - плотность дефектов</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3>Бизнес-метрики</h3>
+            <ul>
+                <li><strong>ROI</strong> - возврат инвестиций</li>
+                <li><strong>User Adoption Rate</strong> - уровень принятия пользователями</li>
+                <li><strong>Feature Usage</strong> - использование функционала</li>
+                <li><strong>CSAT</strong> - удовлетворенность пользователей</li>
+                <li><strong>Time-to-Market</strong> - время выхода на рынок</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <h3>Формулы для расчета:</h3>
+        <p><strong>Velocity</strong> = ∑ Story Points выполненных задач / Кол-во спринтов</p>
+        <p><strong>ROI</strong> = (Выгода - Затраты) / Затраты × 100%</p>
+        <p><strong>CSAT</strong> = (Кол-во положительных оценок / Всего оценок) × 100%</p>
+    </div>
+</section>
+
+        <!-- Documentation Templates Section -->
+<section id="templates" class="section">
+    <h2><i class="fas fa-file-contract"></i> Шаблоны документов</h2>
+    
+    <h3>Основные артефакты с примерами:</h3>
+    
+    <div class="quick-links">
+        <a href="#" class="quick-link">Vision and Scope</a>
+        <a href="#" class="quick-link">SRS (Software Requirements Specification)</a>
+        <a href="#" class="quick-link">Use Case Specification</a>
+        <a href="#" class="quick-link">User Story Template</a>
+        <a href="#" class="quick-link">BRD (Business Requirements Document)</a>
+        <a href="#" class="quick-link">Functional Specification</a>
+    </div>
+    
+    <h3>Пример структуры SRS:</h3>
+    <div class="example">
+        <ol>
+            <li>Введение
+                <ul>
+                    <li>Цели документа</li>
+                    <li>Область применения</li>
+                    <li>Определения и сокращения</li>
+                </ul>
+            </li>
+            <li>Общее описание
+                <ul>
+                    <li>Бизнес-требования</li>
+                    <li>Пользовательские характеристики</li>
+                </ul>
+            </li>
+            <li>Функциональные требования</li>
+            <li>Нефункциональные требования</li>
+            <li>Приложения и глоссарий</li>
+        </ol>
+    </div>
+</section>
+
+        <!-- Career Path Section -->
+<section id="career" class="section">
+    <h2><i class="fas fa-user-graduate"></i> Карьерный путь аналитика</h2>
+    
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+        <div class="highlight-box">
+            <h3>Junior Analyst →</h3>
+            <ul>
+                <li>Сбор требований</li>
+                <li>Документирование процессов</li>
+                <li>Поддержка тестирования</li>
+            </ul>
+        </div>
+        
+        <div class="highlight-box">
+            <h3>Middle Analyst →</h3>
+            <ul>
+                <li>Проектирование решений</li>
+                <li>Управление бэклогом</li>
+                <li>Координация команды</li>
+            </ul>
+        </div>
+        
+        <div class="highlight-box">
+            <h3>Senior Analyst →</h3>
+            <ul>
+                <li>Архитектурные решения</li>
+                <li>Стратегия продукта</li>
+                <li>Менторство</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h3>Рекомендуемые сертификации:</h3>
+    <ul>
+        <li>IIBA CBAP/CCBA</li>
+        <li>IREB CPRE</li>
+        <li>PMI-PBA</li>
+        <li>AWS Certified Solutions Architect</li>
+        <li>Scrum.org PSPO</li>
+    </ul>
+</section>
+
+        <!-- Decision Tree Section -->
+<section id="decision-tree" class="section">
+    <h2><i class="fas fa-sitemap"></i> Выбор методологии</h2>
+    
+    <div style="text-align:center; padding:20px; background:#f8f9fa; border-radius:8px;">
+        <h3>Какую методологию выбрать?</h3>
+        
+        <div id="tree-container" style="margin:20px auto; max-width:600px;">
+            <div id="tree-step-1">
+                <p>Проект имеет четкие требования?</p>
+                <button onclick="showStep(2, 'yes')">Да</button>
+                <button onclick="showStep(2, 'no')">Нет</button>
+            </div>
+            
+            <div id="tree-step-2" style="display:none;">
+                <p id="step2-question"></p>
+                <div id="step2-options"></div>
+            </div>
+            
+            <div id="tree-result" style="display:none; margin-top:20px;">
+                <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
+                <button onclick="resetTree()">Начать заново</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showStep(step, answer) {
+        if (step === 2) {
+            document.getElementById('tree-step-1').style.display = 'none';
+            const step2 = document.getElementById('tree-step-2');
+            step2.style.display = 'block';
+            
+            if (answer === 'yes') {
+                document.getElementById('step2-question').textContent = 'Требования могут меняться?';
+                document.getElementById('step2-options').innerHTML = `
+                    <button onclick="showResult('waterfall')">Нет</button>
+                    <button onclick="showStep(3, 'scrum')">Да</button>
+                `;
+            } else {
+                document.getElementById('step2-question').textContent = 'Проект требует быстрого вывода на рынок?';
+                document.getElementById('step2-options').innerHTML = `
+                    <button onclick="showResult('kanban')">Да</button>
+                    <button onclick="showResult('lean')">Нет</button>
+                `;
+            }
+        }
+    }
+    
+    function showResult(methodology) {
+        document.getElementById('tree-step-2').style.display = 'none';
+        const result = document.getElementById('tree-result');
+        result.style.display = 'block';
+        
+        const methods = {
+            waterfall: 'Waterfall (каскадная модель)',
+            scrum: 'Scrum',
+            kanban: 'Kanban',
+            lean: 'Lean'
+        };
+        
+        document.getElementById('result-text').textContent = methods[methodology];
+    }
+    
+    function resetTree() {
+        document.getElementById('tree-result').style.display = 'none';
+        document.getElementById('tree-step-1').style.display = 'block';
+    }
+</script>
+
+        <!-- Common Mistakes Section -->
+<section id="mistakes" class="section">
+    <h2><i class="fas fa-exclamation-triangle"></i> Типичные ошибки аналитика</h2>
+    
+    <div class="highlight-box">
+        <h3>Топ-10 ошибок:</h3>
+        <ol>
+            <li>Недостаточное вовлечение стейкхолдеров</li>
+            <li>Фокус на решениях вместо проблем</li>
+            <li>Игнорирование нефункциональных требований</li>
+            <li>Недостаточная детализация требований</li>
+            <li>Отсутствие приоритизации</li>
+            <li>Плохая трассируемость требований</li>
+            <li>Игнорирование edge cases</li>
+            <li>Переоценка технических возможностей команды</li>
+            <li>Недостаточное тестирование требований</li>
+            <li>Плохая коммуникация изменений</li>
+        </ol>
+    </div>
+    
+    <h3>Как избежать ошибок:</h3>
+    <ul>
+        <li>Проводить регулярные ревью требований</li>
+        <li>Использовать матрицу трассируемости</li>
+        <li>Внедрить практику "Трех амиго" (аналитик, разработчик, тестировщик)</li>
+        <li>Создавать прототипы для валидации</li>
+        <li>Использовать чеклисты</li>
+    </ul>
+</section>
+
+        
 
         <!-- Data Modeling Section -->
 <section id="data-modeling" class="section">
@@ -1055,6 +1324,16 @@
     <div class="highlight-box">
         <p><strong>Когда использовать:</strong> Scrum - для проектов с относительно стабильными требованиями. Kanban - для поддержки и оперативных задач с частыми изменениями приоритетов.</p>
     </div>
+
+    <div class="highlight-box" style="text-align:center;">
+        <h3><i class="fas fa-stopwatch"></i> Таймер для митинга</h3>
+        <div id="meeting-timer" style="font-size: 2rem; margin: 15px 0;">15:00</div>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button onclick="startTimer(900)" class="quick-link">Старт (15 мин)</button>
+            <button onclick="startTimer(300)" class="quick-link">Старт (5 мин)</button>
+            <button onclick="stopTimer()" class="quick-link">Стоп</button>
+        </div>
+    </div>
 </section>
 
 <!-- Databases Section -->
@@ -1430,6 +1709,30 @@ components:
                 }
             }
         });
+            // Таймер для митингов
+    let timerInterval;
+    function startTimer(seconds) {
+        clearInterval(timerInterval);
+        let timeLeft = seconds;
+        
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('meeting-timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('meeting-timer').textContent = "00:00";
+                alert('Время вышло!');
+            }
+            timeLeft--;
+        }, 1000);
+    }
+    
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
     </script>
 </body>
 </html>
