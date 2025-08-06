@@ -659,6 +659,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
+    // Обработка глубоких ссылок
+    if (window.location.hash) {
+        const targetSection = document.querySelector(window.location.hash);
+        if (targetSection) {
+            setTimeout(() => {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+    }
+    
     // Инициализация закладок и заметок
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
     bookmarks.forEach(id => {
