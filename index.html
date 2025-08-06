@@ -476,9 +476,26 @@
     <ul class="nav-links">
         <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
         <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
-        <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li> <!-- Добавлено -->
+        <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
+        <li><a href="#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
         <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
         <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+    </ul>
+</div>
+
+<div class="category">
+    <h3>Данные</h3>
+    <ul class="nav-links">
+        <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
+        <li><a href="#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
+    </ul>
+</div>
+
+<div class="category">
+    <h3>Процессы</h3>
+    <ul class="nav-links">
+        <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
+        <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
     </ul>
 </div>
             
@@ -523,6 +540,171 @@
                 <i class="fas fa-external-link-alt"></i> Как получить задачу и что с ней делать
             </a>
         </section>
+
+        <!-- GraphQL Section -->
+<section id="graphql" class="section">
+    <h2><i class="fas fa-network-wired"></i> GraphQL</h2>
+    
+    <p>GraphQL - язык запросов для API, позволяющий клиентам точно запрашивать только необходимые данные.</p>
+    
+    <h3>Основные концепции:</h3>
+    <ul>
+        <li><strong>Схема (Schema)</strong> - строго типизированное описание возможных запросов</li>
+        <li><strong>Запросы (Queries)</strong> - получение данных</li>
+        <li><strong>Мутации (Mutations)</strong> - изменение данных</li>
+        <li><strong>Подписки (Subscriptions)</strong> - получение обновлений в реальном времени</li>
+        <li><strong>Резолверы (Resolvers)</strong> - функции для обработки запросов</li>
+    </ul>
+    
+    <h3>Пример запроса:</h3>
+    <div class="code-block">
+{
+  user(id: "789") {
+    name
+    email
+    posts(limit: 5) {
+      title
+      createdAt
+    }
+  }
+}
+    </div>
+    
+    <h3>Преимущества:</h3>
+    <ul>
+        <li>Точная выборка данных (недо/переполучение)</li>
+        <li>Единая конечная точка</li>
+        <li>Строгая типизация</li>
+        <li>Автоматическая документация</li>
+        <li>Гибкие отношения между данными</li>
+    </ul>
+    
+    <div class="highlight-box">
+        <p><strong>Когда использовать:</strong> Для сложных систем с множеством сущностей, мобильных приложений, когда клиенты имеют разные требования к данным.</p>
+    </div>
+    
+    <h3>Сравнение с REST:</h3>
+    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
+            <th style="border:1px solid #ddd; padding:8px;">GraphQL</th>
+            <th style="border:1px solid #ddd; padding:8px;">REST</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Эндпоинты</td>
+            <td style="border:1px solid #ddd; padding:8px;">Один</td>
+            <td style="border:1px solid #ddd; padding:8px;">Множество</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Запрос данных</td>
+            <td style="border:1px solid #ddd; padding:8px;">Клиент определяет</td>
+            <td style="border:1px solid #ddd; padding:8px;">Сервер определяет</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Версионность</td>
+            <td style="border:1px solid #ddd; padding:8px;">Не требуется</td>
+            <td style="border:1px solid #ddd; padding:8px;">Обязательна</td>
+        </tr>
+    </table>
+</section>
+
+        <!-- Data Modeling Section -->
+<section id="data-modeling" class="section">
+    <h2><i class="fas fa-project-diagram"></i> Моделирование данных</h2>
+    
+    <p>Проектирование структуры данных - ключевая задача системного аналитика:</p>
+    
+    <h3>Основные концепции:</h3>
+    <ul>
+        <li><strong>Сущности (Entities)</strong> - основные объекты системы</li>
+        <li><strong>Атрибуты (Attributes)</strong> - свойства сущностей</li>
+        <li><strong>Связи (Relationships)</strong> - взаимодействия между сущностями</li>
+        <li><strong>Кардинальность (Cardinality)</strong> - 1:1, 1:N, M:N</li>
+    </ul>
+    
+    <h3>Пример ER-диаграммы:</h3>
+    <div class="example">
+        <p>Пользователь (1) ---- (N) Заказ (N) ---- (1) Товар</p>
+        <p>Атрибуты:</p>
+        <ul>
+            <li>Пользователь: ID, Имя, Email</li>
+            <li>Заказ: Номер, Дата, Сумма</li>
+            <li>Товар: Артикул, Название, Цена</li>
+        </ul>
+    </div>
+    
+    <h3>Нормализация баз данных:</h3>
+    <ol>
+        <li><strong>1NF</strong> - атомарные значения, отсутствие повторяющихся групп</li>
+        <li><strong>2NF</strong> - выполнение 1NF + отсутствие частичных зависимостей</li>
+        <li><strong>3NF</strong> - выполнение 2NF + отсутствие транзитивных зависимостей</li>
+    </ol>
+    
+    <h3>Инструменты моделирования:</h3>
+    <div class="quick-links">
+        <a href="#" class="quick-link">Lucidchart</a>
+        <a href="#" class="quick-link">Draw.io</a>
+        <a href="#" class="quick-link">ERwin</a>
+        <a href="#" class="quick-link">MySQL Workbench</a>
+    </div>
+</section>
+
+        <!-- CI/CD Section -->
+<section id="ci-cd" class="section">
+    <h2><i class="fas fa-sync-alt"></i> CI/CD (Непрерывная интеграция и доставка)</h2>
+    
+    <p>Автоматизация процессов разработки и развертывания:</p>
+    
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+        <div>
+            <h3>Continuous Integration</h3>
+            <ul>
+                <li>Автоматическая сборка при коммите</li>
+                <li>Запуск тестов</li>
+                <li>Статический анализ кода</li>
+                <li>Раннее обнаружение ошибок</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3>Continuous Delivery</h3>
+            <ul>
+                <li>Автоматическое развертывание</li>
+                <li>Пайплайны поставки</li>
+                <li>Канареечные релизы</li>
+                <li>Blue-Green деплойменты</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h3>Типичный CI/CD пайплайн:</h3>
+    <div class="example">
+        <p>1. Коммит кода → 2. Сборка → 3. Юнит-тесты → 4. Интеграционные тесты → 5. Деплой на staging → 6. Ручное тестирование → 7. Деплой на production</p>
+    </div>
+    
+    <h3>Популярные инструменты:</h3>
+    <ul>
+        <li>Jenkins</li>
+        <li>GitLab CI/CD</li>
+        <li>GitHub Actions</li>
+        <li>CircleCI</li>
+        <li>Azure DevOps</li>
+    </ul>
+</section>
+
+        <section id="glossary" class="section">
+    <h2><i class="fas fa-book"></i> Глоссарий терминов</h2>
+    <dl>
+        <dt>DTO (Data Transfer Object)</dt>
+        <dd>Объект для передачи данных между процессами</dd>
+        
+        <dt>Idempotency (Идемпотентность)</dt>
+        <dd>Свойство операции, позволяющее повторять её без изменения результата</dd>
+        
+        <dt>ACID</dt>
+        <dd>Atomicity, Consistency, Isolation, Durability - свойства транзакций</dd>
+    </dl>
+</section>
 
         <!-- SOAP Section -->
 <section id="soap" class="section">
@@ -1150,6 +1332,21 @@ components:
                 <i class="fas fa-external-link-alt"></i> Принципы UX/UI дизайна
             </a>
         </section>
+        <div class="highlight-box">
+    <h3>Чеклист для проверки требований:</h3>
+    <ul>
+        <li><input type="checkbox"> Все требования измеримы?</li>
+        <li><input type="checkbox"> Есть критерии приемки?</li>
+        <li><input type="checkbox"> Учтены все сценарии использования?</li>
+        <li><input type="checkbox"> Соответствуют бизнес-целям?</li>
+        <li><input type="checkbox"> Нет противоречий с другими требованиями?</li>
+    </ul>
+</div>
+
+        <div class="example">
+    <div class="example-header"><i class="fas fa-chart-pie"></i> Ключевые компетенции</div>
+    <p>▢ Бизнес-анализ ▢ Системный анализ ▢ Работа с данными ▢ UX/UI ▢ Технические знания ▢ Коммуникация</p>
+</div>
     </main>
     
     <!-- Footer -->
