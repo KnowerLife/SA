@@ -732,4 +732,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Логирование для отладки
     console.log('script.js загружен, функции startTimer и stopTimer определены');
-});
