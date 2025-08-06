@@ -618,6 +618,7 @@ function createBookmarkButtons() {
     // Обновляем кнопку в разделе
     const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
     if (sectionBtn) {
+        // УБИРАЕМ ПОПЫТКУ ОБРАЩЕНИЯ К .bookmark-tooltip
         sectionBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
@@ -671,14 +672,8 @@ function createBookmarkButtons() {
             }, 300);
         }
     }
-    
-    // Инициализация закладок и заметок
-    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-    bookmarks.forEach(id => {
-        const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
-        if (btn) btn.innerHTML = '<i class="fas fa-bookmark"></i>';
-    });
-    updateBookmarksList();
+
+    initBookmarksSystem();
     renderNotes();
 
     // Логирование для отладки
