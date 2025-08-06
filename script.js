@@ -436,53 +436,179 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     };
 
-    // Закладки
-    document.querySelectorAll('.section').forEach(section => {
-        const id = section.id;
-        const bookmarkBtn = document.createElement('button');
-        bookmarkBtn.className = 'bookmark-btn';
-        bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i>';
-        bookmarkBtn.dataset.section = id;
-        bookmarkBtn.onclick = toggleBookmark;
-        section.querySelector('h2').appendChild(bookmarkBtn);
-    });
+// Закладки - улучшенная реализация
+document.addEventListener('DOMContentLoaded', () => {
+    // Инициализация системы закладок
+    initBookmarksSystem();
+    
+    function initBookmarksSystem() {
+        // Создаем кнопки закладок
+        createBookmarkButtons();
+        
+        // Восстанавливаем состояние из localStorage
+        restoreBookmarksState();
+        
+        // Обновляем список закладок
+        updateBookmarksList();
+        
+        // Добавляем глобальный обработчик для удаления закладок
+        document.getElementById('bookmarksList').addEventListener('click', handleBookmarkRemove);
+    }
 
-    window.toggleBookmark = () => {
-        const sectionId = event.target.closest('.bookmark-btn').dataset.section;
+    function createBookmarkButtons() {
+        document.querySelectorAll('.section').forEach(section => {
+            const id = section.id;
+            const h2 = section.querySelector('h2');
+            if (!h2) return;
+
+            const bookmarkBtn = document.createElement('button');
+            bookmarkBtn.className = 'bookmark-btn';
+            bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
+            bookmarkBtn.dataset.section = id;
+            bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i>';
+            
+            // Добавляем всплывающую подсказку
+            const tooltip = document.createElement('span');
+            tooltip.className = 'bookmark-tooltip';
+            tooltip.textContent = 'Добавить в закладки';
+            bookmarkBtn.appendChild(tooltip);
+            
+            bookmarkBtn.addEventListener('click', toggleBookmark);
+            h2.appendChild(bookmarkBtn);
+        });
+    }
+
+    function restoreBookmarksState() {
+        const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        bookmarks.forEach(id => {
+            const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-bookmark"></i>';
+                btn.querySelector('.bookmark-tooltip').textContent = 'Удалить из закладок';
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    function toggleBookmark(event) {
+        const btn = event.currentTarget;
+        const sectionId = btn.dataset.section;
         let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        const tooltip = btn.querySelector('.bookmark-tooltip');
 
         if (bookmarks.includes(sectionId)) {
+            // Удаляем закладку
             bookmarks = bookmarks.filter(id => id !== sectionId);
-            event.target.closest('.bookmark-btn').innerHTML = '<i class="far fa-bookmark"></i>';
+            btn.innerHTML = '<i class="far fa-bookmark"></i>';
+            tooltip.textContent = 'Добавить в закладки';
+            btn.classList.remove('active');
+            
+            // Анимация удаления
+            btn.classList.add('pulse');
+            setTimeout(() => btn.classList.remove('pulse'), 300);
         } else {
+            // Добавляем закладку
             bookmarks.push(sectionId);
-            event.target.closest('.bookmark-btn').innerHTML = '<i class="fas fa-bookmark"></i>';
+            btn.innerHTML = '<i class="fas fa-bookmark"></i>';
+            tooltip.textContent = 'Удалить из закладок';
+            btn.classList.add('active');
+            
+            // Анимация добавления
+            btn.classList.add('heartbeat');
+            setTimeout(() => btn.classList.remove('heartbeat'), 300);
         }
 
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
         updateBookmarksList();
-    };
+        
+        // Показываем уведомление
+        showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
+    }
 
-    window.updateBookmarksList = () => {
+    function updateBookmarksList() {
+        const bookmarksList = document.getElementById('bookmarksList');
         const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        const noBookmarksMsg = '<li class="no-bookmarks"><i class="far fa-frown"></i> Пока нет сохраненных закладок</li>';
 
-        bookmarksList.innerHTML = '';
-
-        if (bookmarks.length === 0) {
-            bookmarksList.innerHTML = '<li><p>Нет сохраненных закладок</p></li>';
-            return;
-        }
+        bookmarksList.innerHTML = bookmarks.length ? '' : noBookmarksMsg;
 
         bookmarks.forEach(id => {
             const section = document.getElementById(id);
             if (!section) return;
 
             const title = section.querySelector('h2').textContent;
+            const icon = section.querySelector('h2 i')?.className || 'fas fa-bookmark';
+            
             const li = document.createElement('li');
-            li.innerHTML = `<a href="#${id}"><i class="fas fa-bookmark"></i> ${title}</a>`;
+            li.className = 'bookmark-item';
+            li.innerHTML = `
+                <a href="#${id}" class="bookmark-link">
+                    <i class="${icon}"></i>
+                    <span>${title}</span>
+                </a>
+                <button class="remove-bookmark" data-section="${id}" aria-label="Удалить закладку">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
             bookmarksList.appendChild(li);
         });
-    };
+        
+        // Обновляем счетчик в заголовке
+        updateBookmarksCounter();
+    }
+
+    function handleBookmarkRemove(event) {
+        if (!event.target.closest('.remove-bookmark')) return;
+        
+        const sectionId = event.target.closest('.remove-bookmark').dataset.section;
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        bookmarks = bookmarks.filter(id => id !== sectionId);
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+        
+        // Обновляем кнопку в разделе
+        const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
+        if (sectionBtn) {
+            sectionBtn.innerHTML = '<i class="far fa-bookmark"></i>';
+            sectionBtn.querySelector('.bookmark-tooltip').textContent = 'Добавить в закладки';
+            sectionBtn.classList.remove('active');
+        }
+        
+        updateBookmarksList();
+    }
+
+    function updateBookmarksCounter() {
+        const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        const counter = document.querySelector('.bookmarks-counter');
+        
+        if (counter) {
+            counter.textContent = bookmarks.length;
+            counter.style.display = bookmarks.length ? 'inline-block' : 'none';
+        }
+    }
+
+    function showBookmarkNotification(isAdded, sectionId) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+        
+        const title = section.querySelector('h2').textContent;
+        const notification = document.createElement('div');
+        notification.className = `bookmark-notification ${isAdded ? 'added' : 'removed'}`;
+        notification.innerHTML = `
+            <i class="${isAdded ? 'fas fa-bookmark' : 'far fa-bookmark'}"></i>
+            <span>Раздел "${title}" ${isAdded ? 'добавлен в' : 'удален из'} закладок</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }, 10);
+    }
+});
 
     // Таймер для митинга
     let timerInterval = null;
