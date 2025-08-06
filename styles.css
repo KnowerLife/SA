@@ -10,6 +10,178 @@
     --transition: all 0.3s ease;
 }
 
+/* Стили для системы закладок */
+.bookmark-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 10px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.bookmark-btn:hover {
+    color: #ffc107;
+}
+
+.bookmark-btn.active {
+    color: #ffc107;
+}
+
+.bookmark-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.bookmark-btn:hover .bookmark-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Анимации */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+.heartbeat {
+    animation: heartbeat 0.5s ease;
+}
+
+.pulse {
+    animation: pulse 0.3s ease;
+}
+
+/* Список закладок */
+#bookmarksList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.bookmark-link {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 5px 0;
+}
+
+.bookmark-link i {
+    margin-right: 8px;
+    color: #ffc107;
+}
+
+.remove-bookmark {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-bookmark:hover {
+    background: #f8f9fa;
+    color: #dc3545;
+}
+
+.no-bookmarks {
+    padding: 15px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.no-bookmarks i {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Счетчик закладок */
+.bookmarks-counter {
+    display: inline-block;
+    background: #ffc107;
+    color: #000;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* Уведомления */
+.bookmark-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    border-left: 4px solid #ffc107;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 15px 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.bookmark-notification.removed {
+    border-left-color: #dc3545;
+}
+
+.bookmark-notification i {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.bookmark-notification.added i {
+    color: #ffc107;
+}
+
+.bookmark-notification.removed i {
+    color: #dc3545;
+}
+
+.bookmark-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 body.accessibility {
     --text: #000;
     --border: #000;
@@ -477,6 +649,7 @@ footer {
     .header-content {
         padding-left: 50px;
     }
+    
 }
 
 @media (max-width: 600px) {
