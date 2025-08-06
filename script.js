@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const pdfExport = document.getElementById('pdfExport');
     const searchInput = document.querySelector('.search-bar input');
+    const bookmarksList = document.getElementById('bookmarksList');
 
     // Мобильное меню
     mobileMenuBtn.addEventListener('click', () => {
@@ -29,34 +30,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Переключение темы
     themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-theme');
-        themeToggle.innerHTML = body.classList.contains('dark-theme')
-            ? '<i class="fas fa-sun"></i> Светлая тема'
-            : '<i class="fas fa-moon"></i> Темная тема';
+        document.body.classList.toggle('dark-theme');
+        if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Светлая тема';
+        } else {
+            localStorage.setItem('theme', 'light');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i> Темная тема';
+        }
     });
+
+    // Проверяем сохраненную тему при загрузке
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Светлая тема';
+    }
 
     // Экспорт в PDF
     pdfExport.addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
-        html2canvas(document.querySelector('main')).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF();
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('system_analyst_guide.pdf');
-        });
+        const doc = new jsPDF();
+        const section = document.querySelector('.section:target') || document.querySelector('.section');
+        const sectionTitle = section.querySelector('h2').innerText;
+        const content = section.innerText;
+
+        doc.text(`Памятка системного аналитика: ${sectionTitle}`, 10, 10);
+        doc.text(content, 10, 20);
+        doc.save(`Памятка-${sectionTitle.replace(/\s+/g, '_')}.pdf`);
     });
 
-    // Поиск
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+    // Улучшенный поиск
+    searchInput.addEventListener('input', function(e) {
+        const term = this.value.toLowerCase().trim();
+        if (!term) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'block';
+            });
+            return;
+        }
+
+        let found = false;
         document.querySelectorAll('.section').forEach(section => {
-            const text = section.textContent.toLowerCase();
-            section.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            const title = section.querySelector('h2').textContent.toLowerCase();
+            const content = section.textContent.toLowerCase();
+
+            if (title.includes(term) || content.includes(term)) {
+                section.style.display = 'block';
+                if (!found) {
+                    window.scrollTo({
+                        top: section.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    found = true;
+                }
+            } else {
+                section.style.display = 'none';
+            }
         });
+
+        if (!found) {
+            const synonyms = getSynonyms(term);
+            synonyms.forEach(synonym => {
+                document.querySelectorAll('.section').forEach(section => {
+                    const content = section.textContent.toLowerCase();
+                    if (content.includes(synonym)) {
+                        section.style.display = 'block';
+                        if (!found) {
+                            window.scrollTo({
+                                top: section.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                            found = true;
+                        }
+                    }
+                });
+            });
+        }
     });
+
+    // База синонимов
+    function getSynonyms(term) {
+        const synonymsMap = {
+            'api': ['интерфейс', 'протокол'],
+            'база данных': ['хранилище', 'бд', 'database'],
+            'требования': ['условия', 'необходимости', 'требуемое'],
+            'анализ': ['исследование', 'изучение', 'разбор']
+        };
+        return synonymsMap[term] || [];
+    }
 
     // Decision Tree
     window.showStep = (step, choice) => {
@@ -111,6 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const fields = Array.from(document.querySelectorAll('#sql-fields input:checked')).map(input => input.value);
         const query = `SELECT ${fields.join(', ')} FROM ${table};`;
         document.getElementById('sql-output').textContent = query;
+    };
+
+    // Простой SQL редактор
+    window.runSQL = () => {
+        const sql = document.getElementById('sql-editor').value;
+        const schema = document.getElementById('db-schema').value;
+        alert(`Выполняется SQL: ${sql}\nДля схемы: ${schema}`);
     };
 
     // Тестирование API
@@ -181,9 +249,243 @@ document.addEventListener('DOMContentLoaded', () => {
         output.innerHTML = `<pre>${input.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')}</pre>`;
     };
 
+    // Диаграмма процессов
+    window.addTask = () => {
+        const diagram = document.getElementById('bpmn-diagram');
+        const task = document.createElement('div');
+        task.className = 'bpmn-task';
+        task.innerHTML = '<div class="task-label">Новая задача</div>';
+        diagram.appendChild(task);
+    };
+
     // Карта компетенций
     window.toggleCompetency = (element) => {
         const ul = element.querySelector('ul');
         ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
     };
+
+    // Заметки
+    window.addNote = () => {
+        const title = document.getElementById('new-note-title').value.trim();
+        if (!title) return;
+
+        const noteId = 'note_' + Date.now();
+        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+
+        const newNote = {
+            id: noteId,
+            title: title,
+            content: '',
+            createdAt: new Date().toISOString()
+        };
+
+        notes.push(newNote);
+        localStorage.setItem('userNotes', JSON.stringify(notes));
+        renderNotes();
+
+        document.getElementById('new-note-title').value = '';
+    };
+
+    window.updateNoteTitle = (noteId, element) => {
+        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+        const note = notes.find(n => n.id === noteId);
+        if (note) {
+            note.title = element.textContent.trim();
+            localStorage.setItem('userNotes', JSON.stringify(notes));
+            renderNotes();
+        }
+    };
+
+    window.updateNoteContent = (noteId, element) => {
+        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+        const note = notes.find(n => n.id === noteId);
+        if (note) {
+            note.content = element.textContent.trim();
+            localStorage.setItem('userNotes', JSON.stringify(notes));
+            renderNotes();
+        }
+    };
+
+    window.deleteNote = (noteId) => {
+        let notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+        notes = notes.filter(note => note.id !== noteId);
+        localStorage.setItem('userNotes', JSON.stringify(notes));
+        renderNotes();
+    };
+
+    window.renderNotes = () => {
+        const notesList = document.getElementById('notesList');
+        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+
+        notesList.innerHTML = '';
+
+        if (notes.length === 0) {
+            notesList.innerHTML = '<p>У вас пока нет заметок</p>';
+            return;
+        }
+
+        notes.forEach(note => {
+            const noteElement = document.createElement('div');
+            noteElement.className = 'note-item';
+            noteElement.innerHTML = `
+                <div class="note-header">
+                    <h3 contenteditable="true" onblur="updateNoteTitle('${note.id}', this)">${note.title}</h3>
+                    <button onclick="deleteNote('${note.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="note-content" contenteditable="true" onblur="updateNoteContent('${note.id}', this)">${note.content || 'Нажмите, чтобы редактировать...'}</div>
+                <div class="note-footer">Создано: ${new Date(note.createdAt).toLocaleString()}</div>
+            `;
+            notesList.appendChild(noteElement);
+        });
+    };
+
+    // Тесты
+    const testQuestions = {
+        requirements: [
+            {
+                question: "Что относится к функциональным требованиям?",
+                options: [
+                    "Скорость загрузки страницы",
+                    "Возможность регистрации пользователей",
+                    "Цветовая схема интерфейса",
+                    "Совместимость с браузерами"
+                ],
+                answer: 1
+            },
+            {
+                question: "Что такое нефункциональные требования?",
+                options: [
+                    "Требования к функциям системы",
+                    "Требования к характеристикам системы",
+                    "Требования к бизнес-процессам",
+                    "Требования к интерфейсу"
+                ],
+                answer: 1
+            }
+        ],
+        api: [
+            {
+                question: "Что означает REST?",
+                options: [
+                    "Remote Execution and Storage Technology",
+                    "Representational State Transfer",
+                    "Reliable Enterprise Service Transport",
+                    "Rapid Execution and Synchronization Technique"
+                ],
+                answer: 1
+            }
+        ]
+    };
+
+    window.startTest = () => {
+        const section = document.getElementById('test-section').value;
+        const questions = testQuestions[section];
+
+        if (!questions) {
+            alert('Тест для этого раздела пока недоступен');
+            return;
+        }
+
+        const testContent = document.getElementById('testQuestions');
+        testContent.innerHTML = '';
+
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'test-question';
+            questionDiv.innerHTML = `<h4>${index + 1}. ${q.question}</h4>`;
+
+            q.options.forEach((option, optIndex) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'test-option';
+                optionDiv.innerHTML = `
+                    <input type="radio" name="q${index}" value="${optIndex}" id="q${index}o${optIndex}">
+                    <label for="q${index}o${optIndex}">${option}</label>
+                `;
+                questionDiv.appendChild(optionDiv);
+            });
+
+            testContent.appendChild(questionDiv);
+        });
+
+        document.querySelector('.test-selection').style.display = 'none';
+        document.getElementById('testContent').style.display = 'block';
+    };
+
+    window.submitTest = () => {
+        const section = document.getElementById('test-section').value;
+        const questions = testQuestions[section];
+        let correct = 0;
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selected && parseInt(selected.value) === q.answer) {
+                correct++;
+            }
+        });
+
+        const result = document.getElementById('testResult');
+        result.innerHTML = `
+            <h3>Результат теста</h3>
+            <p>Правильных ответов: ${correct} из ${questions.length}</p>
+            <p>Процент правильных ответов: ${Math.round((correct/questions.length)*100)}%</p>
+            <button onclick="location.reload()">Пройти еще раз</button>
+        `;
+    };
+
+    // Закладки
+    document.querySelectorAll('.section').forEach(section => {
+        const id = section.id;
+        const bookmarkBtn = document.createElement('button');
+        bookmarkBtn.className = 'bookmark-btn';
+        bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i>';
+        bookmarkBtn.dataset.section = id;
+        bookmarkBtn.onclick = toggleBookmark;
+        section.querySelector('h2').appendChild(bookmarkBtn);
+    });
+
+    window.toggleBookmark = () => {
+        const sectionId = event.target.closest('.bookmark-btn').dataset.section;
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+
+        if (bookmarks.includes(sectionId)) {
+            bookmarks = bookmarks.filter(id => id !== sectionId);
+            event.target.closest('.bookmark-btn').innerHTML = '<i class="far fa-bookmark"></i>';
+        } else {
+            bookmarks.push(sectionId);
+            event.target.closest('.bookmark-btn').innerHTML = '<i class="fas fa-bookmark"></i>';
+        }
+
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+        updateBookmarksList();
+    };
+
+    window.updateBookmarksList = () => {
+        const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+
+        bookmarksList.innerHTML = '';
+
+        if (bookmarks.length === 0) {
+            bookmarksList.innerHTML = '<li><p>Нет сохраненных закладок</p></li>';
+            return;
+        }
+
+        bookmarks.forEach(id => {
+            const section = document.getElementById(id);
+            if (!section) return;
+
+            const title = section.querySelector('h2').textContent;
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="#${id}"><i class="fas fa-bookmark"></i> ${title}</a>`;
+            bookmarksList.appendChild(li);
+        });
+    };
+
+    // Инициализация закладок и заметок
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    bookmarks.forEach(id => {
+        const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
+        if (btn) btn.innerHTML = '<i class="fas fa-bookmark"></i>';
+    });
+    updateBookmarksList();
+    renderNotes();
 });
