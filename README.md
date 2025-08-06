@@ -23,7 +23,7 @@
 ## Установка и запуск
 1. Склонируйте репозиторий:
    ```bash
-   git clone https://github.com/KnowerLife/system-analyst-guide.git
+   git clone https://github.com/KnowerLife/SA.git
    ```
 2. Откройте файл `index.html` в любом современном браузере.
 3. Никаких дополнительных зависимостей не требуется — проект использует только HTML, CSS и JavaScript с подключением Font Awesome через CDN.
@@ -36,7 +36,7 @@
 
 ## Структура проекта
 ```
-system-analyst-guide/
+SA/
 ├── index.html         # Основной HTML-файл справочника
 ├── README.md          # Документация проекта
 ```
