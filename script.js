@@ -511,37 +511,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBookmarkButtons() {
-        document.querySelectorAll('.section').forEach(section => {
-            const id = section.id;
-            const h2 = section.querySelector('h2');
-            if (!h2) return;
+    document.querySelectorAll('.section').forEach(section => {
+        const id = section.id;
+        const h2 = section.querySelector('h2');
+        if (!h2) return;
 
-            const bookmarkBtn = document.createElement('button');
-            bookmarkBtn.className = 'bookmark-btn';
-            bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
-            bookmarkBtn.dataset.section = id;
-            bookmarkBtn.innerHTML = `
+        const bookmarkBtn = document.createElement('button');
+        bookmarkBtn.className = 'bookmark-btn';
+        bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
+        bookmarkBtn.dataset.section = id;
+        
+        // Начальное состояние кнопки
+        bookmarkBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
         `;
-            
-            // Добавляем всплывающую подсказку
-            const tooltip = document.createElement('span');
-            tooltip.className = 'bookmark-tooltip';
-            tooltip.textContent = 'Добавить в закладки';
-            bookmarkBtn.appendChild(tooltip);
-            
-            bookmarkBtn.addEventListener('click', toggleBookmark);
-            h2.appendChild(bookmarkBtn);
-        });
-    }
+        
+        bookmarkBtn.addEventListener('click', toggleBookmark);
+        h2.appendChild(bookmarkBtn);
+    });
+}
 
     function restoreBookmarksState() {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
     bookmarks.forEach(id => {
         const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
         if (btn) {
-            // Полностью пересоздаем содержимое для активного состояния
             btn.innerHTML = `
                 <i class="fas fa-bookmark"></i>
                 <span class="bookmark-tooltip">Удалить из закладок</span>
@@ -557,25 +552,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
 
     if (bookmarks.includes(sectionId)) {
-        // Удаляем закладку - создаем неактивное состояние
+        // Удаляем закладку
         bookmarks = bookmarks.filter(id => id !== sectionId);
         btn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
         `;
         btn.classList.remove('active');
-        btn.classList.add('pulse');
-        setTimeout(() => btn.classList.remove('pulse'), 300);
     } else {
-        // Добавляем закладку - создаем активное состояние
+        // Добавляем закладку
         bookmarks.push(sectionId);
         btn.innerHTML = `
             <i class="fas fa-bookmark"></i>
             <span class="bookmark-tooltip">Удалить из закладок</span>
         `;
         btn.classList.add('active');
-        btn.classList.add('heartbeat');
-        setTimeout(() => btn.classList.remove('heartbeat'), 300);
     }
 
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
