@@ -660,56 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         }, 10);
     }
-});
 
-    // Таймер для митинга
-    let timerInterval = null;
-
-    window.startTimer = (seconds) => {
-        console.log(`Запуск таймера на ${seconds} секунд`); // Для отладки
-        clearInterval(timerInterval); // Очищаем предыдущий таймер
-        let timeLeft = seconds;
-        const timerElement = document.getElementById('meeting-timer');
-
-        if (!timerElement) {
-            console.error('Элемент #meeting-timer не найден');
-            alert('Ошибка: Элемент таймера не найден в HTML');
-            return;
-        }
-
-        timerElement.textContent = formatTime(timeLeft); // Устанавливаем начальное время
-        timerInterval = setInterval(() => {
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                timerElement.textContent = '00:00';
-                alert('Время митинга истекло!');
-                return;
-            }
-
-            timeLeft--;
-            timerElement.textContent = formatTime(timeLeft);
-        }, 1000);
-    };
-
-    window.stopTimer = () => {
-        console.log('Остановка таймера'); // Для отладки
-        if (timerInterval) {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            const timerElement = document.getElementById('meeting-timer');
-            if (timerElement) {
-                timerElement.textContent = '00:00'; // Сбрасываем отображение
-            }
-        }
-    };
-
-    // Вспомогательная функция для форматирования времени
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
 
     // Обработка глубоких ссылок
     if (window.location.hash) {
@@ -732,4 +683,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Логирование для отладки
     console.log('script.js загружен, функции startTimer и stopTimer определены');
-);
+});
