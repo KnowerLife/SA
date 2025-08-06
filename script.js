@@ -521,8 +521,6 @@ function createBookmarkButtons() {
         bookmarkBtn.className = 'bookmark-btn';
         bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
         bookmarkBtn.dataset.section = id;
-        
-        // Начальное состояние - неактивное
         bookmarkBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
@@ -538,7 +536,6 @@ function createBookmarkButtons() {
     bookmarks.forEach(id => {
         const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
         if (btn) {
-            // Активное состояние
             btn.innerHTML = `
                 <i class="fas fa-bookmark"></i>
                 <span class="bookmark-tooltip">Удалить из закладок</span>
@@ -573,10 +570,6 @@ function createBookmarkButtons() {
 
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     updateBookmarksList();
-    showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
-}
-    
-    // Показываем уведомление
     showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
 }
 
@@ -624,7 +617,6 @@ function createBookmarkButtons() {
     // Обновляем кнопку в разделе
     const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
     if (sectionBtn) {
-        // ПОЛНОСТЬЮ пересоздаем содержимое кнопки
         sectionBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
