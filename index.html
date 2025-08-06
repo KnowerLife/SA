@@ -2310,30 +2310,6 @@ components:
                 }
             }
         });
-            // Таймер для митингов
-    let timerInterval;
-    function startTimer(seconds) {
-        clearInterval(timerInterval);
-        let timeLeft = seconds;
-        
-        timerInterval = setInterval(() => {
-            const minutes = Math.floor(timeLeft / 60);
-            const secs = timeLeft % 60;
-            document.getElementById('meeting-timer').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                document.getElementById('meeting-timer').textContent = "00:00";
-                alert('Время вышло!');
-            }
-            timeLeft--;
-        }, 1000);
-    }
-    
-    function stopTimer() {
-        clearInterval(timerInterval);
-    }
     </script>
 </body>
 </html>
