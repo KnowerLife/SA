@@ -525,18 +525,29 @@
     <h3>Инструменты</h3>
     <ul class="nav-links">
         <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
+        <li><a href="#unit-converter"><i class="fas fa-calculator"></i> Конвертер</a></li>
+        <li><a href="#diagram-generator"><i class="fas fa-diagram-project"></i> Генератор диаграмм</a></li>
+        <li><a href="#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
+        <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Kanban vs Scrum</a></li>
+        <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
+        <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
+        <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
     </ul>
 </div>
-            
+
             <div class="category">
-                <h3>Инструменты</h3>
-                <ul class="nav-links">
-                    <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Kanban vs Scrum</a></li>
-                    <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
-                    <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
-                    <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
-                </ul>
-            </div>
+    <h3>Чеклисты</h3>
+    <ul class="nav-links">
+        <li><a href="#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
+    </ul>
+</div>
+
+<div class="category">
+    <h3>Развитие</h3>
+    <ul class="nav-links">
+        <li><a href="#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
+    </ul>
+</div>            
         </div>
     </nav>
     
@@ -880,7 +891,290 @@
     </ul>
 </section>
 
+        <!-- Unit Converter Section -->
+<section id="unit-converter" class="section">
+    <h2><i class="fas fa-calculator"></i> Конвертер величин</h2>
+    
+    <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:15px; align-items:center;">
+        <div>
+            <input type="number" id="input-value" value="1" style="width:100%; padding:10px;">
+            <select id="input-unit" style="width:100%; padding:10px; margin-top:5px;">
+                <option value="kb">Килобайт (KB)</option>
+                <option value="mb">Мегабайт (MB)</option>
+                <option value="gb">Гигабайт (GB)</option>
+                <option value="ms">Миллисекунды (ms)</option>
+                <option value="s">Секунды (s)</option>
+            </select>
+        </div>
         
+        <div style="text-align:center;">
+            <i class="fas fa-exchange-alt fa-2x"></i>
+            <button onclick="convertUnits()" style="margin-top:10px; padding:8px 15px;">Конвертировать</button>
+        </div>
+        
+        <div>
+            <input type="text" id="output-value" readonly style="width:100%; padding:10px; background:#f0f0f0;">
+            <select id="output-unit" style="width:100%; padding:10px; margin-top:5px;">
+                <option value="kb">Килобайт (KB)</option>
+                <option value="mb" selected>Мегабайт (MB)</option>
+                <option value="gb">Гигабайт (GB)</option>
+                <option value="ms">Миллисекунды (ms)</option>
+                <option value="s">Секунды (s)</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<script>
+    function convertUnits() {
+        const inputValue = parseFloat(document.getElementById('input-value').value);
+        const inputUnit = document.getElementById('input-unit').value;
+        const outputUnit = document.getElementById('output-unit').value;
+        
+        // Коэффициенты конвертации
+        const factors = {
+            kb: 1,
+            mb: 1024,
+            gb: 1024 * 1024,
+            ms: 1,
+            s: 1000
+        };
+        
+        // Проверка совместимости единиц измерения
+        if ((inputUnit === 'kb' || inputUnit === 'mb' || inputUnit === 'gb') && 
+            (outputUnit === 'ms' || outputUnit === 's')) {
+            document.getElementById('output-value').value = "Несовместимые единицы";
+            return;
+        }
+        
+        if ((inputUnit === 'ms' || inputUnit === 's') && 
+            (outputUnit === 'kb' || outputUnit === 'mb' || outputUnit === 'gb')) {
+            document.getElementById('output-value').value = "Несовместимые единицы";
+            return;
+        }
+        
+        // Конвертация
+        const result = inputValue * factors[inputUnit] / factors[outputUnit];
+        document.getElementById('output-value').value = result.toFixed(4);
+    }
+</script>
+
+        <!-- Interview Checklist Section -->
+<section id="interview-checklist" class="section">
+    <h2><i class="fas fa-list-check"></i> Чеклист для проведения интервью</h2>
+    
+    <div class="highlight-box">
+        <h3>Подготовка к интервью:</h3>
+        <ul>
+            <li><input type="checkbox"> Определить цели интервью</li>
+            <li><input type="checkbox"> Выбрать участников</li>
+            <li><input type="checkbox"> Подготовить вопросы</li>
+            <li><input type="checkbox"> Запланировать время и место</li>
+            <li><input type="checkbox"> Протестировать оборудование</li>
+        </ul>
+    </div>
+    
+    <div class="highlight-box">
+        <h3>Во время интервью:</h3>
+        <ul>
+            <li><input type="checkbox"> Представиться и объяснить цель</li>
+            <li><input type="checkbox"> Задать открытые вопросы</li>
+            <li><input type="checkbox"> Активно слушать</li>
+            <li><input type="checkbox"> Уточнять непонятные моменты</li>
+            <li><input type="checkbox"> Делать заметки</li>
+        </ul>
+    </div>
+    
+    <div class="highlight-box">
+        <h3>После интервью:</h3>
+        <ul>
+            <li><input type="checkbox"> Поблагодарить участников</li>
+            <li><input type="checkbox"> Обработать записи</li>
+            <li><input type="checkbox"> Составить отчет</li>
+            <li><input type="checkbox"> Поделиться результатами</li>
+            <li><input type="checkbox"> Запланировать следующие шаги</li>
+        </ul>
+    </div>
+</section>
+
+        <!-- Diagram Generator Section -->
+<section id="diagram-generator" class="section">
+    <h2><i class="fas fa-diagram-project"></i> Генератор диаграмм</h2>
+    
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div>
+            <h3>Входные данные:</h3>
+            <textarea id="diagram-input" rows="10" style="width:100%; padding:10px; font-family: monospace;">
+Пользователь -> Система: Запрос авторизации
+Система --> Пользователь: Запрос логина/пароля
+Пользователь -> Система: Ввод учетных данных
+Система --> База данных: Проверка учетных данных
+База данных --> Система: Результат проверки
+Система --> Пользователь: Результат авторизации
+            </textarea>
+            <button onclick="generateDiagram()" style="margin-top:10px; padding:8px 15px;">Сгенерировать</button>
+        </div>
+        
+        <div>
+            <h3>Результат:</h3>
+            <div id="diagram-output" style="border:1px solid #ddd; padding:20px; min-height:200px; background:#f9f9f9;">
+                <!-- Диаграмма будет отображаться здесь -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function generateDiagram() {
+        const input = document.getElementById('diagram-input').value;
+        const output = document.getElementById('diagram-output');
+        
+        // Простая визуализация (в реальности можно использовать библиотеку mermaid.js)
+        let html = '<div class="sequence-diagram">';
+        const lines = input.split('\n');
+        
+        lines.forEach(line => {
+            if (line.trim()) {
+                html += `<div style="margin:5px 0; padding:5px; border-left:3px solid #4a4a4a;">${line.trim()}</div>`;
+            }
+        });
+        
+        html += '</div>';
+        output.innerHTML = html;
+    }
+</script>
+
+        <!-- Templates Section -->
+<section id="email-templates" class="section">
+    <h2><i class="fas fa-envelope"></i> Шаблоны писем и сообщений</h2>
+    
+    <div class="quick-links">
+        <button onclick="showTemplate('clarification')" class="quick-link">Запрос уточнений</button>
+        <button onclick="showTemplate('meeting')" class="quick-link">Приглашение на встречу</button>
+        <button onclick="showTemplate('review')" class="quick-link">Запрос на ревью</button>
+        <button onclick="showTemplate('update')" class="quick-link">Статус по задаче</button>
+    </div>
+    
+    <div id="template-content" style="margin-top:20px; padding:20px; background:#f9f9f9; border-radius:8px; display:none;">
+        <textarea id="template-text" rows="6" style="width:100%; padding:10px;"></textarea>
+        <button onclick="copyTemplate()" style="margin-top:10px; padding:8px 15px;">
+            <i class="fas fa-copy"></i> Копировать
+        </button>
+    </div>
+</section>
+
+<script>
+    const templates = {
+        clarification: `Уважаемые коллеги,\n\nТребуется уточнение по задаче [Название задачи].\nВопрос: [Сформулируйте вопрос]\n\nПрошу предоставить информацию до [Дата].\n\nС уважением,\n[Ваше имя]`,
+        meeting: `Уважаемые участники,\n\nПриглашаю вас на встречу по обсуждению [Тема].\nДата: [Дата]\nВремя: [Время]\nМесто: [Место/Ссылка]\n\nПовестка:\n1. [Пункт 1]\n2. [Пункт 2]\n3. [Пункт 3]\n\nПрошу подтвердить участие.\n\nС уважением,\n[Ваше имя]`,
+        review: `Уважаемый(ая) [Имя],\n\nПрошу провести ревью [Документ/Функционал].\nСсылка: [Ссылка]\n\nКлючевые моменты для проверки:\n- [Пункт 1]\n- [Пункт 2]\n\nПрошу предоставить обратную связь до [Дата].\n\nС уважением,\n[Ваше имя]`,
+        update: `Уважаемые заинтересованные стороны,\n\nСтатус по задаче [Название задачи]:\n- Прогресс: [X]%\n- Ключевые достижения: [Описание]\n- Следующие шаги: [Описание]\n- Проблемы/Риски: [Описание]\n\nС уважением,\n[Ваше имя]`
+    };
+
+    function showTemplate(type) {
+        document.getElementById('template-content').style.display = 'block';
+        document.getElementById('template-text').value = templates[type];
+    }
+
+    function copyTemplate() {
+        const textarea = document.getElementById('template-text');
+        textarea.select();
+        document.execCommand('copy');
+        alert('Шаблон скопирован в буфер обмена!');
+    }
+</script>
+
+        <!-- Competency Map Section -->
+<section id="competency-map" class="section">
+    <h2><i class="fas fa-star"></i> Карта компетенций аналитика</h2>
+    
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin-top:20px;">
+        <div class="competency-card" onclick="toggleCompetency(this)">
+            <h3>Бизнес-анализ</h3>
+            <ul style="display:none;">
+                <li>Анализ стейкхолдеров</li>
+                <li>Выявление потребностей</li>
+                <li>Анализ бизнес-процессов</li>
+            </ul>
+        </div>
+        
+        <div class="competency-card" onclick="toggleCompetency(this)">
+            <h3>Системный анализ</h3>
+            <ul style="display:none;">
+                <li>Проектирование архитектуры</li>
+                <li>Спецификация требований</li>
+                <li>Прототипирование</li>
+            </ul>
+        </div>
+        
+        <div class="competency-card" onclick="toggleCompetency(this)">
+            <h3>Данные</h3>
+            <ul style="display:none;">
+                <li>Моделирование данных</li>
+                <li>SQL</li>
+                <li>Аналитика</li>
+            </ul>
+        </div>
+        
+        <div class="competency-card" onclick="toggleCompetency(this)">
+            <h3>Коммуникация</h3>
+            <ul style="display:none;">
+                <li>Проведение встреч</li>
+                <li>Фасилитация</li>
+                <li>Управление конфликтами</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    .competency-card {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .competency-card:hover {
+        background-color: #f0f0f0;
+        transform: translateY(-3px);
+    }
+    
+    .competency-card h3 {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .competency-card h3::after {
+        content: '+';
+        font-size: 1.2rem;
+    }
+    
+    .competency-card.active h3::after {
+        content: '-';
+    }
+</style>
+
+<script>
+    function toggleCompetency(card) {
+        const wasActive = card.classList.contains('active');
+        
+        // Закрываем все карточки
+        document.querySelectorAll('.competency-card').forEach(c => {
+            c.classList.remove('active');
+            c.querySelector('ul').style.display = 'none';
+        });
+        
+        // Открываем текущую, если она не была активна
+        if (!wasActive) {
+            card.classList.add('active');
+            card.querySelector('ul').style.display = 'block';
+        }
+    }
+</script>
 
         <!-- Data Modeling Section -->
 <section id="data-modeling" class="section">
