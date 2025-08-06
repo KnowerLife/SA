@@ -361,6 +361,57 @@
     </table>
 </section>
 
+        <section id="security-checklist" class="section">
+    <h2><i class="fas fa-shield-alt"></i> Чеклист: Безопасность</h2>
+    <div class="checklist-container">
+        <h3>Чеклист по обеспечению безопасности</h3>
+        <ul class="checklist">
+            <li>
+                <input type="checkbox" id="security-1">
+                <label for="security-1">Определены ли требования к аутентификации пользователей (например, многофакторная аутентификация)?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-2">
+                <label for="security-2">Проверены ли требования к авторизации (роли, доступы, принцип минимальных привилегий)?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-3">
+                <label for="security-3">Разработаны ли механизмы защиты данных в транзите (например, TLS/SSL)?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-4">
+                <label for="security-4">Обеспечена ли защита данных в состоянии покоя (шифрование базы данных, файлов)?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-5">
+                <label for="security-5">Проверены ли уязвимости ввода данных (SQL-инъекции, XSS, CSRF)?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-6">
+                <label for="security-6">Настроено ли журналирование и мониторинг событий безопасности?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-7">
+                <label for="security-7">Проведён ли анализ рисков и угроз для системы?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-8">
+                <label for="security-8">Соответствует ли система стандартам безопасности (например, OWASP Top 10, GDPR, ISO 27001)?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-9">
+                <label for="security-9">Разработан ли план реагирования на инциденты безопасности?</label>
+            </li>
+            <li>
+                <input type="checkbox" id="security-10">
+                <label for="security-10">Проверена ли защита API (например, ограничение скорости, проверка токенов)?</label>
+            </li>
+        </ul>
+        <button onclick="saveChecklist('security')">Сохранить чеклист</button>
+        <button onclick="resetChecklist('security')">Сбросить</button>
+    </div>
+</section>
+
         <!-- Metrics Section -->
 <section id="metrics" class="section">
     <h2><i class="fas fa-chart-line"></i> Ключевые метрики для аналитика</h2>
