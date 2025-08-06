@@ -217,6 +217,83 @@
             </div>
         </section>
 
+        <section id="testing-system" class="section">
+    <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
+    
+    <div class="test-container">
+        <div class="test-selection">
+            <h3>Выберите раздел для тестирования:</h3>
+            <select id="test-section">
+                <option value="requirements">Требования</option>
+                <option value="api">API</option>
+                <option value="db">Базы данных</option>
+                <!-- Другие разделы -->
+            </select>
+            <button onclick="startTest()">Начать тест</button>
+        </div>
+        
+        <div class="test-content" id="testContent" style="display:none;">
+            <div id="testQuestions"></div>
+            <button onclick="submitTest()">Завершить тест</button>
+            <div id="testResult"></div>
+        </div>
+    </div>
+</section>
+
+        <section id="interactive-examples" class="section">
+    <h2><i class="fas fa-flask"></i> Интерактивные примеры</h2>
+    
+    <div class="interactive-example">
+        <h3>SQL Редактор</h3>
+        <div class="editor-container">
+            <div class="editor-header">
+                <select id="db-schema">
+                    <option value="users">Пользователи</option>
+                    <option value="orders">Заказы</option>
+                </select>
+                <button onclick="runSQL()">Выполнить</button>
+            </div>
+            <textarea id="sql-editor">SELECT * FROM users;</textarea>
+            <div class="result-container">
+                <table id="sql-result">
+                    <thead><tr><th>ID</th><th>Имя</th><th>Email</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>Иван</td><td>ivan@example.com</td></tr>
+                        <tr><td>2</td><td>Мария</td><td>maria@example.com</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="interactive-example">
+        <h3>Диаграмма процессов</h3>
+        <div id="bpmn-diagram"></div>
+        <div class="diagram-controls">
+            <button onclick="addTask()">Добавить задачу</button>
+            <button onclick="addGateway()">Добавить шлюз</button>
+            <button onclick="saveDiagram()">Сохранить</button>
+        </div>
+    </div>
+</section>
+
+        
+<section id="knowledge-base" class="section">
+    <h2><i class="fas fa-book"></i> База знаний</h2>
+    
+    <div class="notes-container">
+        <div class="notes-header">
+            <input type="text" id="new-note-title" placeholder="Заголовок заметки">
+            <button onclick="addNote()"><i class="fas fa-plus"></i> Добавить</button>
+        </div>
+        
+        <div class="notes-list" id="notesList">
+            <!-- Заметки будут добавляться здесь -->
+        </div>
+    </div>
+</section>
+
+        
         <!-- GraphQL Section -->
 <section id="graphql" class="section">
     <h2><i class="fas fa-network-wired"></i> GraphQL</h2>
