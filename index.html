@@ -1448,40 +1448,155 @@
 <section id="data-modeling" class="section">
     <h2><i class="fas fa-project-diagram"></i> Моделирование данных</h2>
     
-    <p>Проектирование структуры данных - ключевая задача системного аналитика:</p>
-    
-    <h3>Основные концепции:</h3>
-    <ul>
-        <li><strong>Сущности (Entities)</strong> - основные объекты системы</li>
-        <li><strong>Атрибуты (Attributes)</strong> - свойства сущностей</li>
-        <li><strong>Связи (Relationships)</strong> - взаимодействия между сущностями</li>
-        <li><strong>Кардинальность (Cardinality)</strong> - 1:1, 1:N, M:N</li>
-    </ul>
-    
-    <h3>Пример ER-диаграммы:</h3>
-    <div class="example">
-        <p>Пользователь (1) ---- (N) Заказ (N) ---- (1) Товар</p>
-        <p>Атрибуты:</p>
-        <ul>
-            <li>Пользователь: ID, Имя, Email</li>
-            <li>Заказ: Номер, Дата, Сумма</li>
-            <li>Товар: Артикул, Название, Цена</li>
-        </ul>
+    <div class="modeling-container">
+        <!-- Левая колонка - редактор -->
+        <div class="modeling-editor">
+            <h3>Конструктор ER-диаграмм</h3>
+            <div class="editor-toolbar">
+                <button id="addEntity"><i class="fas fa-cube"></i> Сущность</button>
+                <button id="addAttribute"><i class="fas fa-tag"></i> Атрибут</button>
+                <button id="addRelationship"><i class="fas fa-link"></i> Связь</button>
+                <button id="clearDiagram"><i class="fas fa-trash-alt"></i> Очистить</button>
+            </div>
+            <div class="canvas-container">
+                <div id="er-canvas"></div>
+            </div>
+            
+            <div class="entity-properties" style="display:none;">
+                <h4>Свойства сущности</h4>
+                <div class="form-group">
+                    <label>Имя сущности:</label>
+                    <input type="text" id="entity-name" value="НоваяСущность">
+                </div>
+                <div class="form-group">
+                    <label>Цвет:</label>
+                    <input type="color" id="entity-color" value="#4e73df">
+                </div>
+                <button id="saveEntityProps"><i class="fas fa-save"></i> Сохранить</button>
+            </div>
+        </div>
+        
+        <!-- Правая колонка - результат -->
+        <div class="modeling-output">
+            <div class="sql-generator">
+                <h3>Генератор SQL</h3>
+                <div class="sql-preview" id="sql-preview">
+                    -- SQL-код появится здесь
+                </div>
+                <button id="generateSqlBtn"><i class="fas fa-code"></i> Сгенерировать SQL</button>
+            </div>
+            
+            <div class="normalization-example">
+                <h3>Пример нормализации</h3>
+                <div class="normalization-steps">
+                    <div class="norm-step">
+                        <h4>0NF: Денормализованная форма</h4>
+                        <table>
+                            <tr><th>OrderID</th><th>Customer</th><th>Product</th><th>Price</th></tr>
+                            <tr><td>1001</td><td>Иван</td><td>Ноутбук, Мышь</td><td>1000, 20</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="norm-step">
+                        <h4>1NF: Первая нормальная форма</h4>
+                        <table>
+                            <tr><th>OrderID</th><th>Customer</th><th>Product</th><th>Price</th></tr>
+                            <tr><td>1001</td><td>Иван</td><td>Ноутбук</td><td>1000</td></tr>
+                            <tr><td>1001</td><td>Иван</td><td>Мышь</td><td>20</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="norm-step">
+                        <h4>2NF: Вторая нормальная форма</h4>
+                        <div class="tables-container">
+                            <table>
+                                <tr><th>OrderID</th><th>CustomerID</th></tr>
+                                <tr><td>1001</td><td>1</td></tr>
+                            </table>
+                            <table>
+                                <tr><th>CustomerID</th><th>Name</th></tr>
+                                <tr><td>1</td><td>Иван</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
-    <h3>Нормализация баз данных:</h3>
-    <ol>
-        <li><strong>1NF</strong> - атомарные значения, отсутствие повторяющихся групп</li>
-        <li><strong>2NF</strong> - выполнение 1NF + отсутствие частичных зависимостей</li>
-        <li><strong>3NF</strong> - выполнение 2NF + отсутствие транзитивных зависимостей</li>
-    </ol>
+    <div class="data-patterns">
+        <h3>Шаблоны моделей данных</h3>
+        <div class="patterns-grid">
+            <div class="pattern-card">
+                <h4><i class="fas fa-users"></i> Пользователи и роли</h4>
+                <div class="pattern-preview">
+                    <div class="entity">Пользователь</div>
+                    <div class="entity">Роль</div>
+                    <div class="relationship">M:N</div>
+                </div>
+                <button class="apply-pattern">Применить</button>
+            </div>
+            
+            <div class="pattern-card">
+                <h4><i class="fas fa-shopping-cart"></i> Электронная коммерция</h4>
+                <div class="pattern-preview">
+                    <div class="entity">Заказ</div>
+                    <div class="entity">Товар</div>
+                    <div class="relationship">M:N</div>
+                </div>
+                <button class="apply-pattern">Применить</button>
+            </div>
+            
+            <div class="pattern-card">
+                <h4><i class="fas fa-comments"></i> Блог-платформа</h4>
+                <div class="pattern-preview">
+                    <div class="entity">Пользователь</div>
+                    <div class="entity">Пост</div>
+                    <div class="entity">Комментарий</div>
+                </div>
+                <button class="apply-pattern">Применить</button>
+            </div>
+        </div>
+    </div>
     
-    <h3>Инструменты моделирования:</h3>
-    <div class="quick-links">
-        <a href="#" class="quick-link">Lucidchart</a>
-        <a href="#" class="quick-link">Draw.io</a>
-        <a href="#" class="quick-link">ERwin</a>
-        <a href="#" class="quick-link">MySQL Workbench</a>
+    <div class="db-comparison">
+        <h3>Сравнение типов баз данных</h3>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Характеристика</th>
+                    <th>Реляционные (SQL)</th>
+                    <th>Документные (NoSQL)</th>
+                    <th>Колоночные</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Структура данных</td>
+                    <td>Таблицы со строгими схемами</td>
+                    <td>JSON-документы</td>
+                    <td>Колоночное хранение</td>
+                </tr>
+                <tr>
+                    <td>Масштабируемость</td>
+                    <td>Вертикальная</td>
+                    <td>Горизонтальная</td>
+                    <td>Горизонтальная</td>
+                </tr>
+                <tr>
+                    <td>Использование</td>
+                    <td>Транзакционные системы</td>
+                    <td>Контент-менеджмент</td>
+                    <td>Аналитика, big data</td>
+                </tr>
+                <tr>
+                    <td>Примеры</td>
+                    <td>MySQL, PostgreSQL</td>
+                    <td>MongoDB, Couchbase</td>
+                    <td>Cassandra, Bigtable</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 
