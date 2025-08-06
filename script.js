@@ -540,10 +540,13 @@ window.testAPI = async () => {
 
     
 function createBookmarkButtons() {
+    const existingButtons = document.querySelectorAll('.bookmark-btn');
+    if (existingButtons.length > 0) return;
     document.querySelectorAll('.section').forEach(section => {
         const id = section.id;
         const h2 = section.querySelector('h2');
         if (!h2) return;
+        if (h2.querySelector('.bookmark-btn')) return;
 
         const bookmarkBtn = document.createElement('button');
         bookmarkBtn.className = 'bookmark-btn';
