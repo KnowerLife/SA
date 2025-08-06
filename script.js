@@ -520,7 +520,10 @@ document.addEventListener('DOMContentLoaded', () => {
             bookmarkBtn.className = 'bookmark-btn';
             bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
             bookmarkBtn.dataset.section = id;
-            bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i>';
+            bookmarkBtn.innerHTML = `
+            <i class="far fa-bookmark"></i>
+            <span class="bookmark-tooltip">Добавить в закладки</span>
+        `;
             
             // Добавляем всплывающую подсказку
             const tooltip = document.createElement('span');
@@ -538,14 +541,11 @@ document.addEventListener('DOMContentLoaded', () => {
     bookmarks.forEach(id => {
         const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
         if (btn) {
-            btn.innerHTML = '<i class="fas fa-bookmark"></i>';
-            
-            // Проверяем наличие тултипа перед обновлением
-            const tooltip = btn.querySelector('.bookmark-tooltip');
-            if (tooltip) {
-                tooltip.textContent = 'Удалить из закладок';
-            }
-            
+            // Полностью пересоздаем содержимое для активного состояния
+            btn.innerHTML = `
+                <i class="fas fa-bookmark"></i>
+                <span class="bookmark-tooltip">Удалить из закладок</span>
+            `;
             btn.classList.add('active');
         }
     });
@@ -555,42 +555,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = event.currentTarget;
     const sectionId = btn.dataset.section;
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-    const tooltip = btn.querySelector('.bookmark-tooltip'); // Находим элемент
 
     if (bookmarks.includes(sectionId)) {
-        // Удаляем закладку
+        // Удаляем закладку - создаем неактивное состояние
         bookmarks = bookmarks.filter(id => id !== sectionId);
-        btn.innerHTML = '<i class="far fa-bookmark"></i>';
-        
-        // Проверяем наличие тултипа перед обновлением
-        if (tooltip) {
-            tooltip.textContent = 'Добавить в закладки';
-        }
-        
+        btn.innerHTML = `
+            <i class="far fa-bookmark"></i>
+            <span class="bookmark-tooltip">Добавить в закладки</span>
+        `;
         btn.classList.remove('active');
-        
-        // Анимация удаления
         btn.classList.add('pulse');
         setTimeout(() => btn.classList.remove('pulse'), 300);
     } else {
-        // Добавляем закладку
+        // Добавляем закладку - создаем активное состояние
         bookmarks.push(sectionId);
-        btn.innerHTML = '<i class="fas fa-bookmark"></i>';
-        
-        // Проверяем наличие тултипа перед обновлением
-        if (tooltip) {
-            tooltip.textContent = 'Удалить из закладок';
-        }
-        
+        btn.innerHTML = `
+            <i class="fas fa-bookmark"></i>
+            <span class="bookmark-tooltip">Удалить из закладок</span>
+        `;
         btn.classList.add('active');
-        
-        // Анимация добавления
         btn.classList.add('heartbeat');
         setTimeout(() => btn.classList.remove('heartbeat'), 300);
     }
 
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     updateBookmarksList();
+    showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
+}
     
     // Показываем уведомление
     showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
@@ -631,22 +622,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleBookmarkRemove(event) {
         if (!event.target.closest('.remove-bookmark')) return;
-        
-        const sectionId = event.target.closest('.remove-bookmark').dataset.section;
-        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-        bookmarks = bookmarks.filter(id => id !== sectionId);
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-        
-        // Обновляем кнопку в разделе
-        const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
-        if (sectionBtn) {
-            sectionBtn.innerHTML = '<i class="far fa-bookmark"></i>';
-            sectionBtn.querySelector('.bookmark-tooltip').textContent = 'Добавить в закладки';
-            sectionBtn.classList.remove('active');
-        }
-        
-        updateBookmarksList();
+    
+    const sectionId = event.target.closest('.remove-bookmark').dataset.section;
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    bookmarks = bookmarks.filter(id => id !== sectionId);
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    
+    // Обновляем кнопку в разделе
+    const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
+    if (sectionBtn) {
+        // Полностью пересоздаем содержимое кнопки
+        sectionBtn.innerHTML = `
+            <i class="far fa-bookmark"></i>
+            <span class="bookmark-tooltip">Добавить в закладки</span>
+        `;
+        sectionBtn.classList.remove('active');
     }
+    
+    updateBookmarksList();
+}
 
     function updateBookmarksCounter() {
         const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
