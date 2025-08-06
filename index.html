@@ -5,426 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Памятка Системного Аналитика | KNOWERLIFE Essential Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #333;
-            --secondary: #666;
-            --accent: #4a4a4a;
-            --light: #f8f9fa;
-            --dark: #222;
-            --text: #444;
-            --border: #ddd;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-        
-        /* Версия для слабовидящих */
-        body.accessibility {
-            --text: #000;
-            --border: #000;
-            --light: #fff;
-            --dark: #000;
-            font-size: 18px;
-            line-height: 1.8;
-        }
-        
-        body.accessibility .section {
-            border: 2px solid var(--dark);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: var(--light);
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            min-height: 100vh;
-            transition: var(--transition);
-        }
-        
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--dark), var(--primary));
-            color: white;
-            padding: 1.5rem 2rem;
-            grid-column: 1 / -1;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .logo i {
-            font-size: 1.8rem;
-        }
-        
-        .logo h1 {
-            font-size: 1.6rem;
-            font-weight: 600;
-        }
-        
-        .header-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        .accessibility-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-        }
-        
-        .accessibility-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .search-bar {
-            flex: 0 1 400px;
-            position: relative;
-        }
-        
-        .search-bar input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border-radius: 50px;
-            border: none;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-        
-        .search-bar input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .search-bar input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .search-bar i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        /* Navigation Styles */
-        nav {
-            background: white;
-            padding: 1.5rem 0;
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
-            height: calc(100vh - 80px);
-            position: sticky;
-            top: 80px;
-        }
-        
-        .nav-header {
-            padding: 0 1.5rem 1rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1rem;
-        }
-        
-        .nav-header h2 {
-            font-size: 1.1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .nav-categories {
-            padding: 0 1rem;
-        }
-        
-        .category {
-            margin-bottom: 1.5rem;
-        }
-        
-        .category h3 {
-            font-size: 0.95rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.8rem;
-            padding-left: 0.5rem;
-        }
-        
-        .nav-links {
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-bottom: 4px;
-        }
-        
-        .nav-links a {
-            display: flex;
-            align-items: center;
-            padding: 10px 12px;
-            text-decoration: none;
-            color: var(--text);
-            border-radius: 6px;
-            transition: var(--transition);
-            font-size: 0.95rem;
-        }
-        
-        .nav-links a i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-            color: var(--secondary);
-        }
-        
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(0, 0, 0, 0.05);
-            color: var(--dark);
-        }
-        
-        .nav-links a:hover i, .nav-links a.active i {
-            color: var(--dark);
-        }
-        
-        /* Main Content Styles */
-        main {
-            padding: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .section {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-        }
-        
-        .section h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section h2 i {
-            color: var(--accent);
-        }
-        
-        .section h3 {
-            color: var(--secondary);
-            margin: 1.8rem 0 0.8rem;
-        }
-        
-        .section p {
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-        
-        .section ul, .section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .section li {
-            margin-bottom: 0.7rem;
-        }
-        
-        .highlight-box {
-            background: #f0f0f0;
-            border-left: 4px solid var(--primary);
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            border-radius: 0 4px 4px 0;
-        }
-        
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 1.2rem;
-            border-radius: 6px;
-            margin: 1.5rem 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-        
-        .example {
-            background: #f9f9f9;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-        }
-        
-        .example-header {
-            display: flex;
-            align-items: center;
-            color: var(--accent);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .example-header i {
-            margin-right: 8px;
-        }
-        
-        .quick-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 1.5rem 0;
-        }
-        
-        .quick-link {
-            background: rgba(0, 0, 0, 0.05);
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            border: 1px solid var(--border);
-        }
-        
-        .quick-link:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .resource-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary);
-            text-decoration: none;
-            margin: 10px 0;
-            padding: 8px;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-        
-        .resource-link:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Footer Styles */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            grid-column: 1 / -1;
-        }
-        
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 1rem 0;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            body {
-                grid-template-columns: 1fr;
-            }
-            
-            nav {
-                position: static;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .search-bar {
-                width: 100%;
-                max-width: 100%;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .section {
-                padding: 1.5rem;
-            }
-            
-            main {
-                padding: 1.5rem;
-            }
-            
-            .header-controls {
-                flex-direction: column;
-                align-items: flex-start;
-                width: 100%;
-            }
-            
-            .search-bar {
-                width: 100%;
-            }
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="overlay" id="navOverlay"></div>
     <!-- Header Section -->
     <header>
         <div class="header-content">
@@ -440,151 +30,149 @@
                 <button class="accessibility-toggle" id="accessibilityToggle">
                     <i class="fas fa-eye"></i> Версия для слабовидящих
                 </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i> Темная тема
+                </button>
+                <button class="pdf-export" id="pdfExport">
+                    <i class="fas fa-file-pdf"></i> Экспорт в PDF
+                </button>
             </div>
         </div>
     </header>
     
     <!-- Navigation -->
     <nav>
-    <div class="nav-header">
-        <h2><i class="fas fa-bars"></i> Навигация</h2>
-    </div>
-    
-    <div class="nav-categories">
-        <!-- Существующие категории -->
-        <div class="category">
-            <h3>Основы анализа</h3>
-            <ul class="nav-links">
-                <li><a href="#task-process" class="active"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
-                <li><a href="#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
-                <li><a href="#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
-                <li><a href="#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
-                <li><a href="#glossary"><i class="fas fa-book"></i> Глоссарий терминов</a></li>
-            </ul>
+        <div class="nav-header">
+            <h2><i class="fas fa-bars"></i> Навигация</h2>
         </div>
-        
-        <div class="category">
-            <h3>Техники и методы</h3>
-            <ul class="nav-links">
-                <li><a href="#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
-                <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
-                <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
-                <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
-                <!-- Добавлено -->
-                <li><a href="#design-patterns"><i class="fas fa-shapes"></i> Паттерны проектирования</a></li>
-                <li><a href="#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
-            </ul>
+        <div class="nav-categories">
+            <div class="category">
+                <h3>Закладки</h3>
+                <ul class="nav-links" id="bookmarksList">
+                    <li><p>Нет сохраненных закладок</p></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Основы анализа</h3>
+                <ul class="nav-links">
+                    <li><a href="#task-process" class="active"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
+                    <li><a href="#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
+                    <li><a href="#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
+                    <li><a href="#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
+                    <li><a href="#glossary"><i class="fas fa-book"></i> Глоссарий терминов</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Техники и методы</h3>
+                <ul class="nav-links">
+                    <li><a href="#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
+                    <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
+                    <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
+                    <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
+                    <li><a href="#design-patterns"><i class="fas fa-shapes"></i> Паттерны проектирования</a></li>
+                    <li><a href="#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Архитектура</h3>
+                <ul class="nav-links">
+                    <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
+                    <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
+                    <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
+                    <li><a href="#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
+                    <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
+                    <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Данные</h3>
+                <ul class="nav-links">
+                    <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
+                    <li><a href="#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Процессы</h3>
+                <ul class="nav-links">
+                    <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
+                    <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Безопасность</h3>
+                <ul class="nav-links">
+                    <li><a href="#security"><i class="fas fa-shield-alt"></i> Основы безопасности</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Аналитика</h3>
+                <ul class="nav-links">
+                    <li><a href="#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
+                    <li><a href="#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
+                    <li><a href="#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Документация</h3>
+                <ul class="nav-links">
+                    <li><a href="#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Карьера</h3>
+                <ul class="nav-links">
+                    <li><a href="#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Инструменты</h3>
+                <ul class="nav-links">
+                    <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
+                    <li><a href="#unit-converter"><i class="fas fa-calculator"></i> Конвертер</a></li>
+                    <li><a href="#diagram-generator"><i class="fas fa-diagram-project"></i> Генератор диаграмм</a></li>
+                    <li><a href="#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
+                    <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
+                    <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
+                    <li><a href="#additional-tools"><i class="fas fa-tools"></i> Дополнительные инструменты</a></li>
+                    <li><a href="#external-integration"><i class="fas fa-plug"></i> Интеграция с API</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Чеклисты</h3>
+                <ul class="nav-links">
+                    <li><a href="#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
+                    <li><a href="#security-checklist"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Развитие</h3>
+                <ul class="nav-links">
+                    <li><a href="#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Ресурсы</h3>
+                <ul class="nav-links">
+                    <li><a href="#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Интерактив</h3>
+                <ul class="nav-links">
+                    <li><a href="#interactive-examples"><i class="fas fa-flask"></i> Интерактивные примеры</a></li>
+                    <li><a href="#knowledge-base"><i class="fas fa-book"></i> База знаний</a></li>
+                    <li><a href="#testing-system"><i class="fas fa-graduation-cap"></i> Проверка знаний</a></li>
+                </ul>
+            </div>
         </div>
-        
-        <div class="category">
-            <h3>Архитектура</h3>
-            <ul class="nav-links">
-                <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
-                <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
-                <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
-                <li><a href="#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
-                <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
-                <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
-            </ul>
-        </div>
-
-        <div class="category">
-            <h3>Данные</h3>
-            <ul class="nav-links">
-                <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
-                <li><a href="#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
-            </ul>
-        </div>
-
-        <div class="category">
-            <h3>Процессы</h3>
-            <ul class="nav-links">
-                <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
-                <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
-            </ul>
-        </div>
-        
-        <!-- Новая категория: Безопасность -->
-        <div class="category">
-            <h3>Безопасность</h3>
-            <ul class="nav-links">
-                <li><a href="#security"><i class="fas fa-shield-alt"></i> Основы безопасности</a></li>
-            </ul>
-        </div>
-        
-        <div class="category">
-            <h3>Аналитика</h3>
-            <ul class="nav-links">
-                <li><a href="#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
-                <li><a href="#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
-                <!-- Добавлено -->
-                <li><a href="#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
-            </ul>
-        </div>
-
-        <div class="category">
-            <h3>Документация</h3>
-            <ul class="nav-links">
-                <li><a href="#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
-            </ul>
-        </div>
-
-        <div class="category">
-            <h3>Карьера</h3>
-            <ul class="nav-links">
-                <li><a href="#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
-            </ul>
-        </div>
-
-        <div class="category">
-            <h3>Инструменты</h3>
-            <ul class="nav-links">
-                <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
-                <li><a href="#unit-converter"><i class="fas fa-calculator"></i> Конвертер</a></li>
-                <li><a href="#diagram-generator"><i class="fas fa-diagram-project"></i> Генератор диаграмм</a></li>
-                <li><a href="#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
-                <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
-                <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
-                <!-- Добавлено -->
-                <li><a href="#additional-tools"><i class="fas fa-tools"></i> Дополнительные инструменты</a></li>
-                <li><a href="#external-integration"><i class="fas fa-plug"></i> Интеграция с API</a></li>
-            </ul>
-        </div>
-        
-        <div class="category">
-            <h3>Чеклисты</h3>
-            <ul class="nav-links">
-                <li><a href="#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
-                <!-- Добавлено -->
-                <li><a href="#security-checklist"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
-            </ul>
-        </div>
-
-        <div class="category">
-            <h3>Развитие</h3>
-            <ul class="nav-links">
-                <li><a href="#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
-            </ul>
-        </div>
-        
-        <!-- Новая категория: Ресурсы -->
-        <div class="category">
-            <h3>Ресурсы</h3>
-            <ul class="nav-links">
-                <li><a href="#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    </nav>
     
     <!-- Main Content -->
     <main>
         <!-- Task Processing Section -->
         <section id="task-process" class="section">
             <h2><i class="fas fa-tasks"></i> Что делать при получении задачи</h2>
-            
             <p>Когда системный аналитик получает задачу, рекомендуется следовать этому алгоритму:</p>
-            
             <ol>
                 <li><strong>Определение требований</strong> - анализ бизнес-процессов, пользовательских сценариев</li>
                 <li><strong>Исследование и анализ</strong> - изучение документации, интервью с пользователями</li>
@@ -593,16 +181,13 @@
                 <li><strong>Взаимодействие с командой</strong> - согласование требований с разработчиками</li>
                 <li><strong>Контроль и мониторинг</strong> - отслеживание реализации проекта</li>
             </ol>
-            
             <div class="highlight-box">
                 <p><strong>Профессиональный совет:</strong> Всегда начинайте с понимания бизнес-целей задачи. Задавайте вопросы "Зачем?" и "Какую проблему решает?" прежде чем переходить к техническим деталям.</p>
             </div>
-
             <div class="example">
-        <div class="example-header"><i class="fas fa-chart-pie"></i> Ключевые компетенции системного аналитика</div>
-        <p>▢ Бизнес-анализ ▢ Системный анализ ▢ Работа с данными ▢ UX/UI ▢ Технические знания ▢ Коммуникация</p>
-    </div>
-            
+                <div class="example-header"><i class="fas fa-chart-pie"></i> Ключевые компетенции системного аналитика</div>
+                <p>▢ Бизнес-анализ ▢ Системный анализ ▢ Работа с данными ▢ UX/UI ▢ Технические знания ▢ Коммуникация</p>
+            </div>
             <h3>Полезные ресурсы:</h3>
             <a href="https://habr.com/ru/companies/edison/articles/269789/" class="resource-link" target="_blank">
                 <i class="fas fa-external-link-alt"></i> Процесс работы системного аналитика
@@ -610,26 +195,26 @@
             <a href="https://analyst.by/articles/kak-poluchit-zadachu-i-chto-s-nej-delat" class="resource-link" target="_blank">
                 <i class="fas fa-external-link-alt"></i> Как получить задачу и что с ней делать
             </a>
-<h3>Приоритизация задач</h3>
-    <div class="example">
-        <div class="example-header"><i class="fas fa-table"></i> Матрица приоритезации (Value vs Effort)</div>
-        <table style="width:100%; border-collapse: collapse; margin: 10px 0;">
-            <tr>
-                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffcccc;">Низкая ценность<br>Высокая сложность</td>
-                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ccffcc;">Высокая ценность<br>Высокая сложность</td>
-            </tr>
-            <tr>
-                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffe6cc;">Низкая ценность<br>Низкая сложность</td>
-                <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffffcc;">Высокая ценность<br>Низкая сложность</td>
-            </tr>
-        </table>
-        <p style="text-align:center; margin-top:10px;">
-            <span style="background:#ffffcc; padding:2px 5px;">✓ Сделать в первую очередь</span> |
-            <span style="background:#ccffcc; padding:2px 5px;">✓ Планировать</span> |
-            <span style="background:#ffe6cc; padding:2px 5px;">✓ Возможно позже</span> |
-            <span style="background:#ffcccc; padding:2px 5px;">× Избегать</span>
-        </p>
-    </div>
+            <h3>Приоритизация задач</h3>
+            <div class="example">
+                <div class="example-header"><i class="fas fa-table"></i> Матрица приоритезации (Value vs Effort)</div>
+                <table style="width:100%; border-collapse: collapse; margin: 10px 0;">
+                    <tr>
+                        <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffcccc;">Низкая ценность<br>Высокая сложность</td>
+                        <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ccffcc;">Высокая ценность<br>Высокая сложность</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffe6cc;">Низкая ценность<br>Низкая сложность</td>
+                        <td style="border:1px solid #ddd; padding:20px; text-align:center; background:#ffffcc;">Высокая ценность<br>Низкая сложность</td>
+                    </tr>
+                </table>
+                <p style="text-align:center; margin-top:10px;">
+                    <span style="background:#ffffcc; padding:2px 5px;">✓ Сделать в первую очередь</span> |
+                    <span style="background:#ccffcc; padding:2px 5px;">✓ Планировать</span> |
+                    <span style="background:#ffe6cc; padding:2px 5px;">✓ Возможно позже</span> |
+                    <span style="background:#ffcccc; padding:2px 5px;">× Избегать</span>
+                </p>
+            </div>
         </section>
 
         <!-- GraphQL Section -->
@@ -842,50 +427,6 @@
         </div>
     </div>
 </section>
-
-<script>
-    function showStep(step, answer) {
-        if (step === 2) {
-            document.getElementById('tree-step-1').style.display = 'none';
-            const step2 = document.getElementById('tree-step-2');
-            step2.style.display = 'block';
-            
-            if (answer === 'yes') {
-                document.getElementById('step2-question').textContent = 'Требования могут меняться?';
-                document.getElementById('step2-options').innerHTML = `
-                    <button onclick="showResult('waterfall')">Нет</button>
-                    <button onclick="showResult('scrum')">Да</button>
-                `;
-            } else {
-                document.getElementById('step2-question').textContent = 'Проект требует быстрого вывода на рынок?';
-                document.getElementById('step2-options').innerHTML = `
-                    <button onclick="showResult('kanban')">Да</button>
-                    <button onclick="showResult('lean')">Нет</button>
-                `;
-            }
-        }
-    }
-    
-    function showResult(methodology) {
-        document.getElementById('tree-step-2').style.display = 'none';
-        const result = document.getElementById('tree-result');
-        result.style.display = 'block';
-        
-        const methods = {
-            waterfall: 'Waterfall (каскадная модель)',
-            scrum: 'Scrum',
-            kanban: 'Kanban',
-            lean: 'Lean'
-        };
-        
-        document.getElementById('result-text').textContent = methods[methodology];
-    }
-    
-    function resetTree() {
-        document.getElementById('tree-result').style.display = 'none';
-        document.getElementById('tree-step-1').style.display = 'block';
-    }
-</script>
 
         <!-- Common Mistakes Section -->
 <section id="mistakes" class="section">
@@ -1207,38 +748,6 @@
     </div>
 </section>
 
-<script>
-                // Исправленный конвертер
-                function convertUnits() {
-                    const inputValue = parseFloat(document.getElementById('input-value').value);
-                    const inputUnit = document.getElementById('input-unit').value;
-                    const outputUnit = document.getElementById('output-unit').value;
-                    
-                    // Коэффициенты конвертации
-                    const factors = {
-                        kb: 1,
-                        mb: 1024,
-                        gb: 1024 * 1024,
-                        ms: 1,
-                        s: 1000
-                    };
-                    
-                    // Проверка совместимости единиц измерения
-                    const dataUnits = ['kb', 'mb', 'gb'];
-                    const timeUnits = ['ms', 's'];
-                    
-                    if ((dataUnits.includes(inputUnit) && timeUnits.includes(outputUnit)) || 
-                        (timeUnits.includes(inputUnit) && dataUnits.includes(outputUnit))) {
-                        document.getElementById('output-value').value = "Несовместимые единицы";
-                        return;
-                    }
-                    
-                    // Конвертация
-                    const result = inputValue * factors[inputUnit] / factors[outputUnit];
-                    document.getElementById('output-value').value = result.toFixed(4);
-                }
-            </script>
-
         <!-- Interview Checklist Section -->
 <section id="interview-checklist" class="section">
     <h2><i class="fas fa-list-check"></i> Чеклист для проведения интервью</h2>
@@ -1304,26 +813,6 @@
     </div>
 </section>
 
-<script>
-    function generateDiagram() {
-        const input = document.getElementById('diagram-input').value;
-        const output = document.getElementById('diagram-output');
-        
-        // Простая визуализация (в реальности можно использовать библиотеку mermaid.js)
-        let html = '<div class="sequence-diagram">';
-        const lines = input.split('\n');
-        
-        lines.forEach(line => {
-            if (line.trim()) {
-                html += `<div style="margin:5px 0; padding:5px; border-left:3px solid #4a4a4a;">${line.trim()}</div>`;
-            }
-        });
-        
-        html += '</div>';
-        output.innerHTML = html;
-    }
-</script>
-
         <!-- Templates Section -->
 <section id="email-templates" class="section">
     <h2><i class="fas fa-envelope"></i> Шаблоны писем и сообщений</h2>
@@ -1342,27 +831,6 @@
         </button>
     </div>
 </section>
-
-<script>
-    const templates = {
-        clarification: `Уважаемые коллеги,\n\nТребуется уточнение по задаче [Название задачи].\nВопрос: [Сформулируйте вопрос]\n\nПрошу предоставить информацию до [Дата].\n\nС уважением,\n[Ваше имя]`,
-        meeting: `Уважаемые участники,\n\nПриглашаю вас на встречу по обсуждению [Тема].\nДата: [Дата]\nВремя: [Время]\nМесто: [Место/Ссылка]\n\nПовестка:\n1. [Пункт 1]\n2. [Пункт 2]\n3. [Пункт 3]\n\nПрошу подтвердить участие.\n\nС уважением,\n[Ваше имя]`,
-        review: `Уважаемый(ая) [Имя],\n\nПрошу провести ревью [Документ/Функционал].\nСсылка: [Ссылка]\n\nКлючевые моменты для проверки:\n- [Пункт 1]\n- [Пункт 2]\n\nПрошу предоставить обратную связь до [Дата].\n\nС уважением,\n[Ваше имя]`,
-        update: `Уважаемые заинтересованные стороны,\n\nСтатус по задаче [Название задачи]:\n- Прогресс: [X]%\n- Ключевые достижения: [Описание]\n- Следующие шаги: [Описание]\n- Проблемы/Риски: [Описание]\n\nС уважением,\n[Ваше имя]`
-    };
-
-    function showTemplate(type) {
-        document.getElementById('template-content').style.display = 'block';
-        document.getElementById('template-text').value = templates[type];
-    }
-
-    function copyTemplate() {
-        const textarea = document.getElementById('template-text');
-        textarea.select();
-        document.execCommand('copy');
-        alert('Шаблон скопирован в буфер обмена!');
-    }
-</script>
 
         <!-- Competency Map Section -->
 <section id="competency-map" class="section">
@@ -1437,24 +905,6 @@
         content: '-';
     }
 </style>
-
-<script>
-    function toggleCompetency(card) {
-        const wasActive = card.classList.contains('active');
-        
-        // Закрываем все карточки
-        document.querySelectorAll('.competency-card').forEach(c => {
-            c.classList.remove('active');
-            c.querySelector('ul').style.display = 'none';
-        });
-        
-        // Открываем текущую, если она не была активна
-        if (!wasActive) {
-            card.classList.add('active');
-            card.querySelector('ul').style.display = 'block';
-        }
-    }
-</script>
 
         <!-- Data Modeling Section -->
 <section id="data-modeling" class="section">
@@ -1908,33 +1358,6 @@
             <button onclick="stopTimer()" class="quick-link">Стоп</button>
         </div>
     </div>
-    <script>
-                // Добавлен таймер для митингов
-                let timerInterval;
-                
-                function startTimer(seconds) {
-                    clearInterval(timerInterval);
-                    let timeLeft = seconds;
-                    
-                    timerInterval = setInterval(() => {
-                        const minutes = Math.floor(timeLeft / 60);
-                        const secs = timeLeft % 60;
-                        document.getElementById('meeting-timer').textContent = 
-                            `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                        
-                        if (timeLeft <= 0) {
-                            clearInterval(timerInterval);
-                            document.getElementById('meeting-timer').textContent = "00:00";
-                            alert('Время вышло!');
-                        }
-                        timeLeft--;
-                    }, 1000);
-                }
-                
-                function stopTimer() {
-                    clearInterval(timerInterval);
-                }
-            </script>
 </section>
 
 <!-- Databases Section -->
@@ -2239,77 +1662,5 @@ components:
             <p>© 2023 KNOWERLIFE Essential Guide for System Analysts</p>
         </div>
     </footer>
-    
-    <script>
-        // Переключение версии для слабовидящих
-        const accessibilityToggle = document.getElementById('accessibilityToggle');
-        accessibilityToggle.addEventListener('click', function() {
-            document.body.classList.toggle('accessibility');
-            
-            if (document.body.classList.contains('accessibility')) {
-                this.innerHTML = '<i class="fas fa-eye"></i> Обычная версия';
-            } else {
-                this.innerHTML = '<i class="fas fa-eye"></i> Версия для слабовидящих';
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update active link in navigation
-                    document.querySelectorAll('.nav-links a').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                }
-            });
-        });
-        
-        // Search functionality
-        const searchInput = document.querySelector('.search-bar input');
-        searchInput.addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                const searchTerm = this.value.toLowerCase();
-                const sections = document.querySelectorAll('.section');
-                let found = false;
-                
-                sections.forEach(section => {
-                    const sectionText = section.textContent.toLowerCase();
-                    if (sectionText.includes(searchTerm)) {
-                        section.style.display = 'block';
-                        
-                        if (!found) {
-                            // Scroll to the first found section
-                            window.scrollTo({
-                                top: section.offsetTop - 100,
-                                behavior: 'smooth'
-                            });
-                            found = true;
-                        }
-                    } else {
-                        section.style.display = 'none';
-                    }
-                });
-                
-                if (!found) {
-                    alert('Ничего не найдено. Попробуйте другой запрос.');
-                    sections.forEach(section => {
-                        section.style.display = 'block';
-                    });
-                }
-            }
-        });
-    </script>
 </body>
 </html>
