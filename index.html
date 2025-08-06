@@ -472,14 +472,15 @@
             </div>
             
             <div class="category">
-                <h3>Архитектура</h3>
-                <ul class="nav-links">
-                    <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
-                    <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
-                    <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
-                    <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
-                </ul>
-            </div>
+    <h3>Архитектура</h3>
+    <ul class="nav-links">
+        <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
+        <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
+        <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li> <!-- Добавлено -->
+        <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
+        <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+    </ul>
+</div>
             
             <div class="category">
                 <h3>Инструменты</h3>
@@ -522,6 +523,122 @@
                 <i class="fas fa-external-link-alt"></i> Как получить задачу и что с ней делать
             </a>
         </section>
+
+        <!-- SOAP Section -->
+<section id="soap" class="section">
+    <h2><i class="fas fa-exchange-alt"></i> SOAP (Simple Object Access Protocol)</h2>
+    
+    <p>SOAP - протокол для обмена структурированной информацией в распределенных системах. Основные характеристики:</p>
+    
+    <ul>
+        <li><strong>XML-based</strong> - все сообщения в формате XML</li>
+        <li><strong>Протоколо-независимый</strong> - может работать поверх HTTP, SMTP, TCP</li>
+        <li><strong>Строгая типизация</strong> - использует WSDL для описания интерфейсов</li>
+        <li><strong>Встроенная безопасность</strong> - WS-Security стандарт</li>
+        <li><strong>Транзакции</strong> - поддержка ACID через WS-Transaction</li>
+    </ul>
+    
+    <h3>Структура SOAP сообщения:</h3>
+    <div class="code-block">
+&lt;?xml version="1.0"?&gt;
+&lt;soap:Envelope
+  xmlns:soap="http://www.w3.org/2003/05/soap-envelope"&gt;
+  
+  &lt;soap:Header&gt;
+    &lt;!-- Заголовок с метаданными --&gt;
+    &lt;auth:Authentication&gt;
+      &lt;auth:Username&gt;user123&lt;/auth:Username&gt;
+      &lt;auth:Password&gt;pass456&lt;/auth:Password&gt;
+    &lt;/auth:Authentication&gt;
+  &lt;/soap:Header&gt;
+  
+  &lt;soap:Body&gt;
+    &lt;!-- Основное содержимое запроса --&gt;
+    &lt;m:GetUserDetails xmlns:m="https://api.example.com/"&gt;
+      &lt;m:UserId&gt;789&lt;/m:UserId&gt;
+    &lt;/m:GetUserDetails&gt;
+  &lt;/soap:Body&gt;
+  
+&lt;/soap:Envelope&gt;
+    </div>
+    
+    <h3>Ключевые компоненты:</h3>
+    <ul>
+        <li><strong>Envelope</strong> - корневой элемент, определяет сообщение как SOAP</li>
+        <li><strong>Header</strong> - содержит атрибуты безопасности, транзакций</li>
+        <li><strong>Body</strong> - основное содержимое запроса/ответа</li>
+        <li><strong>Fault</strong> - элемент для обработки ошибок</li>
+    </ul>
+    
+    <h3>SOAP vs REST:</h3>
+    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
+            <th style="border:1px solid #ddd; padding:8px;">SOAP</th>
+            <th style="border:1px solid #ddd; padding:8px;">REST</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Формат данных</td>
+            <td style="border:1px solid #ddd; padding:8px;">XML</td>
+            <td style="border:1px solid #ddd; padding:8px;">JSON, XML, текст</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Протокол</td>
+            <td style="border:1px solid #ddd; padding:8px;">HTTP, SMTP, TCP</td>
+            <td style="border:1px solid #ddd; padding:8px;">HTTP</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Стандарты</td>
+            <td style="border:1px solid #ddd; padding:8px;">WS-*, строгие</td>
+            <td style="border:1px solid #ddd; padding:8px;">Нет официальных</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Производительность</td>
+            <td style="border:1px solid #ddd; padding:8px;">Ниже из-за XML</td>
+            <td style="border:1px solid #ddd; padding:8px;">Выше</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Безопасность</td>
+            <td style="border:1px solid #ddd; padding:8px;">WS-Security</td>
+            <td style="border:1px solid #ddd; padding:8px;">HTTPS, OAuth</td>
+        </tr>
+    </table>
+    
+    <div class="highlight-box">
+        <p><strong>Когда использовать SOAP:</strong> Для высокозащищенных систем (банки, госсектор), при работе с устаревшими системами, когда нужны встроенные транзакции или сложные композиции сервисов.</p>
+    </div>
+    
+    <h3>Пример WSDL (Web Services Description Language):</h3>
+    <div class="code-block">
+&lt;definitions name="UserService"
+  targetNamespace="https://api.example.com/user"
+  xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;
+  
+  &lt;types&gt;
+    &lt;xsd:schema&gt;
+      &lt;xsd:element name="GetUserRequest"&gt;
+        &lt;xsd:complexType&gt;
+          &lt;xsd:sequence&gt;
+            &lt;xsd:element name="userId" type="xsd:integer"/&gt;
+          &lt;/xsd:sequence&gt;
+        &lt;/xsd:complexType&gt;
+      &lt;/xsd:element&gt;
+    &lt;/xsd:schema&gt;
+  &lt;/types&gt;
+  
+  &lt;message name="GetUserInput"&gt;
+    &lt;part name="body" element="tns:GetUserRequest"/&gt;
+  &lt;/message&gt;
+  
+  &lt;portType name="UserPortType"&gt;
+    &lt;operation name="GetUser"&gt;
+      &lt;input message="tns:GetUserInput"/&gt;
+    &lt;/operation&gt;
+  &lt;/portType&gt;
+  
+&lt;/definitions&gt;
+    </div>
+</section>
         
         <!-- Artifacts Section -->
         <section id="artifacts" class="section">
