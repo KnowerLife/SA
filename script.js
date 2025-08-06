@@ -575,7 +575,8 @@ function createBookmarkButtons() {
 
     function updateBookmarksList() {
         const bookmarksList = document.getElementById('bookmarksList');
-        if (!bookmarksList) return; // Проверка существования элемента
+        if (!bookmarksList) return;
+        
         const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
         const noBookmarksMsg = '<li class="no-bookmarks"><i class="far fa-frown"></i> Пока нет сохраненных закладок</li>';
 
