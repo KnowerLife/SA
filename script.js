@@ -510,7 +510,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('bookmarksList').addEventListener('click', handleBookmarkRemove);
     }
 
-    function createBookmarkButtons() {
+    
+function createBookmarkButtons() {
     document.querySelectorAll('.section').forEach(section => {
         const id = section.id;
         const h2 = section.querySelector('h2');
@@ -521,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
         bookmarkBtn.dataset.section = id;
         
-        // Начальное состояние кнопки
+        // Начальное состояние - неактивное
         bookmarkBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
@@ -537,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bookmarks.forEach(id => {
         const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
         if (btn) {
+            // Активное состояние
             btn.innerHTML = `
                 <i class="fas fa-bookmark"></i>
                 <span class="bookmark-tooltip">Удалить из закладок</span>
@@ -612,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleBookmarkRemove(event) {
-        if (!event.target.closest('.remove-bookmark')) return;
+    if (!event.target.closest('.remove-bookmark')) return;
     
     const sectionId = event.target.closest('.remove-bookmark').dataset.section;
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
@@ -622,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обновляем кнопку в разделе
     const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
     if (sectionBtn) {
-        // Полностью пересоздаем содержимое кнопки
+        // ПОЛНОСТЬЮ пересоздаем содержимое кнопки
         sectionBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
