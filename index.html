@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Памятка Системного Аналитика | KNOWERLIFE Essential Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #333;
+            --secondary: #666;
+            --accent: #4a4a4a;
+            --light: #f8f9fa;
+            --dark: #222;
+            --text: #444;
+            --border: #ddd;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        /* Версия для слабовидящих */
+        body.accessibility {
+            --text: #000;
+            --border: #000;
+            --light: #fff;
+            --dark: #000;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        body.accessibility .section {
+            border: 2px solid var(--dark);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 1.5rem 2rem;
+            grid-column: 1 / -1;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .accessibility-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .accessibility-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .search-bar {
+            flex: 0 1 400px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background: white;
+            padding: 1.5rem 0;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+        }
+        
+        .nav-header {
+            padding: 0 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        
+        .nav-header h2 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-categories {
+            padding: 0 1rem;
+        }
+        
+        .category {
+            margin-bottom: 1.5rem;
+        }
+        
+        .category h3 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+        }
+        
+        .nav-links {
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-bottom: 4px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            text-decoration: none;
+            color: var(--text);
+            border-radius: 6px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        
+        .nav-links a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--secondary);
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--dark);
+        }
+        
+        .nav-links a:hover i, .nav-links a.active i {
+            color: var(--dark);
+        }
+        
+        /* Main Content Styles */
+        main {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h2 i {
+            color: var(--accent);
+        }
+        
+        .section h3 {
+            color: var(--secondary);
+            margin: 1.8rem 0 0.8rem;
+        }
+        
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .section ul, .section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section li {
+            margin-bottom: 0.7rem;
+        }
+        
+        .highlight-box {
+            background: #f0f0f0;
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.2rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .example {
+            background: #f9f9f9;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .example-header {
+            display: flex;
+            align-items: center;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .example-header i {
+            margin-right: 8px;
+        }
+        
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        .quick-link {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        
+        .quick-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .resource-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .resource-link:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .section {
+                padding: 1.5rem;
+            }
+            
+            main {
+                padding: 1.5rem;
+            }
+            
+            .header-controls {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+                <h1>Памятка Системного Аналитика</h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск по материалам...">
+                </div>
+                <button class="accessibility-toggle" id="accessibilityToggle">
+                    <i class="fas fa-eye"></i> Версия для слабовидящих
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-header">
+            <h2><i class="fas fa-bars"></i> Навигация</h2>
+        </div>
+        
+        <div class="nav-categories">
+            <div class="category">
+                <h3>Основы анализа</h3>
+                <ul class="nav-links">
+                    <li><a href="#task-process" class="active"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
+                    <li><a href="#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
+                    <li><a href="#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
+                    <li><a href="#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>Техники и методы</h3>
+                <ul class="nav-links">
+                    <li><a href="#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
+                    <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
+                    <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
+                    <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>Архитектура</h3>
+                <ul class="nav-links">
+                    <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
+                    <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
+                    <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
+                    <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>Инструменты</h3>
+                <ul class="nav-links">
+                    <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Kanban vs Scrum</a></li>
+                    <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
+                    <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
+                    <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Task Processing Section -->
+        <section id="task-process" class="section">
+            <h2><i class="fas fa-tasks"></i> Что делать при получении задачи</h2>
+            
+            <p>Когда системный аналитик получает задачу, рекомендуется следовать этому алгоритму:</p>
+            
+            <ol>
+                <li><strong>Определение требований</strong> - анализ бизнес-процессов, пользовательских сценариев</li>
+                <li><strong>Исследование и анализ</strong> - изучение документации, интервью с пользователями</li>
+                <li><strong>Моделирование и проектирование</strong> - создание моделей данных, диаграмм</li>
+                <li><strong>Разработка требований</strong> - технические спецификации, документация</li>
+                <li><strong>Взаимодействие с командой</strong> - согласование требований с разработчиками</li>
+                <li><strong>Контроль и мониторинг</strong> - отслеживание реализации проекта</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <p><strong>Профессиональный совет:</strong> Всегда начинайте с понимания бизнес-целей задачи. Задавайте вопросы "Зачем?" и "Какую проблему решает?" прежде чем переходить к техническим деталям.</p>
+            </div>
+            
+            <h3>Полезные ресурсы:</h3>
+            <a href="https://habr.com/ru/companies/edison/articles/269789/" class="resource-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Процесс работы системного аналитика
+            </a>
+            <a href="https://analyst.by/articles/kak-poluchit-zadachu-i-chto-s-nej-delat" class="resource-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Как получить задачу и что с ней делать
+            </a>
+        </section>
+        
+        <!-- Artifacts Section -->
+        <section id="artifacts" class="section">
+            <h2><i class="fas fa-archive"></i> Артефакты в системном анализе</h2>
+            
+            <p>Артефакты - это документы, модели и информация, создаваемые в процессе анализа системы:</p>
+            
+            <ul>
+                <li>Требования (функциональные и нефункциональные)</li>
+                <li>Диаграммы (BPMN, UML, последовательности)</li>
+                <li>Пользовательские истории (User Stories)</li>
+                <li>Сценарии использования (Use Cases)</li>
+                <li>Прототипы интерфейсов</li>
+                <li>Глоссарий терминов</li>
+                <li>Отчеты об анализе</li>
+            </ul>
+            
+            <div class="quick-links">
+                <a href="#requirements" class="quick-link">Требования</a>
+                <a href="#use-cases" class="quick-link">Use Cases</a>
+                <a href="#user-stories" class="quick-link">User Stories</a>
+            </div>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-file-alt"></i> Пример артефакта: User Story</div>
+                <p>"Как зарегистрированный пользователь, я хочу иметь возможность сбросить пароль, чтобы восстановить доступ к аккаунту, если забыл пароль"</p>
+            </div>
+        </section>
+
+          <!-- Stakeholders Section -->
+<section id="stakeholders" class="section">
+    <h2><i class="fas fa-users"></i> Стейкхолдеры</h2>
+    
+    <p>Стейкхолдеры - это лица или организации, которые имеют интерес в проекте и могут повлиять на его успех или неудачу:</p>
+    
+    <ul>
+        <li><strong>Заказчики</strong> - определяют бизнес-требования и финансируют проект</li>
+        <li><strong>Пользователи</strong> - непосредственно работают с системой</li>
+        <li><strong>Разработчики</strong> - реализуют техническое решение</li>
+        <li><strong>Тестировщики</strong> - обеспечивают качество продукта</li>
+        <li><strong>Руководство</strong> - отвечает за стратегические решения</li>
+        <li><strong>Технические эксперты</strong> - предоставляют предметную экспертизу</li>
+    </ul>
+    
+    <h3>Как взаимодействовать со стейкхолдерами:</h3>
+    <ol>
+        <li><strong>Идентификация</strong> - составьте полный список всех заинтересованных сторон</li>
+        <li><strong>Анализ влияния</strong> - оцените уровень влияния каждого стейкхолдера</li>
+        <li><strong>План коммуникации</strong> - определите частоту и формат взаимодействия</li>
+        <li><strong>Управление ожиданиями</strong> - четко формулируйте что возможно, а что нет</li>
+        <li><strong>Обратная связь</strong> - регулярно собирайте и анализируйте мнения</li>
+    </ol>
+    
+    <div class="highlight-box">
+        <p><strong>Совет:</strong> Используйте матрицу влияния/заинтересованности для приоритизации работы со стейкхолдерами. Регулярно обновляйте карту стейкхолдеров по мере развития проекта.</p>
+    </div>
+</section>
+
+<!-- User Stories Section -->
+<section id="user-stories" class="section">
+    <h2><i class="fas fa-book-open"></i> User stories</h2>
+    
+    <p>User story (история пользователя) - это краткое описание функциональности с точки зрения конечного пользователя:</p>
+    
+    <div class="example">
+        <div class="example-header"><i class="fas fa-code"></i> Формат user story</div>
+        <p>"Как [роль пользователя], я хочу [функция], чтобы [получить пользу/решить проблему]"</p>
+    </div>
+    
+    <h3>Критерии хорошей user story (INVEST):</h3>
+    <ul>
+        <li><strong>Independent</strong> - независимая от других историй</li>
+        <li><strong>Negotiable</strong> - подлежит обсуждению и уточнению</li>
+        <li><strong>Valuable</strong> - предоставляет ценность для пользователя</li>
+        <li><strong>Estimable</strong> - может быть оценена по сложности</li>
+        <li><strong>Small</strong> - достаточно мала для реализации за один спринт</li>
+        <li><strong>Testable</strong> - имеет четкие критерии приемки</li>
+    </ul>
+    
+    <h3>Примеры:</h3>
+    <div class="example">
+        <p>"Как покупатель, я хочу фильтровать товары по цене, чтобы быстрее находить подходящие варианты"</p>
+        <p>"Как менеджер, я хочу экспортировать отчет в Excel, чтобы анализировать данные"</p>
+    </div>
+</section>
+
+<!-- BPMN Section -->
+<section id="bpmn" class="section">
+    <h2><i class="fas fa-project-diagram"></i> BPMN (Business Process Model and Notation)</h2>
+    
+    <p>BPMN - стандартная нотация для моделирования бизнес-процессов:</p>
+    
+    <h3>Основные элементы:</h3>
+    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <th style="border:1px solid #ddd; padding:8px;">Элемент</th>
+            <th style="border:1px solid #ddd; padding:8px;">Обозначение</th>
+            <th style="border:1px solid #ddd; padding:8px;">Описание</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Задача</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:50px; height:30px; border:1px solid #000; border-radius:5px; margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Единица работы в процессе</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Событие</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:30px; height:30px; border:1px solid #000; border-radius:50%; margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Что-то, что происходит в процессе</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Шлюз</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:40px; height:40px; border:1px solid #000; transform:rotate(45deg); margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Точка принятия решений и ветвления</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Пул/дорожка</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:100px; height:50px; border:1px solid #000; margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Участники процесса и их зоны ответственности</td>
+        </tr>
+    </table>
+    
+    <div class="highlight-box">
+        <p><strong>Преимущества BPMN:</strong> Стандартизация нотации, наглядное представление процессов, возможность исполнимых моделей, интеграция с системами управления процессами.</p>
+    </div>
+    
+    <h3>Пример простого процесса:</h3>
+    <div class="example">
+        <p>1. Стартовое событие → 2. Проверка документации → 3. [Валидна] Обработка заявки → 4. Финиш</p>
+        <p>3. [Невалидна] Уведомление клиента → 4. Финиш</p>
+    </div>
+</section>
+
+<!-- REST Section -->
+<section id="rest" class="section">
+    <h2><i class="fas fa-exchange-alt"></i> REST (Representational State Transfer)</h2>
+    
+    <p>REST - архитектурный стиль для распределенных систем, основанный на 6 принципах:</p>
+    
+    <ol>
+        <li><strong>Единообразие интерфейса</strong> - стандартные методы и форматы</li>
+        <li><strong>Отсутствие состояния (Stateless)</strong> - каждый запрос самодостаточен</li>
+        <li><strong>Кэширование</strong> - явное указание возможности кэширования</li>
+        <li><strong>Клиент-сервер</strong> - разделение ответственности</li>
+        <li><strong>Многоуровневая система</strong> - иерархия компонентов</li>
+        <li><strong>Код по требованию (опционально)</strong> - возможность расширения функциональности</li>
+    </ol>
+    
+    <h3>REST vs RESTful:</h3>
+    <div class="example">
+        <p><strong>REST</strong> - набор архитектурных принципов</p>
+        <p><strong>RESTful</strong> - API, полностью соответствующий REST-принципам</p>
+        <p><strong>REST API</strong> - интерфейс, реализующий REST подход</p>
+    </div>
+    
+    <h3>Статус коды REST:</h3>
+    <ul>
+        <li><strong>2xx (Успех)</strong>: 200 OK, 201 Created, 204 No Content</li>
+        <li><strong>3xx (Перенаправление)</strong>: 301 Moved, 304 Not Modified</li>
+        <li><strong>4xx (Ошибка клиента)</strong>: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</li>
+        <li><strong>5xx (Ошибка сервера)</strong>: 500 Internal Error, 503 Service Unavailable</li>
+    </ul>
+</section>
+
+<!-- DDD Section -->
+<section id="ddd" class="section">
+    <h2><i class="fas fa-layer-group"></i> DDD (Domain Driven Design)</h2>
+    
+    <p>Domain Driven Design - подход к разработке сложных систем через глубокое погружение в предметную область:</p>
+    
+    <h3>Основные концепции DDD:</h3>
+    <ul>
+        <li><strong>Домен (Domain)</strong> - предметная область системы</li>
+        <li><strong>Модель (Model)</strong> - абстракция ключевых концепций домена</li>
+        <li><strong>Ограниченный контекст (Bounded Context)</strong> - четкие границы моделей</li>
+        <li><strong>Универсальный язык (Ubiquitous Language)</strong> - единая терминология</li>
+        <li><strong>Агрегаты (Aggregates)</strong> - кластеры связанных объектов</li>
+        <li><strong>События домена (Domain Events)</strong> - значимые изменения в системе</li>
+    </ul>
+    
+    <div class="example">
+        <div class="example-header"><i class="fas fa-code"></i> Пример DDD в банковской сфере</div>
+        <p>Домен: Банковские операции<br>
+        Ограниченные контексты: Платежи, Кредитование, Счета<br>
+        Агрегаты: БанковскийСчет (включая баланс, историю операций)<br>
+        События: СчетОткрыт, ПлатежПроведен, ЛимитПревышен</p>
+    </div>
+    
+    <h3>Преимущества DDD:</h3>
+    <ul>
+        <li>Глубокая связь между бизнес-логикой и реализацией</li>
+        <li>Четкое разделение ответственности</li>
+        <li>Устойчивость к изменениям требований</li>
+        <li>Эффективная коммуникация между разработчиками и экспертами</li>
+    </ul>
+</section>
+
+<!-- Kanban vs Scrum Section -->
+<section id="kanban-scrum" class="section">
+    <h2><i class="fas fa-columns"></i> Kanban vs Scrum</h2>
+    
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+        <div>
+            <h3>Scrum</h3>
+            <ul>
+                <li>Фиксированные итерации (спринты 1-4 недели)</li>
+                <li>Роли: Scrum Master, Product Owner, Команда</li>
+                <li>Артефакты: Бэклог продукта, Бэклог спринта</li>
+                <li>Церемонии: Планирование, Дейли, Обзор, Ретроспектива</li>
+                <li>Изменения в процессе спринта запрещены</li>
+                <li>Скорость измеряется в story points</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3>Kanban</h3>
+            <ul>
+                <li>Непрерывный поток работы</li>
+                <li>Визуализация (Kanban-доска)</li>
+                <li>Ограничение WIP (Work In Progress)</li>
+                <li>Управление потоком (flow management)</li>
+                <li>Изменения возможны в любой момент</li>
+                <li>Метрики: Cycle Time, Lead Time</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <p><strong>Когда использовать:</strong> Scrum - для проектов с относительно стабильными требованиями. Kanban - для поддержки и оперативных задач с частыми изменениями приоритетов.</p>
+    </div>
+</section>
+
+<!-- Databases Section -->
+<section id="db" class="section">
+    <h2><i class="fas fa-database"></i> Базы данных</h2>
+    
+    <h3>Типы баз данных:</h3>
+    <ul>
+        <li><strong>Реляционные (SQL)</strong>: MySQL, PostgreSQL, Oracle - данные в таблицах со строгой схемой</li>
+        <li><strong>Документные (NoSQL)</strong>: MongoDB, Couchbase - хранение JSON-документов</li>
+        <li><strong>Ключ-значение</strong>: Redis, Memcached - быстрый доступ по ключу</li>
+        <li><strong>Колоночные</strong>: Cassandra, HBase - оптимизированы для аналитики</li>
+        <li><strong>Графовые</strong>: Neo4j, Amazon Neptune - хранение связей между объектами</li>
+        <li><strong>Поисковые движки</strong>: Elasticsearch - полнотекстовый поиск</li>
+    </ul>
+    
+    <h3>Нормализация баз данных:</h3>
+    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <th style="border:1px solid #ddd; padding:8px;">Нормальная форма</th>
+            <th style="border:1px solid #ddd; padding:8px;">Требование</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">1NF</td>
+            <td style="border:1px solid #ddd; padding:8px;">Атомарность значений, отсутствие повторяющихся групп</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">2NF</td>
+            <td style="border:1px solid #ddd; padding:8px;">Выполнение 1NF + отсутствие частичных зависимостей</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">3NF</td>
+            <td style="border:1px solid #ddd; padding:8px;">Выполнение 2NF + отсутствие транзитивных зависимостей</td>
+        </tr>
+    </table>
+    
+    <h3>Типы JOIN в SQL:</h3>
+    <ul>
+        <li><strong>INNER JOIN</strong> - возвращает совпадающие записи из обеих таблиц</li>
+        <li><strong>LEFT JOIN</strong> - все записи из левой таблицы + совпадения справа</li>
+        <li><strong>RIGHT JOIN</strong> - все записи из правой таблицы + совпадения слева</li>
+        <li><strong>FULL JOIN</strong> - все записи из обеих таблиц</li>
+        <li><strong>CROSS JOIN</strong> - декартово произведение (все комбинации)</li>
+    </ul>
+</section>
+
+<!-- Swagger/OpenAPI Section -->
+<section id="swagger" class="section">
+    <h2><i class="fas fa-file-code"></i> Swagger/OpenAPI</h2>
+    
+    <p>OpenAPI - стандарт описания REST API, Swagger - набор инструментов для работы с OpenAPI:</p>
+    
+    <h3>Преимущества использования:</h3>
+    <ul>
+        <li>Автогенерация документации API</li>
+        <li>Интерактивная песочница для тестирования</li>
+        <li>Автогенерация клиентских SDK и серверных заглушек</li>
+        <li>Валидация запросов и ответов</li>
+        <li>Упрощение процесса разработки API</li>
+    </ul>
+    
+    <h3>Пример описания метода в OpenAPI:</h3>
+    <div class="code-block">
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    </div>
+    
+    <div class="quick-links">
+        <a href="#api" class="quick-link">API</a>
+        <a href="#rest" class="quick-link">REST</a>
+        <a href="https://swagger.io/docs/" target="_blank" class="quick-link">Документация Swagger</a>
+    </div>
+</section>
+        
+        <!-- Requirements Section -->
+        <section id="requirements" class="section">
+            <h2><i class="fas fa-clipboard-list"></i> Виды требований</h2>
+            
+            <h3>Функциональные требования</h3>
+            <p>Определяют, что система должна делать:</p>
+            <ul>
+                <li>Основные функции системы (регистрация, авторизация)</li>
+                <li>Бизнес-процессы и сценарии использования</li>
+                <li>Требования к обработке данных</li>
+                <li>Взаимодействие с другими системами</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример</div>
+                <p>"Система должна позволять пользователям регистрироваться и входить с использованием учетных записей в социальных сетях"</p>
+            </div>
+            
+            <h3>Нефункциональные требования</h3>
+            <p>Определяют характеристики системы:</p>
+            <ul>
+                <li>Производительность (скорость обработки запросов)</li>
+                <li>Масштабируемость</li>
+                <li>Надежность</li>
+                <li>Безопасность</li>
+                <li>Удобство использования</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример</div>
+                <p>"Система должна обеспечивать скорость обработки запросов не менее 1000 запросов в секунду"</p>
+            </div>
+            
+            <h3>Критерии требований</h3>
+            <ul>
+                <li><strong>Релевантность</strong> - требование должно быть связано с целью</li>
+                <li><strong>Четкость</strong> - однозначная формулировка</li>
+                <li><strong>Измеримость</strong> - возможность оценки выполнения</li>
+                <li><strong>Выполнимость</strong> - реалистичность реализации</li>
+                <li><strong>Приоритетность</strong> - важность для проекта</li>
+                <li><strong>Атомарность</strong> - неделимость требования</li>
+                <li><strong>Тестируемость</strong> - возможность проверки выполнения</li>
+            </ul>
+        </section>
+        
+        <!-- Information Gathering Section -->
+        <section id="info-gathering" class="section">
+            <h2><i class="fas fa-search"></i> Методы сбора информации</h2>
+            
+            <p>Эффективные методы сбора информации для системного аналитика:</p>
+            
+            <ol>
+                <li><strong>Опрос</strong> - интервью, анкеты, телефонные опросы</li>
+                <li><strong>Наблюдение</strong> - прямое или косвенное изучение процессов</li>
+                <li><strong>Эксперимент</strong> - тестирование гипотез в контролируемых условиях</li>
+                <li><strong>Анализ документов</strong> - изучение существующей документации</li>
+                <li><strong>Фокус-группы</strong> - обсуждение темы с группой людей</li>
+                <li><strong>Глубинное интервью</strong> - детальное изучение мнений респондентов</li>
+                <li><strong>Вторичный анализ данных</strong> - использование существующих данных</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <p><strong>Совет:</strong> Комбинируйте несколько методов для получения более полной картины. Например, начните с анализа документов, затем проведите интервью с ключевыми стейкхолдерами.</p>
+            </div>
+        </section>
+        
+        <!-- Use Cases Section -->
+        <section id="use-cases" class="section">
+            <h2><i class="fas fa-sitemap"></i> Use Cases</h2>
+            
+            <p>Use case (случай использования) - описание сценария взаимодействия пользователя с системой:</p>
+            
+            <h3>Как пишутся Use Cases:</h3>
+            <ol>
+                <li>Определение контекста использования</li>
+                <li>Описание основных сценариев использования</li>
+                <li>Детализация сценариев использования</li>
+                <li>Документирование use case</li>
+            </ol>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример: Заказ такси</div>
+                <p><strong>Контекст:</strong> Пользователь хочет заказать такси</p>
+                <p><strong>Основной сценарий:</strong></p>
+                <ol>
+                    <li>Пользователь вводит начальную и конечную точку маршрута</li>
+                    <li>Система предлагает выбрать тип автомобиля и тариф</li>
+                    <li>Пользователь выбирает тариф и автомобиль</li>
+                    <li>Пользователь подтверждает заказ</li>
+                    <li>Система отображает информацию о заказе</li>
+                </ol>
+                <p><strong>Альтернативный сценарий:</strong> Если пользователь не находит подходящий тариф, он может изменить параметры поиска</p>
+            </div>
+        </section>
+        
+        <!-- API Section -->
+        <section id="api" class="section">
+            <h2><i class="fas fa-code"></i> API (Application Programming Interface)</h2>
+            
+            <p>API - набор правил и протоколов для взаимодействия между программными компонентами.</p>
+            
+            <h3>Типы API:</h3>
+            <ul>
+                <li><strong>Web API</strong> - доступ через сеть (обычно HTTP)</li>
+                <li><strong>Библиотечное API</strong> - набор функций/классов внутри приложения</li>
+                <li><strong>Операционная система API</strong> - для взаимодействия с ОС</li>
+            </ul>
+            
+            <div class="code-block">
+                // Пример REST API запроса
+                GET /api/books?author=J.K.%20Rowling HTTP/1.1
+                Host: example.com
+                Accept: application/json
+            </div>
+            
+            <h3>Популярные методы REST:</h3>
+            <ul>
+                <li><strong>GET</strong> - получение ресурсов</li>
+                <li><strong>POST</strong> - создание новых ресурсов</li>
+                <li><strong>PUT</strong> - обновление существующих ресурсов</li>
+                <li><strong>DELETE</strong> - удаление ресурсов</li>
+                <li><strong>PATCH</strong> - частичное обновление ресурса</li>
+            </ul>
+            
+            <div class="quick-links">
+                <a href="#rest" class="quick-link">REST API</a>
+                <a href="#swagger" class="quick-link">Swagger/OpenAPI</a>
+            </div>
+        </section>
+        
+        <!-- Microservices Section -->
+        <section id="microservices" class="section">
+            <h2><i class="fas fa-cubes"></i> Микросервисная архитектура</h2>
+            
+            <p>Микросервисы - архитектурный подход, при котором приложение разбивается на небольшие, независимые сервисы.</p>
+            
+            <h3>Преимущества микросервисов:</h3>
+            <ul>
+                <li>Гибкая разработка и масштабирование</li>
+                <li>Лучшая изоляция ошибок</li>
+                <li>Возможность использования разных технологий</li>
+                <li>Более простая поддержка и развертывание</li>
+            </ul>
+            
+            <h3>Когда переходить на микросервисы:</h3>
+            <ul>
+                <li>При увеличении масштаба проекта</li>
+                <li>Для улучшения масштабируемости</li>
+                <li>Для повышения гибкости разработки</li>
+                <li>Для улучшения отказоустойчивости</li>
+                <li>Для ускорения разработки</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><strong>Важно:</strong> Переход к микросервисной архитектуре требует значительных усилий и может привести к увеличению сложности системы.</p>
+            </div>
+        </section>
+        
+        <!-- UX/UI Principles Section -->
+        <section id="ux-ui" class="section">
+            <h2><i class="fas fa-paint-brush"></i> UX/UI принципы</h2>
+            
+            <p>Основные принципы проектирования пользовательского опыта:</p>
+            
+            <ul>
+                <li><strong>Юзабилити</strong> - простота и понятность интерфейса</li>
+                <li><strong>Интуитивность</strong> - понятность без обучения</li>
+                <li><strong>Обратная связь</strong> - реакция системы на действия</li>
+                <li><strong>Адаптивность</strong> - работа на разных устройствах</li>
+                <li><strong>Минимизация ошибок</strong> - предотвращение ошибок пользователя</li>
+                <li><strong>Эстетика</strong> - приятный внешний вид</li>
+            </ul>
+            
+            <h3>Отличия UI от UX:</h3>
+            <div class="example">
+                <p><strong>UI (User Interface)</strong> - то, как выглядит и ощущается интерфейс (дизайн, цвета, шрифты)</p>
+                <p><strong>UX (User Experience)</strong> - опыт пользователя при использовании интерфейса (удобство, время отклика, ошибки)</p>
+            </div>
+            
+            <h3>Ресурсы:</h3>
+            <a href="https://ux.pub/printsipy-ux-ui-dizajna/" class="resource-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Принципы UX/UI дизайна
+            </a>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>Памятка для системных аналитиков | Справочник по ключевым концепциям и методам</p>
+            <div class="footer-links">
+                <a href="https://github.com/KnowerLife"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+            <p>© 2023 KNOWERLIFE Essential Guide for System Analysts</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Переключение версии для слабовидящих
+        const accessibilityToggle = document.getElementById('accessibilityToggle');
+        accessibilityToggle.addEventListener('click', function() {
+            document.body.classList.toggle('accessibility');
+            
+            if (document.body.classList.contains('accessibility')) {
+                this.innerHTML = '<i class="fas fa-eye"></i> Обычная версия';
+            } else {
+                this.innerHTML = '<i class="fas fa-eye"></i> Версия для слабовидящих';
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active link in navigation
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.toLowerCase();
+                const sections = document.querySelectorAll('.section');
+                let found = false;
+                
+                sections.forEach(section => {
+                    const sectionText = section.textContent.toLowerCase();
+                    if (sectionText.includes(searchTerm)) {
+                        section.style.display = 'block';
+                        
+                        if (!found) {
+                            // Scroll to the first found section
+                            window.scrollTo({
+                                top: section.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                            found = true;
+                        }
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+                
+                if (!found) {
+                    alert('Ничего не найдено. Попробуйте другой запрос.');
+                    sections.forEach(section => {
+                        section.style.display = 'block';
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
