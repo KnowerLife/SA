@@ -693,6 +693,176 @@ function createBookmarkButtons() {
         }, 10);
     }
 
+    // Код ER-редактора
+    const erCanvas = document.getElementById('er-canvas');
+    let entities = [];
+    let selectedEntity = null;
+    
+    // Добавление сущности
+    document.getElementById('addEntity').addEventListener('click', function() {
+        const entityId = 'entity_' + Date.now();
+        const entity = {
+            id: entityId,
+            name: 'НоваяСущность',
+            attributes: [
+                {name: 'id', type: 'int', pk: true},
+                {name: 'name', type: 'varchar(255)'}
+            ],
+            x: 50 + entities.length * 20,
+            y: 50 + entities.length * 20,
+            color: '#4e73df'
+        };
+        
+        entities.push(entity);
+        renderERDiagram();
+    });
+    
+    // Генерация SQL
+    document.getElementById('generateSqlBtn').addEventListener('click', function() {
+        let sqlCode = '';
+        
+        entities.forEach(entity => {
+            sqlCode += `CREATE TABLE ${entity.name} (\n`;
+            sqlCode += `    id INT PRIMARY KEY AUTO_INCREMENT,\n`;
+            
+            entity.attributes.forEach(attr => {
+                sqlCode += `    ${attr.name} ${attr.type.toUpperCase()}`;
+                if (attr.pk) sqlCode += ' PRIMARY KEY';
+                if (attr.fk) sqlCode += ' REFERENCES ' + attr.references;
+                sqlCode += ',\n';
+            });
+            
+            // Удаляем последнюю запятую
+            sqlCode = sqlCode.slice(0, -2) + '\n';
+            sqlCode += `);\n\n`;
+        });
+        
+        document.getElementById('sql-preview').textContent = sqlCode;
+    });
+    
+    // Очистка диаграммы
+    document.getElementById('clearDiagram').addEventListener('click', function() {
+        entities = [];
+        renderERDiagram();
+        document.getElementById('sql-preview').textContent = '-- SQL-код появится здесь';
+        document.querySelector('.entity-properties').style.display = 'none';
+    });
+    
+    // Визуализация диаграммы
+    function renderERDiagram() {
+        erCanvas.innerHTML = '';
+        
+        entities.forEach(entity => {
+            const entityDiv = document.createElement('div');
+            entityDiv.className = 'entity';
+            entityDiv.id = entity.id;
+            entityDiv.style.left = entity.x + 'px';
+            entityDiv.style.top = entity.y + 'px';
+            entityDiv.style.backgroundColor = entity.color;
+            
+            entityDiv.innerHTML = `
+                <div class="entity-header">${entity.name}</div>
+                <div class="attributes">
+                    ${entity.attributes.map(attr => 
+                        `<div class="attribute">${attr.name}: ${attr.type}${attr.pk ? ' PK' : ''}</div>`
+                    ).join('')}
+                </div>
+            `;
+            
+            // Обработчик выбора сущности
+            entityDiv.addEventListener('click', function(e) {
+                e.stopPropagation();
+                selectEntity(entity);
+            });
+            
+            erCanvas.appendChild(entityDiv);
+        });
+    }
+    
+    // Выбор сущности
+    function selectEntity(entity) {
+        selectedEntity = entity;
+        document.querySelector('.entity-properties').style.display = 'block';
+        document.getElementById('entity-name').value = entity.name;
+        document.getElementById('entity-color').value = entity.color;
+    }
+    
+    // Сохранение свойств сущности
+    document.getElementById('saveEntityProps').addEventListener('click', function() {
+        if (!selectedEntity) return;
+        
+        selectedEntity.name = document.getElementById('entity-name').value;
+        selectedEntity.color = document.getElementById('entity-color').value;
+        renderERDiagram();
+    });
+    
+    // Применение шаблонов
+    document.querySelectorAll('.apply-pattern').forEach(button => {
+        button.addEventListener('click', function() {
+            const pattern = this.closest('.pattern-card').querySelector('h4').textContent;
+            
+            entities = [];
+            
+            if (pattern.includes('Пользователи и роли')) {
+                entities = [
+                    {
+                        id: 'entity1',
+                        name: 'Пользователь',
+                        attributes: [
+                            {name: 'id', type: 'int', pk: true},
+                            {name: 'name', type: 'varchar(255)'},
+                            {name: 'email', type: 'varchar(255)'}
+                        ],
+                        x: 50,
+                        y: 50,
+                        color: '#4e73df'
+                    },
+                    {
+                        id: 'entity2',
+                        name: 'Роль',
+                        attributes: [
+                            {name: 'id', type: 'int', pk: true},
+                            {name: 'name', type: 'varchar(100)'}
+                        ],
+                        x: 250,
+                        y: 50,
+                        color: '#36b9cc'
+                    }
+                ];
+            } else if (pattern.includes('Электронная коммерция')) {
+                entities = [
+                    {
+                        id: 'entity1',
+                        name: 'Заказ',
+                        attributes: [
+                            {name: 'id', type: 'int', pk: true},
+                            {name: 'date', type: 'datetime'},
+                            {name: 'total', type: 'decimal(10,2)'}
+                        ],
+                        x: 50,
+                        y: 50,
+                        color: '#1cc88a'
+                    },
+                    {
+                        id: 'entity2',
+                        name: 'Товар',
+                        attributes: [
+                            {name: 'id', type: 'int', pk: true},
+                            {name: 'name', type: 'varchar(255)'},
+                            {name: 'price', type: 'decimal(10,2)'}
+                        ],
+                        x: 250,
+                        y: 50,
+                        color: '#f6c23e'
+                    }
+                ];
+            }
+            
+            renderERDiagram();
+            document.querySelector('.entity-properties').style.display = 'none';
+        });
+    });
+    
     // ===== ДОБАВЛЯЕМ КОД ДЛЯ API ПРИМЕРОВ ЗДЕСЬ =====
     // Добавляем примеры API при загрузке
     const apiExamples = [
@@ -730,6 +900,8 @@ function createBookmarkButtons() {
     }
 
     renderNotes();
+    // Инициализация ER-диаграммы
+    renderERDiagram();
 
     // Логирование для отладки
     console.log('script.js загружен, функции startTimer и stopTimer определены');
