@@ -981,75 +981,466 @@
 
         <!-- Competency Map Section -->
 <section id="competency-map" class="section">
-    <h2><i class="fas fa-star"></i> Карта компетенций аналитика</h2>
+    <h2><i class="fas fa-star"></i> Карта компетенций системного аналитика</h2>
     
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin-top:20px;">
-        <div class="competency-card" onclick="toggleCompetency(this)">
-            <h3>Бизнес-анализ</h3>
-            <ul style="display:none;">
-                <li>Анализ стейкхолдеров</li>
-                <li>Выявление потребностей</li>
-                <li>Анализ бизнес-процессов</li>
+    <div class="competency-intro">
+        <p>Эта карта компетенций поможет вам оценить свои навыки и определить области для развития. Отмечайте освоенные компетенции для отслеживания прогресса.</p>
+        <div class="progress-summary">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%;">45%</div>
+            </div>
+            <p>Освоено: <span id="skills-completed">0</span> из <span id="skills-total">0</span> компетенций</p>
+        </div>
+    </div>
+    
+    <div class="competency-categories">
+        <!-- Категория 1: Бизнес-анализ -->
+        <div class="category-card">
+            <h3><i class="fas fa-chart-line"></i> Бизнес-анализ</h3>
+            <ul class="competency-list">
+                <li>
+                    <input type="checkbox" id="comp-ba-1">
+                    <label for="comp-ba-1">Выявление и анализ требований</label>
+                    <span class="skill-level" title="Уровень владения">
+                        <i class="fas fa-circle basic" title="Базовый"></i>
+                        <i class="fas fa-circle advanced" title="Продвинутый"></i>
+                        <i class="fas fa-circle expert" title="Экспертный"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-ba-2">
+                    <label for="comp-ba-2">Анализ бизнес-процессов (BPMN)</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-ba-3">
+                    <label for="comp-ba-3">Определение KPI и метрик успеха</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-ba-4">
+                    <label for="comp-ba-4">Анализ ROI и экономической эффективности</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
             </ul>
         </div>
         
-        <div class="competency-card" onclick="toggleCompetency(this)">
-            <h3>Системный анализ</h3>
-            <ul style="display:none;">
-                <li>Проектирование архитектуры</li>
-                <li>Спецификация требований</li>
-                <li>Прототипирование</li>
+        <!-- Категория 2: Системный анализ -->
+        <div class="category-card">
+            <h3><i class="fas fa-cogs"></i> Системный анализ</h3>
+            <ul class="competency-list">
+                <li>
+                    <input type="checkbox" id="comp-sa-1">
+                    <label for="comp-sa-1">Проектирование архитектуры решений</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-sa-2">
+                    <label for="comp-sa-2">Разработка спецификаций требований</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-sa-3">
+                    <label for="comp-sa-3">Моделирование данных (ER-диаграммы)</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-sa-4">
+                    <label for="comp-sa-4">Проектирование API (REST, GraphQL, SOAP)</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
             </ul>
         </div>
         
-        <div class="competency-card" onclick="toggleCompetency(this)">
-            <h3>Данные</h3>
-            <ul style="display:none;">
-                <li>Моделирование данных</li>
-                <li>SQL</li>
-                <li>Аналитика</li>
+        <!-- Категория 3: Технические навыки -->
+        <div class="category-card">
+            <h3><i class="fas fa-laptop-code"></i> Технические навыки</h3>
+            <ul class="competency-list">
+                <li>
+                    <input type="checkbox" id="comp-tech-1">
+                    <label for="comp-tech-1">Понимание принципов разработки ПО</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-tech-2">
+                    <label for="comp-tech-2">Работа с базами данных (SQL/NoSQL)</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-tech-3">
+                    <label for="comp-tech-3">Основы сетевых технологий</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-tech-4">
+                    <label for="comp-tech-4">Понимание CI/CD процессов</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
             </ul>
         </div>
         
-        <div class="competency-card" onclick="toggleCompetency(this)">
-            <h3>Коммуникация</h3>
-            <ul style="display:none;">
-                <li>Проведение встреч</li>
-                <li>Фасилитация</li>
-                <li>Управление конфликтами</li>
+        <!-- Категория 4: Документация -->
+        <div class="category-card">
+            <h3><i class="fas fa-file-alt"></i> Документация</h3>
+            <ul class="competency-list">
+                <li>
+                    <input type="checkbox" id="comp-doc-1">
+                    <label for="comp-doc-1">Создание технических спецификаций</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-doc-2">
+                    <label for="comp-doc-2">Разработка пользовательских сценариев</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-doc-3">
+                    <label for="comp-doc-3">Создание диаграмм и схем</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-doc-4">
+                    <label for="comp-doc-4">Ведение глоссария терминов</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
             </ul>
         </div>
+        
+        <!-- Категория 5: Мягкие навыки -->
+        <div class="category-card">
+            <h3><i class="fas fa-comments"></i> Мягкие навыки</h3>
+            <ul class="competency-list">
+                <li>
+                    <input type="checkbox" id="comp-soft-1">
+                    <label for="comp-soft-1">Коммуникация с заинтересованными сторонами</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-soft-2">
+                    <label for="comp-soft-2">Фасилитация встреч и воркшопов</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-soft-3">
+                    <label for="comp-soft-3">Управление конфликтами</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-soft-4">
+                    <label for="comp-soft-4">Презентация решений</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Категория 6: Управление продуктом -->
+        <div class="category-card">
+            <h3><i class="fas fa-tasks"></i> Управление продуктом</h3>
+            <ul class="competency-list">
+                <li>
+                    <input type="checkbox" id="comp-pm-1">
+                    <label for="comp-pm-1">Приоритизация требований</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-pm-2">
+                    <label for="comp-pm-2">Управление бэклогом продукта</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-pm-3">
+                    <label for="comp-pm-3">Определение MVP</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+                <li>
+                    <input type="checkbox" id="comp-pm-4">
+                    <label for="comp-pm-4">Анализ метрик продукта</label>
+                    <span class="skill-level">
+                        <i class="fas fa-circle basic"></i>
+                        <i class="fas fa-circle advanced"></i>
+                        <i class="fas fa-circle expert"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Рекомендации по развитию -->
+    <div class="development-recommendations">
+        <h3><i class="fas fa-lightbulb"></i> Рекомендации по развитию</h3>
+        <div class="recommendation-card">
+            <h4>Для начинающих аналитиков</h4>
+            <ul>
+                <li>Освойте основы бизнес-анализа</li>
+                <li>Изучите техники сбора требований</li>
+                <li>Практикуйтесь в создании простых диаграмм процессов</li>
+                <li>Развивайте коммуникативные навыки</li>
+            </ul>
+        </div>
+        <div class="recommendation-card">
+            <h4>Для опытных аналитиков</h4>
+            <ul>
+                <li>Углубите знания в архитектуре систем</li>
+                <li>Освойте продвинутые техники моделирования</li>
+                <li>Изучите принципы UX/UI проектирования</li>
+                <li>Развивайте экспертизу в своей предметной области</li>
+            </ul>
+        </div>
+        <div class="recommendation-card">
+            <h4>Для ведущих аналитиков</h4>
+            <ul>
+                <li>Освойте стратегическое планирование</li>
+                <li>Развивайте навыки менторства</li>
+                <li>Изучите продвинутые методы анализа данных</li>
+                <li>Развивайте экспертизу в управлении продуктом</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Сохранение прогресса -->
+    <div class="save-progress">
+        <button id="saveProgressBtn"><i class="fas fa-save"></i> Сохранить прогресс</button>
+        <p>Ваш прогресс сохраняется локально в браузере</p>
     </div>
 </section>
 
 <style>
-    .competency-card {
-        padding: 15px;
-        border: 1px solid #ddd;
+    .competency-intro {
+        background: #f8f9fa;
+        padding: 20px;
         border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s;
+        margin-bottom: 25px;
     }
     
-    .competency-card:hover {
-        background-color: #f0f0f0;
-        transform: translateY(-3px);
+    .progress-summary {
+        margin-top: 15px;
     }
     
-    .competency-card h3 {
-        margin-bottom: 10px;
+    .progress-bar {
+        width: 100%;
+        height: 25px;
+        background: #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: #4caf50;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .competency-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .category-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .category-card h3 {
+        margin-top: 0;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .competency-list {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0 0;
+    }
+    
+    .competency-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+        display: flex;
         align-items: center;
     }
     
-    .competency-card h3::after {
-        content: '+';
-        font-size: 1.2rem;
+    .competency-list li:last-child {
+        border-bottom: none;
     }
     
-    .competency-card.active h3::after {
-        content: '-';
+    .competency-list input[type="checkbox"] {
+        margin-right: 12px;
+        width: 18px;
+        height: 18px;
+    }
+    
+    .competency-list label {
+        flex-grow: 1;
+        cursor: pointer;
+    }
+    
+    .skill-level {
+        display: flex;
+        gap: 5px;
+    }
+    
+    .skill-level i {
+        font-size: 0.7em;
+        cursor: help;
+    }
+    
+    .skill-level .basic { color: #ff9800; }
+    .skill-level .advanced { color: #4caf50; }
+    .skill-level .expert { color: #2196f3; }
+    
+    .development-recommendations {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+    
+    .recommendation-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #3498db;
+    }
+    
+    .recommendation-card h4 {
+        margin-top: 0;
+        color: #2c3e50;
+    }
+    
+    .recommendation-card ul {
+        padding-left: 20px;
+    }
+    
+    .recommendation-card li {
+        margin-bottom: 8px;
+    }
+    
+    .save-progress {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .save-progress button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background 0.3s;
+    }
+    
+    .save-progress button:hover {
+        background: #2980b9;
+    }
+    
+    .save-progress p {
+        color: #7f8c8d;
+        font-size: 0.9em;
+        margin-top: 10px;
     }
 </style>
 
