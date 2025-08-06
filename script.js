@@ -485,36 +485,50 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerInterval = null;
 
     window.startTimer = (seconds) => {
-        clearInterval(timerInterval); // Очищаем предыдущий таймер, если он есть
+        console.log(`Запуск таймера на ${seconds} секунд`); // Для отладки
+        clearInterval(timerInterval); // Очищаем предыдущий таймер
         let timeLeft = seconds;
         const timerElement = document.getElementById('meeting-timer');
 
         if (!timerElement) {
             console.error('Элемент #meeting-timer не найден');
+            alert('Ошибка: Элемент таймера не найден в HTML');
             return;
         }
 
+        timerElement.textContent = formatTime(timeLeft); // Устанавливаем начальное время
         timerInterval = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
+                timerInterval = null;
                 timerElement.textContent = '00:00';
                 alert('Время митинга истекло!');
                 return;
             }
 
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             timeLeft--;
+            timerElement.textContent = formatTime(timeLeft);
         }, 1000);
     };
 
     window.stopTimer = () => {
+        console.log('Остановка таймера'); // Для отладки
         if (timerInterval) {
             clearInterval(timerInterval);
             timerInterval = null;
+            const timerElement = document.getElementById('meeting-timer');
+            if (timerElement) {
+                timerElement.textContent = '00:00'; // Сбрасываем отображение
+            }
         }
     };
+
+    // Вспомогательная функция для форматирования времени
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
 
     // Инициализация закладок и заметок
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
@@ -524,4 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     updateBookmarksList();
     renderNotes();
+
+    // Логирование для отладки
+    console.log('script.js загружен, функции startTimer и stopTimer определены');
 });
