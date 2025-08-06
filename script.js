@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('start-15min').addEventListener('click', () => startTimer(900));
+    document.getElementById('start-5min').addEventListener('click', () => startTimer(300));
+    document.getElementById('stop-timer').addEventListener('click', stopTimer);
     const body = document.body;
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const nav = document.querySelector('nav');
