@@ -726,7 +726,6 @@ function createBookmarkButtons() {
         }
     }
 
-    initBookmarksSystem();
     renderNotes();
 
     // Логирование для отладки
