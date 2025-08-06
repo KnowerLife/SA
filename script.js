@@ -733,4 +733,55 @@ function createBookmarkButtons() {
 
     // Логирование для отладки
     console.log('script.js загружен, функции startTimer и stopTimer определены');
+
+    // ===== КОД ДЛЯ КАРТЫ КОМПЕТЕНЦИЙ =====
+if (document.querySelector('.competency-list')) {
+    // Подсчет общего количества компетенций
+    const totalSkills = document.querySelectorAll('.competency-list input').length;
+    document.getElementById('skills-total').textContent = totalSkills;
+    
+    // Функция обновления прогресса
+    function updateProgress() {
+        const completedSkills = document.querySelectorAll('.competency-list input:checked').length;
+        const progress = (completedSkills / totalSkills) * 100;
+        
+        document.querySelector('.progress-fill').style.width = `${progress}%`;
+        document.querySelector('.progress-fill').textContent = `${Math.round(progress)}%`;
+        document.getElementById('skills-completed').textContent = completedSkills;
+    }
+    
+    // Обработка кликов по чекбоксам
+    document.querySelectorAll('.competency-list input').forEach(checkbox => {
+        checkbox.addEventListener('change', updateProgress);
+    });
+    
+    // Кнопка сохранения прогресса
+    document.getElementById('saveProgressBtn').addEventListener('click', function() {
+        const progress = [];
+        
+        document.querySelectorAll('.competency-list input').forEach(checkbox => {
+            progress.push({
+                id: checkbox.id,
+                checked: checkbox.checked
+            });
+        });
+        
+        // Сохранение в localStorage
+        localStorage.setItem('competencyProgress', JSON.stringify(progress));
+        alert('Прогресс успешно сохранен!');
+    });
+    
+    // Загрузка сохраненного прогресса
+    const savedProgress = localStorage.getItem('competencyProgress');
+    if (savedProgress) {
+        JSON.parse(savedProgress).forEach(item => {
+            const checkbox = document.getElementById(item.id);
+            if (checkbox) {
+                checkbox.checked = item.checked;
+            }
+        });
+        updateProgress();
+    }
+}
+// ===== КОНЕЦ КОДА ДЛЯ КАРТЫ КОМПЕТЕНЦИЙ =====
 });
