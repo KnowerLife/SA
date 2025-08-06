@@ -481,6 +481,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Таймер для митинга
+    let timerInterval = null;
+
+    window.startTimer = (seconds) => {
+        clearInterval(timerInterval); // Очищаем предыдущий таймер, если он есть
+        let timeLeft = seconds;
+        const timerElement = document.getElementById('meeting-timer');
+
+        if (!timerElement) {
+            console.error('Элемент #meeting-timer не найден');
+            return;
+        }
+
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerElement.textContent = '00:00';
+                alert('Время митинга истекло!');
+                return;
+            }
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timeLeft--;
+        }, 1000);
+    };
+
+    window.stopTimer = () => {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+    };
+
     // Инициализация закладок и заметок
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
     bookmarks.forEach(id => {
