@@ -25,7 +25,7 @@
 ### Локальный запуск
 1. Склонируйте репозиторий:
    ```bash
-   git clone https://github.com/your-username/knowerlife-essential-guide.git
+   git clone https://github.com/KnowerLife/SA.git
    ```
 2. Откройте файл `index.html` в вашем браузере:
    ```bash
@@ -94,5 +94,5 @@
 ## Контакты
 
 Если у вас есть вопросы или предложения, свяжитесь с нами:
-- Email: support@knowerlife.com
-- GitHub Issues: [Создать issue](https://github.com/your-username/knowerlife-essential-guide/issues)
+- Email: info@knowerlife.ru
+- GitHub Issues: [Создать issue](https://github.com/KnowerLife/SA/issues)
