@@ -1,3 +1,51 @@
+    document.addEventListener('DOMContentLoaded', () => {
+    // Объявляем функции ДО их использования
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function startTimer(seconds) {
+        console.log(`Запуск таймера на ${seconds} секунд`);
+        clearInterval(timerInterval);
+        let timeLeft = seconds;
+        const timerElement = document.getElementById('meeting-timer');
+
+        if (!timerElement) {
+            console.error('Элемент #meeting-timer не найден');
+            alert('Ошибка: Элемент таймера не найден в HTML');
+            return;
+        }
+
+        timerElement.textContent = formatTime(timeLeft);
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                timerElement.textContent = '00:00';
+                alert('Время митинга истекло!');
+                return;
+            }
+
+            timeLeft--;
+            timerElement.textContent = formatTime(timeLeft);
+        }, 1000);
+    }
+
+    function stopTimer() {
+        console.log('Остановка таймера');
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            const timerElement = document.getElementById('meeting-timer');
+            if (timerElement) {
+                timerElement.textContent = '00:00';
+            }
+        }
+    }
+
+    // Теперь можно безопасно использовать функции
     document.getElementById('start-15min').addEventListener('click', () => startTimer(900));
     document.getElementById('start-5min').addEventListener('click', () => startTimer(300));
     document.getElementById('stop-timer').addEventListener('click', stopTimer);
@@ -435,8 +483,7 @@
         `;
     };
 
-// Закладки - улучшенная реализация
-document.addEventListener('DOMContentLoaded', () => {
+    // Закладки - улучшенная реализация
     // Инициализация системы закладок
     initBookmarksSystem();
     
