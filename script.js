@@ -492,7 +492,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function initBookmarksSystem() {
         const bookmarksList = document.getElementById('bookmarksList');
-        if (!bookmarksList) return;
+        if (!bookmarksList) {
+        console.error('Элемент #bookmarksList не найден');
+        return;
+    }
         
         // Создаем кнопки закладок
         createBookmarkButtons();
@@ -531,54 +534,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function restoreBookmarksState() {
-        const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-        bookmarks.forEach(id => {
-            const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
-            if (btn) {
-                btn.innerHTML = '<i class="fas fa-bookmark"></i>';
-                btn.querySelector('.bookmark-tooltip').textContent = 'Удалить из закладок';
-                btn.classList.add('active');
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    bookmarks.forEach(id => {
+        const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-bookmark"></i>';
+            
+            // Проверяем наличие тултипа перед обновлением
+            const tooltip = btn.querySelector('.bookmark-tooltip');
+            if (tooltip) {
+                tooltip.textContent = 'Удалить из закладок';
             }
-        });
-    }
+            
+            btn.classList.add('active');
+        }
+    });
+}
 
     function toggleBookmark(event) {
-        const btn = event.currentTarget;
-        const sectionId = btn.dataset.section;
-        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-        const tooltip = btn.querySelector('.bookmark-tooltip');
+    const btn = event.currentTarget;
+    const sectionId = btn.dataset.section;
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    const tooltip = btn.querySelector('.bookmark-tooltip'); // Находим элемент
 
-        if (bookmarks.includes(sectionId)) {
-            // Удаляем закладку
-            bookmarks = bookmarks.filter(id => id !== sectionId);
-            btn.innerHTML = '<i class="far fa-bookmark"></i>';
-            tooltip.textContent = 'Добавить в закладки';
-            btn.classList.remove('active');
-            
-            // Анимация удаления
-            btn.classList.add('pulse');
-            setTimeout(() => btn.classList.remove('pulse'), 300);
-        } else {
-            // Добавляем закладку
-            bookmarks.push(sectionId);
-            btn.innerHTML = '<i class="fas fa-bookmark"></i>';
-            tooltip.textContent = 'Удалить из закладок';
-            btn.classList.add('active');
-            
-            // Анимация добавления
-            btn.classList.add('heartbeat');
-            setTimeout(() => btn.classList.remove('heartbeat'), 300);
-        }
-
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-        updateBookmarksList();
+    if (bookmarks.includes(sectionId)) {
+        // Удаляем закладку
+        bookmarks = bookmarks.filter(id => id !== sectionId);
+        btn.innerHTML = '<i class="far fa-bookmark"></i>';
         
-        // Показываем уведомление
-        showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
+        // Проверяем наличие тултипа перед обновлением
+        if (tooltip) {
+            tooltip.textContent = 'Добавить в закладки';
+        }
+        
+        btn.classList.remove('active');
+        
+        // Анимация удаления
+        btn.classList.add('pulse');
+        setTimeout(() => btn.classList.remove('pulse'), 300);
+    } else {
+        // Добавляем закладку
+        bookmarks.push(sectionId);
+        btn.innerHTML = '<i class="fas fa-bookmark"></i>';
+        
+        // Проверяем наличие тултипа перед обновлением
+        if (tooltip) {
+            tooltip.textContent = 'Удалить из закладок';
+        }
+        
+        btn.classList.add('active');
+        
+        // Анимация добавления
+        btn.classList.add('heartbeat');
+        setTimeout(() => btn.classList.remove('heartbeat'), 300);
     }
+
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    updateBookmarksList();
+    
+    // Показываем уведомление
+    showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
+}
 
     function updateBookmarksList() {
         const bookmarksList = document.getElementById('bookmarksList');
+        if (!bookmarksList) return; // Проверка существования элемента
         const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
         const noBookmarksMsg = '<li class="no-bookmarks"><i class="far fa-frown"></i> Пока нет сохраненных закладок</li>';
 
