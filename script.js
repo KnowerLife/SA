@@ -234,19 +234,47 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Выполняется SQL: ${sql}\nДля схемы: ${schema}`);
     };
 
-    // Тестирование API
-    window.testAPI = async () => {
-        const method = document.getElementById('api-method').value;
-        const url = document.getElementById('api-url').value;
-        const output = document.getElementById('api-response-output');
-        try {
-            const response = await fetch(url, { method });
-            const data = await response.json();
-            output.textContent = JSON.stringify(data, null, 2);
-        } catch (error) {
-            output.textContent = `Ошибка: ${error.message}`;
+window.testAPI = async () => {
+    const method = document.getElementById('api-method').value;
+    const url = document.getElementById('api-url').value;
+    const output = document.getElementById('api-response-output');
+    
+    // Добавляем индикатор загрузки
+    output.textContent = "Отправка запроса...";
+    
+    try {
+        const options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        };
+        
+        // Для POST/PUT добавляем тело запроса
+        if (method === 'POST' || method === 'PUT') {
+            options.body = JSON.stringify({
+                title: 'Запрос от системного аналитика',
+                body: 'Это тестовый запрос',
+                userId: 1
+            });
         }
-    };
+        
+        const response = await fetch(url, options);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ошибка! Статус: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        output.textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+        output.textContent = `Ошибка: ${error.message}`;
+        
+        // Для отладки
+        console.error('API Error:', error);
+    }
+};
 
     // Конвертер величин
     window.convertUnits = () => {
@@ -662,6 +690,31 @@ function createBookmarkButtons() {
         }, 10);
     }
 
+    // ===== ДОБАВЛЯЕМ КОД ДЛЯ API ПРИМЕРОВ ЗДЕСЬ =====
+    // Добавляем примеры API при загрузке
+    const apiExamples = [
+        {name: 'JSONPlaceholder', url: 'https://jsonplaceholder.typicode.com/posts'},
+        {name: 'ReqRes', url: 'https://reqres.in/api/users'},
+        {name: 'HTTPBin', url: 'https://httpbin.org/get'},
+        {name: 'DummyJSON', url: 'https://dummyjson.com/products/1'}
+    ];
+    
+    const examplesList = document.querySelector('#external-integration .highlight-box ul');
+    if (examplesList) {
+        examplesList.innerHTML = '';
+        
+        apiExamples.forEach(api => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${api.name}:</strong> <span class="api-url">${api.url}</span>`;
+            examplesList.appendChild(li);
+            
+            // Добавляем обработчик клика для быстрой вставки URL
+            li.addEventListener('click', () => {
+                document.getElementById('api-url').value = api.url;
+            });
+        });
+    }
+    // ===== КОНЕЦ ДОБАВЛЕНИЯ КОДА ДЛЯ API ПРИМЕРОВ =====
 
     // Обработка глубоких ссылок
     if (window.location.hash) {
