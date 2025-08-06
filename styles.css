@@ -572,6 +572,83 @@ footer {
     display: none;
 }
 
+/* Стили для API-тестера */
+.api-tester {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e1e4e8;
+}
+
+.api-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.api-controls select, .api-controls input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.api-controls select {
+    width: 100px;
+}
+
+.api-controls input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.api-controls button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.api-controls button:hover {
+    background-color: #45a049;
+}
+
+.api-response {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 4px;
+    max-height: 300px;
+    overflow: auto;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.api-url {
+    color: #1e6bb8;
+    cursor: pointer;
+    text-decoration: underline;
+    word-break: break-all;
+}
+
+.api-url:hover {
+    color: #0d4a9e;
+}
+
+.api-tips {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    font-size: 0.9em;
+    color: #555;
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
     body {
