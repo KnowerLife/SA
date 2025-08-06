@@ -200,25 +200,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputValue = parseFloat(document.getElementById('input-value').value);
         const inputUnit = document.getElementById('input-unit').value;
         const outputUnit = document.getElementById('output-unit').value;
-        let result;
 
-        const conversions = {
-            kb: { mb: value => value / 1024, gb: value => value / (1024 * 1024) },
-            mb: { kb: value => value * 1024, gb: value => value / 1024 },
-            gb: { kb: value => value * (1024 * 1024), mb: value => value * 1024 },
-            ms: { s: value => value / 1000 },
-            s: { ms: value => value * 1000 }
+        const factors = {
+            kb: 1,
+            mb: 1024,
+            gb: 1024 * 1024,
+            ms: 1,
+            s: 1000
         };
 
-        if (inputUnit === outputUnit) {
-            result = inputValue;
-        } else if (conversions[inputUnit] && conversions[inputUnit][outputUnit]) {
-            result = conversions[inputUnit][outputUnit](inputValue);
-        } else {
-            result = 'Невозможно конвертировать';
+        const dataUnits = ['kb', 'mb', 'gb'];
+        const timeUnits = ['ms', 's'];
+
+        if ((dataUnits.includes(inputUnit) && timeUnits.includes(outputUnit)) ||
+            (timeUnits.includes(inputUnit) && dataUnits.includes(outputUnit))) {
+            document.getElementById('output-value').value = "Несовместимые единицы";
+            return;
         }
 
-        document.getElementById('output-value').value = result;
+        const result = inputValue * factors[inputUnit] / factors[outputUnit];
+        document.getElementById('output-value').value = result.toFixed(4);
     };
 
     // Шаблоны писем
