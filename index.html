@@ -197,6 +197,20 @@
                     <li><a href="#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
                 </ul>
             </div>
+        <div class="category">
+            <h3>Паттерны и антипаттерны</h3>
+            <ul class="nav-links">
+                <li><a href="#analysis-patterns"><i class="fas fa-shapes"></i> Паттерны анализа</a></li>
+                <li><a href="#anti-patterns"><i class="fas fa-exclamation-triangle"></i> Антипаттерны</a></li>
+            </ul>
+        </div>
+        <div class="category">
+                <h3>Практика</h3>
+                <ul class="nav-links">
+                    <li><a href="#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                    <li><a href="#checklists"><i class="fas fa-list-check"></i> Чеклисты</a></li>
+                </ul>
+            </div>
             <div class="category">
                 <h3>Интерактив</h3>
                 <ul class="nav-links">
@@ -308,6 +322,164 @@
         </div>
     </div>
 </section>
+
+        <section id="analysis-patterns" class="section">
+    <h2><i class="fas fa-shapes"></i> Паттерны анализа и проектирования</h2>
+    
+    <div class="pattern-card">
+        <h3>Шаблон "Агрегатор"</h3>
+        <p><strong>Проблема:</strong> Необходимость объединения данных из нескольких источников</p>
+        <p><strong>Решение:</strong> Создание единого интерфейса для доступа к разрозненным данным</p>
+        <div class="code-block">
+// Пример реализации
+class DataAggregator {
+    constructor(sources) {
+        this.sources = sources;
+    }
+    
+    async fetchData() {
+        const results = await Promise.all(
+            this.sources.map(source => source.getData())
+        );
+        return results.flat();
+    }
+}
+        </div>
+        <p><strong>Применение:</strong> Сводные отчеты, дашборды, унифицированные API</p>
+    </div>
+    
+    <div class="pattern-card">
+        <h3>Шаблон "Валидатор"</h3>
+        <p><strong>Проблема:</strong> Обеспечение корректности входящих данных</p>
+        <p><strong>Решение:</strong> Централизованная система проверки данных</p>
+        <div class="code-block">
+// Пример реализации
+class DataValidator {
+    static validate(userInput, rules) {
+        return rules.every(rule => rule(userInput));
+    }
+}
+
+// Правила валидации
+const emailRule = input => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
+const ageRule = input => input > 0 && input < 120;
+        </div>
+        <p><strong>Применение:</strong> Формы ввода, API, импорт данных</p>
+    </div>
+    
+    <div class="pattern-card">
+        <h3>Шаблон "Состояние" для бизнес-процессов</h3>
+        <p><strong>Проблема:</strong> Управление сложными жизненными циклами объектов</p>
+        <p><strong>Решение:</strong> Реализация конечного автомата (state machine)</p>
+        <div class="example">
+            <div class="example-header"><i class="fas fa-sitemap"></i> Пример состояний заказа</div>
+            <p>Создан → Оплачен → В обработке → Отправлен → Доставлен</p>
+            <p>Возможные переходы: Оплачен → Отменен, В обработке → Возврат</p>
+        </div>
+        <p><strong>Применение:</strong> Заказы, документооборот, workflow</p>
+    </div>
+        </section>
+
+        <section id="case-studies" class="section">
+    <h2><i class="fas fa-briefcase"></i> Практические кейсы</h2>
+    
+    <div class="case-study">
+        <h3>Оптимизация процесса заказа в e-commerce</h3>
+        <p><strong>Проблема:</strong> 40% пользователей не завершали заказ на шаге оплаты</p>
+        <p><strong>Анализ:</strong> 
+            <ul>
+                <li>Таймтрекинг шагов оформления заказа</li>
+                <li>Аналитика кликов и скроллинга</li>
+                <li>Опросы пользователей</li>
+            </ul>
+        </p>
+        <p><strong>Решение:</strong>
+            <ul>
+                <li>Упрощение формы (убраны 3 необязательных поля)</li>
+                <li>Добавление экспресс-оплаты (1 клик)</li>
+                <li>Интеграция с цифровыми кошельками</li>
+            </ul>
+        </p>
+        <p><strong>Результат:</strong> Увеличение конверсии на 27%, сокращение времени оформления на 65%</p>
+    </div>
+    
+    <div class="case-study">
+        <h3>Миграция с монолита на микросервисы</h3>
+        <p><strong>Проблема:</strong> Невозможность масштабирования, частые простои</p>
+        <p><strong>Анализ:</strong> 
+            <ul>
+                <li>Выделение бизнес-доменов</li>
+                <li>Анализ связей между модулями</li>
+                <li>Определение границ сервисов</li>
+            </ul>
+        </p>
+        <p><strong>Решение:</strong>
+            <ul>
+                <li>Поэтапная миграция модулей</li>
+                <li>Внедрение API Gateway</li>
+                <li>Реализация Event-Driven Architecture</li>
+            </ul>
+        </p>
+        <p><strong>Результат:</strong> Уменьшение времени деплоя с 3 часов до 15 минут, увеличение отказоустойчивости</p>
+    </div>
+        </section>
+
+        <section id="checklists" class="section">
+    <h2><i class="fas fa-tasks"></i> Практические чеклисты</h2>
+    
+    <div class="checklist">
+        <h3>Чеклист анализа нового проекта</h3>
+        <ul>
+            <li><input type="checkbox"> Определение стейкхолдеров и их интересов</li>
+            <li><input type="checkbox"> Анализ бизнес-целей и KPI</li>
+            <li><input type="checkbox"> Сбор существующей документации</li>
+            <li><input type="checkbox"> Изучение конкурентных решений</li>
+            <li><input type="checkbox"> Определение технических ограничений</li>
+            <li><input type="checkbox"> Составление глоссария терминов</li>
+            <li><input type="checkbox"> Разработка roadmap проекта</li>
+        </ul>
+    </div>
+    
+    <div class="checklist">
+        <h3>Чеклист проектирования API</h3>
+        <ul>
+            <li><input type="checkbox"> Определение ресурсов и их отношений</li>
+            <li><input type="checkbox"> Проектирование эндпоинтов (RESTful принципы)</li>
+            <li><input type="checkbox"> Определение форматов запросов/ответов</li>
+            <li><input type="checkbox"> Проектирование системы аутентификации</li>
+            <li><input type="checkbox"> Определение кодов ошибок и их семантики</li>
+            <li><input type="checkbox"> Планирование версионирования</li>
+            <li><input type="checkbox"> Документирование (OpenAPI/Swagger)</li>
+        </ul>
+    </div>
+        </section>
+
+        
+
+        <section id="anti-patterns" class="section">
+    <h2><i class="fas fa-exclamation-circle"></i> Антипаттерны системного анализа</h2>
+    
+    <div class="anti-pattern">
+        <h3>Золотой молоток</h3>
+        <p><strong>Описание:</strong> Использование знакомого решения для всех проблем без учета контекста</p>
+        <p><strong>Пример:</strong> Применение блокчейна для простых систем учета без реальной необходимости</p>
+        <p><strong>Решение:</strong> Выбор технологий на основе требований, а не личных предпочтений</p>
+    </div>
+    
+    <div class="anti-pattern">
+        <h3>Аналитический паралич</h3>
+        <p><strong>Описание:</strong> Бесконечный сбор требований без перехода к реализации</p>
+        <p><strong>Пример:</strong> 6 месяцев на анализ простого мобильного приложения</p>
+        <p><strong>Решение:</strong> Time-boxed анализ, итеративный подход, MVP</p>
+    </div>
+    
+    <div class="anti-pattern">
+        <h3>Сферический конь в вакууме</h3>
+        <p><strong>Описание:</strong> Проектирование идеального решения без учета реальных ограничений</p>
+        <p><strong>Пример:</strong> Требование мгновенной обработки 1 млн запросов при бюджете на 2 сервера</p>
+        <p><strong>Решение:</strong> Учет технических, финансовых и временных ограничений</p>
+    </div>
+        </section>
 
         <section id="interactive-examples" class="section">
     <h2><i class="fas fa-flask"></i> Интерактивные примеры</h2>
@@ -845,7 +1017,37 @@
             <div class="code-block" id="sql-output">SELECT ...</div>
         </div>
     </div>
-</section>
+        </section>
+
+        <section id="diagram-generator" class="section">
+    <h2><i class="fas fa-diagram-project"></i> Генератор диаграмм</h2>
+    
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div>
+            <h3>Конструктор BPMN</h3>
+            <div class="bpmn-toolbar">
+                <button onclick="addBPMNElement('task')"><i class="fas fa-tasks"></i> Задача</button>
+                <button onclick="addBPMNElement('gateway')"><i class="fas fa-code-branch"></i> Шлюз</button>
+                <button onclick="addBPMNElement('event')"><i class="fas fa-circle"></i> Событие</button>
+            </div>
+            <div id="bpmn-canvas" style="border:1px solid #ddd; height:300px; background:#f9f9f9; position:relative;">
+                <!-- Элементы будут добавляться сюда -->
+            </div>
+            <button onclick="exportBPMN()" style="margin-top:10px;"><i class="fas fa-download"></i> Экспорт в PNG</button>
+        </div>
+        
+        <div>
+            <h3>Примеры диаграмм из Analyst's Notes</h3>
+            <div class="diagram-examples">
+                <img src="https://raw.githubusercontent.com/BorodaOmsk/Analyst-s-Notes/main/Diagrams/e-commerce-process.png" alt="Процесс оформления заказа">
+                <img src="https://raw.githubusercontent.com/BorodaOmsk/Analyst-s-Notes/main/Diagrams/user-auth-flow.png" alt="Процесс аутентификации">
+            </div>
+            <button onclick="loadExample('ecommerce')" class="quick-link">Загрузить пример: E-commerce</button>
+            <button onclick="loadExample('auth')" class="quick-link">Загрузить пример: Аутентификация</button>
+        </div>
+    </div>
+        </section>
+        
         <section id="resources" class="section">
     <h2><i class="fas fa-external-link-alt"></i> Полезные ресурсы</h2>
     
@@ -856,6 +1058,15 @@
                 <li><a href="https://habr.com/ru/articles/841646/" target="_blank">Хабр: Системный анализ</a></li>
                 <li><a href="https://medium.com/tag/system-analysis" target="_blank">Medium: System Analysis</a></li>
                 <li><a href="https://www.modernanalyst.com/" target="_blank">Modern Analyst</a></li>
+            </ul>
+        </div>
+
+        <div class="resource-category">
+            <h3>Шаблоны и примеры</h3>
+            <ul>
+                <li><a href="https://github.com/BorodaOmsk/Analyst-s-Notes/tree/main/Templates" target="_blank">Шаблоны документов</a></li>
+                <li><a href="https://github.com/BorodaOmsk/Analyst-s-Notes/tree/main/Examples" target="_blank">Примеры решений</a></li>
+                <li><a href="https://github.com/BorodaOmsk/Analyst-s-Notes/tree/main/Diagrams" target="_blank">Примеры диаграмм</a></li>
             </ul>
         </div>
         
