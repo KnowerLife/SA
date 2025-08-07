@@ -1,3 +1,4 @@
+
 :root {
     --primary: #333;
     --secondary: #666;
@@ -8,6 +9,114 @@
     --border: #ddd;
     --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     --transition: all 0.3s ease;
+    --correct: #27ae60;
+    --wrong: #e74c3c;
+    --selected: #3498db;
+}
+
+/* Стили для тестового интерфейса */
+.test-container {
+    background: var(--light);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.test-settings {
+    margin: 15px 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.test-settings label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.test-progress, 
+.test-timer {
+    font-weight: bold;
+}
+
+.test-question {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+}
+
+.test-options {
+    margin-top: 15px;
+}
+
+.test-option {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.test-option:hover {
+    background: #f0f8ff;
+    border-color: var(--selected);
+}
+
+.test-option.selected {
+    background: #e1f0fa;
+    border-color: var(--selected);
+}
+
+.test-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.test-controls button {
+    flex: 1;
+}
+
+.test-result {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.result-summary {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.result-details {
+    margin-top: 20px;
+}
+
+.correct-answer {
+    color: var(--correct);
+    font-weight: bold;
+}
+
+.wrong-answer {
+    color: var(--wrong);
+    font-weight: bold;
 }
 
 /* Стили для системы закладок */
@@ -210,6 +319,32 @@ body.dark-theme {
         background: #2a2a2a;
         border-color: #444;
     }
+
+    body.dark-theme .test-container {
+    background: #2a2a2a;
+}
+
+body.dark-theme .test-question,
+body.dark-theme .test-result {
+    background: #333;
+    color: #e0e0e0;
+}
+
+body.dark-theme .test-option {
+    border-color: #444;
+}
+
+body.dark-theme .test-option:hover {
+    background: #2a3b4d;
+}
+
+body.dark-theme .test-option.selected {
+    background: #1e2a38;
+}
+
+body.dark-theme .test-header {
+    border-bottom-color: #444;
+}
     
     .canvas-container {
         background: #1e1e1e;
