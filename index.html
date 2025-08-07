@@ -110,7 +110,6 @@
                     <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
                     <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
                     <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
-                    <li><a href="#design-patterns"><i class="fas fa-shapes"></i> Паттерны проектирования</a></li>
                     <li><a href="#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
                 </ul>
             </div>
@@ -275,6 +274,543 @@
                 </p>
             </div>
         </section>
+
+        <!-- Artifacts Section -->
+        <section id="artifacts" class="section">
+            <h2><i class="fas fa-archive"></i> Артефакты в системном анализе</h2>
+            
+            <p>Артефакты - это документы, модели и информация, создаваемые в процессе анализа системы:</p>
+            
+            <ul>
+                <li>Требования (функциональные и нефункциональные)</li>
+                <li>Диаграммы (BPMN, UML, последовательности)</li>
+                <li>Пользовательские истории (User Stories)</li>
+                <li>Сценарии использования (Use Cases)</li>
+                <li>Прототипы интерфейсов</li>
+                <li>Глоссарий терминов</li>
+                <li>Отчеты об анализе</li>
+            </ul>
+            
+            <div class="quick-links">
+                <a href="#requirements" class="quick-link">Требования</a>
+                <a href="#use-cases" class="quick-link">Use Cases</a>
+                <a href="#user-stories" class="quick-link">User Stories</a>
+            </div>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-file-alt"></i> Пример артефакта: User Story</div>
+                <p>"Как зарегистрированный пользователь, я хочу иметь возможность сбросить пароль, чтобы восстановить доступ к аккаунту, если забыл пароль"</p>
+            </div>
+        </section>
+
+        <!-- Requirements Section -->
+        <section id="requirements" class="section">
+            <h2><i class="fas fa-clipboard-list"></i> Виды требований</h2>
+            
+            <h3>Функциональные требования</h3>
+            <p>Определяют, что система должна делать:</p>
+            <ul>
+                <li>Основные функции системы (регистрация, авторизация)</li>
+                <li>Бизнес-процессы и сценарии использования</li>
+                <li>Требования к обработке данных</li>
+                <li>Взаимодействие с другими системами</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример</div>
+                <p>"Система должна позволять пользователям регистрироваться и входить с использованием учетных записей в социальных сетях"</p>
+            </div>
+            
+            <h3>Нефункциональные требования</h3>
+            <p>Определяют характеристики системы:</p>
+            <ul>
+                <li>Производительность (скорость обработки запросов)</li>
+                <li>Масштабируемость</li>
+                <li>Надежность</li>
+                <li>Безопасность</li>
+                <li>Удобство использования</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример</div>
+                <p>"Система должна обеспечивать скорость обработки запросов не менее 1000 запросов в секунду"</p>
+            </div>
+            
+            <h3>Критерии требований</h3>
+            <ul>
+                <li><strong>Релевантность</strong> - требование должно быть связано с целью</li>
+                <li><strong>Четкость</strong> - однозначная формулировка</li>
+                <li><strong>Измеримость</strong> - возможность оценки выполнения</li>
+                <li><strong>Выполнимость</strong> - реалистичность реализации</li>
+                <li><strong>Приоритетность</strong> - важность для проекта</li>
+                <li><strong>Атомарность</strong> - неделимость требования</li>
+                <li><strong>Тестируемость</strong> - возможность проверки выполнения</li>
+            </ul>
+            <div class="highlight-box">
+        <h3>Чеклист для проверки требований:</h3>
+        <ul>
+            <li><input type="checkbox"> Все требования измеримы?</li>
+            <li><input type="checkbox"> Есть критерии приемки?</li>
+            <li><input type="checkbox"> Учтены все сценарии использования?</li>
+            <li><input type="checkbox"> Соответствуют бизнес-целям?</li>
+            <li><input type="checkbox"> Нет противоречий с другими требованиями?</li>
+        </ul>
+    </div>        
+        </section>
+
+        <!-- Stakeholders Section -->
+<section id="stakeholders" class="section">
+    <h2><i class="fas fa-users"></i> Стейкхолдеры</h2>
+    
+    <p>Стейкхолдеры - это лица или организации, которые имеют интерес в проекте и могут повлиять на его успех или неудачу:</p>
+    
+    <ul>
+        <li><strong>Заказчики</strong> - определяют бизнес-требования и финансируют проект</li>
+        <li><strong>Пользователи</strong> - непосредственно работают с системой</li>
+        <li><strong>Разработчики</strong> - реализуют техническое решение</li>
+        <li><strong>Тестировщики</strong> - обеспечивают качество продукта</li>
+        <li><strong>Руководство</strong> - отвечает за стратегические решения</li>
+        <li><strong>Технические эксперты</strong> - предоставляют предметную экспертизу</li>
+    </ul>
+    
+    <h3>Как взаимодействовать со стейкхолдерами:</h3>
+    <ol>
+        <li><strong>Идентификация</strong> - составьте полный список всех заинтересованных сторон</li>
+        <li><strong>Анализ влияния</strong> - оцените уровень влияния каждого стейкхолдера</li>
+        <li><strong>План коммуникации</strong> - определите частоту и формат взаимодействия</li>
+        <li><strong>Управление ожиданиями</strong> - четко формулируйте что возможно, а что нет</li>
+        <li><strong>Обратная связь</strong> - регулярно собирайте и анализируйте мнения</li>
+    </ol>
+    
+    <div class="highlight-box">
+        <p><strong>Совет:</strong> Используйте матрицу влияния/заинтересованности для приоритизации работы со стейкхолдерами. Регулярно обновляйте карту стейкхолдеров по мере развития проекта.</p>
+    </div>
+</section>
+
+        <section id="glossary" class="section">
+    <h2><i class="fas fa-book"></i> Глоссарий терминов</h2>
+    
+    <div class="glossary-container">
+        <div class="glossary-category">
+            <h3>Основные понятия системного анализа</h3>
+            <dl>
+                <dt>Артефакты (Artifacts)</dt>
+                <dd>Рабочие продукты, создаваемые в процессе анализа - документы, модели, диаграммы</dd>
+                
+                <dt>Стейкхолдеры (Stakeholders)</dt>
+                <dd>Лица и организации, заинтересованные в проекте и влияющие на требования</dd>
+                
+                <dt>Функциональные требования</dt>
+                <dd>Что система должна делать - описание функций и возможностей системы</dd>
+                
+                <dt>Нефункциональные требования</dt>
+                <dd>Как система должна работать - характеристики производительности, безопасности</dd>
+            </dl>
+        </div>
+        
+        <div class="glossary-category">
+            <h3>Архитектура и технологии</h3>
+            <dl>
+                <dt>REST (Representational State Transfer)</dt>
+                <dd>Архитектурный стиль для API, основанный на стандартных HTTP-методах</dd>
+                
+                <dt>SOAP (Simple Object Access Protocol)</dt>
+                <dd>Протокол обмена структурированными XML-сообщениями для веб-сервисов</dd>
+                
+                <dt>GraphQL</dt>
+                <dd>Язык запросов для API, позволяющий клиентам запрашивать только необходимые данные</dd>
+                
+                <dt>Микросервисы (Microservices)</dt>
+                <dd>Архитектурный подход с независимыми сервисами</dd>
+            </dl>
+        </div>
+        
+        <div class="glossary-category">
+            <h3>Данные и базы данных</h3>
+            <dl>
+                <dt>Реляционная БД</dt>
+                <dd>База данных с табличной структурой и строгими связями (MySQL, PostgreSQL)</dd>
+                
+                <dt>NoSQL</dt>
+                <dd>Нереляционные базы данных (документные, ключ-значение, графовые)</dd>
+                
+                <dt>Нормализация</dt>
+                <dd>Процесс оптимизации структуры БД через нормальные формы (1NF, 2NF, 3NF)</dd>
+            </dl>
+        </div>
+        
+        <div class="glossary-category">
+            <h3>Процессы и методологии</h3>
+            <dl>
+                <dt>CI/CD</dt>
+                <dd>Непрерывная интеграция и доставка - автоматизация сборки и развертывания</dd>
+                
+                <dt>Scrum</dt>
+                <dd>Итеративная методология разработки с фиксированными спринтами</dd>
+                
+                <dt>Kanban</dt>
+                <dd>Метод управления потоком работ с визуализацией задач</dd>
+            </dl>
+        </div>
+    </div>
+</section>
+
+        <!-- Information Gathering Section -->
+        <section id="info-gathering" class="section">
+            <h2><i class="fas fa-search"></i> Методы сбора информации</h2>
+            
+            <p>Эффективные методы сбора информации для системного аналитика:</p>
+            
+            <ol>
+                <li><strong>Опрос</strong> - интервью, анкеты, телефонные опросы</li>
+                <li><strong>Наблюдение</strong> - прямое или косвенное изучение процессов</li>
+                <li><strong>Эксперимент</strong> - тестирование гипотез в контролируемых условиях</li>
+                <li><strong>Анализ документов</strong> - изучение существующей документации</li>
+                <li><strong>Фокус-группы</strong> - обсуждение темы с группой людей</li>
+                <li><strong>Глубинное интервью</strong> - детальное изучение мнений респондентов</li>
+                <li><strong>Вторичный анализ данных</strong> - использование существующих данных</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <p><strong>Совет:</strong> Комбинируйте несколько методов для получения более полной картины. Например, начните с анализа документов, затем проведите интервью с ключевыми стейкхолдерами.</p>
+            </div>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section id="use-cases" class="section">
+            <h2><i class="fas fa-sitemap"></i> Use Cases</h2>
+            
+            <p>Use case (случай использования) - описание сценария взаимодействия пользователя с системой:</p>
+            
+            <h3>Как пишутся Use Cases:</h3>
+            <ol>
+                <li>Определение контекста использования</li>
+                <li>Описание основных сценариев использования</li>
+                <li>Детализация сценариев использования</li>
+                <li>Документирование use case</li>
+            </ol>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример: Заказ такси</div>
+                <p><strong>Контекст:</strong> Пользователь хочет заказать такси</p>
+                <p><strong>Основной сценарий:</strong></p>
+                <ol>
+                    <li>Пользователь вводит начальную и конечную точку маршрута</li>
+                    <li>Система предлагает выбрать тип автомобиля и тариф</li>
+                    <li>Пользователь выбирает тариф и автомобиль</li>
+                    <li>Пользователь подтверждает заказ</li>
+                    <li>Система отображает информацию о заказе</li>
+                </ol>
+                <p><strong>Альтернативный сценарий:</strong> Если пользователь не находит подходящий тариф, он может изменить параметры поиска</p>
+            </div>
+        </section>
+
+        <!-- User Stories Section -->
+<section id="user-stories" class="section">
+    <h2><i class="fas fa-book-open"></i> User stories</h2>
+    
+    <p>User story (история пользователя) - это краткое описание функциональности с точки зрения конечного пользователя:</p>
+    
+    <div class="example">
+        <div class="example-header"><i class="fas fa-code"></i> Формат user story</div>
+        <p>"Как [роль пользователя], я хочу [функция], чтобы [получить пользу/решить проблему]"</p>
+    </div>
+    
+    <h3>Критерии хорошей user story (INVEST):</h3>
+    <ul>
+        <li><strong>Independent</strong> - независимая от других историй</li>
+        <li><strong>Negotiable</strong> - подлежит обсуждению и уточнению</li>
+        <li><strong>Valuable</strong> - предоставляет ценность для пользователя</li>
+        <li><strong>Estimable</strong> - может быть оценена по сложности</li>
+        <li><strong>Small</strong> - достаточно мала для реализации за один спринт</li>
+        <li><strong>Testable</strong> - имеет четкие критерии приемки</li>
+    </ul>
+    
+    <h3>Примеры:</h3>
+    <div class="example">
+        <p>"Как покупатель, я хочу фильтровать товары по цене, чтобы быстрее находить подходящие варианты"</p>
+        <p>"Как менеджер, я хочу экспортировать отчет в Excel, чтобы анализировать данные"</p>
+    </div>
+</section>
+
+<!-- BPMN Section -->
+<section id="bpmn" class="section">
+    <h2><i class="fas fa-project-diagram"></i> BPMN (Business Process Model and Notation)</h2>
+    
+    <p>BPMN - стандартная нотация для моделирования бизнес-процессов:</p>
+    
+    <h3>Основные элементы:</h3>
+    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <th style="border:1px solid #ddd; padding:8px;">Элемент</th>
+            <th style="border:1px solid #ddd; padding:8px;">Обозначение</th>
+            <th style="border:1px solid #ddd; padding:8px;">Описание</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Задача</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:50px; height:30px; border:1px solid #000; border-radius:5px; margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Единица работы в процессе</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Событие</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:30px; height:30px; border:1px solid #000; border-radius:50%; margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Что-то, что происходит в процессе</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Шлюз</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:40px; height:40px; border:1px solid #000; transform:rotate(45deg); margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Точка принятия решений и ветвления</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Пул/дорожка</td>
+            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:100px; height:50px; border:1px solid #000; margin:0 auto;"></div></td>
+            <td style="border:1px solid #ddd; padding:8px;">Участники процесса и их зоны ответственности</td>
+        </tr>
+    </table>
+    
+    <div class="highlight-box">
+        <p><strong>Преимущества BPMN:</strong> Стандартизация нотации, наглядное представление процессов, возможность исполнимых моделей, интеграция с системами управления процессами.</p>
+    </div>
+    
+    <h3>Пример простого процесса:</h3>
+    <div class="example">
+        <p>1. Стартовое событие → 2. Проверка документации → 3. [Валидна] Обработка заявки → 4. Финиш</p>
+        <p>3. [Невалидна] Уведомление клиента → 4. Финиш</p>
+    </div>
+</section>
+
+        <section id="estimation" class="section">
+    <h2><i class="fas fa-calculator"></i> Техники оценки задач</h2>
+    
+    <div class="estimation-methods">
+        <div class="method">
+            <h3>Planning Poker</h3>
+            <p>Оценка сложности задач с помощью карточек</p>
+            <div class="quick-links">
+                <span class="quick-link">1</span>
+                <span class="quick-link">2</span>
+                <span class="quick-link">3</span>
+                <span class="quick-link">5</span>
+                <span class="quick-link">8</span>
+                <span class="quick-link">13</span>
+            </div>
+        </div>
+        
+        <div class="method">
+            <h3>T-Shirt Sizing</h3>
+            <p>Оценка по размерам одежды</p>
+            <div class="quick-links">
+                <span class="quick-link">XS</span>
+                <span class="quick-link">S</span>
+                <span class="quick-link">M</span>
+                <span class="quick-link">L</span>
+                <span class="quick-link">XL</span>
+            </div>
+        </div>
+    </div>
+    
+    <h3>Факторы для учета:</h3>
+    <div class="factor-grid">
+        <div class="factor">
+            <i class="fas fa-brain"></i>
+            <h4>Сложность</h4>
+        </div>
+        <div class="factor">
+            <i class="fas fa-arrows-alt-h"></i>
+            <h4>Объем</h4>
+        </div>
+        <div class="factor">
+            <i class="fas fa-uncertainty"></i>
+            <h4>Неопределенность</h4>
+        </div>
+        <div class="factor">
+            <i class="fas fa-users"></i>
+            <h4>Зависимости</h4>
+        </div>
+    </div>
+</section>
+
+        <!-- API Section -->
+        <section id="api" class="section">
+            <h2><i class="fas fa-code"></i> API (Application Programming Interface)</h2>
+            
+            <p>API - набор правил и протоколов для взаимодействия между программными компонентами.</p>
+            
+            <h3>Типы API:</h3>
+            <ul>
+                <li><strong>Web API</strong> - доступ через сеть (обычно HTTP)</li>
+                <li><strong>Библиотечное API</strong> - набор функций/классов внутри приложения</li>
+                <li><strong>Операционная система API</strong> - для взаимодействия с ОС</li>
+            </ul>
+            
+            <div class="code-block">
+                // Пример REST API запроса
+                GET /api/books?author=J.K.%20Rowling HTTP/1.1
+                Host: example.com
+                Accept: application/json
+            </div>
+            
+            <h3>Популярные методы REST:</h3>
+            <ul>
+                <li><strong>GET</strong> - получение ресурсов</li>
+                <li><strong>POST</strong> - создание новых ресурсов</li>
+                <li><strong>PUT</strong> - обновление существующих ресурсов</li>
+                <li><strong>DELETE</strong> - удаление ресурсов</li>
+                <li><strong>PATCH</strong> - частичное обновление ресурса</li>
+            </ul>
+            
+            <div class="quick-links">
+                <a href="#rest" class="quick-link">REST API</a>
+                <a href="#swagger" class="quick-link">Swagger/OpenAPI</a>
+            </div>
+        </section>
+
+        <!-- REST Section -->
+<section id="rest" class="section">
+    <h2><i class="fas fa-exchange-alt"></i> REST (Representational State Transfer)</h2>
+    
+    <p>REST - архитектурный стиль для распределенных систем, основанный на 6 принципах:</p>
+    
+    <ol>
+        <li><strong>Единообразие интерфейса</strong> - стандартные методы и форматы</li>
+        <li><strong>Отсутствие состояния (Stateless)</strong> - каждый запрос самодостаточен</li>
+        <li><strong>Кэширование</strong> - явное указание возможности кэширования</li>
+        <li><strong>Клиент-сервер</strong> - разделение ответственности</li>
+        <li><strong>Многоуровневая система</strong> - иерархия компонентов</li>
+        <li><strong>Код по требованию (опционально)</strong> - возможность расширения функциональности</li>
+    </ol>
+    
+    <h3>REST vs RESTful:</h3>
+    <div class="example">
+        <p><strong>REST</strong> - набор архитектурных принципов</p>
+        <p><strong>RESTful</strong> - API, полностью соответствующий REST-принципам</p>
+        <p><strong>REST API</strong> - интерфейс, реализующий REST подход</p>
+    </div>
+    
+    <h3>Статус коды REST:</h3>
+    <ul>
+        <li><strong>2xx (Успех)</strong>: 200 OK, 201 Created, 204 No Content</li>
+        <li><strong>3xx (Перенаправление)</strong>: 301 Moved, 304 Not Modified</li>
+        <li><strong>4xx (Ошибка клиента)</strong>: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</li>
+        <li><strong>5xx (Ошибка сервера)</strong>: 500 Internal Error, 503 Service Unavailable</li>
+    </ul>
+</section>
+
+        <!-- SOAP Section -->
+<section id="soap" class="section">
+    <h2><i class="fas fa-exchange-alt"></i> SOAP (Simple Object Access Protocol)</h2>
+    
+    <p>SOAP - протокол для обмена структурированной информацией в распределенных системах. Основные характеристики:</p>
+    
+    <ul>
+        <li><strong>XML-based</strong> - все сообщения в формате XML</li>
+        <li><strong>Протоколо-независимый</strong> - может работать поверх HTTP, SMTP, TCP</li>
+        <li><strong>Строгая типизация</strong> - использует WSDL для описания интерфейсов</li>
+        <li><strong>Встроенная безопасность</strong> - WS-Security стандарт</li>
+        <li><strong>Транзакции</strong> - поддержка ACID через WS-Transaction</li>
+    </ul>
+    
+    <h3>Структура SOAP сообщения:</h3>
+    <div class="code-block">
+&lt;?xml version="1.0"?&gt;
+&lt;soap:Envelope
+  xmlns:soap="http://www.w3.org/2003/05/soap-envelope"&gt;
+  
+  &lt;soap:Header&gt;
+    &lt;!-- Заголовок с метаданными --&gt;
+    &lt;auth:Authentication&gt;
+      &lt;auth:Username&gt;user123&lt;/auth:Username&gt;
+      &lt;auth:Password&gt;pass456&lt;/auth:Password&gt;
+    &lt;/auth:Authentication&gt;
+  &lt;/soap:Header&gt;
+  
+  &lt;soap:Body&gt;
+    &lt;!-- Основное содержимое запроса --&gt;
+    &lt;m:GetUserDetails xmlns:m="https://api.example.com/"&gt;
+      &lt;m:UserId&gt;789&lt;/m:UserId&gt;
+    &lt;/m:GetUserDetails&gt;
+  &lt;/soap:Body&gt;
+  
+&lt;/soap:Envelope&gt;
+    </div>
+    
+    <h3>Ключевые компоненты:</h3>
+    <ul>
+        <li><strong>Envelope</strong> - корневой элемент, определяет сообщение как SOAP</li>
+        <li><strong>Header</strong> - содержит атрибуты безопасности, транзакций</li>
+        <li><strong>Body</strong> - основное содержимое запроса/ответа</li>
+        <li><strong>Fault</strong> - элемент для обработки ошибок</li>
+    </ul>
+    
+    <h3>SOAP vs REST:</h3>
+    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+            <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
+            <th style="border:1px solid #ddd; padding:8px;">SOAP</th>
+            <th style="border:1px solid #ddd; padding:8px;">REST</th>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Формат данных</td>
+            <td style="border:1px solid #ddd; padding:8px;">XML</td>
+            <td style="border:1px solid #ddd; padding:8px;">JSON, XML, текст</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Протокол</td>
+            <td style="border:1px solid #ddd; padding:8px;">HTTP, SMTP, TCP</td>
+            <td style="border:1px solid #ddd; padding:8px;">HTTP</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Стандарты</td>
+            <td style="border:1px solid #ddd; padding:8px;">WS-*, строгие</td>
+            <td style="border:1px solid #ddd; padding:8px;">Нет официальных</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Производительность</td>
+            <td style="border:1px solid #ddd; padding:8px;">Ниже из-за XML</td>
+            <td style="border:1px solid #ddd; padding:8px;">Выше</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #ddd; padding:8px;">Безопасность</td>
+            <td style="border:1px solid #ddd; padding:8px;">WS-Security</td>
+            <td style="border:1px solid #ddd; padding:8px;">HTTPS, OAuth</td>
+        </tr>
+    </table>
+    
+    <div class="highlight-box">
+        <p><strong>Когда использовать SOAP:</strong> Для высокозащищенных систем (банки, госсектор), при работе с устаревшими системами, когда нужны встроенные транзакции или сложные композиции сервисов.</p>
+    </div>
+    
+    <h3>Пример WSDL (Web Services Description Language):</h3>
+    <div class="code-block">
+&lt;?xml version="1.0"?&gt;
+&lt;definitions name="UserService"
+  targetNamespace="https://api.example.com/user"
+  xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;
+  
+  &lt;types&gt;
+    &lt;xsd:schema&gt;
+      &lt;xsd:element name="GetUserRequest"&gt;
+        &lt;xsd:complexType&gt;
+          &lt;xsd:sequence&gt;
+            &lt;xsd:element name="userId" type="xsd:integer"/&gt;
+          &lt;/xsd:sequence&gt;
+        &lt;/xsd:complexType&gt;
+      &lt;/xsd:element&gt; &lt;!-- Закрывающий тег добавлен --&gt;
+    &lt;/xsd:schema&gt;
+  &lt;/types&gt;
+  
+  &lt;message name="GetUserInput"&gt;
+    &lt;part name="body" element="tns:GetUserRequest"/&gt;
+  &lt;/message&gt;
+  
+  &lt;portType name="UserPortType"&gt;
+    &lt;operation name="GetUser"&gt;
+      &lt;input message="tns:GetUserInput"/&gt;
+    &lt;/operation&gt;
+  &lt;/portType&gt;
+&lt;/definitions&gt;
+            </div>
+</section>
         
         <!-- GraphQL Section -->
 <section id="graphql" class="section">
@@ -341,6 +877,67 @@
             <td style="border:1px solid #ddd; padding:8px;">Обязательна</td>
         </tr>
     </table>
+</section>
+
+        <!-- Microservices Section -->
+        <section id="microservices" class="section">
+            <h2><i class="fas fa-cubes"></i> Микросервисная архитектура</h2>
+            
+            <p>Микросервисы - архитектурный подход, при котором приложение разбивается на небольшие, независимые сервисы.</p>
+            
+            <h3>Преимущества микросервисов:</h3>
+            <ul>
+                <li>Гибкая разработка и масштабирование</li>
+                <li>Лучшая изоляция ошибок</li>
+                <li>Возможность использования разных технологий</li>
+                <li>Более простая поддержка и развертывание</li>
+            </ul>
+            
+            <h3>Когда переходить на микросервисы:</h3>
+            <ul>
+                <li>При увеличении масштаба проекта</li>
+                <li>Для улучшения масштабируемости</li>
+                <li>Для повышения гибкости разработки</li>
+                <li>Для улучшения отказоустойчивости</li>
+                <li>Для ускорения разработки</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><strong>Важно:</strong> Переход к микросервисной архитектуре требует значительных усилий и может привести к увеличению сложности системы.</p>
+            </div>
+        </section>
+
+        <!-- DDD Section -->
+<section id="ddd" class="section">
+    <h2><i class="fas fa-layer-group"></i> DDD (Domain Driven Design)</h2>
+    
+    <p>Domain Driven Design - подход к разработке сложных систем через глубокое погружение в предметную область:</p>
+    
+    <h3>Основные концепции DDD:</h3>
+    <ul>
+        <li><strong>Домен (Domain)</strong> - предметная область системы</li>
+        <li><strong>Модель (Model)</strong> - абстракция ключевых концепций домена</li>
+        <li><strong>Ограниченный контекст (Bounded Context)</strong> - четкие границы моделей</li>
+        <li><strong>Универсальный язык (Ubiquitous Language)</strong> - единая терминология</li>
+        <li><strong>Агрегаты (Aggregates)</strong> - кластеры связанных объектов</li>
+        <li><strong>События домена (Domain Events)</strong> - значимые изменения в системе</li>
+    </ul>
+    
+    <div class="example">
+        <div class="example-header"><i class="fas fa-code"></i> Пример DDD в банковской сфере</div>
+        <p>Домен: Банковские операции<br>
+        Ограниченные контексты: Платежи, Кредитование, Счета<br>
+        Агрегаты: БанковскийСчет (включая баланс, историю операций)<br>
+        События: СчетОткрыт, ПлатежПроведен, ЛимитПревышен</p>
+    </div>
+    
+    <h3>Преимущества DDD:</h3>
+    <ul>
+        <li>Глубокая связь между бизнес-логикой и реализацией</li>
+        <li>Четкое разделение ответственности</li>
+        <li>Устойчивость к изменениям требований</li>
+        <li>Эффективная коммуникация между разработчиками и экспертами</li>
+    </ul>
 </section>
 
         <section id="security-checklist" class="section">
@@ -566,57 +1163,6 @@
     </ul>
 </section>
 
-        <section id="design-patterns" class="section">
-    <h2><i class="fas fa-shapes"></i> Паттерны проектирования</h2>
-    
-    <div class="pattern-grid">
-        <div class="pattern-card">
-            <h3>Singleton</h3>
-            <p>Гарантирует существование только одного экземпляра класса</p>
-            <div class="code-block">
-                class Database {
-                    private static instance: Database;
-                    private constructor() {}
-                    public static getInstance(): Database {
-                        if (!Database.instance) {
-                            Database.instance = new Database();
-                        }
-                        return Database.instance;
-                    }
-                }
-            </div>
-        </div>
-        
-        <div class="pattern-card">
-            <h3>Observer</h3>
-            <p>Определяет зависимость "один-ко-многим" между объектами</p>
-            <div class="code-block">
-                interface Observer {
-                    update(data: any): void;
-                }
-                
-                class Subject {
-                    private observers: Observer[] = [];
-                    public addObserver(o: Observer): void {
-                        this.observers.push(o);
-                    }
-                    public notifyObservers(data: any): void {
-                        this.observers.forEach(o => o.update(data));
-                    }
-                }
-            </div>
-        </div>
-    </div>
-    
-    <h3>Когда использовать:</h3>
-    <ul>
-        <li><strong>Factory</strong> - создание объектов без указания точного класса</li>
-        <li><strong>Strategy</strong> - выбор алгоритма во время выполнения</li>
-        <li><strong>Decorator</strong> - динамическое добавление функциональности</li>
-        <li><strong>Facade</strong> - простой интерфейс для сложной системы</li>
-    </ul>
-</section>
-
         <section id="security" class="section">
     <h2><i class="fas fa-shield-alt"></i> Основы безопасности</h2>
     
@@ -647,57 +1193,6 @@
         <li><strong>Не доверяй пользовательскому вводу</strong></li>
         <li><strong>Регулярные аудиты безопасности</strong></li>
     </ul>
-</section>
-
-        <section id="estimation" class="section">
-    <h2><i class="fas fa-calculator"></i> Техники оценки задач</h2>
-    
-    <div class="estimation-methods">
-        <div class="method">
-            <h3>Planning Poker</h3>
-            <p>Оценка сложности задач с помощью карточек</p>
-            <div class="quick-links">
-                <span class="quick-link">1</span>
-                <span class="quick-link">2</span>
-                <span class="quick-link">3</span>
-                <span class="quick-link">5</span>
-                <span class="quick-link">8</span>
-                <span class="quick-link">13</span>
-            </div>
-        </div>
-        
-        <div class="method">
-            <h3>T-Shirt Sizing</h3>
-            <p>Оценка по размерам одежды</p>
-            <div class="quick-links">
-                <span class="quick-link">XS</span>
-                <span class="quick-link">S</span>
-                <span class="quick-link">M</span>
-                <span class="quick-link">L</span>
-                <span class="quick-link">XL</span>
-            </div>
-        </div>
-    </div>
-    
-    <h3>Факторы для учета:</h3>
-    <div class="factor-grid">
-        <div class="factor">
-            <i class="fas fa-brain"></i>
-            <h4>Сложность</h4>
-        </div>
-        <div class="factor">
-            <i class="fas fa-arrows-alt-h"></i>
-            <h4>Объем</h4>
-        </div>
-        <div class="factor">
-            <i class="fas fa-uncertainty"></i>
-            <h4>Неопределенность</h4>
-        </div>
-        <div class="factor">
-            <i class="fas fa-users"></i>
-            <h4>Зависимости</h4>
-        </div>
-    </div>
 </section>
 
         <section id="additional-tools" class="section">
@@ -1866,385 +2361,6 @@ const ageRule = input => input > 0 && input < 120;
     </ul>
 </section>
 
-        <section id="glossary" class="section">
-    <h2><i class="fas fa-book"></i> Глоссарий терминов</h2>
-    
-    <div class="glossary-container">
-        <div class="glossary-category">
-            <h3>Основные понятия системного анализа</h3>
-            <dl>
-                <dt>Артефакты (Artifacts)</dt>
-                <dd>Рабочие продукты, создаваемые в процессе анализа - документы, модели, диаграммы</dd>
-                
-                <dt>Стейкхолдеры (Stakeholders)</dt>
-                <dd>Лица и организации, заинтересованные в проекте и влияющие на требования</dd>
-                
-                <dt>Функциональные требования</dt>
-                <dd>Что система должна делать - описание функций и возможностей системы</dd>
-                
-                <dt>Нефункциональные требования</dt>
-                <dd>Как система должна работать - характеристики производительности, безопасности</dd>
-            </dl>
-        </div>
-        
-        <div class="glossary-category">
-            <h3>Архитектура и технологии</h3>
-            <dl>
-                <dt>REST (Representational State Transfer)</dt>
-                <dd>Архитектурный стиль для API, основанный на стандартных HTTP-методах</dd>
-                
-                <dt>SOAP (Simple Object Access Protocol)</dt>
-                <dd>Протокол обмена структурированными XML-сообщениями для веб-сервисов</dd>
-                
-                <dt>GraphQL</dt>
-                <dd>Язык запросов для API, позволяющий клиентам запрашивать только необходимые данные</dd>
-                
-                <dt>Микросервисы (Microservices)</dt>
-                <dd>Архитектурный подход с независимыми сервисами</dd>
-            </dl>
-        </div>
-        
-        <div class="glossary-category">
-            <h3>Данные и базы данных</h3>
-            <dl>
-                <dt>Реляционная БД</dt>
-                <dd>База данных с табличной структурой и строгими связями (MySQL, PostgreSQL)</dd>
-                
-                <dt>NoSQL</dt>
-                <dd>Нереляционные базы данных (документные, ключ-значение, графовые)</dd>
-                
-                <dt>Нормализация</dt>
-                <dd>Процесс оптимизации структуры БД через нормальные формы (1NF, 2NF, 3NF)</dd>
-            </dl>
-        </div>
-        
-        <div class="glossary-category">
-            <h3>Процессы и методологии</h3>
-            <dl>
-                <dt>CI/CD</dt>
-                <dd>Непрерывная интеграция и доставка - автоматизация сборки и развертывания</dd>
-                
-                <dt>Scrum</dt>
-                <dd>Итеративная методология разработки с фиксированными спринтами</dd>
-                
-                <dt>Kanban</dt>
-                <dd>Метод управления потоком работ с визуализацией задач</dd>
-            </dl>
-        </div>
-    </div>
-</section>
-
-        <!-- SOAP Section -->
-<section id="soap" class="section">
-    <h2><i class="fas fa-exchange-alt"></i> SOAP (Simple Object Access Protocol)</h2>
-    
-    <p>SOAP - протокол для обмена структурированной информацией в распределенных системах. Основные характеристики:</p>
-    
-    <ul>
-        <li><strong>XML-based</strong> - все сообщения в формате XML</li>
-        <li><strong>Протоколо-независимый</strong> - может работать поверх HTTP, SMTP, TCP</li>
-        <li><strong>Строгая типизация</strong> - использует WSDL для описания интерфейсов</li>
-        <li><strong>Встроенная безопасность</strong> - WS-Security стандарт</li>
-        <li><strong>Транзакции</strong> - поддержка ACID через WS-Transaction</li>
-    </ul>
-    
-    <h3>Структура SOAP сообщения:</h3>
-    <div class="code-block">
-&lt;?xml version="1.0"?&gt;
-&lt;soap:Envelope
-  xmlns:soap="http://www.w3.org/2003/05/soap-envelope"&gt;
-  
-  &lt;soap:Header&gt;
-    &lt;!-- Заголовок с метаданными --&gt;
-    &lt;auth:Authentication&gt;
-      &lt;auth:Username&gt;user123&lt;/auth:Username&gt;
-      &lt;auth:Password&gt;pass456&lt;/auth:Password&gt;
-    &lt;/auth:Authentication&gt;
-  &lt;/soap:Header&gt;
-  
-  &lt;soap:Body&gt;
-    &lt;!-- Основное содержимое запроса --&gt;
-    &lt;m:GetUserDetails xmlns:m="https://api.example.com/"&gt;
-      &lt;m:UserId&gt;789&lt;/m:UserId&gt;
-    &lt;/m:GetUserDetails&gt;
-  &lt;/soap:Body&gt;
-  
-&lt;/soap:Envelope&gt;
-    </div>
-    
-    <h3>Ключевые компоненты:</h3>
-    <ul>
-        <li><strong>Envelope</strong> - корневой элемент, определяет сообщение как SOAP</li>
-        <li><strong>Header</strong> - содержит атрибуты безопасности, транзакций</li>
-        <li><strong>Body</strong> - основное содержимое запроса/ответа</li>
-        <li><strong>Fault</strong> - элемент для обработки ошибок</li>
-    </ul>
-    
-    <h3>SOAP vs REST:</h3>
-    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-        <tr>
-            <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
-            <th style="border:1px solid #ddd; padding:8px;">SOAP</th>
-            <th style="border:1px solid #ddd; padding:8px;">REST</th>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Формат данных</td>
-            <td style="border:1px solid #ddd; padding:8px;">XML</td>
-            <td style="border:1px solid #ddd; padding:8px;">JSON, XML, текст</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Протокол</td>
-            <td style="border:1px solid #ddd; padding:8px;">HTTP, SMTP, TCP</td>
-            <td style="border:1px solid #ddd; padding:8px;">HTTP</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Стандарты</td>
-            <td style="border:1px solid #ddd; padding:8px;">WS-*, строгие</td>
-            <td style="border:1px solid #ddd; padding:8px;">Нет официальных</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Производительность</td>
-            <td style="border:1px solid #ddd; padding:8px;">Ниже из-за XML</td>
-            <td style="border:1px solid #ddd; padding:8px;">Выше</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Безопасность</td>
-            <td style="border:1px solid #ddd; padding:8px;">WS-Security</td>
-            <td style="border:1px solid #ddd; padding:8px;">HTTPS, OAuth</td>
-        </tr>
-    </table>
-    
-    <div class="highlight-box">
-        <p><strong>Когда использовать SOAP:</strong> Для высокозащищенных систем (банки, госсектор), при работе с устаревшими системами, когда нужны встроенные транзакции или сложные композиции сервисов.</p>
-    </div>
-    
-    <h3>Пример WSDL (Web Services Description Language):</h3>
-    <div class="code-block">
-&lt;?xml version="1.0"?&gt;
-&lt;definitions name="UserService"
-  targetNamespace="https://api.example.com/user"
-  xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;
-  
-  &lt;types&gt;
-    &lt;xsd:schema&gt;
-      &lt;xsd:element name="GetUserRequest"&gt;
-        &lt;xsd:complexType&gt;
-          &lt;xsd:sequence&gt;
-            &lt;xsd:element name="userId" type="xsd:integer"/&gt;
-          &lt;/xsd:sequence&gt;
-        &lt;/xsd:complexType&gt;
-      &lt;/xsd:element&gt; &lt;!-- Закрывающий тег добавлен --&gt;
-    &lt;/xsd:schema&gt;
-  &lt;/types&gt;
-  
-  &lt;message name="GetUserInput"&gt;
-    &lt;part name="body" element="tns:GetUserRequest"/&gt;
-  &lt;/message&gt;
-  
-  &lt;portType name="UserPortType"&gt;
-    &lt;operation name="GetUser"&gt;
-      &lt;input message="tns:GetUserInput"/&gt;
-    &lt;/operation&gt;
-  &lt;/portType&gt;
-&lt;/definitions&gt;
-            </div>
-</section>
-        
-        <!-- Artifacts Section -->
-        <section id="artifacts" class="section">
-            <h2><i class="fas fa-archive"></i> Артефакты в системном анализе</h2>
-            
-            <p>Артефакты - это документы, модели и информация, создаваемые в процессе анализа системы:</p>
-            
-            <ul>
-                <li>Требования (функциональные и нефункциональные)</li>
-                <li>Диаграммы (BPMN, UML, последовательности)</li>
-                <li>Пользовательские истории (User Stories)</li>
-                <li>Сценарии использования (Use Cases)</li>
-                <li>Прототипы интерфейсов</li>
-                <li>Глоссарий терминов</li>
-                <li>Отчеты об анализе</li>
-            </ul>
-            
-            <div class="quick-links">
-                <a href="#requirements" class="quick-link">Требования</a>
-                <a href="#use-cases" class="quick-link">Use Cases</a>
-                <a href="#user-stories" class="quick-link">User Stories</a>
-            </div>
-            
-            <div class="example">
-                <div class="example-header"><i class="fas fa-file-alt"></i> Пример артефакта: User Story</div>
-                <p>"Как зарегистрированный пользователь, я хочу иметь возможность сбросить пароль, чтобы восстановить доступ к аккаунту, если забыл пароль"</p>
-            </div>
-        </section>
-
-          <!-- Stakeholders Section -->
-<section id="stakeholders" class="section">
-    <h2><i class="fas fa-users"></i> Стейкхолдеры</h2>
-    
-    <p>Стейкхолдеры - это лица или организации, которые имеют интерес в проекте и могут повлиять на его успех или неудачу:</p>
-    
-    <ul>
-        <li><strong>Заказчики</strong> - определяют бизнес-требования и финансируют проект</li>
-        <li><strong>Пользователи</strong> - непосредственно работают с системой</li>
-        <li><strong>Разработчики</strong> - реализуют техническое решение</li>
-        <li><strong>Тестировщики</strong> - обеспечивают качество продукта</li>
-        <li><strong>Руководство</strong> - отвечает за стратегические решения</li>
-        <li><strong>Технические эксперты</strong> - предоставляют предметную экспертизу</li>
-    </ul>
-    
-    <h3>Как взаимодействовать со стейкхолдерами:</h3>
-    <ol>
-        <li><strong>Идентификация</strong> - составьте полный список всех заинтересованных сторон</li>
-        <li><strong>Анализ влияния</strong> - оцените уровень влияния каждого стейкхолдера</li>
-        <li><strong>План коммуникации</strong> - определите частоту и формат взаимодействия</li>
-        <li><strong>Управление ожиданиями</strong> - четко формулируйте что возможно, а что нет</li>
-        <li><strong>Обратная связь</strong> - регулярно собирайте и анализируйте мнения</li>
-    </ol>
-    
-    <div class="highlight-box">
-        <p><strong>Совет:</strong> Используйте матрицу влияния/заинтересованности для приоритизации работы со стейкхолдерами. Регулярно обновляйте карту стейкхолдеров по мере развития проекта.</p>
-    </div>
-</section>
-
-<!-- User Stories Section -->
-<section id="user-stories" class="section">
-    <h2><i class="fas fa-book-open"></i> User stories</h2>
-    
-    <p>User story (история пользователя) - это краткое описание функциональности с точки зрения конечного пользователя:</p>
-    
-    <div class="example">
-        <div class="example-header"><i class="fas fa-code"></i> Формат user story</div>
-        <p>"Как [роль пользователя], я хочу [функция], чтобы [получить пользу/решить проблему]"</p>
-    </div>
-    
-    <h3>Критерии хорошей user story (INVEST):</h3>
-    <ul>
-        <li><strong>Independent</strong> - независимая от других историй</li>
-        <li><strong>Negotiable</strong> - подлежит обсуждению и уточнению</li>
-        <li><strong>Valuable</strong> - предоставляет ценность для пользователя</li>
-        <li><strong>Estimable</strong> - может быть оценена по сложности</li>
-        <li><strong>Small</strong> - достаточно мала для реализации за один спринт</li>
-        <li><strong>Testable</strong> - имеет четкие критерии приемки</li>
-    </ul>
-    
-    <h3>Примеры:</h3>
-    <div class="example">
-        <p>"Как покупатель, я хочу фильтровать товары по цене, чтобы быстрее находить подходящие варианты"</p>
-        <p>"Как менеджер, я хочу экспортировать отчет в Excel, чтобы анализировать данные"</p>
-    </div>
-</section>
-
-<!-- BPMN Section -->
-<section id="bpmn" class="section">
-    <h2><i class="fas fa-project-diagram"></i> BPMN (Business Process Model and Notation)</h2>
-    
-    <p>BPMN - стандартная нотация для моделирования бизнес-процессов:</p>
-    
-    <h3>Основные элементы:</h3>
-    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-        <tr>
-            <th style="border:1px solid #ddd; padding:8px;">Элемент</th>
-            <th style="border:1px solid #ddd; padding:8px;">Обозначение</th>
-            <th style="border:1px solid #ddd; padding:8px;">Описание</th>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Задача</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:50px; height:30px; border:1px solid #000; border-radius:5px; margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Единица работы в процессе</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Событие</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:30px; height:30px; border:1px solid #000; border-radius:50%; margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Что-то, что происходит в процессе</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Шлюз</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:40px; height:40px; border:1px solid #000; transform:rotate(45deg); margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Точка принятия решений и ветвления</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Пул/дорожка</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:100px; height:50px; border:1px solid #000; margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Участники процесса и их зоны ответственности</td>
-        </tr>
-    </table>
-    
-    <div class="highlight-box">
-        <p><strong>Преимущества BPMN:</strong> Стандартизация нотации, наглядное представление процессов, возможность исполнимых моделей, интеграция с системами управления процессами.</p>
-    </div>
-    
-    <h3>Пример простого процесса:</h3>
-    <div class="example">
-        <p>1. Стартовое событие → 2. Проверка документации → 3. [Валидна] Обработка заявки → 4. Финиш</p>
-        <p>3. [Невалидна] Уведомление клиента → 4. Финиш</p>
-    </div>
-</section>
-
-<!-- REST Section -->
-<section id="rest" class="section">
-    <h2><i class="fas fa-exchange-alt"></i> REST (Representational State Transfer)</h2>
-    
-    <p>REST - архитектурный стиль для распределенных систем, основанный на 6 принципах:</p>
-    
-    <ol>
-        <li><strong>Единообразие интерфейса</strong> - стандартные методы и форматы</li>
-        <li><strong>Отсутствие состояния (Stateless)</strong> - каждый запрос самодостаточен</li>
-        <li><strong>Кэширование</strong> - явное указание возможности кэширования</li>
-        <li><strong>Клиент-сервер</strong> - разделение ответственности</li>
-        <li><strong>Многоуровневая система</strong> - иерархия компонентов</li>
-        <li><strong>Код по требованию (опционально)</strong> - возможность расширения функциональности</li>
-    </ol>
-    
-    <h3>REST vs RESTful:</h3>
-    <div class="example">
-        <p><strong>REST</strong> - набор архитектурных принципов</p>
-        <p><strong>RESTful</strong> - API, полностью соответствующий REST-принципам</p>
-        <p><strong>REST API</strong> - интерфейс, реализующий REST подход</p>
-    </div>
-    
-    <h3>Статус коды REST:</h3>
-    <ul>
-        <li><strong>2xx (Успех)</strong>: 200 OK, 201 Created, 204 No Content</li>
-        <li><strong>3xx (Перенаправление)</strong>: 301 Moved, 304 Not Modified</li>
-        <li><strong>4xx (Ошибка клиента)</strong>: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</li>
-        <li><strong>5xx (Ошибка сервера)</strong>: 500 Internal Error, 503 Service Unavailable</li>
-    </ul>
-</section>
-
-<!-- DDD Section -->
-<section id="ddd" class="section">
-    <h2><i class="fas fa-layer-group"></i> DDD (Domain Driven Design)</h2>
-    
-    <p>Domain Driven Design - подход к разработке сложных систем через глубокое погружение в предметную область:</p>
-    
-    <h3>Основные концепции DDD:</h3>
-    <ul>
-        <li><strong>Домен (Domain)</strong> - предметная область системы</li>
-        <li><strong>Модель (Model)</strong> - абстракция ключевых концепций домена</li>
-        <li><strong>Ограниченный контекст (Bounded Context)</strong> - четкие границы моделей</li>
-        <li><strong>Универсальный язык (Ubiquitous Language)</strong> - единая терминология</li>
-        <li><strong>Агрегаты (Aggregates)</strong> - кластеры связанных объектов</li>
-        <li><strong>События домена (Domain Events)</strong> - значимые изменения в системе</li>
-    </ul>
-    
-    <div class="example">
-        <div class="example-header"><i class="fas fa-code"></i> Пример DDD в банковской сфере</div>
-        <p>Домен: Банковские операции<br>
-        Ограниченные контексты: Платежи, Кредитование, Счета<br>
-        Агрегаты: БанковскийСчет (включая баланс, историю операций)<br>
-        События: СчетОткрыт, ПлатежПроведен, ЛимитПревышен</p>
-    </div>
-    
-    <h3>Преимущества DDD:</h3>
-    <ul>
-        <li>Глубокая связь между бизнес-логикой и реализацией</li>
-        <li>Четкое разделение ответственности</li>
-        <li>Устойчивость к изменениям требований</li>
-        <li>Эффективная коммуникация между разработчиками и экспертами</li>
-    </ul>
-</section>
-
 <!-- Kanban vs Scrum Section -->
 <section id="kanban-scrum" class="section">
     <h2><i class="fas fa-columns"></i> Kanban vs Scrum</h2>
@@ -2385,174 +2501,6 @@ components:
         <a href="https://swagger.io/docs/" target="_blank" class="quick-link">Документация Swagger</a>
     </div>
 </section>
-        
-        <!-- Requirements Section -->
-        <section id="requirements" class="section">
-            <h2><i class="fas fa-clipboard-list"></i> Виды требований</h2>
-            
-            <h3>Функциональные требования</h3>
-            <p>Определяют, что система должна делать:</p>
-            <ul>
-                <li>Основные функции системы (регистрация, авторизация)</li>
-                <li>Бизнес-процессы и сценарии использования</li>
-                <li>Требования к обработке данных</li>
-                <li>Взаимодействие с другими системами</li>
-            </ul>
-            
-            <div class="example">
-                <div class="example-header"><i class="fas fa-code"></i> Пример</div>
-                <p>"Система должна позволять пользователям регистрироваться и входить с использованием учетных записей в социальных сетях"</p>
-            </div>
-            
-            <h3>Нефункциональные требования</h3>
-            <p>Определяют характеристики системы:</p>
-            <ul>
-                <li>Производительность (скорость обработки запросов)</li>
-                <li>Масштабируемость</li>
-                <li>Надежность</li>
-                <li>Безопасность</li>
-                <li>Удобство использования</li>
-            </ul>
-            
-            <div class="example">
-                <div class="example-header"><i class="fas fa-code"></i> Пример</div>
-                <p>"Система должна обеспечивать скорость обработки запросов не менее 1000 запросов в секунду"</p>
-            </div>
-            
-            <h3>Критерии требований</h3>
-            <ul>
-                <li><strong>Релевантность</strong> - требование должно быть связано с целью</li>
-                <li><strong>Четкость</strong> - однозначная формулировка</li>
-                <li><strong>Измеримость</strong> - возможность оценки выполнения</li>
-                <li><strong>Выполнимость</strong> - реалистичность реализации</li>
-                <li><strong>Приоритетность</strong> - важность для проекта</li>
-                <li><strong>Атомарность</strong> - неделимость требования</li>
-                <li><strong>Тестируемость</strong> - возможность проверки выполнения</li>
-            </ul>
-            <div class="highlight-box">
-        <h3>Чеклист для проверки требований:</h3>
-        <ul>
-            <li><input type="checkbox"> Все требования измеримы?</li>
-            <li><input type="checkbox"> Есть критерии приемки?</li>
-            <li><input type="checkbox"> Учтены все сценарии использования?</li>
-            <li><input type="checkbox"> Соответствуют бизнес-целям?</li>
-            <li><input type="checkbox"> Нет противоречий с другими требованиями?</li>
-        </ul>
-    </div>        
-        </section>
-        
-        <!-- Information Gathering Section -->
-        <section id="info-gathering" class="section">
-            <h2><i class="fas fa-search"></i> Методы сбора информации</h2>
-            
-            <p>Эффективные методы сбора информации для системного аналитика:</p>
-            
-            <ol>
-                <li><strong>Опрос</strong> - интервью, анкеты, телефонные опросы</li>
-                <li><strong>Наблюдение</strong> - прямое или косвенное изучение процессов</li>
-                <li><strong>Эксперимент</strong> - тестирование гипотез в контролируемых условиях</li>
-                <li><strong>Анализ документов</strong> - изучение существующей документации</li>
-                <li><strong>Фокус-группы</strong> - обсуждение темы с группой людей</li>
-                <li><strong>Глубинное интервью</strong> - детальное изучение мнений респондентов</li>
-                <li><strong>Вторичный анализ данных</strong> - использование существующих данных</li>
-            </ol>
-            
-            <div class="highlight-box">
-                <p><strong>Совет:</strong> Комбинируйте несколько методов для получения более полной картины. Например, начните с анализа документов, затем проведите интервью с ключевыми стейкхолдерами.</p>
-            </div>
-        </section>
-        
-        <!-- Use Cases Section -->
-        <section id="use-cases" class="section">
-            <h2><i class="fas fa-sitemap"></i> Use Cases</h2>
-            
-            <p>Use case (случай использования) - описание сценария взаимодействия пользователя с системой:</p>
-            
-            <h3>Как пишутся Use Cases:</h3>
-            <ol>
-                <li>Определение контекста использования</li>
-                <li>Описание основных сценариев использования</li>
-                <li>Детализация сценариев использования</li>
-                <li>Документирование use case</li>
-            </ol>
-            
-            <div class="example">
-                <div class="example-header"><i class="fas fa-code"></i> Пример: Заказ такси</div>
-                <p><strong>Контекст:</strong> Пользователь хочет заказать такси</p>
-                <p><strong>Основной сценарий:</strong></p>
-                <ol>
-                    <li>Пользователь вводит начальную и конечную точку маршрута</li>
-                    <li>Система предлагает выбрать тип автомобиля и тариф</li>
-                    <li>Пользователь выбирает тариф и автомобиль</li>
-                    <li>Пользователь подтверждает заказ</li>
-                    <li>Система отображает информацию о заказе</li>
-                </ol>
-                <p><strong>Альтернативный сценарий:</strong> Если пользователь не находит подходящий тариф, он может изменить параметры поиска</p>
-            </div>
-        </section>
-        
-        <!-- API Section -->
-        <section id="api" class="section">
-            <h2><i class="fas fa-code"></i> API (Application Programming Interface)</h2>
-            
-            <p>API - набор правил и протоколов для взаимодействия между программными компонентами.</p>
-            
-            <h3>Типы API:</h3>
-            <ul>
-                <li><strong>Web API</strong> - доступ через сеть (обычно HTTP)</li>
-                <li><strong>Библиотечное API</strong> - набор функций/классов внутри приложения</li>
-                <li><strong>Операционная система API</strong> - для взаимодействия с ОС</li>
-            </ul>
-            
-            <div class="code-block">
-                // Пример REST API запроса
-                GET /api/books?author=J.K.%20Rowling HTTP/1.1
-                Host: example.com
-                Accept: application/json
-            </div>
-            
-            <h3>Популярные методы REST:</h3>
-            <ul>
-                <li><strong>GET</strong> - получение ресурсов</li>
-                <li><strong>POST</strong> - создание новых ресурсов</li>
-                <li><strong>PUT</strong> - обновление существующих ресурсов</li>
-                <li><strong>DELETE</strong> - удаление ресурсов</li>
-                <li><strong>PATCH</strong> - частичное обновление ресурса</li>
-            </ul>
-            
-            <div class="quick-links">
-                <a href="#rest" class="quick-link">REST API</a>
-                <a href="#swagger" class="quick-link">Swagger/OpenAPI</a>
-            </div>
-        </section>
-        
-        <!-- Microservices Section -->
-        <section id="microservices" class="section">
-            <h2><i class="fas fa-cubes"></i> Микросервисная архитектура</h2>
-            
-            <p>Микросервисы - архитектурный подход, при котором приложение разбивается на небольшие, независимые сервисы.</p>
-            
-            <h3>Преимущества микросервисов:</h3>
-            <ul>
-                <li>Гибкая разработка и масштабирование</li>
-                <li>Лучшая изоляция ошибок</li>
-                <li>Возможность использования разных технологий</li>
-                <li>Более простая поддержка и развертывание</li>
-            </ul>
-            
-            <h3>Когда переходить на микросервисы:</h3>
-            <ul>
-                <li>При увеличении масштаба проекта</li>
-                <li>Для улучшения масштабируемости</li>
-                <li>Для повышения гибкости разработки</li>
-                <li>Для улучшения отказоустойчивости</li>
-                <li>Для ускорения разработки</li>
-            </ul>
-            
-            <div class="highlight-box">
-                <p><strong>Важно:</strong> Переход к микросервисной архитектуре требует значительных усилий и может привести к увеличению сложности системы.</p>
-            </div>
-        </section>
         
         <!-- UX/UI Principles Section -->
         <section id="ux-ui" class="section">
