@@ -1190,4 +1190,29 @@ if (document.querySelector('.competency-list')) {
     }
 }
 // ===== КОНЕЦ КОДА ДЛЯ КАРТЫ КОМПЕТЕНЦИЙ =====
+// Получаем все кнопки
+        const scrollButtons = document.querySelectorAll('#scrollToTopBtn');
+        
+        // Обработчик прокрутки страницы
+        window.onscroll = function() {
+            const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+            
+            scrollButtons.forEach(btn => {
+                if (scrollPosition > 300) {
+                    btn.style.display = 'block';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        };
+
+        // Обработчик клика по кнопкам
+        scrollButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
 });
