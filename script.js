@@ -1,7 +1,8 @@
     // Объявляем глобальные переменные
 let timerInterval = null;
+let testTimerInterval = null;
 
-// Функции для работы с таймером выносим в глобальную область видимости
+// Основные функции для работы с таймером
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -45,6 +46,235 @@ function stopTimer() {
             timerElement.textContent = '00:00';
         }
     }
+}
+
+// Новый код для системы тестирования
+const testQuestions = {
+    requirements: [
+        {
+            question: "Что такое функциональные требования?",
+            options: [
+                "Описание того, что система должна делать",
+                "Характеристики производительности системы",
+                "Требования к безопасности системы",
+                "Требования к удобству использования"
+            ],
+            answer: 0
+        },
+        {
+            question: "Что означает критерий INVEST для user stories?",
+            options: [
+                "Independent, Negotiable, Valuable, Estimable, Small, Testable",
+                "Integrated, Negotiable, Valuable, Estimable, Simple, Testable",
+                "Independent, Negotiable, Visible, Estimable, Small, Testable",
+                "Integrated, Negotiable, Visible, Estimable, Simple, Testable"
+            ],
+            answer: 0
+        }
+    ],
+    api: [
+        {
+            question: "Какой HTTP-метод используется для создания ресурса в REST API?",
+            options: ["GET", "POST", "PUT", "DELETE"],
+            answer: 1
+        },
+        {
+            question: "Что означает статус код 404?",
+            options: [
+                "Успешный запрос",
+                "Ошибка сервера",
+                "Ресурс не найден",
+                "Запрещено"
+            ],
+            answer: 2
+        }
+    ],
+    db: [
+        {
+            question: "Что такое первая нормальная форма (1NF)?",
+            options: [
+                "Отсутствие транзитивных зависимостей",
+                "Атомарность значений в столбцах",
+                "Отсутствие частичных зависимостей",
+                "Все ключи уникальны"
+            ],
+            answer: 1
+        },
+        {
+            question: "Какой тип JOIN возвращает все записи из левой таблицы?",
+            options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN"],
+            answer: 1
+        }
+    ],
+    bpmn: [
+        {
+            question: "Какой элемент BPMN обозначает точку принятия решений?",
+            options: ["Задача", "Событие", "Шлюз", "Пул"],
+            answer: 2
+        }
+    ],
+    security: [
+        {
+            question: "Что такое SQL-инъекция?",
+            options: [
+                "Метод оптимизации SQL-запросов",
+                "Уязвимость, позволяющая выполнить произвольный SQL-код",
+                "Техника соединения таблиц в SQL",
+                "Метод шифрования данных в БД"
+            ],
+            answer: 1
+        }
+    ],
+    ddd: [
+        {
+            question: "Что означает DDD в разработке ПО?",
+            options: [
+                "Data-Driven Development",
+                "Domain-Driven Design",
+                "Database Development",
+                "Dynamic Design"
+            ],
+            answer: 1
+        }
+    ]
+};
+
+let currentTest = [];
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let testStartTime;
+
+function startTest() {
+    const section = document.getElementById('test-section').value;
+    const questionCount = parseInt(document.getElementById('question-count').value) || 10;
+    const randomOrder = document.getElementById('random-order').checked;
+    
+    // Получаем вопросы для выбранного раздела
+    let questions = [...testQuestions[section]];
+    
+    if (!questions || questions.length === 0) {
+        alert('Тест для этого раздела пока недоступен');
+        return;
+    }
+    
+    // Выбираем случайные вопросы если нужно
+    if (questions.length > questionCount) {
+        if (randomOrder) {
+            questions = shuffleArray(questions).slice(0, questionCount);
+        } else {
+            questions = questions.slice(0, questionCount);
+        }
+    }
+    
+    currentTest = questions;
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length).fill(null);
+    
+    // Обновляем UI
+    document.getElementById('testContent').style.display = 'block';
+    document.getElementById('total-questions').textContent = questions.length;
+    
+    // Запускаем таймер теста
+    testStartTime = new Date();
+    startTestTimer();
+    
+    // Показываем первый вопрос
+    showQuestion(currentQuestionIndex);
+}
+
+function showQuestion(index) {
+    const question = currentTest[index];
+    const questionHtml = `
+        <div class="test-question">
+            <h4>${question.question}</h4>
+            <div class="test-options">
+                ${question.options.map((option, i) => `
+                    <div class="test-option ${userAnswers[index] === i ? 'selected' : ''}" 
+                         onclick="selectOption(${i})">
+                        ${option}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('testQuestions').innerHTML = questionHtml;
+    document.getElementById('current-question').textContent = index + 1;
+}
+
+function selectOption(optionIndex) {
+    userAnswers[currentQuestionIndex] = optionIndex;
+    showQuestion(currentQuestionIndex);
+}
+
+function nextQuestion() {
+    if (currentQuestionIndex < currentTest.length - 1) {
+        currentQuestionIndex++;
+        showQuestion(currentQuestionIndex);
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion(currentQuestionIndex);
+    }
+}
+
+function submitTest() {
+    clearInterval(testTimerInterval);
+    const endTime = new Date();
+    const timeTaken = Math.floor((endTime - testStartTime) / 1000);
+    
+    // Подсчет результатов
+    let correctCount = 0;
+    const resultsHtml = currentTest.map((question, index) => {
+        const isCorrect = userAnswers[index] === question.answer;
+        if (isCorrect) correctCount++;
+        
+        return `
+            <div class="result-item">
+                <p><strong>Вопрос ${index + 1}:</strong> ${question.question}</p>
+                <p>Ваш ответ: <span class="${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                    ${question.options[userAnswers[index]] || 'Нет ответа'}
+                </span></p>
+                ${!isCorrect ? `<p>Правильный ответ: <span class="correct-answer">${question.options[question.answer]}</span></p>` : ''}
+            </div>
+        `;
+    }).join('');
+    
+    const percentage = Math.round((correctCount / currentTest.length) * 100);
+    
+    document.getElementById('testResult').innerHTML = `
+        <div class="result-summary">
+            <h3>Результаты тестирования</h3>
+            <p>Правильных ответов: ${correctCount} из ${currentTest.length} (${percentage}%)</p>
+            <p>Затраченное время: ${formatTime(timeTaken)}</p>
+        </div>
+        <div class="result-details">
+            ${resultsHtml}
+        </div>
+        <button onclick="startTest()" style="margin-top:20px;">Пройти тест снова</button>
+    `;
+}
+
+function startTestTimer() {
+    clearInterval(testTimerInterval);
+    let seconds = 0;
+    
+    testTimerInterval = setInterval(() => {
+        seconds++;
+        document.getElementById('test-timer').textContent = formatTime(seconds);
+    }, 1000);
+}
+
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -898,6 +1128,10 @@ function createBookmarkButtons() {
             }, 300);
         }
     }
+
+    // Завершаем обработчиками для тестовой системы
+    document.querySelector('.test-selection button').addEventListener('click', startTest);
+    document.querySelector('.test-controls button[onclick="submitTest()"]').addEventListener('click', submitTest);
 
     renderNotes();
     // Инициализация ER-диаграммы
