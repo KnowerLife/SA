@@ -275,269 +275,6 @@
                 </p>
             </div>
         </section>
-
-        <!-- Обновленный блок #testing-system -->
-<section id="testing-system" class="section">
-    <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
-    
-    <div class="test-container">
-        <div class="test-selection">
-            <h3>Выберите раздел для тестирования:</h3>
-            <select id="test-section">
-                <option value="requirements">Требования</option>
-                <option value="api">API</option>
-                <option value="db">Базы данных</option>
-                <option value="bpmn">BPMN</option>
-                <option value="security">Безопасность</option>
-                <option value="ddd">DDD</option>
-            </select>
-            
-            <div class="test-settings">
-                <label>
-                    <input type="checkbox" id="random-order"> Случайный порядок вопросов
-                </label>
-                <label>
-                    <input type="number" id="question-count" min="5" max="20" value="10"> Количество вопросов
-                </label>
-            </div>
-            
-            <button onclick="startTest()">Начать тест</button>
-        </div>
-        
-        <div class="test-content" id="testContent" style="display:none;">
-            <div class="test-header">
-                <div class="test-progress">
-                    Вопрос <span id="current-question">1</span> из <span id="total-questions">10</span>
-                </div>
-                <div class="test-timer">
-                    <i class="fas fa-clock"></i> <span id="test-timer">00:00</span>
-                </div>
-            </div>
-            
-            <div id="testQuestions"></div>
-            
-            <div class="test-controls">
-                <button onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Назад</button>
-                <button onclick="nextQuestion()">Далее <i class="fas fa-arrow-right"></i></button>
-                <button onclick="submitTest()">Завершить тест</button>
-            </div>
-            
-            <div id="testResult" class="test-result"></div>
-        </div>
-    </div>
-</section>
-
-        <section id="analysis-patterns" class="section">
-    <h2><i class="fas fa-shapes"></i> Паттерны анализа и проектирования</h2>
-    
-    <div class="pattern-card">
-        <h3>Шаблон "Агрегатор"</h3>
-        <p><strong>Проблема:</strong> Необходимость объединения данных из нескольких источников</p>
-        <p><strong>Решение:</strong> Создание единого интерфейса для доступа к разрозненным данным</p>
-        <div class="code-block">
-// Пример реализации
-class DataAggregator {
-    constructor(sources) {
-        this.sources = sources;
-    }
-    
-    async fetchData() {
-        const results = await Promise.all(
-            this.sources.map(source => source.getData())
-        );
-        return results.flat();
-    }
-}
-        </div>
-        <p><strong>Применение:</strong> Сводные отчеты, дашборды, унифицированные API</p>
-    </div>
-    
-    <div class="pattern-card">
-        <h3>Шаблон "Валидатор"</h3>
-        <p><strong>Проблема:</strong> Обеспечение корректности входящих данных</p>
-        <p><strong>Решение:</strong> Централизованная система проверки данных</p>
-        <div class="code-block">
-// Пример реализации
-class DataValidator {
-    static validate(userInput, rules) {
-        return rules.every(rule => rule(userInput));
-    }
-}
-
-// Правила валидации
-const emailRule = input => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
-const ageRule = input => input > 0 && input < 120;
-        </div>
-        <p><strong>Применение:</strong> Формы ввода, API, импорт данных</p>
-    </div>
-    
-    <div class="pattern-card">
-        <h3>Шаблон "Состояние" для бизнес-процессов</h3>
-        <p><strong>Проблема:</strong> Управление сложными жизненными циклами объектов</p>
-        <p><strong>Решение:</strong> Реализация конечного автомата (state machine)</p>
-        <div class="example">
-            <div class="example-header"><i class="fas fa-sitemap"></i> Пример состояний заказа</div>
-            <p>Создан → Оплачен → В обработке → Отправлен → Доставлен</p>
-            <p>Возможные переходы: Оплачен → Отменен, В обработке → Возврат</p>
-        </div>
-        <p><strong>Применение:</strong> Заказы, документооборот, workflow</p>
-    </div>
-        </section>
-
-        <section id="practical-case-studies" class="section">
-    <h2><i class="fas fa-briefcase"></i> Практические кейсы</h2>
-    
-    <div class="case-study">
-        <h3>Оптимизация процесса заказа в e-commerce</h3>
-        <p><strong>Проблема:</strong> 40% пользователей не завершали заказ на шаге оплаты</p>
-        <p><strong>Анализ:</strong> 
-            <ul>
-                <li>Таймтрекинг шагов оформления заказа</li>
-                <li>Аналитика кликов и скроллинга</li>
-                <li>Опросы пользователей</li>
-            </ul>
-        </p>
-        <p><strong>Решение:</strong>
-            <ul>
-                <li>Упрощение формы (убраны 3 необязательных поля)</li>
-                <li>Добавление экспресс-оплаты (1 клик)</li>
-                <li>Интеграция с цифровыми кошельками</li>
-            </ul>
-        </p>
-        <p><strong>Результат:</strong> Увеличение конверсии на 27%, сокращение времени оформления на 65%</p>
-    </div>
-    
-    <div class="case-study">
-        <h3>Миграция с монолита на микросервисы</h3>
-        <p><strong>Проблема:</strong> Невозможность масштабирования, частые простои</p>
-        <p><strong>Анализ:</strong> 
-            <ul>
-                <li>Выделение бизнес-доменов</li>
-                <li>Анализ связей между модулями</li>
-                <li>Определение границ сервисов</li>
-            </ul>
-        </p>
-        <p><strong>Решение:</strong>
-            <ul>
-                <li>Поэтапная миграция модулей</li>
-                <li>Внедрение API Gateway</li>
-                <li>Реализация Event-Driven Architecture</li>
-            </ul>
-        </p>
-        <p><strong>Результат:</strong> Уменьшение времени деплоя с 3 часов до 15 минут, увеличение отказоустойчивости</p>
-    </div>
-        </section>
-
-        <section id="practical-checklists" class="section">
-    <h2><i class="fas fa-tasks"></i> Практические чеклисты</h2>
-    
-    <div class="checklist">
-        <h3>Чеклист анализа нового проекта</h3>
-        <ul>
-            <li><input type="checkbox"> Определение стейкхолдеров и их интересов</li>
-            <li><input type="checkbox"> Анализ бизнес-целей и KPI</li>
-            <li><input type="checkbox"> Сбор существующей документации</li>
-            <li><input type="checkbox"> Изучение конкурентных решений</li>
-            <li><input type="checkbox"> Определение технических ограничений</li>
-            <li><input type="checkbox"> Составление глоссария терминов</li>
-            <li><input type="checkbox"> Разработка roadmap проекта</li>
-        </ul>
-    </div>
-    
-    <div class="checklist">
-        <h3>Чеклист проектирования API</h3>
-        <ul>
-            <li><input type="checkbox"> Определение ресурсов и их отношений</li>
-            <li><input type="checkbox"> Проектирование эндпоинтов (RESTful принципы)</li>
-            <li><input type="checkbox"> Определение форматов запросов/ответов</li>
-            <li><input type="checkbox"> Проектирование системы аутентификации</li>
-            <li><input type="checkbox"> Определение кодов ошибок и их семантики</li>
-            <li><input type="checkbox"> Планирование версионирования</li>
-            <li><input type="checkbox"> Документирование (OpenAPI/Swagger)</li>
-        </ul>
-    </div>
-        </section>
-
-        
-
-        <section id="anti-patterns" class="section">
-    <h2><i class="fas fa-exclamation-circle"></i> Антипаттерны системного анализа</h2>
-    
-    <div class="anti-pattern">
-        <h3>Золотой молоток</h3>
-        <p><strong>Описание:</strong> Использование знакомого решения для всех проблем без учета контекста</p>
-        <p><strong>Пример:</strong> Применение блокчейна для простых систем учета без реальной необходимости</p>
-        <p><strong>Решение:</strong> Выбор технологий на основе требований, а не личных предпочтений</p>
-    </div>
-    
-    <div class="anti-pattern">
-        <h3>Аналитический паралич</h3>
-        <p><strong>Описание:</strong> Бесконечный сбор требований без перехода к реализации</p>
-        <p><strong>Пример:</strong> 6 месяцев на анализ простого мобильного приложения</p>
-        <p><strong>Решение:</strong> Time-boxed анализ, итеративный подход, MVP</p>
-    </div>
-    
-    <div class="anti-pattern">
-        <h3>Сферический конь в вакууме</h3>
-        <p><strong>Описание:</strong> Проектирование идеального решения без учета реальных ограничений</p>
-        <p><strong>Пример:</strong> Требование мгновенной обработки 1 млн запросов при бюджете на 2 сервера</p>
-        <p><strong>Решение:</strong> Учет технических, финансовых и временных ограничений</p>
-    </div>
-        </section>
-
-        <section id="interactive-examples" class="section">
-    <h2><i class="fas fa-flask"></i> Интерактивные примеры</h2>
-    
-    <div class="interactive-example">
-        <h3>SQL Редактор</h3>
-        <div class="editor-container">
-            <div class="editor-header">
-                <select id="db-schema">
-                    <option value="users">Пользователи</option>
-                    <option value="orders">Заказы</option>
-                </select>
-                <button onclick="runSQL()">Выполнить</button>
-            </div>
-            <textarea id="sql-editor">SELECT * FROM users;</textarea>
-            <div class="result-container">
-                <table id="sql-result">
-                    <thead><tr><th>ID</th><th>Имя</th><th>Email</th></tr></thead>
-                    <tbody>
-                        <tr><td>1</td><td>Иван</td><td>ivan@example.com</td></tr>
-                        <tr><td>2</td><td>Мария</td><td>maria@example.com</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    
-    <div class="interactive-example">
-        <h3>Диаграмма процессов</h3>
-        <div id="bpmn-diagram"></div>
-        <div class="diagram-controls">
-            <button onclick="addTask()">Добавить задачу</button>
-            <button onclick="addGateway()">Добавить шлюз</button>
-            <button onclick="saveDiagram()">Сохранить</button>
-        </div>
-    </div>
-</section>
-
-        
-<section id="knowledge-base" class="section">
-    <h2><i class="fas fa-book"></i> База знаний</h2>
-    
-    <div class="notes-container">
-        <div class="notes-header">
-            <input type="text" id="new-note-title" placeholder="Заголовок заметки">
-            <button onclick="addNote()"><i class="fas fa-plus"></i> Добавить</button>
-        </div>
-        
-        <div class="notes-list" id="notesList">
-            <!-- Заметки будут добавляться здесь -->
-        </div>
-    </div>
-</section>
-
         
         <!-- GraphQL Section -->
 <section id="graphql" class="section">
@@ -1203,6 +940,265 @@ const ageRule = input => input > 0 && input < 120;
         <button onclick="copyTemplate()" style="margin-top:10px; padding:8px 15px;">
             <i class="fas fa-copy"></i> Копировать
         </button>
+    </div>
+</section>
+
+        <section id="analysis-patterns" class="section">
+    <h2><i class="fas fa-shapes"></i> Паттерны анализа и проектирования</h2>
+    
+    <div class="pattern-card">
+        <h3>Шаблон "Агрегатор"</h3>
+        <p><strong>Проблема:</strong> Необходимость объединения данных из нескольких источников</p>
+        <p><strong>Решение:</strong> Создание единого интерфейса для доступа к разрозненным данным</p>
+        <div class="code-block">
+// Пример реализации
+class DataAggregator {
+    constructor(sources) {
+        this.sources = sources;
+    }
+    
+    async fetchData() {
+        const results = await Promise.all(
+            this.sources.map(source => source.getData())
+        );
+        return results.flat();
+    }
+}
+        </div>
+        <p><strong>Применение:</strong> Сводные отчеты, дашборды, унифицированные API</p>
+    </div>
+    
+    <div class="pattern-card">
+        <h3>Шаблон "Валидатор"</h3>
+        <p><strong>Проблема:</strong> Обеспечение корректности входящих данных</p>
+        <p><strong>Решение:</strong> Централизованная система проверки данных</p>
+        <div class="code-block">
+// Пример реализации
+class DataValidator {
+    static validate(userInput, rules) {
+        return rules.every(rule => rule(userInput));
+    }
+}
+
+// Правила валидации
+const emailRule = input => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
+const ageRule = input => input > 0 && input < 120;
+        </div>
+        <p><strong>Применение:</strong> Формы ввода, API, импорт данных</p>
+    </div>
+    
+    <div class="pattern-card">
+        <h3>Шаблон "Состояние" для бизнес-процессов</h3>
+        <p><strong>Проблема:</strong> Управление сложными жизненными циклами объектов</p>
+        <p><strong>Решение:</strong> Реализация конечного автомата (state machine)</p>
+        <div class="example">
+            <div class="example-header"><i class="fas fa-sitemap"></i> Пример состояний заказа</div>
+            <p>Создан → Оплачен → В обработке → Отправлен → Доставлен</p>
+            <p>Возможные переходы: Оплачен → Отменен, В обработке → Возврат</p>
+        </div>
+        <p><strong>Применение:</strong> Заказы, документооборот, workflow</p>
+    </div>
+        </section>
+
+        <section id="anti-patterns" class="section">
+    <h2><i class="fas fa-exclamation-circle"></i> Антипаттерны системного анализа</h2>
+    
+    <div class="anti-pattern">
+        <h3>Золотой молоток</h3>
+        <p><strong>Описание:</strong> Использование знакомого решения для всех проблем без учета контекста</p>
+        <p><strong>Пример:</strong> Применение блокчейна для простых систем учета без реальной необходимости</p>
+        <p><strong>Решение:</strong> Выбор технологий на основе требований, а не личных предпочтений</p>
+    </div>
+    
+    <div class="anti-pattern">
+        <h3>Аналитический паралич</h3>
+        <p><strong>Описание:</strong> Бесконечный сбор требований без перехода к реализации</p>
+        <p><strong>Пример:</strong> 6 месяцев на анализ простого мобильного приложения</p>
+        <p><strong>Решение:</strong> Time-boxed анализ, итеративный подход, MVP</p>
+    </div>
+    
+    <div class="anti-pattern">
+        <h3>Сферический конь в вакууме</h3>
+        <p><strong>Описание:</strong> Проектирование идеального решения без учета реальных ограничений</p>
+        <p><strong>Пример:</strong> Требование мгновенной обработки 1 млн запросов при бюджете на 2 сервера</p>
+        <p><strong>Решение:</strong> Учет технических, финансовых и временных ограничений</p>
+    </div>
+        </section>
+
+        <section id="practical-case-studies" class="section">
+    <h2><i class="fas fa-briefcase"></i> Практические кейсы</h2>
+    
+    <div class="case-study">
+        <h3>Оптимизация процесса заказа в e-commerce</h3>
+        <p><strong>Проблема:</strong> 40% пользователей не завершали заказ на шаге оплаты</p>
+        <p><strong>Анализ:</strong> 
+            <ul>
+                <li>Таймтрекинг шагов оформления заказа</li>
+                <li>Аналитика кликов и скроллинга</li>
+                <li>Опросы пользователей</li>
+            </ul>
+        </p>
+        <p><strong>Решение:</strong>
+            <ul>
+                <li>Упрощение формы (убраны 3 необязательных поля)</li>
+                <li>Добавление экспресс-оплаты (1 клик)</li>
+                <li>Интеграция с цифровыми кошельками</li>
+            </ul>
+        </p>
+        <p><strong>Результат:</strong> Увеличение конверсии на 27%, сокращение времени оформления на 65%</p>
+    </div>
+    
+    <div class="case-study">
+        <h3>Миграция с монолита на микросервисы</h3>
+        <p><strong>Проблема:</strong> Невозможность масштабирования, частые простои</p>
+        <p><strong>Анализ:</strong> 
+            <ul>
+                <li>Выделение бизнес-доменов</li>
+                <li>Анализ связей между модулями</li>
+                <li>Определение границ сервисов</li>
+            </ul>
+        </p>
+        <p><strong>Решение:</strong>
+            <ul>
+                <li>Поэтапная миграция модулей</li>
+                <li>Внедрение API Gateway</li>
+                <li>Реализация Event-Driven Architecture</li>
+            </ul>
+        </p>
+        <p><strong>Результат:</strong> Уменьшение времени деплоя с 3 часов до 15 минут, увеличение отказоустойчивости</p>
+    </div>
+        </section>
+
+        <section id="practical-checklists" class="section">
+    <h2><i class="fas fa-tasks"></i> Практические чеклисты</h2>
+    
+    <div class="checklist">
+        <h3>Чеклист анализа нового проекта</h3>
+        <ul>
+            <li><input type="checkbox"> Определение стейкхолдеров и их интересов</li>
+            <li><input type="checkbox"> Анализ бизнес-целей и KPI</li>
+            <li><input type="checkbox"> Сбор существующей документации</li>
+            <li><input type="checkbox"> Изучение конкурентных решений</li>
+            <li><input type="checkbox"> Определение технических ограничений</li>
+            <li><input type="checkbox"> Составление глоссария терминов</li>
+            <li><input type="checkbox"> Разработка roadmap проекта</li>
+        </ul>
+    </div>
+    
+    <div class="checklist">
+        <h3>Чеклист проектирования API</h3>
+        <ul>
+            <li><input type="checkbox"> Определение ресурсов и их отношений</li>
+            <li><input type="checkbox"> Проектирование эндпоинтов (RESTful принципы)</li>
+            <li><input type="checkbox"> Определение форматов запросов/ответов</li>
+            <li><input type="checkbox"> Проектирование системы аутентификации</li>
+            <li><input type="checkbox"> Определение кодов ошибок и их семантики</li>
+            <li><input type="checkbox"> Планирование версионирования</li>
+            <li><input type="checkbox"> Документирование (OpenAPI/Swagger)</li>
+        </ul>
+    </div>
+        </section>
+
+        <section id="interactive-examples" class="section">
+    <h2><i class="fas fa-flask"></i> Интерактивные примеры</h2>
+    
+    <div class="interactive-example">
+        <h3>SQL Редактор</h3>
+        <div class="editor-container">
+            <div class="editor-header">
+                <select id="db-schema">
+                    <option value="users">Пользователи</option>
+                    <option value="orders">Заказы</option>
+                </select>
+                <button onclick="runSQL()">Выполнить</button>
+            </div>
+            <textarea id="sql-editor">SELECT * FROM users;</textarea>
+            <div class="result-container">
+                <table id="sql-result">
+                    <thead><tr><th>ID</th><th>Имя</th><th>Email</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>Иван</td><td>ivan@example.com</td></tr>
+                        <tr><td>2</td><td>Мария</td><td>maria@example.com</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="interactive-example">
+        <h3>Диаграмма процессов</h3>
+        <div id="bpmn-diagram"></div>
+        <div class="diagram-controls">
+            <button onclick="addTask()">Добавить задачу</button>
+            <button onclick="addGateway()">Добавить шлюз</button>
+            <button onclick="saveDiagram()">Сохранить</button>
+        </div>
+    </div>
+</section>
+
+        <section id="knowledge-base" class="section">
+    <h2><i class="fas fa-book"></i> База знаний</h2>
+    
+    <div class="notes-container">
+        <div class="notes-header">
+            <input type="text" id="new-note-title" placeholder="Заголовок заметки">
+            <button onclick="addNote()"><i class="fas fa-plus"></i> Добавить</button>
+        </div>
+        
+        <div class="notes-list" id="notesList">
+            <!-- Заметки будут добавляться здесь -->
+        </div>
+    </div>
+</section>
+        
+                <!-- Обновленный блок #testing-system -->
+<section id="testing-system" class="section">
+    <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
+    
+    <div class="test-container">
+        <div class="test-selection">
+            <h3>Выберите раздел для тестирования:</h3>
+            <select id="test-section">
+                <option value="requirements">Требования</option>
+                <option value="api">API</option>
+                <option value="db">Базы данных</option>
+                <option value="bpmn">BPMN</option>
+                <option value="security">Безопасность</option>
+                <option value="ddd">DDD</option>
+            </select>
+            
+            <div class="test-settings">
+                <label>
+                    <input type="checkbox" id="random-order"> Случайный порядок вопросов
+                </label>
+                <label>
+                    <input type="number" id="question-count" min="5" max="20" value="10"> Количество вопросов
+                </label>
+            </div>
+            
+            <button onclick="startTest()">Начать тест</button>
+        </div>
+        
+        <div class="test-content" id="testContent" style="display:none;">
+            <div class="test-header">
+                <div class="test-progress">
+                    Вопрос <span id="current-question">1</span> из <span id="total-questions">10</span>
+                </div>
+                <div class="test-timer">
+                    <i class="fas fa-clock"></i> <span id="test-timer">00:00</span>
+                </div>
+            </div>
+            
+            <div id="testQuestions"></div>
+            
+            <div class="test-controls">
+                <button onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button onclick="nextQuestion()">Далее <i class="fas fa-arrow-right"></i></button>
+                <button onclick="submitTest()">Завершить тест</button>
+            </div>
+            
+            <div id="testResult" class="test-result"></div>
+        </div>
     </div>
 </section>
 
