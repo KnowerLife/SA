@@ -204,21 +204,25 @@
                 <li><a href="#anti-patterns"><i class="fas fa-exclamation-triangle"></i> Антипаттерны</a></li>
             </ul>
         </div>
+        
+        <!-- Практика -->
         <div class="category">
-                <h3>Практика</h3>
-                <ul class="nav-links">
-                    <li><a href="#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
-                    <li><a href="#checklists"><i class="fas fa-list-check"></i> Чеклисты</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Интерактив</h3>
-                <ul class="nav-links">
-                    <li><a href="#interactive-examples"><i class="fas fa-flask"></i> Интерактивные примеры</a></li>
-                    <li><a href="#knowledge-base"><i class="fas fa-book"></i> База знаний</a></li>
-                    <li><a href="#testing-system"><i class="fas fa-graduation-cap"></i> Проверка знаний</a></li>
-                </ul>
-            </div>
+            <h3>Практика</h3>
+            <ul class="nav-links">
+                <li><a href="#practical-case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                <li><a href="#practical-checklists"><i class="fas fa-list-check"></i> Чеклисты</a></li>
+            </ul>
+        </div>
+        
+        <!-- Интерактив -->
+        <div class="category">
+            <h3>Интерактив</h3>
+            <ul class="nav-links">
+                <li><a href="#interactive-examples"><i class="fas fa-flask"></i> Интерактивные примеры</a></li>
+                <li><a href="#knowledge-base"><i class="fas fa-book"></i> База знаний</a></li>
+                <li><a href="#testing-system"><i class="fas fa-graduation-cap"></i> Проверка знаний</a></li>
+            </ul>
+        </div>
         </div>
     </nav>
     
@@ -380,7 +384,7 @@ const ageRule = input => input > 0 && input < 120;
     </div>
         </section>
 
-        <section id="case-studies" class="section">
+        <section id="practical-case-studies" class="section">
     <h2><i class="fas fa-briefcase"></i> Практические кейсы</h2>
     
     <div class="case-study">
@@ -424,7 +428,7 @@ const ageRule = input => input > 0 && input < 120;
     </div>
         </section>
 
-        <section id="checklists" class="section">
+        <section id="practical-checklists" class="section">
     <h2><i class="fas fa-tasks"></i> Практические чеклисты</h2>
     
     <div class="checklist">
@@ -959,31 +963,6 @@ const ageRule = input => input > 0 && input < 120;
     </div>
 </section>
 
-        <section id="case-studies" class="section">
-    <h2><i class="fas fa-briefcase"></i> Реальные кейсы</h2>
-    
-    <div class="case-study">
-        <h3>Миграция монолита на микросервисы</h3>
-        <p><strong>Задача:</strong> Перенос legacy-системы банка на микросервисную архитектуру</p>
-        <p><strong>Решение:</strong></p>
-        <ol>
-            <li>Анализ существующих модулей</li>
-            <li>Определение границ сервисов</li>
-            <li>Постепенный перенос функционала</li>
-            <li>Внедрение API Gateway</li>
-        </ol>
-        <p><strong>Результат:</strong> Увеличение скорости разработки на 40%, уменьшение времени деплоя с 2 часов до 15 минут</p>
-    </div>
-    
-    <div class="case-study">
-        <h3>Оптимизация процесса заказа</h3>
-        <p><strong>Проблема:</strong> 30% пользователей не завершали заказ</p>
-        <p><strong>Анализ:</strong> Обнаружены 5 лишних шагов в процессе оформления</p>
-        <p><strong>Решение:</strong> Упрощение формы заказа, интеграция с социальными сетями</p>
-        <p><strong>Результат:</strong> Конверсия увеличилась на 22%</p>
-    </div>
-</section>
-
         <section id="additional-tools" class="section">
     <h2><i class="fas fa-tools"></i> Дополнительные инструменты</h2>
     
@@ -1205,33 +1184,6 @@ const ageRule = input => input > 0 && input < 120;
             <li><input type="checkbox"> Поделиться результатами</li>
             <li><input type="checkbox"> Запланировать следующие шаги</li>
         </ul>
-    </div>
-</section>
-
-        <!-- Diagram Generator Section -->
-<section id="diagram-generator" class="section">
-    <h2><i class="fas fa-diagram-project"></i> Генератор диаграмм</h2>
-    
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-        <div>
-            <h3>Входные данные:</h3>
-            <textarea id="diagram-input" rows="10" style="width:100%; padding:10px; font-family: monospace;">
-Пользователь -> Система: Запрос авторизации
-Система --> Пользователь: Запрос логина/пароля
-Пользователь -> Система: Ввод учетных данных
-Система --> База данных: Проверка учетных данных
-База данных --> Система: Результат проверки
-Система --> Пользователь: Результат авторизации
-            </textarea>
-            <button onclick="generateDiagram()" style="margin-top:10px; padding:8px 15px;">Сгенерировать</button>
-        </div>
-        
-        <div>
-            <h3>Результат:</h3>
-            <div id="diagram-output" style="border:1px solid #ddd; padding:20px; min-height:200px; background:#f9f9f9;">
-                <!-- Диаграмма будет отображаться здесь -->
-            </div>
-        </div>
     </div>
 </section>
 
