@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Полное руководство для системных аналитиков: требования, архитектура, базы данных, безопасность, документация, карьерный рост и инструменты. Памятка с практическими примерами и шаблонами.">
+    <meta name="keywords" content="системный аналитик, требования, SRS, BPMN, UML, REST API, GraphQL, микросервисы, базы данных, SQL, документация, карьера, чеклисты">
+    <meta name="author" content="Памятка Системного Аналитика">
+    <meta name="copyright" content="© 2025 Памятка Системного Аналитика">
+    <meta property="og:title" content="Памятка Системного Аналитика - Essential Guide">
+    <meta property="og:description" content="Полное руководство для системных аналитиков с практическими примерами, шаблонами и инструментами">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://knowerlife.github.io/SA/">
+    <meta property="og:image" content="https://knowerlife.github.io/SA/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://knowerlife.github.io/SA/">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+    <title>Карта сайта - Памятка Системного Аналитика</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Памятка Системного Аналитика",
+      "description": "Полное руководство для системных аналитиков с практическими примерами, шаблонами и инструментами",
+      "url": "https://knowerlife.github.io/SA/",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "https://knowerlife.github.io/SA/"
+        }]
+      },
+      "mainEntity": [{
+        "@type": "Article",
+        "name": "Что делать при получении задачи системным аналитиком",
+        "articleBody": "Когда системный аналитик получает задачу, рекомендуется следовать алгоритму: определение требований, исследование и анализ, моделирование и проектирование, разработка требований, взаимодействие с командой, контроль и мониторинг."
+      }]
+    }
+    </script>
+</head>
+<body>
+    <button id="scrollToTopBtn" class="desktop" title="Вверх">↑</button>
+    <button id="scrollToTopBtn" class="mobile" title="Вверх">↑</button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="overlay" id="navOverlay"></div>
+    <!-- Header Section -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+                <h1>Памятка Системного Аналитика</h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск по материалам...">
+                </div>
+                <button class="accessibility-toggle" id="accessibilityToggle">
+                    <i class="fas fa-eye"></i> Версия для слабовидящих
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i> Темная тема
+                </button>
+                <button class="pdf-export" id="pdfExport">
+                    <i class="fas fa-file-pdf"></i> Экспорт в PDF
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-header">
+            <h2><i class="fas fa-bars"></i> Навигация</h2>
+        </div>
+        <div class="category">
+    <h3>
+        <i class="fas fa-bookmark"></i> Мои закладки 
+        <span class="bookmarks-counter">0</span>
+    </h3>
+    <ul class="nav-links" id="bookmarksList">
+        <li class="no-bookmarks">
+            <i class="far fa-frown"></i>
+            <p>Пока нет сохраненных закладок</p>
+        </li>
+    </ul>
+</div>
+            <div class="category">
+                <h3>Основы анализа</h3>
+                <ul class="nav-links">
+                    <li><a href="#task-process" class="active"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
+                    <li><a href="#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
+                    <li><a href="#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
+                    <li><a href="#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
+                    <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Техники и методы</h3>
+                <ul class="nav-links">
+                    <li><a href="#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
+                    <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
+                    <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
+                    <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
+                    <li><a href="#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Архитектура</h3>
+                <ul class="nav-links">
+                    <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
+                    <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
+                    <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
+                    <li><a href="#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
+                    <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
+                    <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Данные</h3>
+                <ul class="nav-links">
+                    <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
+                    <li><a href="#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Процессы</h3>
+                <ul class="nav-links">
+                    <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
+                    <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Безопасность</h3>
+                <ul class="nav-links">
+                    <li><a href="#security"><i class="fas fa-shield-alt"></i> Основы безопасности</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Аналитика</h3>
+                <ul class="nav-links">
+                    <li><a href="#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
+                    <li><a href="#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
+                    <li><a href="#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Документация</h3>
+                <ul class="nav-links">
+                    <li><a href="#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Карьера</h3>
+                <ul class="nav-links">
+                    <li><a href="#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Инструменты</h3>
+                <ul class="nav-links">
+                    <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
+                    <li><a href="#unit-converter"><i class="fas fa-calculator"></i> Конвертер</a></li>
+                    <li><a href="#diagram-generator"><i class="fas fa-diagram-project"></i> Генератор диаграмм</a></li>
+                    <li><a href="#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
+                    <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
+                    <li><a href="#additional-tools"><i class="fas fa-tools"></i> Дополнительные инструменты</a></li>
+                    <li><a href="#external-integration"><i class="fas fa-plug"></i> Интеграция с API</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Чеклисты</h3>
+                <ul class="nav-links">
+                    <li><a href="#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
+                    <li><a href="#security-checklist"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Развитие</h3>
+                <ul class="nav-links">
+                    <li><a href="#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
+                </ul>
+            </div>
+            <div class="category">
+                <h3>Ресурсы</h3>
+                <ul class="nav-links">
+                    <li><a href="#glossary"><i class="fas fa-book"></i> Глоссарий терминов</a></li>
+                    <li><a href="#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
+                </ul>
+            </div>
+        <div class="category">
+            <h3>Паттерны и антипаттерны</h3>
+            <ul class="nav-links">
+                <li><a href="#analysis-patterns"><i class="fas fa-shapes"></i> Паттерны анализа</a></li>
+                <li><a href="#anti-patterns"><i class="fas fa-exclamation-triangle"></i> Антипаттерны</a></li>
+            </ul>
+        </div>
+        
+        <!-- Практика -->
+        <div class="category">
+            <h3>Практика</h3>
+            <ul class="nav-links">
+                <li><a href="#practical-case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                <li><a href="#practical-checklists"><i class="fas fa-list-check"></i> Чеклисты</a></li>
+            </ul>
+        </div>
+        
+        <!-- Интерактив -->
+        <div class="category">
+            <h3>Интерактив</h3>
+            <ul class="nav-links">
+                <li><a href="#interactive-examples"><i class="fas fa-flask"></i> Интерактивные примеры</a></li>
+                <li><a href="#knowledge-base"><i class="fas fa-book"></i> База знаний</a></li>
+                <li><a href="#testing-system"><i class="fas fa-graduation-cap"></i> Проверка знаний</a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Заголовок карты сайта -->
+        <div class="sitemap-header">
+            <h1><i class="fas fa-sitemap"></i> Карта сайта</h1>
+            <p>Полная структура ресурса "Памятка Системного Аналитика" с удобной навигацией по всем разделам</p>
+        </div>
+        
+        <!-- Основной контент карты сайта -->
+        <div class="sitemap-container">
+            <!-- Основы анализа -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-bookmark"></i> Основы анализа</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#task-process"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
+                    <li><a href="index.html#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
+                    <li><a href="index.html#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
+                    <li><a href="index.html#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
+                    <li><a href="index.html#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
+                </ul>
+            </div>
+            
+            <!-- Техники и методы -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-tools"></i> Техники и методы</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
+                    <li><a href="index.html#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
+                    <li><a href="index.html#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
+                    <li><a href="index.html#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
+                    <li><a href="index.html#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
+                </ul>
+            </div>
+            
+            <!-- Архитектура -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-layer-group"></i> Архитектура</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#api"><i class="fas fa-code"></i> API</a></li>
+                    <li><a href="index.html#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
+                    <li><a href="index.html#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
+                    <li><a href="index.html#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
+                    <li><a href="index.html#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
+                    <li><a href="index.html#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+                </ul>
+            </div>
+            
+            <!-- Данные -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-database"></i> Данные</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#db"><i class="fas fa-database"></i> Базы данных</a></li>
+                    <li><a href="index.html#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
+                </ul>
+            </div>
+            
+            <!-- Процессы -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-sync-alt"></i> Процессы</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
+                    <li><a href="index.html#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+                </ul>
+            </div>
+            
+            <!-- Безопасность -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-shield-alt"></i> Безопасность</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#security"><i class="fas fa-shield-alt"></i> Основы безопасности</a></li>
+                </ul>
+            </div>
+            
+            <!-- Аналитика -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-chart-line"></i> Аналитика</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
+                    <li><a href="index.html#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
+                    <li><a href="index.html#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                </ul>
+            </div>
+            
+            <!-- Документация -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-file-contract"></i> Документация</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
+                </ul>
+            </div>
+            
+            <!-- Карьера -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-user-graduate"></i> Карьера</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
+                </ul>
+            </div>
+            
+            <!-- Инструменты -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-tools"></i> Инструменты</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
+                    <li><a href="index.html#unit-converter"><i class="fas fa-calculator"></i> Конвертер</a></li>
+                    <li><a href="index.html#diagram-generator"><i class="fas fa-diagram-project"></i> Генератор диаграмм</a></li>
+                    <li><a href="index.html#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
+                    <li><a href="index.html#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
+                    <li><a href="index.html#additional-tools"><i class="fas fa-tools"></i> Дополнительные инструменты</a></li>
+                    <li><a href="index.html#external-integration"><i class="fas fa-plug"></i> Интеграция с API</a></li>
+                </ul>
+            </div>
+            
+            <!-- Чеклисты -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-list-check"></i> Чеклисты</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
+                    <li><a href="index.html#security-checklist"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
+                </ul>
+            </div>
+            
+            <!-- Развитие -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-star"></i> Развитие</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
+                </ul>
+            </div>
+            
+            <!-- Ресурсы -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-book"></i> Ресурсы</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#glossary"><i class="fas fa-book"></i> Глоссарий терминов</a></li>
+                    <li><a href="index.html#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
+                </ul>
+            </div>
+            
+            <!-- Паттерны и антипаттерны -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-shapes"></i> Паттерны и антипаттерны</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#analysis-patterns"><i class="fas fa-shapes"></i> Паттерны анализа</a></li>
+                    <li><a href="index.html#anti-patterns"><i class="fas fa-exclamation-triangle"></i> Антипаттерны</a></li>
+                </ul>
+            </div>
+            
+            <!-- Практика -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-briefcase"></i> Практика</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#practical-case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
+                    <li><a href="index.html#practical-checklists"><i class="fas fa-list-check"></i> Чеклисты</a></li>
+                </ul>
+            </div>
+            
+            <!-- Интерактив -->
+            <div class="sitemap-category">
+                <h2><i class="fas fa-flask"></i> Интерактив</h2>
+                <ul class="sitemap-links">
+                    <li><a href="index.html#interactive-examples"><i class="fas fa-flask"></i> Интерактивные примеры</a></li>
+                    <li><a href="index.html#knowledge-base"><i class="fas fa-book"></i> База знаний</a></li>
+                    <li><a href="index.html#testing-system"><i class="fas fa-graduation-cap"></i> Проверка знаний</a></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <!-- Колонка 1: Лого и описание -->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <i class="fas fa-book"></i>
+                    <h3>Памятка Системного Аналитика</h3>
+                </div>
+                <p class="footer-description">
+                    Полное руководство для системных аналитиков с практическими примерами, шаблонами и инструментами. 
+                    Ваш надежный спутник в мире анализа требований и проектирования систем.
+                </p>
+                <div class="footer-copyright">
+                    © 2025 Памятка Системного Аналитика - Essential Guide
+                </div>
+            </div>
+
+            <!-- Колонка 2: Навигация -->
+            <div class="footer-column">
+                <h3 class="footer-title">Навигация</h3>
+                <ul class="footer-links">
+                    <li><a href="#task-process"><i class="fas fa-chevron-right"></i> Что делать при получении задачи</a></li>
+                    <li><a href="#requirements"><i class="fas fa-chevron-right"></i> Виды требований</a></li>
+                    <li><a href="#api"><i class="fas fa-chevron-right"></i> API и архитектура</a></li>
+                    <li><a href="#db"><i class="fas fa-chevron-right"></i> Базы данных</a></li>
+                    <li><a href="#templates"><i class="fas fa-chevron-right"></i> Шаблоны документов</a></li>
+                    <li><a href="#career"><i class="fas fa-chevron-right"></i> Карьерный рост</a></li>
+                </ul>
+            </div>
+
+            <!-- Колонка 3: Ресурсы -->
+            <div class="footer-column">
+                <h3 class="footer-title">Ресурсы</h3>
+                <ul class="footer-links">
+                    <li><a href="#glossary"><i class="fas fa-chevron-right"></i> Глоссарий терминов</a></li>
+                    <li><a href="#resources"><i class="fas fa-chevron-right"></i> Полезные ссылки</a></li>
+                    <li><a href="#checklists"><i class="fas fa-chevron-right"></i> Чеклисты</a></li>
+                    <li><a href="#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
+                    <li><a href="#case-studies"><i class="fas fa-chevron-right"></i> Реальные кейсы</a></li>
+                    <li><a href="#competency-map"><i class="fas fa-chevron-right"></i> Карта компетенций</a></li>
+                </ul>
+            </div>
+
+            <!-- Колонка 4: Контакты и соцсети -->
+            <div class="footer-column">
+                <h3 class="footer-title">Свяжитесь с нами</h3>
+                <ul class="footer-contacts">
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:info@knowerlife.ru" target="_blank" rel="noopener noreferrer nofollow">info@knowerlife.ru</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Аналитическая, 15</li>
+                </ul>
+                
+                <div class="social-links">
+                    <h4>Подпишитесь на обновления</h4>
+                    <div class="social-icons">
+                        <a href="https://t.me/knowerlife" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://github.com/KnowerLife" target="_blank" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://vk.com/knowerlife" target="_blank" title="VK">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/knowerlife.ru" target="_blank" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="newsletter">
+                    <h4>Подписка на новости</h4>
+                    <form class="subscribe-form">
+                        <input type="email" placeholder="Ваш email" required>
+                        <button type="submit">Подписаться</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-links-bottom">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Условия использования</a>
+                <a href="/sitemap.html"><i class="fas fa-sitemap"></i> Карта сайта</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fas fa-arrow-up"></i> Наверх</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
