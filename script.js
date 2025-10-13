@@ -1,3 +1,128 @@
+// ===== ИНТЕГРАЦИЯ С ВНЕШНИМИ API =====
+
+class APIExamples {
+    constructor() {
+        this.examples = {
+            'jsonplaceholder': {
+                name: 'JSONPlaceholder',
+                endpoints: [
+                    { method: 'GET', url: 'https://jsonplaceholder.typicode.com/posts', description: 'Получить список постов' },
+                    { method: 'GET', url: 'https://jsonplaceholder.typicode.com/posts/1', description: 'Получить пост по ID' },
+                    { method: 'POST', url: 'https://jsonplaceholder.typicode.com/posts', description: 'Создать новый пост' }
+                ]
+            },
+            'reqres': {
+                name: 'ReqRes',
+                endpoints: [
+                    { method: 'GET', url: 'https://reqres.in/api/users', description: 'Получить список пользователей' },
+                    { method: 'GET', url: 'https://reqres.in/api/users/2', description: 'Получить пользователя по ID' },
+                    { method: 'POST', url: 'https://reqres.in/api/users', description: 'Создать пользователя' }
+                ]
+            }
+        };
+    }
+    
+    renderExamples() {
+        const container = document.getElementById('external-integration');
+        if (!container) return;
+        
+        const examplesHTML = Object.entries(this.examples).map(([key, service]) => `
+            <div class="api-service-card">
+                <h3>${service.name}</h3>
+                <div class="api-endpoints">
+                    ${service.endpoints.map(endpoint => `
+                        <div class="api-endpoint" data-method="${endpoint.method}" data-url="${endpoint.url}">
+                            <span class="http-method ${endpoint.method.toLowerCase()}">${endpoint.method}</span>
+                            <span class="endpoint-url">${endpoint.url}</span>
+                            <span class="endpoint-description">${endpoint.description}</span>
+                            <button class="try-endpoint" onclick="apiExamples.tryEndpoint('${endpoint.method}', '${endpoint.url}')">
+                                <i class="fas fa-play"></i> Попробовать
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+        
+        const existingExamples = container.querySelector('.api-examples');
+        if (existingExamples) {
+            existingExamples.innerHTML = examplesHTML;
+        } else {
+            const examplesSection = document.createElement('div');
+            examplesSection.className = 'api-examples';
+            examplesSection.innerHTML = `<h3>Примеры API для тестирования</h3>${examplesHTML}`;
+            container.appendChild(examplesSection);
+        }
+    }
+    
+    async tryEndpoint(method, url) {
+        // Устанавливаем значения в API тестер
+        document.getElementById('api-method').value = method;
+        document.getElementById('api-url').value = url;
+        
+        // Прокручиваем к тестеру
+        document.getElementById('api-url').scrollIntoView({ behavior: 'smooth' });
+        
+        // Если это GET запрос, автоматически выполняем его
+        if (method === 'GET') {
+            setTimeout(() => {
+                document.querySelector('.api-controls button').click();
+            }, 500);
+        }
+    }
+}
+
+let apiExamples;
+
+function initAPIExamples() {
+    apiExamples = new APIExamples();
+    apiExamples.renderExamples();
+}
+
+// Обновляем функцию testAPI для лучшей обработки ошибок
+async function testAPI() {
+    const method = document.getElementById('api-method').value;
+    const url = document.getElementById('api-url').value;
+    const output = document.getElementById('api-response-output');
+    
+    if (!url) {
+        output.textContent = 'Ошибка: Введите URL API';
+        return;
+    }
+    
+    // Показываем индикатор загрузки
+    output.innerHTML = '<div class="loading">Отправка запроса... <i class="fas fa-spinner fa-spin"></i></div>';
+    
+    try {
+        const options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        };
+        
+        // Добавляем тело для POST/PUT запросов
+        if (method === 'POST' || method === 'PUT') {
+            options.body = JSON.stringify({
+                title: 'Тестовый запрос от системного аналитика',
+                body: 'Это тестовый запрос для проверки API',
+                userId: 1
+            }, null, 2);
+        }
+        
+        const response = await fetch(url, options);
+        const data = await response.json();
+        
+        output.textContent = JSON.stringify(data, null, 2);
+        
+    } catch (error) {
+        output.textContent = `Ошибка: ${error.message}\n\nПопробуйте:\n1. Проверить URL\n2. Убедиться, что CORS разрешен\n3. Использовать расширение для обхода CORS`;
+        
+        console.error('API Error:', error);
+    }
+}
+
 // ===== ГЕНЕРАТОР ДОКУМЕНТОВ =====
 
 class DocumentGenerator {
