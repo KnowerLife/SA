@@ -480,37 +480,42 @@ class AdvancedSearch {
         return 'general';
     }
     
-    setupSearchUI() {
-        const searchContainer = document.querySelector('.search-bar');
-        if (!searchContainer) return;
-        
-        // Создаем расширенный поиск
-        const advancedSearch = document.createElement('div');
-        advancedSearch.className = 'advanced-search';
-        advancedSearch.style.display = 'none';
-        advancedSearch.innerHTML = this.getSearchHTML();
-        
-        searchContainer.appendChild(advancedSearch);
-        
-        // Обработчики событий
-        const searchInput = searchContainer.querySelector('input');
+setupSearchUI() {
+    const searchContainer = document.querySelector('.search-bar');
+    if (!searchContainer) return;
+    
+    // Создаем расширенный поиск
+    const advancedSearch = document.createElement('div');
+    advancedSearch.className = 'advanced-search';
+    advancedSearch.style.display = 'none';
+    advancedSearch.innerHTML = this.getSearchHTML();
+    
+    // БЕЗОПАСНАЯ вставка
+    searchContainer.appendChild(advancedSearch);
+    
+    // Обработчики событий
+    const searchInput = searchContainer.querySelector('input');
+    if (searchInput) {
         searchInput.addEventListener('focus', () => {
             advancedSearch.style.display = 'block';
         });
-        
-        document.addEventListener('click', (e) => {
-            if (!searchContainer.contains(e.target)) {
-                advancedSearch.style.display = 'none';
-            }
-        });
-        
-        // Обработчики фильтров
-        advancedSearch.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', () => this.performSearch());
-        });
-        
+    }
+    
+    document.addEventListener('click', (e) => {
+        if (!searchContainer.contains(e.target)) {
+            advancedSearch.style.display = 'none';
+        }
+    });
+    
+    // Обработчики фильтров
+    advancedSearch.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', () => this.performSearch());
+    });
+    
+    if (searchInput) {
         searchInput.addEventListener('input', () => this.performSearch());
     }
+}
     
     getSearchHTML() {
         return `
@@ -708,13 +713,6 @@ function stopTimer() {
 
 // ===== ИНТЕРАКТИВНЫЕ ЧЕКЛИСТЫ =====
 
-function initInteractiveChecklists() {
-    // Обработка всех чеклистов на странице
-    document.querySelectorAll('.checklist, .highlight-box ul').forEach(container => {
-        enhanceChecklist(container);
-    });
-}
-
 function enhanceChecklist(container) {
     const checkboxes = container.querySelectorAll('input[type="checkbox"]');
     const checklistId = container.id || `checklist-${Date.now()}`;
@@ -725,8 +723,13 @@ function enhanceChecklist(container) {
     const progressContainer = document.createElement('div');
     progressContainer.className = 'checklist-progress';
     
-    // Добавляем прогресс перед чеклистом
-    container.parentNode.insertBefore(progressContainer, container);
+    // БЕЗОПАСНАЯ вставка прогресса перед чеклистом
+    if (container.parentNode) {
+        container.parentNode.insertBefore(progressContainer, container);
+    } else {
+        console.warn('Checklist container has no parent node');
+        return;
+    }
     
     // Обертываем каждый пункт
     checkboxes.forEach((checkbox, index) => {
@@ -773,7 +776,14 @@ function enhanceChecklist(container) {
         <button class="reset">Сбросить прогресс</button>
     `;
     
-    container.parentNode.insertBefore(actionsContainer, container.nextSibling);
+    // БЕЗОПАСНАЯ вставка действий после чеклиста
+    if (container.parentNode) {
+        if (container.nextSibling) {
+            container.parentNode.insertBefore(actionsContainer, container.nextSibling);
+        } else {
+            container.parentNode.appendChild(actionsContainer);
+        }
+    }
     
     // Обработчики для кнопок
     actionsContainer.querySelector('.select-all').addEventListener('click', () => {
@@ -1149,8 +1159,25 @@ function initNotesSystem() {
         }
         
         const notesList = document.getElementById('notesList');
-        notesContainer.insertBefore(toolbar, notesList);
+        // БЕЗОПАСНАЯ вставка тулбара
+        if (notesList && notesList.parentNode === notesContainer) {
+            notesContainer.insertBefore(toolbar, notesList);
+        } else if (notesContainer) {
+            // Если notesList не найден или не является прямым потомком, добавляем в конец
+            notesContainer.appendChild(toolbar);
+        }
     }
+}
+
+function initInteractiveChecklists() {
+    // Обработка всех чеклистов на странице с обработкой ошибок
+    document.querySelectorAll('.checklist, .highlight-box ul').forEach(container => {
+        try {
+            enhanceChecklist(container);
+        } catch (error) {
+            console.error('Error enhancing checklist:', error, container);
+        }
+    });
 }
 
 // ===== СИСТЕМА ТЕСТИРОВАНИЯ =====
@@ -1619,10 +1646,16 @@ function initQuickActions() {
     quickActions.className = 'quick-actions';
     
     const actions = [
-        { icon: 'fas fa-search', title: 'Поиск', action: () => document.querySelector('.search-bar input').focus() },
+        { icon: 'fas fa-search', title: 'Поиск', action: () => {
+            const searchInput = document.querySelector('.search-bar input');
+            if (searchInput) searchInput.focus();
+        }},
         { icon: 'fas fa-bookmark', title: 'Закладки', action: () => scrollToSection('bookmarks') },
         { icon: 'fas fa-expand', title: 'Режим фокусировки', action: () => activateFocusModeForCurrent() },
-        { icon: 'fas fa-moon', title: 'Тема', action: () => document.getElementById('themeToggle').click() }
+        { icon: 'fas fa-moon', title: 'Тема', action: () => {
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) themeToggle.click();
+        }}
     ];
 
     actions.forEach(action => {
@@ -1634,7 +1667,10 @@ function initQuickActions() {
         quickActions.appendChild(btn);
     });
 
-    document.body.appendChild(quickActions);
+    // БЕЗОПАСНАЯ вставка в body
+    if (document.body) {
+        document.body.appendChild(quickActions);
+    }
 }
 
 function activateFocusModeForCurrent() {
