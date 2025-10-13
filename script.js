@@ -2521,10 +2521,18 @@ function initWeek1Improvements() {
     console.log('Улучшения первой недели загружены');
 }
 
-// Добавляем вызов в конец DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
     // ... существующий код ...
     
-    // Инициализируем улучшения первой недели
+    // Инициализация улучшений первой недели
     initWeek1Improvements();
+    
+    // Инициализация улучшений второй недели
+    initInteractiveChecklists();
+    initNotesSystem();
+    initAdvancedSearch();
+    initDocumentGenerator();
+    initAPIExamples();
+    
+    console.log('Все системы второй недели инициализированы');
 });
