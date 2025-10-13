@@ -1,3 +1,295 @@
+// ===== ГЕНЕРАТОР ДОКУМЕНТОВ =====
+
+class DocumentGenerator {
+    constructor() {
+        this.currentType = null;
+        this.templates = {
+            srs: this.generateSRS,
+            'user-stories': this.generateUserStories,
+            'api-spec': this.generateAPISpec,
+            'test-cases': this.generateTestCases
+        };
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+    }
+    
+    setupEventListeners() {
+        // Выбор типа документа
+        document.querySelectorAll('.doc-type-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const type = card.dataset.type;
+                this.selectType(type);
+            });
+        });
+        
+        // Изменение шаблона
+        document.getElementById('docTemplate').addEventListener('change', () => {
+            if (this.currentType) {
+                this.generate();
+            }
+        });
+    }
+    
+    selectType(type) {
+        this.currentType = type;
+        
+        // Обновляем UI
+        document.querySelectorAll('.doc-type-card').forEach(card => {
+            card.classList.toggle('active', card.dataset.type === type);
+        });
+        
+        document.getElementById('docEditor').style.display = 'block';
+        this.generate();
+    }
+    
+    generate() {
+        if (!this.currentType) return;
+        
+        const template = document.getElementById('docTemplate').value;
+        const generator = this.templates[this.currentType];
+        
+        if (generator) {
+            const content = generator.call(this, template);
+            document.getElementById('docContent').value = content;
+        }
+    }
+    
+    generateSRS(template) {
+        const basic = `
+SOFTWARE REQUIREMENTS SPECIFICATION (SRS)
+
+1. Введение
+1.1. Назначение
+1.2. Область действия
+1.3. Определения, акронимы и сокращения
+1.4. Ссылки
+
+2. Общее описание
+2.1. Перспектива продукта
+2.2. Функции продукта
+2.3. Пользовательские характеристики
+2.4. Ограничения
+2.5. Допущения и зависимости
+
+3. Конкретные требования
+3.1. Функциональные требования
+3.1.1. Требования к функциям
+3.1.2. Бизнес-правила
+3.2. Нефункциональные требования
+3.2.1. Требования к производительности
+3.2.2. Требования к безопасности
+3.2.3. Атрибуты качества
+
+4. Приложения
+4.1. Глоссарий
+4.2. Модели анализа
+`;
+        
+        const detailed = `
+ДЕТАЛИЗИРОВАННАЯ СПЕЦИФИКАЦИЯ ТРЕБОВАНИЙ К ПО
+
+1. ВВЕДЕНИЕ
+1.1. Цели и задачи
+1.2. Бизнес-требования
+1.3. Масштаб проекта
+1.4. Определения и терминология
+
+2. ОБЩЕЕ ОПИСАНИЕ СИСТЕМЫ
+2.1. Контекст системы
+2.2. Бизнес-процессы
+2.3. Пользовательские роли
+2.4. Архитектура системы
+
+3. ФУНКЦИОНАЛЬНЫЕ ТРЕБОВАНИЯ
+3.1. Модуль управления пользователями
+   FR-001: Регистрация нового пользователя
+   FR-002: Аутентификация пользователя
+   FR-003: Управление профилем
+
+3.2. Модуль обработки данных
+   FR-010: Импорт данных
+   FR-011: Валидация данных
+   FR-012: Экспорт отчетов
+
+4. НЕФУНКЦИОНАЛЬНЫЕ ТРЕБОВАНИЯ
+4.1. Требования к производительности
+   NFR-001: Время отклика < 2 секунд
+   NFR-002: Поддержка 1000 одновременных пользователей
+
+4.2. Требования к безопасности
+   NFR-101: Шифрование данных
+   NFR-102: Ролевая модель доступа
+
+5. ИНТЕРФЕЙСЫ
+5.1. Пользовательский интерфейс
+5.2. Программные интерфейсы (API)
+5.3. Аппаратные интерфейсы
+
+6. ОГРАНИЧЕНИЯ И ЗАВИСИМОСТИ
+`;
+        
+        return template === 'detailed' ? detailed : basic;
+    }
+    
+    generateUserStories(template) {
+        return `
+ПОЛЬЗОВАТЕЛЬСКИЕ ИСТОРИИ
+
+Формат: Как [роль], я хочу [функция], чтобы [выгода]
+
+1. Управление пользователями
+   US-001: Как новый пользователь, я хочу зарегистрироваться в системе, чтобы получить доступ к функционалу
+     Критерии приемки:
+     - ✓ Поля: email, пароль, подтверждение пароля
+     - ✓ Валидация email
+     - ✓ Пароль не менее 8 символов
+     - ✓ Подтверждение по email
+
+   US-002: Как пользователь, я хочу войти в систему, чтобы получить доступ к моим данным
+     Критерии приемки:
+     - ✓ Авторизация по email/пароль
+     - ✓ Восстановление пароля
+     - ✓ Запомнить меня
+
+2. Управление контентом
+   US-010: Как автор, я хочу создавать новые статьи, чтобы делиться знаниями
+     Критерии приемки:
+     - ✓ Редактор с форматированием
+     - ✓ Предпросмотр
+     - ✓ Сохранение черновиков
+
+   US-011: Как читатель, я хочу искать статьи по ключевым словам, чтобы находить нужную информацию
+     Критерии приемки:
+     - ✓ Поиск по заголовку и содержанию
+     - ✓ Фильтрация по тегам
+     - ✓ Сортировка по дате/релевантности
+
+ПРИОРИТЕТЫ:
+Высокий: US-001, US-002
+Средний: US-010, US-011
+`;
+    }
+    
+    generateAPISpec(template) {
+        return `
+СПЕЦИФИКАЦИЯ REST API
+
+Базовый URL: https://api.example.com/v1
+
+Аутентификация: Bearer Token
+
+1. Ресурс: Пользователи
+   GET /users - Получить список пользователей
+     Параметры:
+       - page (number)
+       - limit (number)
+       - search (string)
+     Ответ: 200 OK
+     {
+       "data": [User],
+       "pagination": {...}
+     }
+
+   POST /users - Создать пользователя
+     Тело: { "name": "string", "email": "string" }
+     Ответ: 201 Created
+
+   GET /users/{id} - Получить пользователя
+     Ответ: 200 OK, 404 Not Found
+
+   PUT /users/{id} - Обновить пользователя
+     Тело: { "name": "string" }
+     Ответ: 200 OK, 404 Not Found
+
+   DELETE /users/{id} - Удалить пользователя
+     Ответ: 204 No Content, 404 Not Found
+
+2. Ресурс: Статьи
+   GET /articles - Получить статьи
+   POST /articles - Создать статью
+   GET /articles/{id} - Получить статью
+   PUT /articles/{id} - Обновить статью
+   DELETE /articles/{id} - Удалить статью
+
+КОДЫ ОТВЕТОВ:
+200 - Успех
+201 - Создано
+400 - Неверный запрос
+401 - Не авторизован
+403 - Запрещено
+404 - Не найдено
+500 - Ошибка сервера
+`;
+    }
+    
+    generateTestCases(template) {
+        return `
+ТЕСТОВЫЕ СЦЕНАРИИ
+
+1. Функциональное тестирование
+   TC-001: Регистрация нового пользователя
+     Предусловия: Пользователь не зарегистрирован
+     Шаги:
+       1. Открыть страницу регистрации
+       2. Заполнить валидные данные
+       3. Нажать "Зарегистрироваться"
+     Ожидаемый результат: 
+       - Сообщение об успешной регистрации
+       - Подтверждение отправлено на email
+
+   TC-002: Попытка регистрации с существующим email
+     Предусловия: Пользователь с test@example.com уже существует
+     Шаги:
+       1. Открыть страницу регистрации
+       2. Ввести test@example.com
+       3. Заполнить остальные поля
+       4. Нажать "Зарегистрироваться"
+     Ожидаемый результат: 
+       - Сообщение об ошибке "Email уже используется"
+
+2. Тестирование API
+   TC-101: GET /users без аутентификации
+     Запрос: GET /users
+     Ожидаемый результат: 401 Unauthorized
+
+   TC-102: GET /users с валидным токеном
+     Запрос: GET /users (с заголовком Authorization)
+     Ожидаемый результат: 200 OK с списком пользователей
+
+КРИТЕРИИ ПРОХОЖДЕНИЯ:
+- Все обязательные тесты пройдены
+- Нет критических дефектов
+- Соответствие требованиям > 95%
+`;
+    }
+    
+    download() {
+        const content = document.getElementById('docContent').value;
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `document-${this.currentType}-${new Date().toISOString().split('T')[0]}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    
+    clear() {
+        document.getElementById('docContent').value = '';
+    }
+}
+
+let docGenerator;
+
+function initDocumentGenerator() {
+    docGenerator = new DocumentGenerator();
+}
+
 // ===== РАСШИРЕННЫЙ ПОИСК =====
 
 class AdvancedSearch {
