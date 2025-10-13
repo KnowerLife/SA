@@ -14,6 +14,92 @@
     --selected: #3498db;
 }
 
+/* Интерактивные чеклисты */
+.checklist-container {
+    margin: 20px 0;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px;
+    margin: 8px 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.checklist-item.checked {
+    background: #f0f9ff;
+    border-left-color: #4CAF50;
+    text-decoration: line-through;
+    color: #666;
+}
+
+.checklist-item input[type="checkbox"] {
+    margin-right: 12px;
+    margin-top: 2px;
+}
+
+.checklist-item label {
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+}
+
+.checklist-progress {
+    margin: 20px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.progress-stats {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.checklist-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.checklist-actions button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.checklist-actions button:hover {
+    background: #f5f5f5;
+}
+
+.checklist-actions button.reset {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.checklist-category {
+    margin: 25px 0 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: bold;
+}
+
 /* Уведомления */
 .notification {
     position: fixed;
