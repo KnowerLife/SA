@@ -1065,6 +1065,49 @@
     </div>
 </section>
 
+        <section id="document-generator" class="section">
+    <h2><i class="fas fa-file-alt"></i> Генератор документов</h2>
+    
+    <div class="doc-generator-container">
+        <div class="doc-type-selector">
+            <div class="doc-type-card" data-type="srs">
+                <i class="fas fa-book"></i>
+                <h4>SRS Document</h4>
+                <p>Software Requirements Specification</p>
+            </div>
+            <div class="doc-type-card" data-type="user-stories">
+                <i class="fas fa-tasks"></i>
+                <h4>User Stories</h4>
+                <p>Пользовательские истории с критериями приемки</p>
+            </div>
+            <div class="doc-type-card" data-type="api-spec">
+                <i class="fas fa-code"></i>
+                <h4>API Specification</h4>
+                <p>Спецификация REST API</p>
+            </div>
+            <div class="doc-type-card" data-type="test-cases">
+                <i class="fas fa-vial"></i>
+                <h4>Test Cases</h4>
+                <p>Тестовые сценарии</p>
+            </div>
+        </div>
+        
+        <div class="doc-editor" id="docEditor" style="display: none;">
+            <div class="doc-toolbar">
+                <select id="docTemplate">
+                    <option value="basic">Базовый шаблон</option>
+                    <option value="detailed">Детализированный</option>
+                    <option value="minimal">Минималистичный</option>
+                </select>
+                <button onclick="docGenerator.generate()"><i class="fas fa-magic"></i> Сгенерировать</button>
+                <button onclick="docGenerator.download()"><i class="fas fa-download"></i> Скачать</button>
+                <button onclick="docGenerator.clear()"><i class="fas fa-times"></i> Очистить</button>
+            </div>
+            <textarea id="docContent" rows="20" placeholder="Сгенерированный документ появится здесь..."></textarea>
+        </div>
+    </div>
+</section>
+
         <!-- Career Path Section -->
 <section id="career" class="section">
     <h2><i class="fas fa-user-graduate"></i> Карьерный путь аналитика</h2>
