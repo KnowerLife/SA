@@ -1,4 +1,239 @@
-    // Объявляем глобальные переменные
+// ===== РАСШИРЕННЫЙ ПОИСК =====
+
+class AdvancedSearch {
+    constructor() {
+        this.searchIndex = [];
+        this.currentResults = [];
+        this.filters = {
+            type: 'all',
+            category: 'all',
+            difficulty: 'all'
+        };
+        this.init();
+    }
+    
+    init() {
+        this.buildSearchIndex();
+        this.setupSearchUI();
+    }
+    
+    buildSearchIndex() {
+        const sections = document.querySelectorAll('.section');
+        this.searchIndex = [];
+        
+        sections.forEach(section => {
+            const id = section.id;
+            const title = section.querySelector('h2').textContent;
+            const content = section.textContent;
+            const type = this.detectContentType(section);
+            const category = this.detectCategory(section);
+            
+            this.searchIndex.push({
+                id,
+                title,
+                content: content.substring(0, 1000), // Ограничиваем содержание для производительности
+                type,
+                category,
+                element: section
+            });
+        });
+    }
+    
+    detectContentType(section) {
+        if (section.querySelector('.checklist')) return 'checklist';
+        if (section.querySelector('.example')) return 'example';
+        if (section.querySelector('.code-block')) return 'code';
+        if (section.querySelector('.tool-card')) return 'tool';
+        return 'theory';
+    }
+    
+    detectCategory(section) {
+        // Определяем категорию по ID или содержимому
+        const id = section.id;
+        if (id.includes('api') || id.includes('rest') || id.includes('graphql')) return 'api';
+        if (id.includes('db') || id.includes('data')) return 'database';
+        if (id.includes('security')) return 'security';
+        if (id.includes('bpmn') || id.includes('uml')) return 'modeling';
+        return 'general';
+    }
+    
+    setupSearchUI() {
+        const searchContainer = document.querySelector('.search-bar');
+        if (!searchContainer) return;
+        
+        // Создаем расширенный поиск
+        const advancedSearch = document.createElement('div');
+        advancedSearch.className = 'advanced-search';
+        advancedSearch.style.display = 'none';
+        advancedSearch.innerHTML = this.getSearchHTML();
+        
+        searchContainer.appendChild(advancedSearch);
+        
+        // Обработчики событий
+        const searchInput = searchContainer.querySelector('input');
+        searchInput.addEventListener('focus', () => {
+            advancedSearch.style.display = 'block';
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!searchContainer.contains(e.target)) {
+                advancedSearch.style.display = 'none';
+            }
+        });
+        
+        // Обработчики фильтров
+        advancedSearch.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => this.performSearch());
+        });
+        
+        searchInput.addEventListener('input', () => this.performSearch());
+    }
+    
+    getSearchHTML() {
+        return `
+            <div class="search-filters-row">
+                <div class="search-filter-group">
+                    <label>Тип контента</label>
+                    <select id="searchType">
+                        <option value="all">Все типы</option>
+                        <option value="theory">Теория</option>
+                        <option value="example">Примеры</option>
+                        <option value="checklist">Чеклисты</option>
+                        <option value="tool">Инструменты</option>
+                        <option value="code">Код</option>
+                    </select>
+                </div>
+                <div class="search-filter-group">
+                    <label>Категория</label>
+                    <select id="searchCategory">
+                        <option value="all">Все категории</option>
+                        <option value="api">API</option>
+                        <option value="database">Базы данных</option>
+                        <option value="security">Безопасность</option>
+                        <option value="modeling">Моделирование</option>
+                        <option value="general">Общее</option>
+                    </select>
+                </div>
+            </div>
+            <div id="searchResults"></div>
+        `;
+    }
+    
+    performSearch() {
+        const searchTerm = document.querySelector('.search-bar input').value.toLowerCase();
+        const typeFilter = document.getElementById('searchType').value;
+        const categoryFilter = document.getElementById('searchCategory').value;
+        
+        this.filters.type = typeFilter;
+        this.filters.category = categoryFilter;
+        
+        const results = this.searchIndex.filter(item => {
+            // Фильтрация по типу и категории
+            if (typeFilter !== 'all' && item.type !== typeFilter) return false;
+            if (categoryFilter !== 'all' && item.category !== categoryFilter) return false;
+            
+            // Поиск по тексту
+            if (!searchTerm) return true;
+            
+            return item.title.toLowerCase().includes(searchTerm) ||
+                   item.content.toLowerCase().includes(searchTerm);
+        });
+        
+        this.currentResults = results;
+        this.displayResults(results, searchTerm);
+    }
+    
+    displayResults(results, searchTerm) {
+        const resultsContainer = document.getElementById('searchResults');
+        if (!resultsContainer) return;
+        
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="search-no-results">
+                    <i class="fas fa-search"></i>
+                    <p>Ничего не найдено</p>
+                    <p>Попробуйте изменить критерии поиска</p>
+                </div>
+            `;
+            return;
+        }
+        
+        resultsContainer.innerHTML = `
+            <div class="search-results-info">
+                Найдено: ${results.length} результатов
+            </div>
+            ${results.map(item => this.formatResultItem(item, searchTerm)).join('')}
+        `;
+    }
+    
+    formatResultItem(item, searchTerm) {
+        const preview = this.getTextPreview(item.content, searchTerm);
+        
+        return `
+            <div class="search-result-item" data-section="${item.id}">
+                <h4 class="search-result-title">
+                    <a href="#${item.id}" onclick="advancedSearch.navigateToResult('${item.id}')">
+                        ${this.highlightText(item.title, searchTerm)}
+                    </a>
+                </h4>
+                <div class="search-result-preview">${preview}</div>
+                <div class="search-result-meta">
+                    <span class="badge">${item.type}</span>
+                    <span class="badge">${item.category}</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    getTextPreview(text, searchTerm, length = 150) {
+        if (!searchTerm) return text.substring(0, length) + '...';
+        
+        const index = text.toLowerCase().indexOf(searchTerm);
+        if (index === -1) return text.substring(0, length) + '...';
+        
+        const start = Math.max(0, index - 50);
+        const end = Math.min(text.length, index + searchTerm.length + 100);
+        let preview = text.substring(start, end);
+        
+        if (start > 0) preview = '...' + preview;
+        if (end < text.length) preview = preview + '...';
+        
+        return this.highlightText(preview, searchTerm);
+    }
+    
+    highlightText(text, searchTerm) {
+        if (!searchTerm) return text;
+        
+        const regex = new RegExp(`(${this.escapeRegex(searchTerm)})`, 'gi');
+        return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+    }
+    
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
+    navigateToResult(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            section.classList.add('highlight-animation');
+            setTimeout(() => {
+                section.classList.remove('highlight-animation');
+            }, 2000);
+        }
+        
+        // Скрываем результаты поиска
+        document.querySelector('.advanced-search').style.display = 'none';
+    }
+}
+
+let advancedSearch;
+
+function initAdvancedSearch() {
+    advancedSearch = new AdvancedSearch();
+}
+
+// Объявляем глобальные переменные
 let timerInterval = null;
 let testTimerInterval = null;
 
