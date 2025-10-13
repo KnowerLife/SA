@@ -151,11 +151,14 @@ class DocumentGenerator {
         });
         
         // Изменение шаблона
-        document.getElementById('docTemplate').addEventListener('change', () => {
-            if (this.currentType) {
-                this.generate();
-            }
-        });
+        const docTemplate = document.getElementById('docTemplate');
+        if (docTemplate) {
+            docTemplate.addEventListener('change', () => {
+                if (this.currentType) {
+                    this.generate();
+                }
+            });
+        }
     }
     
     selectType(type) {
@@ -166,7 +169,10 @@ class DocumentGenerator {
             card.classList.toggle('active', card.dataset.type === type);
         });
         
-        document.getElementById('docEditor').style.display = 'block';
+        const docEditor = document.getElementById('docEditor');
+        if (docEditor) {
+            docEditor.style.display = 'block';
+        }
         this.generate();
     }
     
@@ -650,11 +656,11 @@ function initAdvancedSearch() {
     advancedSearch = new AdvancedSearch();
 }
 
-// Объявляем глобальные переменные
+// ===== ТАЙМЕРЫ =====
+
 let timerInterval = null;
 let testTimerInterval = null;
 
-// Основные функции для работы с таймером
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -843,7 +849,7 @@ function resetChecklistState(checklistId) {
     localStorage.setItem('checklists', JSON.stringify(saved));
 }
 
-// ===== УЛУЧШЕННАЯ СИСТЕМА ЗАМЕТОК =====
+// ===== СИСТЕМА ЗАМЕТОК =====
 
 class NotesSystem {
     constructor() {
@@ -1119,7 +1125,6 @@ class NotesSystem {
     }
 }
 
-// Инициализация системы заметок
 let notesSystem;
 
 function initNotesSystem() {
@@ -1148,7 +1153,8 @@ function initNotesSystem() {
     }
 }
 
-// Новый код для системы тестирования
+// ===== СИСТЕМА ТЕСТИРОВАНИЯ =====
+
 const testQuestions = {
     requirements: [
         {
@@ -1377,501 +1383,21 @@ function shuffleArray(array) {
     return shuffled;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Обработчики для кнопок таймера
-    document.getElementById('start-15min').addEventListener('click', () => startTimer(900));
-    document.getElementById('start-5min').addEventListener('click', () => startTimer(300));
-    document.getElementById('stop-timer').addEventListener('click', stopTimer);
-    const body = document.body;
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const nav = document.querySelector('nav');
-    const navOverlay = document.getElementById('navOverlay');
-    const accessibilityToggle = document.getElementById('accessibilityToggle');
-    const themeToggle = document.getElementById('themeToggle');
-    const pdfExport = document.getElementById('pdfExport');
-    const searchInput = document.querySelector('.search-bar input');
+// ===== СИСТЕМА ЗАКЛАДОК =====
+
+function initBookmarksSystem() {
+    createBookmarkButtons();
+    restoreBookmarksState();
+    updateBookmarksList();
+    
+    // Добавляем глобальный обработчик для удаления закладок
     const bookmarksList = document.getElementById('bookmarksList');
-
-    // Мобильное меню
-    mobileMenuBtn.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        navOverlay.classList.toggle('active');
-    });
-
-    navOverlay.addEventListener('click', () => {
-        nav.classList.remove('active');
-        navOverlay.classList.remove('active');
-    });
-
-    // Версия для слабовидящих
-    accessibilityToggle.addEventListener('click', () => {
-        body.classList.toggle('accessibility');
-        accessibilityToggle.innerHTML = body.classList.contains('accessibility')
-            ? '<i class="fas fa-eye-slash"></i> Обычная версия'
-            : '<i class="fas fa-eye"></i> Версия для слабовидящих';
-    });
-
-    // Переключение темы
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-        if (document.body.classList.contains('dark-theme')) {
-            localStorage.setItem('theme', 'dark');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Светлая тема';
-        } else {
-            localStorage.setItem('theme', 'light');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i> Темная тема';
-        }
-    });
-
-    // Проверяем сохраненную тему при загрузке
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Светлая тема';
+    if (bookmarksList) {
+        bookmarksList.addEventListener('click', handleBookmarkRemove);
     }
+}
 
-    // Экспорт в PDF
-    pdfExport.addEventListener('click', () => {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const section = document.querySelector('.section:target') || document.querySelector('.section');
-        const sectionTitle = section.querySelector('h2').innerText;
-        const content = section.innerText;
-
-        doc.text(`Памятка системного аналитика: ${sectionTitle}`, 10, 10);
-        doc.text(content, 10, 20);
-        doc.save(`Памятка-${sectionTitle.replace(/\s+/g, '_')}.pdf`);
-    });
-
-    // Улучшенный поиск
-    searchInput.addEventListener('input', function(e) {
-        const term = this.value.toLowerCase().trim();
-        if (!term) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'block';
-            });
-            return;
-        }
-
-        let found = false;
-        document.querySelectorAll('.section').forEach(section => {
-            const title = section.querySelector('h2').textContent.toLowerCase();
-            const content = section.textContent.toLowerCase();
-
-            if (title.includes(term) || content.includes(term)) {
-                section.style.display = 'block';
-                if (!found) {
-                    window.scrollTo({
-                        top: section.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                    found = true;
-                }
-            } else {
-                section.style.display = 'none';
-            }
-        });
-
-        if (!found) {
-            const synonyms = getSynonyms(term);
-            synonyms.forEach(synonym => {
-                document.querySelectorAll('.section').forEach(section => {
-                    const content = section.textContent.toLowerCase();
-                    if (content.includes(synonym)) {
-                        section.style.display = 'block';
-                        if (!found) {
-                            window.scrollTo({
-                                top: section.offsetTop - 100,
-                                behavior: 'smooth'
-                            });
-                            found = true;
-                        }
-                    }
-                });
-            });
-        }
-    });
-
-    // База синонимов
-    function getSynonyms(term) {
-        const synonymsMap = {
-            'api': ['интерфейс', 'протокол'],
-            'база данных': ['хранилище', 'бд', 'database'],
-            'требования': ['условия', 'необходимости', 'требуемое'],
-            'анализ': ['исследование', 'изучение', 'разбор']
-        };
-        return synonymsMap[term] || [];
-    }
-
-    // Decision Tree
-    window.showStep = (step, choice) => {
-        const step1 = document.getElementById('tree-step-1');
-        const step2 = document.getElementById('tree-step-2');
-        const result = document.getElementById('tree-result');
-        const step2Question = document.getElementById('step2-question');
-        const step2Options = document.getElementById('step2-options');
-        const resultText = document.getElementById('result-text');
-
-        if (step === 2) {
-            step1.style.display = 'none';
-            step2.style.display = 'block';
-            if (choice === 'yes') {
-                step2Question.textContent = 'Проект большой и долгосрочный?';
-                step2Options.innerHTML = `
-                    <button onclick="showResult('Waterfall')">Да</button>
-                    <button onclick="showResult('Scrum')">Нет</button>
-                `;
-            } else {
-                step2Question.textContent = 'Требуется быстрая доставка ценности?';
-                step2Options.innerHTML = `
-                    <button onclick="showResult('Scrum')">Да</button>
-                    <button onclick="showResult('Kanban')">Нет</button>
-                `;
-            }
-        }
-    };
-
-    window.showResult = (methodology) => {
-        document.getElementById('tree-step-2').style.display = 'none';
-        document.getElementById('tree-result').style.display = 'block';
-        document.getElementById('result-text').textContent = methodology;
-    };
-
-    window.resetTree = () => {
-        document.getElementById('tree-step-1').style.display = 'block';
-        document.getElementById('tree-step-2').style.display = 'none';
-        document.getElementById('tree-result').style.display = 'none';
-    };
-
-    // Генератор ER-диаграмм (упрощенный пример)
-    window.generateERDiagram = () => {
-        const input = document.getElementById('er-input').value;
-        const output = document.getElementById('er-output');
-        output.innerHTML = `<pre>${input.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')}</pre>`;
-    };
-
-    // Конструктор SQL-запросов
-    window.generateSQL = () => {
-        const table = document.getElementById('sql-table').value;
-        const fields = Array.from(document.querySelectorAll('#sql-fields input:checked')).map(input => input.value);
-        const query = `SELECT ${fields.join(', ')} FROM ${table};`;
-        document.getElementById('sql-output').textContent = query;
-    };
-
-    // Простой SQL редактор
-    window.runSQL = () => {
-        const sql = document.getElementById('sql-editor').value;
-        const schema = document.getElementById('db-schema').value;
-        alert(`Выполняется SQL: ${sql}\nДля схемы: ${schema}`);
-    };
-
-window.testAPI = async () => {
-    const method = document.getElementById('api-method').value;
-    const url = document.getElementById('api-url').value;
-    const output = document.getElementById('api-response-output');
-    
-    // Добавляем индикатор загрузки
-    output.textContent = "Отправка запроса...";
-    
-    try {
-        const options = {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        };
-        
-        // Для POST/PUT добавляем тело запроса
-        if (method === 'POST' || method === 'PUT') {
-            options.body = JSON.stringify({
-                title: 'Запрос от системного аналитика',
-                body: 'Это тестовый запрос',
-                userId: 1
-            });
-        }
-        
-        const response = await fetch(url, options);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ошибка! Статус: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        output.textContent = JSON.stringify(data, null, 2);
-    } catch (error) {
-        output.textContent = `Ошибка: ${error.message}`;
-        
-        // Для отладки
-        console.error('API Error:', error);
-    }
-};
-
-    // Конвертер величин
-    window.convertUnits = () => {
-        const inputValue = parseFloat(document.getElementById('input-value').value);
-        const inputUnit = document.getElementById('input-unit').value;
-        const outputUnit = document.getElementById('output-unit').value;
-
-        const factors = {
-            kb: 1,
-            mb: 1024,
-            gb: 1024 * 1024,
-            ms: 1,
-            s: 1000
-        };
-
-        const dataUnits = ['kb', 'mb', 'gb'];
-        const timeUnits = ['ms', 's'];
-
-        if ((dataUnits.includes(inputUnit) && timeUnits.includes(outputUnit)) ||
-            (timeUnits.includes(inputUnit) && dataUnits.includes(outputUnit))) {
-            document.getElementById('output-value').value = "Несовместимые единицы";
-            return;
-        }
-
-        const result = inputValue * factors[inputUnit] / factors[outputUnit];
-        document.getElementById('output-value').value = result.toFixed(4);
-    };
-
-    // Шаблоны писем
-    window.showTemplate = (type) => {
-        const templates = {
-            clarification: 'Уважаемый(ая) [Имя],\n\nМогли бы вы уточнить [вопрос/деталь]? Это поможет нам [цель].\n\nСпасибо,\n[Ваше имя]',
-            meeting: 'Уважаемые коллеги,\n\nПриглашаю вас на встречу по [тема] [дата] в [время]. Пожалуйста, подтвердите участие.\n\nС уважением,\n[Ваше имя]',
-            review: 'Коллеги,\n\nПрошу ознакомиться с [документ] и предоставить обратную связь до [дата].\n\nСпасибо,\n[Ваше имя]',
-            update: 'Добрый день,\n\nПо задаче [номер/название] текущий статус: [статус]. Следующие шаги: [действия].\n\nС уважением,\n[Ваше имя]'
-        };
-        const templateContent = document.getElementById('template-content');
-        const templateText = document.getElementById('template-text');
-        templateText.value = templates[type] || '';
-        templateContent.style.display = 'block';
-    };
-
-    window.copyTemplate = () => {
-        const templateText = document.getElementById('template-text');
-        templateText.select();
-        document.execCommand('copy');
-        alert('Шаблон скопирован в буфер обмена');
-    };
-
-    // Генератор диаграмм (упрощенный пример)
-    window.generateDiagram = () => {
-        const input = document.getElementById('diagram-input').value;
-        const output = document.getElementById('diagram-output');
-        output.innerHTML = `<pre>${input.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')}</pre>`;
-    };
-
-    // Диаграмма процессов
-    window.addTask = () => {
-        const diagram = document.getElementById('bpmn-diagram');
-        const task = document.createElement('div');
-        task.className = 'bpmn-task';
-        task.innerHTML = '<div class="task-label">Новая задача</div>';
-        diagram.appendChild(task);
-    };
-
-    // Карта компетенций
-    window.toggleCompetency = (element) => {
-        const ul = element.querySelector('ul');
-        ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
-    };
-
-    // Заметки
-    window.addNote = () => {
-        const title = document.getElementById('new-note-title').value.trim();
-        if (!title) return;
-
-        const noteId = 'note_' + Date.now();
-        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
-
-        const newNote = {
-            id: noteId,
-            title: title,
-            content: '',
-            createdAt: new Date().toISOString()
-        };
-
-        notes.push(newNote);
-        localStorage.setItem('userNotes', JSON.stringify(notes));
-        renderNotes();
-
-        document.getElementById('new-note-title').value = '';
-    };
-
-    window.updateNoteTitle = (noteId, element) => {
-        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
-        const note = notes.find(n => n.id === noteId);
-        if (note) {
-            note.title = element.textContent.trim();
-            localStorage.setItem('userNotes', JSON.stringify(notes));
-            renderNotes();
-        }
-    };
-
-    window.updateNoteContent = (noteId, element) => {
-        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
-        const note = notes.find(n => n.id === noteId);
-        if (note) {
-            note.content = element.textContent.trim();
-            localStorage.setItem('userNotes', JSON.stringify(notes));
-            renderNotes();
-        }
-    };
-
-    window.deleteNote = (noteId) => {
-        let notes = JSON.parse(localStorage.getItem('userNotes')) || [];
-        notes = notes.filter(note => note.id !== noteId);
-        localStorage.setItem('userNotes', JSON.stringify(notes));
-        renderNotes();
-    };
-
-    window.renderNotes = () => {
-        const notesList = document.getElementById('notesList');
-        const notes = JSON.parse(localStorage.getItem('userNotes')) || [];
-
-        notesList.innerHTML = '';
-
-        if (notes.length === 0) {
-            notesList.innerHTML = '<p>У вас пока нет заметок</p>';
-            return;
-        }
-
-        notes.forEach(note => {
-            const noteElement = document.createElement('div');
-            noteElement.className = 'note-item';
-            noteElement.innerHTML = `
-                <div class="note-header">
-                    <h3 contenteditable="true" onblur="updateNoteTitle('${note.id}', this)">${note.title}</h3>
-                    <button onclick="deleteNote('${note.id}')"><i class="fas fa-trash"></i></button>
-                </div>
-                <div class="note-content" contenteditable="true" onblur="updateNoteContent('${note.id}', this)">${note.content || 'Нажмите, чтобы редактировать...'}</div>
-                <div class="note-footer">Создано: ${new Date(note.createdAt).toLocaleString()}</div>
-            `;
-            notesList.appendChild(noteElement);
-        });
-    };
-
-    // Тесты
-    const testQuestions = {
-        requirements: [
-            {
-                question: "Что относится к функциональным требованиям?",
-                options: [
-                    "Скорость загрузки страницы",
-                    "Возможность регистрации пользователей",
-                    "Цветовая схема интерфейса",
-                    "Совместимость с браузерами"
-                ],
-                answer: 1
-            },
-            {
-                question: "Что такое нефункциональные требования?",
-                options: [
-                    "Требования к функциям системы",
-                    "Требования к характеристикам системы",
-                    "Требования к бизнес-процессам",
-                    "Требования к интерфейсу"
-                ],
-                answer: 1
-            }
-        ],
-        api: [
-            {
-                question: "Что означает REST?",
-                options: [
-                    "Remote Execution and Storage Technology",
-                    "Representational State Transfer",
-                    "Reliable Enterprise Service Transport",
-                    "Rapid Execution and Synchronization Technique"
-                ],
-                answer: 1
-            }
-        ]
-    };
-
-    window.startTest = () => {
-        const section = document.getElementById('test-section').value;
-        const questions = testQuestions[section];
-
-        if (!questions) {
-            alert('Тест для этого раздела пока недоступен');
-            return;
-        }
-
-        const testContent = document.getElementById('testQuestions');
-        testContent.innerHTML = '';
-
-        questions.forEach((q, index) => {
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'test-question';
-            questionDiv.innerHTML = `<h4>${index + 1}. ${q.question}</h4>`;
-
-            q.options.forEach((option, optIndex) => {
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'test-option';
-                optionDiv.innerHTML = `
-                    <input type="radio" name="q${index}" value="${optIndex}" id="q${index}o${optIndex}">
-                    <label for="q${index}o${optIndex}">${option}</label>
-                `;
-                questionDiv.appendChild(optionDiv);
-            });
-
-            testContent.appendChild(questionDiv);
-        });
-
-        document.querySelector('.test-selection').style.display = 'none';
-        document.getElementById('testContent').style.display = 'block';
-    };
-
-    window.submitTest = () => {
-        const section = document.getElementById('test-section').value;
-        const questions = testQuestions[section];
-        let correct = 0;
-
-        questions.forEach((q, index) => {
-            const selected = document.querySelector(`input[name="q${index}"]:checked`);
-            if (selected && parseInt(selected.value) === q.answer) {
-                correct++;
-            }
-        });
-
-        const result = document.getElementById('testResult');
-        result.innerHTML = `
-            <h3>Результат теста</h3>
-            <p>Правильных ответов: ${correct} из ${questions.length}</p>
-            <p>Процент правильных ответов: ${Math.round((correct/questions.length)*100)}%</p>
-            <button onclick="location.reload()">Пройти еще раз</button>
-        `;
-    };
-
-    // Закладки - улучшенная реализация
-    // Инициализация системы закладок
-    initBookmarksSystem();
-    
-    function initBookmarksSystem() {
-        const bookmarksList = document.getElementById('bookmarksList');
-        if (!bookmarksList) {
-        console.error('Элемент #bookmarksList не найден');
-        return;
-    }
-        
-        // Создаем кнопки закладок
-        createBookmarkButtons();
-        
-        // Восстанавливаем состояние из localStorage
-        restoreBookmarksState();
-        
-        // Обновляем список закладок
-        updateBookmarksList();
-        
-        // Добавляем глобальный обработчик для удаления закладок
-        document.getElementById('bookmarksList').addEventListener('click', handleBookmarkRemove);
-    }
-
-    
 function createBookmarkButtons() {
-    const existingButtons = document.querySelectorAll('.bookmark-btn');
-    if (existingButtons.length > 0) return;
     document.querySelectorAll('.section').forEach(section => {
         const id = section.id;
         const h2 = section.querySelector('h2');
@@ -1892,7 +1418,7 @@ function createBookmarkButtons() {
     });
 }
 
-    function restoreBookmarksState() {
+function restoreBookmarksState() {
     const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
     bookmarks.forEach(id => {
         const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
@@ -1906,13 +1432,12 @@ function createBookmarkButtons() {
     });
 }
 
-    function toggleBookmark(event) {
+function toggleBookmark(event) {
     const btn = event.currentTarget;
     const sectionId = btn.dataset.section;
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
 
     if (bookmarks.includes(sectionId)) {
-        // Удаляем закладку
         bookmarks = bookmarks.filter(id => id !== sectionId);
         btn.innerHTML = `
             <i class="far fa-bookmark"></i>
@@ -1920,7 +1445,6 @@ function createBookmarkButtons() {
         `;
         btn.classList.remove('active');
     } else {
-        // Добавляем закладку
         bookmarks.push(sectionId);
         btn.innerHTML = `
             <i class="fas fa-bookmark"></i>
@@ -1934,41 +1458,40 @@ function createBookmarkButtons() {
     showBookmarkNotification(bookmarks.includes(sectionId), sectionId);
 }
 
-    function updateBookmarksList() {
-        const bookmarksList = document.getElementById('bookmarksList');
-        if (!bookmarksList) return;
+function updateBookmarksList() {
+    const bookmarksList = document.getElementById('bookmarksList');
+    if (!bookmarksList) return;
+
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    const noBookmarksMsg = '<li class="no-bookmarks"><i class="far fa-frown"></i> Пока нет сохраненных закладок</li>';
+
+    bookmarksList.innerHTML = bookmarks.length ? '' : noBookmarksMsg;
+
+    bookmarks.forEach(id => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        const title = section.querySelector('h2').textContent;
+        const icon = section.querySelector('h2 i')?.className || 'fas fa-bookmark';
         
-        const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-        const noBookmarksMsg = '<li class="no-bookmarks"><i class="far fa-frown"></i> Пока нет сохраненных закладок</li>';
+        const li = document.createElement('li');
+        li.className = 'bookmark-item';
+        li.innerHTML = `
+            <a href="#${id}" class="bookmark-link">
+                <i class="${icon}"></i>
+                <span>${title}</span>
+            </a>
+            <button class="remove-bookmark" data-section="${id}" aria-label="Удалить закладку">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        bookmarksList.appendChild(li);
+    });
+    
+    updateBookmarksCounter();
+}
 
-        bookmarksList.innerHTML = bookmarks.length ? '' : noBookmarksMsg;
-
-        bookmarks.forEach(id => {
-            const section = document.getElementById(id);
-            if (!section) return;
-
-            const title = section.querySelector('h2').textContent;
-            const icon = section.querySelector('h2 i')?.className || 'fas fa-bookmark';
-            
-            const li = document.createElement('li');
-            li.className = 'bookmark-item';
-            li.innerHTML = `
-                <a href="#${id}" class="bookmark-link">
-                    <i class="${icon}"></i>
-                    <span>${title}</span>
-                </a>
-                <button class="remove-bookmark" data-section="${id}" aria-label="Удалить закладку">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            bookmarksList.appendChild(li);
-        });
-        
-        // Обновляем счетчик в заголовке
-        updateBookmarksCounter();
-    }
-
-    function handleBookmarkRemove(event) {
+function handleBookmarkRemove(event) {
     if (!event.target.closest('.remove-bookmark')) return;
     
     const sectionId = event.target.closest('.remove-bookmark').dataset.section;
@@ -1976,10 +1499,8 @@ function createBookmarkButtons() {
     bookmarks = bookmarks.filter(id => id !== sectionId);
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     
-    // Обновляем кнопку в разделе
     const sectionBtn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
     if (sectionBtn) {
-        // УБИРАЕМ ПОПЫТКУ ОБРАЩЕНИЯ К .bookmark-tooltip
         sectionBtn.innerHTML = `
             <i class="far fa-bookmark"></i>
             <span class="bookmark-tooltip">Добавить в закладки</span>
@@ -1990,332 +1511,39 @@ function createBookmarkButtons() {
     updateBookmarksList();
 }
 
-    function updateBookmarksCounter() {
-        const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-        const counter = document.querySelector('.bookmarks-counter');
-        
-        if (counter) {
-            counter.textContent = bookmarks.length;
-            counter.style.display = bookmarks.length ? 'inline-block' : 'none';
-        }
-    }
-
-    function showBookmarkNotification(isAdded, sectionId) {
-        const section = document.getElementById(sectionId);
-        if (!section) return;
-        
-        const title = section.querySelector('h2').textContent;
-        const notification = document.createElement('div');
-        notification.className = `bookmark-notification ${isAdded ? 'added' : 'removed'}`;
-        notification.innerHTML = `
-            <i class="${isAdded ? 'fas fa-bookmark' : 'far fa-bookmark'}"></i>
-            <span>Раздел "${title}" ${isAdded ? 'добавлен в' : 'удален из'} закладок</span>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 2000);
-        }, 10);
-    }
-
-    // Код ER-редактора
-    const erCanvas = document.getElementById('er-canvas');
-    let entities = [];
-    let selectedEntity = null;
+function updateBookmarksCounter() {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    const counter = document.querySelector('.bookmarks-counter');
     
-    // Добавление сущности
-    document.getElementById('addEntity').addEventListener('click', function() {
-        const entityId = 'entity_' + Date.now();
-        const entity = {
-            id: entityId,
-            name: 'НоваяСущность',
-            attributes: [
-                {name: 'id', type: 'int', pk: true},
-                {name: 'name', type: 'varchar(255)'}
-            ],
-            x: 50 + entities.length * 20,
-            y: 50 + entities.length * 20,
-            color: '#4e73df'
-        };
-        
-        entities.push(entity);
-        renderERDiagram();
-    });
-    
-    // Генерация SQL
-    document.getElementById('generateSqlBtn').addEventListener('click', function() {
-        let sqlCode = '';
-        
-        entities.forEach(entity => {
-            sqlCode += `CREATE TABLE ${entity.name} (\n`;
-            sqlCode += `    id INT PRIMARY KEY AUTO_INCREMENT,\n`;
-            
-            entity.attributes.forEach(attr => {
-                sqlCode += `    ${attr.name} ${attr.type.toUpperCase()}`;
-                if (attr.pk) sqlCode += ' PRIMARY KEY';
-                if (attr.fk) sqlCode += ' REFERENCES ' + attr.references;
-                sqlCode += ',\n';
-            });
-            
-            // Удаляем последнюю запятую
-            sqlCode = sqlCode.slice(0, -2) + '\n';
-            sqlCode += `);\n\n`;
-        });
-        
-        document.getElementById('sql-preview').textContent = sqlCode;
-    });
-    
-    // Очистка диаграммы
-    document.getElementById('clearDiagram').addEventListener('click', function() {
-        entities = [];
-        renderERDiagram();
-        document.getElementById('sql-preview').textContent = '-- SQL-код появится здесь';
-        document.querySelector('.entity-properties').style.display = 'none';
-    });
-    
-    // Визуализация диаграммы
-    function renderERDiagram() {
-        erCanvas.innerHTML = '';
-        
-        entities.forEach(entity => {
-            const entityDiv = document.createElement('div');
-            entityDiv.className = 'entity';
-            entityDiv.id = entity.id;
-            entityDiv.style.left = entity.x + 'px';
-            entityDiv.style.top = entity.y + 'px';
-            entityDiv.style.backgroundColor = entity.color;
-            
-            entityDiv.innerHTML = `
-                <div class="entity-header">${entity.name}</div>
-                <div class="attributes">
-                    ${entity.attributes.map(attr => 
-                        `<div class="attribute">${attr.name}: ${attr.type}${attr.pk ? ' PK' : ''}</div>`
-                    ).join('')}
-                </div>
-            `;
-            
-            // Обработчик выбора сущности
-            entityDiv.addEventListener('click', function(e) {
-                e.stopPropagation();
-                selectEntity(entity);
-            });
-            
-            erCanvas.appendChild(entityDiv);
-        });
-    }
-    
-    // Выбор сущности
-    function selectEntity(entity) {
-        selectedEntity = entity;
-        document.querySelector('.entity-properties').style.display = 'block';
-        document.getElementById('entity-name').value = entity.name;
-        document.getElementById('entity-color').value = entity.color;
-    }
-    
-    // Сохранение свойств сущности
-    document.getElementById('saveEntityProps').addEventListener('click', function() {
-        if (!selectedEntity) return;
-        
-        selectedEntity.name = document.getElementById('entity-name').value;
-        selectedEntity.color = document.getElementById('entity-color').value;
-        renderERDiagram();
-    });
-    
-    // Применение шаблонов
-    document.querySelectorAll('.apply-pattern').forEach(button => {
-        button.addEventListener('click', function() {
-            const pattern = this.closest('.pattern-card').querySelector('h4').textContent;
-            
-            entities = [];
-            
-            if (pattern.includes('Пользователи и роли')) {
-                entities = [
-                    {
-                        id: 'entity1',
-                        name: 'Пользователь',
-                        attributes: [
-                            {name: 'id', type: 'int', pk: true},
-                            {name: 'name', type: 'varchar(255)'},
-                            {name: 'email', type: 'varchar(255)'}
-                        ],
-                        x: 50,
-                        y: 50,
-                        color: '#4e73df'
-                    },
-                    {
-                        id: 'entity2',
-                        name: 'Роль',
-                        attributes: [
-                            {name: 'id', type: 'int', pk: true},
-                            {name: 'name', type: 'varchar(100)'}
-                        ],
-                        x: 250,
-                        y: 50,
-                        color: '#36b9cc'
-                    }
-                ];
-            } else if (pattern.includes('Электронная коммерция')) {
-                entities = [
-                    {
-                        id: 'entity1',
-                        name: 'Заказ',
-                        attributes: [
-                            {name: 'id', type: 'int', pk: true},
-                            {name: 'date', type: 'datetime'},
-                            {name: 'total', type: 'decimal(10,2)'}
-                        ],
-                        x: 50,
-                        y: 50,
-                        color: '#1cc88a'
-                    },
-                    {
-                        id: 'entity2',
-                        name: 'Товар',
-                        attributes: [
-                            {name: 'id', type: 'int', pk: true},
-                            {name: 'name', type: 'varchar(255)'},
-                            {name: 'price', type: 'decimal(10,2)'}
-                        ],
-                        x: 250,
-                        y: 50,
-                        color: '#f6c23e'
-                    }
-                ];
-            }
-            
-            renderERDiagram();
-            document.querySelector('.entity-properties').style.display = 'none';
-        });
-    });
-    
-    // ===== ДОБАВЛЯЕМ КОД ДЛЯ API ПРИМЕРОВ ЗДЕСЬ =====
-    // Добавляем примеры API при загрузке
-    const apiExamples = [
-        {name: 'JSONPlaceholder', url: 'https://jsonplaceholder.typicode.com/posts'},
-        {name: 'ReqRes', url: 'https://reqres.in/api/users'},
-        {name: 'HTTPBin', url: 'https://httpbin.org/get'},
-        {name: 'DummyJSON', url: 'https://dummyjson.com/products/1'}
-    ];
-    
-    const examplesList = document.querySelector('#external-integration .highlight-box ul');
-    if (examplesList) {
-        examplesList.innerHTML = '';
-        
-        apiExamples.forEach(api => {
-            const li = document.createElement('li');
-            li.innerHTML = `<strong>${api.name}:</strong> <span class="api-url">${api.url}</span>`;
-            examplesList.appendChild(li);
-            
-            // Добавляем обработчик клика для быстрой вставки URL
-            li.addEventListener('click', () => {
-                document.getElementById('api-url').value = api.url;
-            });
-        });
-    }
-    // ===== КОНЕЦ ДОБАВЛЕНИЯ КОДА ДЛЯ API ПРИМЕРОВ =====
-
-    // Обработка глубоких ссылок
-    if (window.location.hash) {
-        const targetSection = document.querySelector(window.location.hash);
-        if (targetSection) {
-            setTimeout(() => {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }, 300);
-        }
-    }
-
-    // Завершаем обработчиками для тестовой системы
-    document.querySelector('.test-selection button').addEventListener('click', startTest);
-    document.querySelector('.test-controls button[onclick="submitTest()"]').addEventListener('click', submitTest);
-
-    renderNotes();
-    // Инициализация ER-диаграммы
-    renderERDiagram();
-
-    // Логирование для отладки
-    console.log('script.js загружен, функции startTimer и stopTimer определены');
-
-    // ===== КОД ДЛЯ КАРТЫ КОМПЕТЕНЦИЙ =====
-if (document.querySelector('.competency-list')) {
-    // Подсчет общего количества компетенций
-    const totalSkills = document.querySelectorAll('.competency-list input').length;
-    document.getElementById('skills-total').textContent = totalSkills;
-    
-    // Функция обновления прогресса
-    function updateProgress() {
-        const completedSkills = document.querySelectorAll('.competency-list input:checked').length;
-        const progress = (completedSkills / totalSkills) * 100;
-        
-        document.querySelector('.progress-fill').style.width = `${progress}%`;
-        document.querySelector('.progress-fill').textContent = `${Math.round(progress)}%`;
-        document.getElementById('skills-completed').textContent = completedSkills;
-    }
-    
-    // Обработка кликов по чекбоксам
-    document.querySelectorAll('.competency-list input').forEach(checkbox => {
-        checkbox.addEventListener('change', updateProgress);
-    });
-    
-    // Кнопка сохранения прогресса
-    document.getElementById('saveProgressBtn').addEventListener('click', function() {
-        const progress = [];
-        
-        document.querySelectorAll('.competency-list input').forEach(checkbox => {
-            progress.push({
-                id: checkbox.id,
-                checked: checkbox.checked
-            });
-        });
-        
-        // Сохранение в localStorage
-        localStorage.setItem('competencyProgress', JSON.stringify(progress));
-        alert('Прогресс успешно сохранен!');
-    });
-    
-    // Загрузка сохраненного прогресса
-    const savedProgress = localStorage.getItem('competencyProgress');
-    if (savedProgress) {
-        JSON.parse(savedProgress).forEach(item => {
-            const checkbox = document.getElementById(item.id);
-            if (checkbox) {
-                checkbox.checked = item.checked;
-            }
-        });
-        updateProgress();
+    if (counter) {
+        counter.textContent = bookmarks.length;
+        counter.style.display = bookmarks.length ? 'inline-block' : 'none';
     }
 }
-// ===== КОНЕЦ КОДА ДЛЯ КАРТЫ КОМПЕТЕНЦИЙ =====
-// Получаем все кнопки
-        const scrollButtons = document.querySelectorAll('#scrollToTopBtn');
-        
-        // Обработчик прокрутки страницы
-        window.onscroll = function() {
-            const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-            
-            scrollButtons.forEach(btn => {
-                if (scrollPosition > 300) {
-                    btn.style.display = 'block';
-                } else {
-                    btn.style.display = 'none';
-                }
-            });
-        };
 
-        // Обработчик клика по кнопкам
-        scrollButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-});
+function showBookmarkNotification(isAdded, sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    
+    const title = section.querySelector('h2').textContent;
+    const notification = document.createElement('div');
+    notification.className = `bookmark-notification ${isAdded ? 'added' : 'removed'}`;
+    notification.innerHTML = `
+        <i class="${isAdded ? 'fas fa-bookmark' : 'far fa-bookmark'}"></i>
+        <span>Раздел "${title}" ${isAdded ? 'добавлен в' : 'удален из'} закладок</span>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }, 10);
+}
+
 // ===== УЛУЧШЕНИЯ ПЕРВОЙ НЕДЕЛИ =====
 
 // 1. Прогресс-бар чтения
@@ -2488,6 +1716,8 @@ function enhanceMobileNavigation() {
     const nav = document.querySelector('nav');
     const overlay = document.getElementById('navOverlay');
     
+    if (!nav || !overlay) return;
+    
     // Закрытие навигации при клике на ссылку
     document.querySelectorAll('nav a').forEach(link => {
         link.addEventListener('click', () => {
@@ -2521,18 +1751,191 @@ function initWeek1Improvements() {
     console.log('Улучшения первой недели загружены');
 }
 
+// ===== ОСНОВНАЯ ИНИЦИАЛИЗАЦИЯ =====
+
 document.addEventListener('DOMContentLoaded', function() {
-    // ... существующий код ...
+    // Мобильное меню
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const nav = document.querySelector('nav');
+    const navOverlay = document.getElementById('navOverlay');
+    const accessibilityToggle = document.getElementById('accessibilityToggle');
+    const themeToggle = document.getElementById('themeToggle');
+    const pdfExport = document.getElementById('pdfExport');
+    const searchInput = document.querySelector('.search-bar input');
+    const body = document.body;
+
+    // Мобильное меню
+    if (mobileMenuBtn && nav && navOverlay) {
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            nav.classList.remove('active');
+            navOverlay.classList.remove('active');
+        });
+    }
+
+    // Версия для слабовидящих
+    if (accessibilityToggle) {
+        accessibilityToggle.addEventListener('click', () => {
+            body.classList.toggle('accessibility');
+            accessibilityToggle.innerHTML = body.classList.contains('accessibility')
+                ? '<i class="fas fa-eye-slash"></i> Обычная версия'
+                : '<i class="fas fa-eye"></i> Версия для слабовидящих';
+        });
+    }
+
+    // Переключение темы
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Светлая тема';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Темная тема';
+            }
+        });
+
+        // Проверяем сохраненную тему при загрузке
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Светлая тема';
+        }
+    }
+
+    // Экспорт в PDF
+    if (pdfExport) {
+        pdfExport.addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const section = document.querySelector('.section:target') || document.querySelector('.section');
+            const sectionTitle = section.querySelector('h2').innerText;
+            const content = section.innerText;
+
+            doc.text(`Памятка системного аналитика: ${sectionTitle}`, 10, 10);
+            doc.text(content, 10, 20);
+            doc.save(`Памятка-${sectionTitle.replace(/\s+/g, '_')}.pdf`);
+        });
+    }
+
+    // Улучшенный поиск
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const term = this.value.toLowerCase().trim();
+            if (!term) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'block';
+                });
+                return;
+            }
+
+            let found = false;
+            document.querySelectorAll('.section').forEach(section => {
+                const title = section.querySelector('h2').textContent.toLowerCase();
+                const content = section.textContent.toLowerCase();
+
+                if (title.includes(term) || content.includes(term)) {
+                    section.style.display = 'block';
+                    if (!found) {
+                        window.scrollTo({
+                            top: section.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        found = true;
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (!found) {
+                const synonyms = getSynonyms(term);
+                synonyms.forEach(synonym => {
+                    document.querySelectorAll('.section').forEach(section => {
+                        const content = section.textContent.toLowerCase();
+                        if (content.includes(synonym)) {
+                            section.style.display = 'block';
+                            if (!found) {
+                                window.scrollTo({
+                                    top: section.offsetTop - 100,
+                                    behavior: 'smooth'
+                                });
+                                found = true;
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    // База синонимов
+    function getSynonyms(term) {
+        const synonymsMap = {
+            'api': ['интерфейс', 'протокол'],
+            'база данных': ['хранилище', 'бд', 'database'],
+            'требования': ['условия', 'необходимости', 'требуемое'],
+            'анализ': ['исследование', 'изучение', 'разбор']
+        };
+        return synonymsMap[term] || [];
+    }
+
+    // Обработчики для кнопок таймера
+    const start15min = document.getElementById('start-15min');
+    const start5min = document.getElementById('start-5min');
+    const stopTimerBtn = document.getElementById('stop-timer');
+
+    if (start15min) start15min.addEventListener('click', () => startTimer(900));
+    if (start5min) start5min.addEventListener('click', () => startTimer(300));
+    if (stopTimerBtn) stopTimerBtn.addEventListener('click', stopTimer);
+
+    // Кнопка прокрутки наверх
+    const scrollButtons = document.querySelectorAll('#scrollToTopBtn');
     
-    // Инициализация улучшений первой недели
+    window.onscroll = function() {
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+        
+        scrollButtons.forEach(btn => {
+            if (scrollPosition > 300) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+    };
+
+    scrollButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Инициализация всех систем
     initWeek1Improvements();
-    
-    // Инициализация улучшений второй недели
     initInteractiveChecklists();
     initNotesSystem();
     initAdvancedSearch();
     initDocumentGenerator();
     initAPIExamples();
-    
-    console.log('Все системы второй недели инициализированы');
+    initBookmarksSystem();
+
+    // Обработка глубоких ссылок
+    if (window.location.hash) {
+        const targetSection = document.querySelector(window.location.hash);
+        if (targetSection) {
+            setTimeout(() => {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+    }
+
+    // Логирование для отладки
+    console.log('Все системы инициализированы');
 });
