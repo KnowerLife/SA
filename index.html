@@ -2636,5 +2636,31 @@ components:
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/104368407" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+    <!-- Уведомления -->
+<div id="notification-container"></div>
+
+<!-- Модальное окно быстрых настроек -->
+<div id="quick-settings" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Быстрые настройки</h3>
+        <div class="setting-group">
+            <label>Размер шрифта:</label>
+            <select id="font-size">
+                <option value="14px">Маленький</option>
+                <option value="16px" selected>Средний</option>
+                <option value="18px">Большой</option>
+            </select>
+        </div>
+        <div class="setting-group">
+            <label>Межстрочный интервал:</label>
+            <select id="line-height">
+                <option value="1.4">Компактный</option>
+                <option value="1.6" selected>Стандартный</option>
+                <option value="1.8">Просторный</option>
+            </select>
+        </div>
+        <button onclick="applyQuickSettings()">Применить</button>
+    </div>
+</div>
 </body>
 </html>
