@@ -48,6 +48,149 @@ function stopTimer() {
     }
 }
 
+// ===== ИНТЕРАКТИВНЫЕ ЧЕКЛИСТЫ =====
+
+function initInteractiveChecklists() {
+    // Обработка всех чеклистов на странице
+    document.querySelectorAll('.checklist, .highlight-box ul').forEach(container => {
+        enhanceChecklist(container);
+    });
+}
+
+function enhanceChecklist(container) {
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    const checklistId = container.id || `checklist-${Date.now()}`;
+    
+    if (checkboxes.length === 0) return;
+    
+    // Создаем контейнер для прогресса
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'checklist-progress';
+    
+    // Добавляем прогресс перед чеклистом
+    container.parentNode.insertBefore(progressContainer, container);
+    
+    // Обертываем каждый пункт
+    checkboxes.forEach((checkbox, index) => {
+        const listItem = checkbox.closest('li');
+        if (!listItem) return;
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'checklist-item';
+        wrapper.innerHTML = listItem.innerHTML;
+        
+        // Заменяем содержимое li
+        listItem.innerHTML = '';
+        listItem.appendChild(wrapper);
+        
+        // Обновляем чекбокс
+        const newCheckbox = wrapper.querySelector('input[type="checkbox"]');
+        const label = wrapper.querySelector('label');
+        
+        if (label) {
+            label.setAttribute('for', newCheckbox.id);
+        }
+        
+        // Загружаем сохраненное состояние
+        const savedState = loadChecklistState(checklistId, index);
+        if (savedState) {
+            newCheckbox.checked = true;
+            wrapper.classList.add('checked');
+        }
+        
+        // Обработчик изменения
+        newCheckbox.addEventListener('change', function() {
+            wrapper.classList.toggle('checked', this.checked);
+            saveChecklistState(checklistId, index, this.checked);
+            updateChecklistProgress(container, progressContainer, checklistId);
+        });
+    });
+    
+    // Добавляем кнопки действий
+    const actionsContainer = document.createElement('div');
+    actionsContainer.className = 'checklist-actions';
+    actionsContainer.innerHTML = `
+        <button class="select-all">Выбрать все</button>
+        <button class="deselect-all">Снять все</button>
+        <button class="reset">Сбросить прогресс</button>
+    `;
+    
+    container.parentNode.insertBefore(actionsContainer, container.nextSibling);
+    
+    // Обработчики для кнопок
+    actionsContainer.querySelector('.select-all').addEventListener('click', () => {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change'));
+        });
+    });
+    
+    actionsContainer.querySelector('.deselect-all').addEventListener('click', () => {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.dispatchEvent(new Event('change'));
+        });
+    });
+    
+    actionsContainer.querySelector('.reset').addEventListener('click', () => {
+        if (confirm('Сбросить весь прогресс для этого чеклиста?')) {
+            resetChecklistState(checklistId);
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+        }
+    });
+    
+    // Инициализируем прогресс
+    updateChecklistProgress(container, progressContainer, checklistId);
+}
+
+function updateChecklistProgress(container, progressContainer, checklistId) {
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    const total = checkboxes.length;
+    const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+    const progress = total > 0 ? Math.round((checked / total) * 100) : 0;
+    
+    progressContainer.innerHTML = `
+        <div class="progress-header">
+            <h4>Прогресс выполнения</h4>
+            <div class="progress-stats">${checked}/${total} (${progress}%)</div>
+        </div>
+        <div class="progress-bar" style="height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden;">
+            <div class="progress-fill" style="height: 100%; background: #4CAF50; width: ${progress}%; transition: width 0.3s ease;"></div>
+        </div>
+    `;
+}
+
+function loadChecklistState(checklistId, itemIndex) {
+    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
+    return saved[`${checklistId}-${itemIndex}`];
+}
+
+function saveChecklistState(checklistId, itemIndex, checked) {
+    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
+    const key = `${checklistId}-${itemIndex}`;
+    
+    if (checked) {
+        saved[key] = true;
+    } else {
+        delete saved[key];
+    }
+    
+    localStorage.setItem('checklists', JSON.stringify(saved));
+}
+
+function resetChecklistState(checklistId) {
+    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
+    Object.keys(saved).forEach(key => {
+        if (key.startsWith(checklistId)) {
+            delete saved[key];
+        }
+    });
+    localStorage.setItem('checklists', JSON.stringify(saved));
+}
+
 // Новый код для системы тестирования
 const testQuestions = {
     requirements: [
