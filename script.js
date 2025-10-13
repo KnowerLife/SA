@@ -191,6 +191,311 @@ function resetChecklistState(checklistId) {
     localStorage.setItem('checklists', JSON.stringify(saved));
 }
 
+// ===== УЛУЧШЕННАЯ СИСТЕМА ЗАМЕТОК =====
+
+class NotesSystem {
+    constructor() {
+        this.notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+        this.currentFilter = 'all';
+        this.searchTerm = '';
+        this.init();
+    }
+    
+    init() {
+        this.render();
+        this.setupEventListeners();
+    }
+    
+    setupEventListeners() {
+        // Поиск по заметкам
+        const searchInput = document.getElementById('notes-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.searchTerm = e.target.value.toLowerCase();
+                this.render();
+            });
+        }
+        
+        // Фильтры по тегам
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-tag')) {
+                const tag = e.target.dataset.tag;
+                this.currentFilter = tag;
+                this.updateActiveFilter();
+                this.render();
+            }
+        });
+    }
+    
+    addNote(title, content, tags = []) {
+        const newNote = {
+            id: 'note_' + Date.now(),
+            title: title.trim(),
+            content: content.trim(),
+            tags: tags,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+        
+        this.notes.unshift(newNote);
+        this.save();
+        this.render();
+        return newNote;
+    }
+    
+    updateNote(noteId, updates) {
+        const noteIndex = this.notes.findIndex(note => note.id === noteId);
+        if (noteIndex !== -1) {
+            this.notes[noteIndex] = {
+                ...this.notes[noteIndex],
+                ...updates,
+                updatedAt: new Date().toISOString()
+            };
+            this.save();
+            this.render();
+        }
+    }
+    
+    deleteNote(noteId) {
+        this.notes = this.notes.filter(note => note.id !== noteId);
+        this.save();
+        this.render();
+    }
+    
+    save() {
+        localStorage.setItem('userNotes', JSON.stringify(this.notes));
+    }
+    
+    getFilteredNotes() {
+        let filtered = this.notes;
+        
+        // Фильтрация по тегу
+        if (this.currentFilter !== 'all') {
+            filtered = filtered.filter(note => 
+                note.tags.includes(this.currentFilter)
+            );
+        }
+        
+        // Поиск
+        if (this.searchTerm) {
+            filtered = filtered.filter(note => 
+                note.title.toLowerCase().includes(this.searchTerm) ||
+                note.content.toLowerCase().includes(this.searchTerm) ||
+                note.tags.some(tag => tag.toLowerCase().includes(this.searchTerm))
+            );
+        }
+        
+        return filtered;
+    }
+    
+    getAllTags() {
+        const allTags = new Set();
+        this.notes.forEach(note => {
+            note.tags.forEach(tag => allTags.add(tag));
+        });
+        return Array.from(allTags);
+    }
+    
+    updateActiveFilter() {
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.classList.toggle('active', tag.dataset.tag === this.currentFilter);
+        });
+    }
+    
+    render() {
+        const container = document.getElementById('notesList');
+        if (!container) return;
+        
+        const filteredNotes = this.getFilteredNotes();
+        const allTags = this.getAllTags();
+        
+        // Рендерим фильтры
+        const filtersContainer = document.getElementById('notesFilters');
+        if (filtersContainer) {
+            filtersContainer.innerHTML = `
+                <div class="filter-tag ${this.currentFilter === 'all' ? 'active' : ''}" data-tag="all">Все</div>
+                ${allTags.map(tag => `
+                    <div class="filter-tag ${this.currentFilter === tag ? 'active' : ''}" data-tag="${tag}">${tag}</div>
+                `).join('')}
+            `;
+        }
+        
+        // Рендерим заметки
+        if (filteredNotes.length === 0) {
+            container.innerHTML = `
+                <div class="no-notes">
+                    <i class="fas fa-sticky-note"></i>
+                    <p>${this.searchTerm || this.currentFilter !== 'all' ? 'Заметки не найдены' : 'Пока нет заметок'}</p>
+                    ${!this.searchTerm && this.currentFilter === 'all' ? 
+                        '<button onclick="notesSystem.showEditor()" class="quick-link">Создать первую заметку</button>' : ''}
+                </div>
+            `;
+        } else {
+            container.innerHTML = filteredNotes.map(note => `
+                <div class="note-card" data-note-id="${note.id}">
+                    <div class="note-card-header">
+                        <h3 class="note-card-title">${this.escapeHtml(note.title)}</h3>
+                        <div class="note-card-actions">
+                            <button onclick="notesSystem.editNote('${note.id}')" title="Редактировать">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="notesSystem.deleteNote('${note.id}')" title="Удалить">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="note-card-content">${this.formatContent(note.content)}</div>
+                    ${note.tags.length > 0 ? `
+                        <div class="note-card-tags">
+                            ${note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="note-card-footer">
+                        Создано: ${this.formatDate(note.createdAt)}
+                        ${note.updatedAt !== note.createdAt ? `<br>Обновлено: ${this.formatDate(note.updatedAt)}` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+    
+    showEditor(noteId = null) {
+        const note = noteId ? this.notes.find(n => n.id === noteId) : null;
+        
+        const editorHtml = `
+            <div class="note-editor">
+                <h3>${note ? 'Редактировать заметку' : 'Новая заметка'}</h3>
+                <input type="text" class="note-input" id="noteTitle" 
+                       placeholder="Заголовок заметки" value="${note ? this.escapeHtml(note.title) : ''}">
+                <textarea class="note-input" id="noteContent" rows="6" 
+                          placeholder="Содержание заметки...">${note ? this.escapeHtml(note.content) : ''}</textarea>
+                <div class="note-tags-input" id="noteTagsContainer">
+                    ${note ? note.tags.map(tag => `
+                        <span class="note-tag">
+                            ${tag}
+                            <span class="remove" onclick="notesSystem.removeTag(this)">×</span>
+                        </span>
+                    `).join('') : ''}
+                </div>
+                <input type="text" class="note-input" id="newTag" placeholder="Добавить тег (нажмите Enter)">
+                <div class="note-actions">
+                    <button onclick="notesSystem.saveNote('${note ? note.id : ''}')" class="quick-link">
+                        ${note ? 'Обновить' : 'Сохранить'}
+                    </button>
+                    <button onclick="notesSystem.hideEditor()" class="quick-link" style="background: #6c757d;">
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        const container = document.getElementById('notesList');
+        container.innerHTML = editorHtml + container.innerHTML;
+        
+        // Обработчик добавления тегов
+        document.getElementById('newTag').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.addTagToEditor(e.target.value);
+                e.target.value = '';
+            }
+        });
+    }
+    
+    hideEditor() {
+        this.render();
+    }
+    
+    addTagToEditor(tag) {
+        tag = tag.trim();
+        if (!tag) return;
+        
+        const container = document.getElementById('noteTagsContainer');
+        const tagElement = document.createElement('span');
+        tagElement.className = 'note-tag';
+        tagElement.innerHTML = `
+            ${tag}
+            <span class="remove" onclick="notesSystem.removeTag(this)">×</span>
+        `;
+        container.appendChild(tagElement);
+    }
+    
+    removeTag(element) {
+        element.parentElement.remove();
+    }
+    
+    saveNote(noteId = null) {
+        const title = document.getElementById('noteTitle').value.trim();
+        const content = document.getElementById('noteContent').value.trim();
+        const tags = Array.from(document.getElementById('noteTagsContainer').querySelectorAll('.note-tag'))
+            .map(tag => tag.textContent.replace('×', '').trim());
+        
+        if (!title) {
+            alert('Введите заголовок заметки');
+            return;
+        }
+        
+        if (noteId) {
+            this.updateNote(noteId, { title, content, tags });
+        } else {
+            this.addNote(title, content, tags);
+        }
+    }
+    
+    editNote(noteId) {
+        this.showEditor(noteId);
+    }
+    
+    escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+    
+    formatContent(content) {
+        // Простой Markdown-like форматирование
+        return content
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n/g, '<br>');
+    }
+    
+    formatDate(dateString) {
+        return new Date(dateString).toLocaleString('ru-RU');
+    }
+}
+
+// Инициализация системы заметок
+let notesSystem;
+
+function initNotesSystem() {
+    notesSystem = new NotesSystem();
+    
+    // Добавляем кнопку создания заметки в тулбар
+    const notesContainer = document.getElementById('knowledge-base');
+    if (notesContainer) {
+        const toolbar = document.createElement('div');
+        toolbar.className = 'notes-toolbar';
+        toolbar.innerHTML = `
+            <input type="text" id="notes-search" placeholder="Поиск в заметках..." class="note-input">
+            <div id="notesFilters" class="notes-filters"></div>
+            <button onclick="notesSystem.showEditor()" class="quick-link">
+                <i class="fas fa-plus"></i> Новая заметка
+            </button>
+        `;
+        
+        const existingToolbar = notesContainer.querySelector('.notes-toolbar');
+        if (existingToolbar) {
+            existingToolbar.remove();
+        }
+        
+        const notesList = document.getElementById('notesList');
+        notesContainer.insertBefore(toolbar, notesList);
+    }
+}
+
 // Новый код для системы тестирования
 const testQuestions = {
     requirements: [
