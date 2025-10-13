@@ -1216,3 +1216,215 @@ if (document.querySelector('.competency-list')) {
             });
         });
 });
+// ===== УЛУЧШЕНИЯ ПЕРВОЙ НЕДЕЛИ =====
+
+// 1. Прогресс-бар чтения
+function initReadingProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress';
+    document.body.appendChild(progressBar);
+
+    function updateProgress() {
+        const winHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset;
+        const scrollPercent = scrollTop / (docHeight - winHeight);
+        const progress = Math.round(scrollPercent * 100);
+        
+        progressBar.style.transform = `scaleX(${scrollPercent})`;
+        
+        if (scrollPercent > 0) {
+            progressBar.classList.add('show');
+        } else {
+            progressBar.classList.remove('show');
+        }
+    }
+
+    window.addEventListener('scroll', updateProgress);
+    window.addEventListener('resize', updateProgress);
+}
+
+// 2. Режим фокусировки
+function initFocusMode() {
+    const focusOverlay = document.createElement('div');
+    focusOverlay.className = 'focus-mode';
+    
+    document.body.appendChild(focusOverlay);
+
+    window.activateFocusMode = function(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        const content = section.cloneNode(true);
+        content.className = 'focus-content';
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'focus-close';
+        closeBtn.innerHTML = '×';
+        closeBtn.onclick = deactivateFocusMode;
+        
+        content.appendChild(closeBtn);
+        focusOverlay.innerHTML = '';
+        focusOverlay.appendChild(content);
+        focusOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.deactivateFocusMode = function() {
+        focusOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            focusOverlay.innerHTML = '';
+        }, 300);
+    }
+
+    focusOverlay.addEventListener('click', function(e) {
+        if (e.target === focusOverlay) {
+            deactivateFocusMode();
+        }
+    });
+}
+
+// 3. Быстрые действия
+function initQuickActions() {
+    const quickActions = document.createElement('div');
+    quickActions.className = 'quick-actions';
+    
+    const actions = [
+        { icon: 'fas fa-search', title: 'Поиск', action: () => document.querySelector('.search-bar input').focus() },
+        { icon: 'fas fa-bookmark', title: 'Закладки', action: () => scrollToSection('bookmarks') },
+        { icon: 'fas fa-expand', title: 'Режим фокусировки', action: () => activateFocusModeForCurrent() },
+        { icon: 'fas fa-moon', title: 'Тема', action: () => document.getElementById('themeToggle').click() }
+    ];
+
+    actions.forEach(action => {
+        const btn = document.createElement('button');
+        btn.className = 'quick-action-btn';
+        btn.innerHTML = `<i class="${action.icon}"></i>`;
+        btn.title = action.title;
+        btn.onclick = action.action;
+        quickActions.appendChild(btn);
+    });
+
+    document.body.appendChild(quickActions);
+}
+
+function activateFocusModeForCurrent() {
+    const currentSection = getCurrentVisibleSection();
+    if (currentSection) {
+        activateFocusMode(currentSection.id);
+    }
+}
+
+function getCurrentVisibleSection() {
+    const sections = document.querySelectorAll('.section');
+    for (let section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+            return section;
+        }
+    }
+    return sections[0];
+}
+
+// 4. Улучшенная система закладок
+function enhanceBookmarks() {
+    // Добавляем кнопки действий к разделам
+    document.querySelectorAll('.section').forEach(section => {
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'bookmark-actions';
+        
+        const focusBtn = document.createElement('button');
+        focusBtn.className = 'bookmark-btn';
+        focusBtn.innerHTML = '<i class="fas fa-expand"></i>';
+        focusBtn.title = 'Режим фокусировки';
+        focusBtn.onclick = () => activateFocusMode(section.id);
+        
+        const copyLinkBtn = document.createElement('button');
+        copyLinkBtn.className = 'bookmark-btn';
+        copyLinkBtn.innerHTML = '<i class="fas fa-link"></i>';
+        copyLinkBtn.title = 'Копировать ссылку';
+        copyLinkBtn.onclick = () => copySectionLink(section.id);
+        
+        actionsDiv.appendChild(focusBtn);
+        actionsDiv.appendChild(copyLinkBtn);
+        section.appendChild(actionsDiv);
+    });
+}
+
+function copySectionLink(sectionId) {
+    const url = `${window.location.origin}${window.location.pathname}#${sectionId}`;
+    navigator.clipboard.writeText(url).then(() => {
+        showNotification('Ссылка скопирована в буфер обмена', 'success');
+    });
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        background: type === 'success' ? '#4CAF50' : '#2196F3',
+        color: 'white',
+        padding: '15px 20px',
+        borderRadius: '4px',
+        zIndex: '10000',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+    });
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// 5. Улучшенная мобильная навигация
+function enhanceMobileNavigation() {
+    const nav = document.querySelector('nav');
+    const overlay = document.getElementById('navOverlay');
+    
+    // Закрытие навигации при клике на ссылку
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    });
+    
+    // Swipe для закрытия навигации
+    let startX = 0;
+    overlay.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+    
+    overlay.addEventListener('touchmove', (e) => {
+        if (startX - e.touches[0].clientX > 50) {
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+    });
+}
+
+// Инициализация всех улучшений
+function initWeek1Improvements() {
+    initReadingProgress();
+    initFocusMode();
+    initQuickActions();
+    enhanceBookmarks();
+    enhanceMobileNavigation();
+    
+    console.log('Улучшения первой недели загружены');
+}
+
+// Добавляем вызов в конец DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // ... существующий код ...
+    
+    // Инициализируем улучшения первой недели
+    initWeek1Improvements();
+});
