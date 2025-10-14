@@ -47,12 +47,15 @@
     </script>
 </head>
 <body>
-    <button id="scrollToTopBtn" class="desktop" title="Вверх">↑</button>
-    <button id="scrollToTopBtn" class="mobile" title="Вверх">↑</button>
+    <!-- Убраны дублирующиеся кнопки прокрутки -->
+    <button id="scrollToTopBtn" title="Вверх">↑</button>
+    
     <button class="mobile-menu-btn" id="mobileMenuBtn">
         <i class="fas fa-bars"></i>
     </button>
+    
     <div class="overlay" id="navOverlay"></div>
+    
     <!-- Header Section -->
     <header>
         <div class="header-content">
@@ -63,7 +66,7 @@
             <div class="header-controls">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Поиск по материалам...">
+                    <input type="text" placeholder="Поиск по материалам..." id="globalSearch">
                 </div>
                 <button class="accessibility-toggle" id="accessibilityToggle">
                     <i class="fas fa-eye"></i> Версия для слабовидящих
@@ -83,147 +86,133 @@
         <div class="nav-header">
             <h2><i class="fas fa-bars"></i> Навигация</h2>
         </div>
+        
         <div class="category">
-    <h3>
-        <i class="fas fa-bookmark"></i> Мои закладки 
-        <span class="bookmarks-counter">0</span>
-    </h3>
-    <ul class="nav-links" id="bookmarksList">
-        <li class="no-bookmarks">
-            <i class="far fa-frown"></i>
-            <p>Пока нет сохраненных закладок</p>
-        </li>
-    </ul>
-</div>
-            <div class="category">
-                <h3>Основы анализа</h3>
-                <ul class="nav-links">
-                    <li><a href="#task-process" class="active"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
-                    <li><a href="#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
-                    <li><a href="#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
-                    <li><a href="#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
-                    <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Техники и методы</h3>
-                <ul class="nav-links">
-                    <li><a href="#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
-                    <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
-                    <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
-                    <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
-                    <li><a href="#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Архитектура</h3>
-                <ul class="nav-links">
-                    <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
-                    <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
-                    <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
-                    <li><a href="#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
-                    <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
-                    <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Данные</h3>
-                <ul class="nav-links">
-                    <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
-                    <li><a href="#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Процессы</h3>
-                <ul class="nav-links">
-                    <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
-                    <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Безопасность</h3>
-                <ul class="nav-links">
-                    <li><a href="#security"><i class="fas fa-shield-alt"></i> Основы безопасности</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Аналитика</h3>
-                <ul class="nav-links">
-                    <li><a href="#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
-                    <li><a href="#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
-                    <li><a href="#case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Документация</h3>
-                <ul class="nav-links">
-                    <li><a href="#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Карьера</h3>
-                <ul class="nav-links">
-                    <li><a href="#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Инструменты</h3>
-                <ul class="nav-links">
-                    <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
-                    <li><a href="#unit-converter"><i class="fas fa-calculator"></i> Конвертер</a></li>
-                    <li><a href="#diagram-generator"><i class="fas fa-diagram-project"></i> Генератор диаграмм</a></li>
-                    <li><a href="#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
-                    <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
-                    <li><a href="#additional-tools"><i class="fas fa-tools"></i> Дополнительные инструменты</a></li>
-                    <li><a href="#external-integration"><i class="fas fa-plug"></i> Интеграция с API</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Чеклисты</h3>
-                <ul class="nav-links">
-                    <li><a href="#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
-                    <li><a href="#security-checklist"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Развитие</h3>
-                <ul class="nav-links">
-                    <li><a href="#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
-                </ul>
-            </div>
-            <div class="category">
-                <h3>Ресурсы</h3>
-                <ul class="nav-links">
-                    <li><a href="#glossary"><i class="fas fa-book"></i> Глоссарий терминов</a></li>
-                    <li><a href="#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
-                </ul>
-            </div>
-        <div class="category">
-            <h3>Паттерны и антипаттерны</h3>
-            <ul class="nav-links">
-                <li><a href="#analysis-patterns"><i class="fas fa-shapes"></i> Паттерны анализа</a></li>
-                <li><a href="#anti-patterns"><i class="fas fa-exclamation-triangle"></i> Антипаттерны</a></li>
+            <h3>
+                <i class="fas fa-bookmark"></i> Мои закладки 
+                <span class="bookmarks-counter">0</span>
+            </h3>
+            <ul class="nav-links" id="bookmarksList">
+                <li class="no-bookmarks">
+                    <i class="far fa-frown"></i>
+                    <p>Пока нет сохраненных закладок</p>
+                </li>
             </ul>
         </div>
         
-        <!-- Практика -->
+        <!-- Основные разделы -->
         <div class="category">
-            <h3>Практика</h3>
+            <h3>Основы анализа</h3>
             <ul class="nav-links">
-                <li><a href="#practical-case-studies"><i class="fas fa-briefcase"></i> Реальные кейсы</a></li>
-                <li><a href="#practical-checklists"><i class="fas fa-list-check"></i> Чеклисты</a></li>
+                <li><a href="#task-process" class="active"><i class="fas fa-tasks"></i> Что делать при получении задачи</a></li>
+                <li><a href="#artifacts"><i class="fas fa-archive"></i> Артефакты</a></li>
+                <li><a href="#requirements"><i class="fas fa-clipboard-list"></i> Виды требований</a></li>
+                <li><a href="#stakeholders"><i class="fas fa-users"></i> Стейкхолдеры</a></li>
+                <li><a href="#ux-ui"><i class="fas fa-paint-brush"></i> UX/UI принципы</a></li>
             </ul>
         </div>
         
-        <!-- Интерактив -->
         <div class="category">
-            <h3>Интерактив</h3>
+            <h3>Техники и методы</h3>
             <ul class="nav-links">
-                <li><a href="#interactive-examples"><i class="fas fa-flask"></i> Интерактивные примеры</a></li>
-                <li><a href="#knowledge-base"><i class="fas fa-book"></i> База знаний</a></li>
+                <li><a href="#info-gathering"><i class="fas fa-search"></i> Методы сбора информации</a></li>
+                <li><a href="#use-cases"><i class="fas fa-sitemap"></i> Use cases</a></li>
+                <li><a href="#user-stories"><i class="fas fa-book-open"></i> User stories</a></li>
+                <li><a href="#bpmn"><i class="fas fa-project-diagram"></i> BPMN</a></li>
+                <li><a href="#estimation"><i class="fas fa-calculator"></i> Техники оценки задач</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Архитектура</h3>
+            <ul class="nav-links">
+                <li><a href="#api"><i class="fas fa-code"></i> API</a></li>
+                <li><a href="#rest"><i class="fas fa-exchange-alt"></i> REST</a></li>
+                <li><a href="#soap"><i class="fas fa-exchange-alt"></i> SOAP</a></li>
+                <li><a href="#graphql"><i class="fas fa-network-wired"></i> GraphQL</a></li>
+                <li><a href="#microservices"><i class="fas fa-cubes"></i> Микросервисы</a></li>
+                <li><a href="#ddd"><i class="fas fa-layer-group"></i> DDD</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Данные</h3>
+            <ul class="nav-links">
+                <li><a href="#db"><i class="fas fa-database"></i> Базы данных</a></li>
+                <li><a href="#data-modeling"><i class="fas fa-project-diagram"></i> Моделирование данных</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Процессы</h3>
+            <ul class="nav-links">
+                <li><a href="#kanban-scrum"><i class="fas fa-columns"></i> Методологии</a></li>
+                <li><a href="#ci-cd"><i class="fas fa-sync-alt"></i> CI/CD</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Безопасность</h3>
+            <ul class="nav-links">
+                <li><a href="#security"><i class="fas fa-shield-alt"></i> Основы безопасности</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Аналитика</h3>
+            <ul class="nav-links">
+                <li><a href="#metrics"><i class="fas fa-chart-line"></i> Метрики</a></li>
+                <li><a href="#mistakes"><i class="fas fa-exclamation-triangle"></i> Ошибки</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Документация</h3>
+            <ul class="nav-links">
+                <li><a href="#templates"><i class="fas fa-file-contract"></i> Шаблоны</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Карьера</h3>
+            <ul class="nav-links">
+                <li><a href="#career"><i class="fas fa-user-graduate"></i> Развитие</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Инструменты</h3>
+            <ul class="nav-links">
+                <li><a href="#quick-tools"><i class="fas fa-bolt"></i> Быстрые инструменты</a></li>
+                <li><a href="#decision-tree"><i class="fas fa-sitemap"></i> Decision Tree</a></li>
+                <li><a href="#email-templates"><i class="fas fa-envelope"></i> Шаблоны писем</a></li>
+                <li><a href="#swagger"><i class="fas fa-file-code"></i> Swagger/OpenAPI</a></li>
+                <li><a href="#external-integration"><i class="fas fa-plug"></i> Интеграция с API</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Чеклисты</h3>
+            <ul class="nav-links">
+                <li><a href="#interview-checklist"><i class="fas fa-list-check"></i> Для интервью</a></li>
+                <li><a href="#security-checklist"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>Развитие</h3>
+            <ul class="nav-links">
+                <li><a href="#competency-map"><i class="fas fa-star"></i> Карта компетенций</a></li>
                 <li><a href="#testing-system"><i class="fas fa-graduation-cap"></i> Проверка знаний</a></li>
             </ul>
         </div>
+        
+        <div class="category">
+            <h3>Ресурсы</h3>
+            <ul class="nav-links">
+                <li><a href="#glossary"><i class="fas fa-book"></i> Глоссарий терминов</a></li>
+                <li><a href="#resources"><i class="fas fa-external-link-alt"></i> Полезные ресурсы</a></li>
+            </ul>
         </div>
     </nav>
     
@@ -248,13 +237,7 @@
                 <div class="example-header"><i class="fas fa-chart-pie"></i> Ключевые компетенции системного аналитика</div>
                 <p>▢ Бизнес-анализ ▢ Системный анализ ▢ Работа с данными ▢ UX/UI ▢ Технические знания ▢ Коммуникация</p>
             </div>
-            <h3>Полезные ресурсы:</h3>
-            <a href="https://habr.com/ru/companies/edison/articles/269789/" class="resource-link" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Процесс работы системного аналитика
-            </a>
-            <a href="https://analyst.by/articles/kak-poluchit-zadachu-i-chto-s-nej-delat" class="resource-link" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Как получить задачу и что с ней делать
-            </a>
+            
             <h3>Приоритизация задач</h3>
             <div class="example">
                 <div class="example-header"><i class="fas fa-table"></i> Матрица приоритезации (Value vs Effort)</div>
@@ -298,11 +281,6 @@
                 <a href="#use-cases" class="quick-link">Use Cases</a>
                 <a href="#user-stories" class="quick-link">User Stories</a>
             </div>
-            
-            <div class="example">
-                <div class="example-header"><i class="fas fa-file-alt"></i> Пример артефакта: User Story</div>
-                <p>"Как зарегистрированный пользователь, я хочу иметь возможность сбросить пароль, чтобы восстановить доступ к аккаунту, если забыл пароль"</p>
-            </div>
         </section>
 
         <!-- Requirements Section -->
@@ -315,7 +293,7 @@
                 <li>Основные функции системы (регистрация, авторизация)</li>
                 <li>Бизнес-процессы и сценарии использования</li>
                 <li>Требования к обработке данных</li>
-                <li>Взаимодействие с другими системами</li>
+                <li>Взаимодействие с другими системы</li>
             </ul>
             
             <div class="example">
@@ -348,114 +326,69 @@
                 <li><strong>Атомарность</strong> - неделимость требования</li>
                 <li><strong>Тестируемость</strong> - возможность проверки выполнения</li>
             </ul>
+            
             <div class="highlight-box">
-        <h3>Чеклист для проверки требований:</h3>
-        <ul>
-            <li><input type="checkbox"> Все требования измеримы?</li>
-            <li><input type="checkbox"> Есть критерии приемки?</li>
-            <li><input type="checkbox"> Учтены все сценарии использования?</li>
-            <li><input type="checkbox"> Соответствуют бизнес-целям?</li>
-            <li><input type="checkbox"> Нет противоречий с другими требованиями?</li>
-        </ul>
-    </div>        
+                <h3>Чеклист для проверки требований:</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox"> Все требования измеримы?</li>
+                    <li><input type="checkbox"> Есть критерии приемки?</li>
+                    <li><input type="checkbox"> Учтены все сценарии использования?</li>
+                    <li><input type="checkbox"> Соответствуют бизнес-целям?</li>
+                    <li><input type="checkbox"> Нет противоречий с другими требованиями?</li>
+                </ul>
+            </div>        
         </section>
 
         <!-- Stakeholders Section -->
-<section id="stakeholders" class="section">
-    <h2><i class="fas fa-users"></i> Стейкхолдеры</h2>
-    
-    <p>Стейкхолдеры - это лица или организации, которые имеют интерес в проекте и могут повлиять на его успех или неудачу:</p>
-    
-    <ul>
-        <li><strong>Заказчики</strong> - определяют бизнес-требования и финансируют проект</li>
-        <li><strong>Пользователи</strong> - непосредственно работают с системой</li>
-        <li><strong>Разработчики</strong> - реализуют техническое решение</li>
-        <li><strong>Тестировщики</strong> - обеспечивают качество продукта</li>
-        <li><strong>Руководство</strong> - отвечает за стратегические решения</li>
-        <li><strong>Технические эксперты</strong> - предоставляют предметную экспертизу</li>
-    </ul>
-    
-    <h3>Как взаимодействовать со стейкхолдерами:</h3>
-    <ol>
-        <li><strong>Идентификация</strong> - составьте полный список всех заинтересованных сторон</li>
-        <li><strong>Анализ влияния</strong> - оцените уровень влияния каждого стейкхолдера</li>
-        <li><strong>План коммуникации</strong> - определите частоту и формат взаимодействия</li>
-        <li><strong>Управление ожиданиями</strong> - четко формулируйте что возможно, а что нет</li>
-        <li><strong>Обратная связь</strong> - регулярно собирайте и анализируйте мнения</li>
-    </ol>
-    
-    <div class="highlight-box">
-        <p><strong>Совет:</strong> Используйте матрицу влияния/заинтересованности для приоритизации работы со стейкхолдерами. Регулярно обновляйте карту стейкхолдеров по мере развития проекта.</p>
-    </div>
-</section>
+        <section id="stakeholders" class="section">
+            <h2><i class="fas fa-users"></i> Стейкхолдеры</h2>
+            
+            <p>Стейкхолдеры - это лица или организации, которые имеют интерес в проекте и могут повлиять на его успех или неудачу:</p>
+            
+            <ul>
+                <li><strong>Заказчики</strong> - определяют бизнес-требования и финансируют проект</li>
+                <li><strong>Пользователи</strong> - непосредственно работают с системой</li>
+                <li><strong>Разработчики</strong> - реализуют техническое решение</li>
+                <li><strong>Тестировщики</strong> - обеспечивают качество продукта</li>
+                <li><strong>Руководство</strong> - отвечает за стратегические решения</li>
+                <li><strong>Технические эксперты</strong> - предоставляют предметную экспертизу</li>
+            </ul>
+            
+            <h3>Как взаимодействовать со стейкхолдерами:</h3>
+            <ol>
+                <li><strong>Идентификация</strong> - составьте полный список всех заинтересованных сторон</li>
+                <li><strong>Анализ влияния</strong> - оцените уровень влияния каждого стейкхолдера</li>
+                <li><strong>План коммуникации</strong> - определите частоту и формат взаимодействия</li>
+                <li><strong>Управление ожиданиями</strong> - четко формулируйте что возможно, а что нет</li>
+                <li><strong>Обратная связь</strong> - регулярно собирайте и анализируйте мнения</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <p><strong>Совет:</strong> Используйте матрицу влияния/заинтересованности для приоритизации работы со стейкхолдерами. Регулярно обновляйте карту стейкхолдеров по мере развития проекта.</p>
+            </div>
+        </section>
 
-        <section id="glossary" class="section">
-    <h2><i class="fas fa-book"></i> Глоссарий терминов</h2>
-    
-    <div class="glossary-container">
-        <div class="glossary-category">
-            <h3>Основные понятия системного анализа</h3>
-            <dl>
-                <dt>Артефакты (Artifacts)</dt>
-                <dd>Рабочие продукты, создаваемые в процессе анализа - документы, модели, диаграммы</dd>
-                
-                <dt>Стейкхолдеры (Stakeholders)</dt>
-                <dd>Лица и организации, заинтересованные в проекте и влияющие на требования</dd>
-                
-                <dt>Функциональные требования</dt>
-                <dd>Что система должна делать - описание функций и возможностей системы</dd>
-                
-                <dt>Нефункциональные требования</dt>
-                <dd>Как система должна работать - характеристики производительности, безопасности</dd>
-            </dl>
-        </div>
-        
-        <div class="glossary-category">
-            <h3>Архитектура и технологии</h3>
-            <dl>
-                <dt>REST (Representational State Transfer)</dt>
-                <dd>Архитектурный стиль для API, основанный на стандартных HTTP-методах</dd>
-                
-                <dt>SOAP (Simple Object Access Protocol)</dt>
-                <dd>Протокол обмена структурированными XML-сообщениями для веб-сервисов</dd>
-                
-                <dt>GraphQL</dt>
-                <dd>Язык запросов для API, позволяющий клиентам запрашивать только необходимые данные</dd>
-                
-                <dt>Микросервисы (Microservices)</dt>
-                <dd>Архитектурный подход с независимыми сервисами</dd>
-            </dl>
-        </div>
-        
-        <div class="glossary-category">
-            <h3>Данные и базы данных</h3>
-            <dl>
-                <dt>Реляционная БД</dt>
-                <dd>База данных с табличной структурой и строгими связями (MySQL, PostgreSQL)</dd>
-                
-                <dt>NoSQL</dt>
-                <dd>Нереляционные базы данных (документные, ключ-значение, графовые)</dd>
-                
-                <dt>Нормализация</dt>
-                <dd>Процесс оптимизации структуры БД через нормальные формы (1NF, 2NF, 3NF)</dd>
-            </dl>
-        </div>
-        
-        <div class="glossary-category">
-            <h3>Процессы и методологии</h3>
-            <dl>
-                <dt>CI/CD</dt>
-                <dd>Непрерывная интеграция и доставка - автоматизация сборки и развертывания</dd>
-                
-                <dt>Scrum</dt>
-                <dd>Итеративная методология разработки с фиксированными спринтами</dd>
-                
-                <dt>Kanban</dt>
-                <dd>Метод управления потоком работ с визуализацией задач</dd>
-            </dl>
-        </div>
-    </div>
-</section>
+        <!-- UX/UI Principles Section -->
+        <section id="ux-ui" class="section">
+            <h2><i class="fas fa-paint-brush"></i> UX/UI принципы</h2>
+            
+            <p>Основные принципы проектирования пользовательского опыта:</p>
+            
+            <ul>
+                <li><strong>Юзабилити</strong> - простота и понятность интерфейса</li>
+                <li><strong>Интуитивность</strong> - понятность без обучения</li>
+                <li><strong>Обратная связь</strong> - реакция системы на действия</li>
+                <li><strong>Адаптивность</strong> - работа на разных устройствах</li>
+                <li><strong>Минимизация ошибок</strong> - предотвращение ошибок пользователя</li>
+                <li><strong>Эстетика</strong> - приятный внешний вид</li>
+            </ul>
+            
+            <h3>Отличия UI от UX:</h3>
+            <div class="example">
+                <p><strong>UI (User Interface)</strong> - то, как выглядит и ощущается интерфейс (дизайн, цвета, шрифты)</p>
+                <p><strong>UX (User Experience)</strong> - опыт пользователя при использовании интерфейса (удобство, время отклика, ошибки)</p>
+            </div>
+        </section>
 
         <!-- Information Gathering Section -->
         <section id="info-gathering" class="section">
@@ -508,129 +441,119 @@
         </section>
 
         <!-- User Stories Section -->
-<section id="user-stories" class="section">
-    <h2><i class="fas fa-book-open"></i> User stories</h2>
-    
-    <p>User story (история пользователя) - это краткое описание функциональности с точки зрения конечного пользователя:</p>
-    
-    <div class="example">
-        <div class="example-header"><i class="fas fa-code"></i> Формат user story</div>
-        <p>"Как [роль пользователя], я хочу [функция], чтобы [получить пользу/решить проблему]"</p>
-    </div>
-    
-    <h3>Критерии хорошей user story (INVEST):</h3>
-    <ul>
-        <li><strong>Independent</strong> - независимая от других историй</li>
-        <li><strong>Negotiable</strong> - подлежит обсуждению и уточнению</li>
-        <li><strong>Valuable</strong> - предоставляет ценность для пользователя</li>
-        <li><strong>Estimable</strong> - может быть оценена по сложности</li>
-        <li><strong>Small</strong> - достаточно мала для реализации за один спринт</li>
-        <li><strong>Testable</strong> - имеет четкие критерии приемки</li>
-    </ul>
-    
-    <h3>Примеры:</h3>
-    <div class="example">
-        <p>"Как покупатель, я хочу фильтровать товары по цене, чтобы быстрее находить подходящие варианты"</p>
-        <p>"Как менеджер, я хочу экспортировать отчет в Excel, чтобы анализировать данные"</p>
-    </div>
-</section>
+        <section id="user-stories" class="section">
+            <h2><i class="fas fa-book-open"></i> User stories</h2>
+            
+            <p>User story (история пользователя) - это краткое описание функциональности с точки зрения конечного пользователя:</p>
+            
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Формат user story</div>
+                <p>"Как [роль пользователя], я хочу [функция], чтобы [получить пользу/решить проблему]"</p>
+            </div>
+            
+            <h3>Критерии хорошей user story (INVEST):</h3>
+            <ul>
+                <li><strong>Independent</strong> - независимая от других историй</li>
+                <li><strong>Negotiable</strong> - подлежит обсуждению и уточнению</li>
+                <li><strong>Valuable</strong> - предоставляет ценность для пользователя</li>
+                <li><strong>Estimable</strong> - может быть оценена по сложности</li>
+                <li><strong>Small</strong> - достаточно мала для реализации за один спринт</li>
+                <li><strong>Testable</strong> - имеет четкие критерии приемки</li>
+            </ul>
+            
+            <h3>Примеры:</h3>
+            <div class="example">
+                <p>"Как покупатель, я хочу фильтровать товары по цене, чтобы быстрее находить подходящие варианты"</p>
+                <p>"Как менеджер, я хочу экспортировать отчет в Excel, чтобы анализировать данные"</p>
+            </div>
+        </section>
 
-<!-- BPMN Section -->
-<section id="bpmn" class="section">
-    <h2><i class="fas fa-project-diagram"></i> BPMN (Business Process Model and Notation)</h2>
-    
-    <p>BPMN - стандартная нотация для моделирования бизнес-процессов:</p>
-    
-    <h3>Основные элементы:</h3>
-    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-        <tr>
-            <th style="border:1px solid #ddd; padding:8px;">Элемент</th>
-            <th style="border:1px solid #ddd; padding:8px;">Обозначение</th>
-            <th style="border:1px solid #ddd; padding:8px;">Описание</th>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Задача</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:50px; height:30px; border:1px solid #000; border-radius:5px; margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Единица работы в процессе</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Событие</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:30px; height:30px; border:1px solid #000; border-radius:50%; margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Что-то, что происходит в процессе</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Шлюз</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:40px; height:40px; border:1px solid #000; transform:rotate(45deg); margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Точка принятия решений и ветвления</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Пул/дорожка</td>
-            <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:100px; height:50px; border:1px solid #000; margin:0 auto;"></div></td>
-            <td style="border:1px solid #ddd; padding:8px;">Участники процесса и их зоны ответственности</td>
-        </tr>
-    </table>
-    
-    <div class="highlight-box">
-        <p><strong>Преимущества BPMN:</strong> Стандартизация нотации, наглядное представление процессов, возможность исполнимых моделей, интеграция с системами управления процессами.</p>
-    </div>
-    
-    <h3>Пример простого процесса:</h3>
-    <div class="example">
-        <p>1. Стартовое событие → 2. Проверка документации → 3. [Валидна] Обработка заявки → 4. Финиш</p>
-        <p>3. [Невалидна] Уведомление клиента → 4. Финиш</p>
-    </div>
-</section>
+        <!-- BPMN Section -->
+        <section id="bpmn" class="section">
+            <h2><i class="fas fa-project-diagram"></i> BPMN (Business Process Model and Notation)</h2>
+            
+            <p>BPMN - стандартная нотация для моделирования бизнес-процессов:</p>
+            
+            <h3>Основные элементы:</h3>
+            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                <tr>
+                    <th style="border:1px solid #ddd; padding:8px;">Элемент</th>
+                    <th style="border:1px solid #ddd; padding:8px;">Обозначение</th>
+                    <th style="border:1px solid #ddd; padding:8px;">Описание</th>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Задача</td>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:50px; height:30px; border:1px solid #000; border-radius:5px; margin:0 auto;"></div></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Единица работы в процессе</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Событие</td>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:30px; height:30px; border:1px solid #000; border-radius:50%; margin:0 auto;"></div></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Что-то, что происходит в процессе</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Шлюз</td>
+                    <td style="border:1px solid #ddd; padding:8px; text-align:center;"><div style="width:40px; height:40px; border:1px solid #000; transform:rotate(45deg); margin:0 auto;"></div></td>
+                    <td style="border:1px solid #ddd; padding:8px;">Точка принятия решений и ветвления</td>
+                </tr>
+            </table>
+            
+            <div class="highlight-box">
+                <p><strong>Преимущества BPMN:</strong> Стандартизация нотации, наглядное представление процессов, возможность исполнимых моделей, интеграция с системами управления процессами.</p>
+            </div>
+        </section>
 
+        <!-- Estimation Section -->
         <section id="estimation" class="section">
-    <h2><i class="fas fa-calculator"></i> Техники оценки задач</h2>
-    
-    <div class="estimation-methods">
-        <div class="method">
-            <h3>Planning Poker</h3>
-            <p>Оценка сложности задач с помощью карточек</p>
-            <div class="quick-links">
-                <span class="quick-link">1</span>
-                <span class="quick-link">2</span>
-                <span class="quick-link">3</span>
-                <span class="quick-link">5</span>
-                <span class="quick-link">8</span>
-                <span class="quick-link">13</span>
+            <h2><i class="fas fa-calculator"></i> Техники оценки задач</h2>
+            
+            <div class="estimation-methods">
+                <div class="method">
+                    <h3>Planning Poker</h3>
+                    <p>Оценка сложности задач с помощью карточек</p>
+                    <div class="quick-links">
+                        <span class="quick-link">1</span>
+                        <span class="quick-link">2</span>
+                        <span class="quick-link">3</span>
+                        <span class="quick-link">5</span>
+                        <span class="quick-link">8</span>
+                        <span class="quick-link">13</span>
+                    </div>
+                </div>
+                
+                <div class="method">
+                    <h3>T-Shirt Sizing</h3>
+                    <p>Оценка по размерам одежды</p>
+                    <div class="quick-links">
+                        <span class="quick-link">XS</span>
+                        <span class="quick-link">S</span>
+                        <span class="quick-link">M</span>
+                        <span class="quick-link">L</span>
+                        <span class="quick-link">XL</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="method">
-            <h3>T-Shirt Sizing</h3>
-            <p>Оценка по размерам одежды</p>
-            <div class="quick-links">
-                <span class="quick-link">XS</span>
-                <span class="quick-link">S</span>
-                <span class="quick-link">M</span>
-                <span class="quick-link">L</span>
-                <span class="quick-link">XL</span>
+            
+            <h3>Факторы для учета:</h3>
+            <div class="factor-grid">
+                <div class="factor">
+                    <i class="fas fa-brain"></i>
+                    <h4>Сложность</h4>
+                </div>
+                <div class="factor">
+                    <i class="fas fa-arrows-alt-h"></i>
+                    <h4>Объем</h4>
+                </div>
+                <div class="factor">
+                    <i class="fas fa-uncertainty"></i>
+                    <h4>Неопределенность</h4>
+                </div>
+                <div class="factor">
+                    <i class="fas fa-users"></i>
+                    <h4>Зависимости</h4>
+                </div>
             </div>
-        </div>
-    </div>
-    
-    <h3>Факторы для учета:</h3>
-    <div class="factor-grid">
-        <div class="factor">
-            <i class="fas fa-brain"></i>
-            <h4>Сложность</h4>
-        </div>
-        <div class="factor">
-            <i class="fas fa-arrows-alt-h"></i>
-            <h4>Объем</h4>
-        </div>
-        <div class="factor">
-            <i class="fas fa-uncertainty"></i>
-            <h4>Неопределенность</h4>
-        </div>
-        <div class="factor">
-            <i class="fas fa-users"></i>
-            <h4>Зависимости</h4>
-        </div>
-    </div>
-</section>
+        </section>
 
         <!-- API Section -->
         <section id="api" class="section">
@@ -646,10 +569,10 @@
             </ul>
             
             <div class="code-block">
-                // Пример REST API запроса
-                GET /api/books?author=J.K.%20Rowling HTTP/1.1
-                Host: example.com
-                Accept: application/json
+// Пример REST API запроса
+GET /api/books?author=J.K.%20Rowling HTTP/1.1
+Host: example.com
+Accept: application/json
             </div>
             
             <h3>Популярные методы REST:</h3>
@@ -660,177 +583,95 @@
                 <li><strong>DELETE</strong> - удаление ресурсов</li>
                 <li><strong>PATCH</strong> - частичное обновление ресурса</li>
             </ul>
-            
-            <div class="quick-links">
-                <a href="#rest" class="quick-link">REST API</a>
-                <a href="#swagger" class="quick-link">Swagger/OpenAPI</a>
-            </div>
         </section>
 
         <!-- REST Section -->
-<section id="rest" class="section">
-    <h2><i class="fas fa-exchange-alt"></i> REST (Representational State Transfer)</h2>
-    
-    <p>REST - архитектурный стиль для распределенных систем, основанный на 6 принципах:</p>
-    
-    <ol>
-        <li><strong>Единообразие интерфейса</strong> - стандартные методы и форматы</li>
-        <li><strong>Отсутствие состояния (Stateless)</strong> - каждый запрос самодостаточен</li>
-        <li><strong>Кэширование</strong> - явное указание возможности кэширования</li>
-        <li><strong>Клиент-сервер</strong> - разделение ответственности</li>
-        <li><strong>Многоуровневая система</strong> - иерархия компонентов</li>
-        <li><strong>Код по требованию (опционально)</strong> - возможность расширения функциональности</li>
-    </ol>
-    
-    <h3>REST vs RESTful:</h3>
-    <div class="example">
-        <p><strong>REST</strong> - набор архитектурных принципов</p>
-        <p><strong>RESTful</strong> - API, полностью соответствующий REST-принципам</p>
-        <p><strong>REST API</strong> - интерфейс, реализующий REST подход</p>
-    </div>
-    
-    <h3>Статус коды REST:</h3>
-    <ul>
-        <li><strong>2xx (Успех)</strong>: 200 OK, 201 Created, 204 No Content</li>
-        <li><strong>3xx (Перенаправление)</strong>: 301 Moved, 304 Not Modified</li>
-        <li><strong>4xx (Ошибка клиента)</strong>: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</li>
-        <li><strong>5xx (Ошибка сервера)</strong>: 500 Internal Error, 503 Service Unavailable</li>
-    </ul>
-</section>
+        <section id="rest" class="section">
+            <h2><i class="fas fa-exchange-alt"></i> REST (Representational State Transfer)</h2>
+            
+            <p>REST - архитектурный стиль для распределенных систем, основанный на 6 принципах:</p>
+            
+            <ol>
+                <li><strong>Единообразие интерфейса</strong> - стандартные методы и форматы</li>
+                <li><strong>Отсутствие состояния (Stateless)</strong> - каждый запрос самодостаточен</li>
+                <li><strong>Кэширование</strong> - явное указание возможности кэширования</li>
+                <li><strong>Клиент-сервер</strong> - разделение ответственности</li>
+                <li><strong>Многоуровневая система</strong> - иерархия компонентов</li>
+                <li><strong>Код по требованию (опционально)</strong> - возможность расширения функциональности</li>
+            </ol>
+            
+            <h3>Статус коды REST:</h3>
+            <ul>
+                <li><strong>2xx (Успех)</strong>: 200 OK, 201 Created, 204 No Content</li>
+                <li><strong>3xx (Перенаправление)</strong>: 301 Moved, 304 Not Modified</li>
+                <li><strong>4xx (Ошибка клиента)</strong>: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</li>
+                <li><strong>5xx (Ошибка сервера)</strong>: 500 Internal Error, 503 Service Unavailable</li>
+            </ul>
+        </section>
 
         <!-- SOAP Section -->
-<section id="soap" class="section">
-    <h2><i class="fas fa-exchange-alt"></i> SOAP (Simple Object Access Protocol)</h2>
-    
-    <p>SOAP - протокол для обмена структурированной информацией в распределенных системах. Основные характеристики:</p>
-    
-    <ul>
-        <li><strong>XML-based</strong> - все сообщения в формате XML</li>
-        <li><strong>Протоколо-независимый</strong> - может работать поверх HTTP, SMTP, TCP</li>
-        <li><strong>Строгая типизация</strong> - использует WSDL для описания интерфейсов</li>
-        <li><strong>Встроенная безопасность</strong> - WS-Security стандарт</li>
-        <li><strong>Транзакции</strong> - поддержка ACID через WS-Transaction</li>
-    </ul>
-    
-    <h3>Структура SOAP сообщения:</h3>
-    <div class="code-block">
-&lt;?xml version="1.0"?&gt;
-&lt;soap:Envelope
-  xmlns:soap="http://www.w3.org/2003/05/soap-envelope"&gt;
-  
-  &lt;soap:Header&gt;
-    &lt;!-- Заголовок с метаданными --&gt;
-    &lt;auth:Authentication&gt;
-      &lt;auth:Username&gt;user123&lt;/auth:Username&gt;
-      &lt;auth:Password&gt;pass456&lt;/auth:Password&gt;
-    &lt;/auth:Authentication&gt;
-  &lt;/soap:Header&gt;
-  
-  &lt;soap:Body&gt;
-    &lt;!-- Основное содержимое запроса --&gt;
-    &lt;m:GetUserDetails xmlns:m="https://api.example.com/"&gt;
-      &lt;m:UserId&gt;789&lt;/m:UserId&gt;
-    &lt;/m:GetUserDetails&gt;
-  &lt;/soap:Body&gt;
-  
-&lt;/soap:Envelope&gt;
-    </div>
-    
-    <h3>Ключевые компоненты:</h3>
-    <ul>
-        <li><strong>Envelope</strong> - корневой элемент, определяет сообщение как SOAP</li>
-        <li><strong>Header</strong> - содержит атрибуты безопасности, транзакций</li>
-        <li><strong>Body</strong> - основное содержимое запроса/ответа</li>
-        <li><strong>Fault</strong> - элемент для обработки ошибок</li>
-    </ul>
-    
-    <h3>SOAP vs REST:</h3>
-    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-        <tr>
-            <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
-            <th style="border:1px solid #ddd; padding:8px;">SOAP</th>
-            <th style="border:1px solid #ddd; padding:8px;">REST</th>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Формат данных</td>
-            <td style="border:1px solid #ddd; padding:8px;">XML</td>
-            <td style="border:1px solid #ddd; padding:8px;">JSON, XML, текст</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Протокол</td>
-            <td style="border:1px solid #ddd; padding:8px;">HTTP, SMTP, TCP</td>
-            <td style="border:1px solid #ddd; padding:8px;">HTTP</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Стандарты</td>
-            <td style="border:1px solid #ddd; padding:8px;">WS-*, строгие</td>
-            <td style="border:1px solid #ddd; padding:8px;">Нет официальных</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Производительность</td>
-            <td style="border:1px solid #ddd; padding:8px;">Ниже из-за XML</td>
-            <td style="border:1px solid #ddd; padding:8px;">Выше</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Безопасность</td>
-            <td style="border:1px solid #ddd; padding:8px;">WS-Security</td>
-            <td style="border:1px solid #ddd; padding:8px;">HTTPS, OAuth</td>
-        </tr>
-    </table>
-    
-    <div class="highlight-box">
-        <p><strong>Когда использовать SOAP:</strong> Для высокозащищенных систем (банки, госсектор), при работе с устаревшими системами, когда нужны встроенные транзакции или сложные композиции сервисов.</p>
-    </div>
-    
-    <h3>Пример WSDL (Web Services Description Language):</h3>
-    <div class="code-block">
-&lt;?xml version="1.0"?&gt;
-&lt;definitions name="UserService"
-  targetNamespace="https://api.example.com/user"
-  xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;
-  
-  &lt;types&gt;
-    &lt;xsd:schema&gt;
-      &lt;xsd:element name="GetUserRequest"&gt;
-        &lt;xsd:complexType&gt;
-          &lt;xsd:sequence&gt;
-            &lt;xsd:element name="userId" type="xsd:integer"/&gt;
-          &lt;/xsd:sequence&gt;
-        &lt;/xsd:complexType&gt;
-      &lt;/xsd:element&gt; &lt;!-- Закрывающий тег добавлен --&gt;
-    &lt;/xsd:schema&gt;
-  &lt;/types&gt;
-  
-  &lt;message name="GetUserInput"&gt;
-    &lt;part name="body" element="tns:GetUserRequest"/&gt;
-  &lt;/message&gt;
-  
-  &lt;portType name="UserPortType"&gt;
-    &lt;operation name="GetUser"&gt;
-      &lt;input message="tns:GetUserInput"/&gt;
-    &lt;/operation&gt;
-  &lt;/portType&gt;
-&lt;/definitions&gt;
+        <section id="soap" class="section">
+            <h2><i class="fas fa-exchange-alt"></i> SOAP (Simple Object Access Protocol)</h2>
+            
+            <p>SOAP - протокол для обмена структурированной информацией в распределенных системах. Основные характеристики:</p>
+            
+            <ul>
+                <li><strong>XML-based</strong> - все сообщения в формате XML</li>
+                <li><strong>Протоколо-независимый</strong> - может работать поверх HTTP, SMTP, TCP</li>
+                <li><strong>Строгая типизация</strong> - использует WSDL для описания интерфейсов</li>
+                <li><strong>Встроенная безопасность</strong> - WS-Security стандарт</li>
+            </ul>
+            
+            <h3>SOAP vs REST:</h3>
+            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                <tr>
+                    <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
+                    <th style="border:1px solid #ddd; padding:8px;">SOAP</th>
+                    <th style="border:1px solid #ddd; padding:8px;">REST</th>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Формат данных</td>
+                    <td style="border:1px solid #ddd; padding:8px;">XML</td>
+                    <td style="border:1px solid #ddd; padding:8px;">JSON, XML, текст</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Протокол</td>
+                    <td style="border:1px solid #ddd; padding:8px;">HTTP, SMTP, TCP</td>
+                    <td style="border:1px solid #ddd; padding:8px;">HTTP</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Стандарты</td>
+                    <td style="border:1px solid #ddd; padding:8px;">WS-*, строгие</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Нет официальных</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">Производительность</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Ниже из-за XML</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Выше</td>
+                </tr>
+            </table>
+            
+            <div class="highlight-box">
+                <p><strong>Когда использовать SOAP:</strong> Для высокозащищенных систем (банки, госсектор), при работе с устаревшими системами, когда нужны встроенные транзакции.</p>
             </div>
-</section>
+        </section>
         
         <!-- GraphQL Section -->
-<section id="graphql" class="section">
-    <h2><i class="fas fa-network-wired"></i> GraphQL</h2>
-    
-    <p>GraphQL - язык запросов для API, позволяющий клиентам точно запрашивать только необходимые данные.</p>
-    
-    <h3>Основные концепции:</h3>
-    <ul>
-        <li><strong>Схема (Schema)</strong> - строго типизированное описание возможных запросов</li>
-        <li><strong>Запросы (Queries)</strong> - получение данных</li>
-        <li><strong>Мутации (Mutations)</strong> - изменение данных</li>
-        <li><strong>Подписки (Subscriptions)</strong> - получение обновлений в реальном времени</li>
-        <li><strong>Резолверы (Resolvers)</strong> - функции для обработки запросов</li>
-    </ul>
-    
-    <h3>Пример запроса:</h3>
-    <div class="code-block">
+        <section id="graphql" class="section">
+            <h2><i class="fas fa-network-wired"></i> GraphQL</h2>
+            
+            <p>GraphQL - язык запросов для API, позволяющий клиентам точно запрашивать только необходимые данные.</p>
+            
+            <h3>Основные концепции:</h3>
+            <ul>
+                <li><strong>Схема (Schema)</strong> - строго типизированное описание возможных запросов</li>
+                <li><strong>Запросы (Queries)</strong> - получение данных</li>
+                <li><strong>Мутации (Mutations)</strong> - изменение данных</li>
+                <li><strong>Подписки (Subscriptions)</strong> - получение обновлений в реальном времени</li>
+            </ul>
+            
+            <h3>Пример запроса:</h3>
+            <div class="code-block">
 {
   user(id: "789") {
     name
@@ -841,45 +682,17 @@
     }
   }
 }
-    </div>
-    
-    <h3>Преимущества:</h3>
-    <ul>
-        <li>Точная выборка данных (недополучение/переполучение)</li>
-        <li>Единая конечная точка</li>
-        <li>Строгая типизация</li>
-        <li>Автоматическая документация</li>
-        <li>Гибкие отношения между данными</li>
-    </ul>
-    
-    <div class="highlight-box">
-        <p><strong>Когда использовать:</strong> Для сложных систем с множеством сущностей, мобильных приложений, когда клиенты имеют разные требования к данным.</p>
-    </div>
-    
-    <h3>Сравнение с REST:</h3>
-    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-        <tr>
-            <th style="border:1px solid #ddd; padding:8px;">Характеристика</th>
-            <th style="border:1px solid #ddd; padding:8px;">GraphQL</th>
-            <th style="border:1px solid #ddd; padding:8px;">REST</th>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Эндпоинты</td>
-            <td style="border:1px solid #ddd; padding:8px;">Один</td>
-            <td style="border:1px solid #ddd; padding:8px;">Множество</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Запрос данных</td>
-            <td style="border:1px solid #ddd; padding:8px;">Клиент определяет</td>
-            <td style="border:1px solid #ddd; padding:8px;">Сервер определяет</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">Версионность</td>
-            <td style="border:1px solid #ddd; padding:8px;">Не требуется</td>
-            <td style="border:1px solid #ddd; padding:8px;">Обязательна</td>
-        </tr>
-    </table>
-</section>
+            </div>
+            
+            <h3>Преимущества:</h3>
+            <ul>
+                <li>Точная выборка данных (недополучение/переполучение)</li>
+                <li>Единая конечная точка</li>
+                <li>Строгая типизация</li>
+                <li>Автоматическая документация</li>
+                <li>Гибкие отношения между данными</li>
+            </ul>
+        </section>
 
         <!-- Microservices Section -->
         <section id="microservices" class="section">
@@ -901,1796 +714,489 @@
                 <li>Для улучшения масштабируемости</li>
                 <li>Для повышения гибкости разработки</li>
                 <li>Для улучшения отказоустойчивости</li>
-                <li>Для ускорения разработки</li>
             </ul>
-            
-            <div class="highlight-box">
-                <p><strong>Важно:</strong> Переход к микросервисной архитектуре требует значительных усилий и может привести к увеличению сложности системы.</p>
-            </div>
         </section>
 
         <!-- DDD Section -->
-<section id="ddd" class="section">
-    <h2><i class="fas fa-layer-group"></i> DDD (Domain Driven Design)</h2>
-    
-    <p>Domain Driven Design - подход к разработке сложных систем через глубокое погружение в предметную область:</p>
-    
-    <h3>Основные концепции DDD:</h3>
-    <ul>
-        <li><strong>Домен (Domain)</strong> - предметная область системы</li>
-        <li><strong>Модель (Model)</strong> - абстракция ключевых концепций домена</li>
-        <li><strong>Ограниченный контекст (Bounded Context)</strong> - четкие границы моделей</li>
-        <li><strong>Универсальный язык (Ubiquitous Language)</strong> - единая терминология</li>
-        <li><strong>Агрегаты (Aggregates)</strong> - кластеры связанных объектов</li>
-        <li><strong>События домена (Domain Events)</strong> - значимые изменения в системе</li>
-    </ul>
-    
-    <div class="example">
-        <div class="example-header"><i class="fas fa-code"></i> Пример DDD в банковской сфере</div>
-        <p>Домен: Банковские операции<br>
-        Ограниченные контексты: Платежи, Кредитование, Счета<br>
-        Агрегаты: БанковскийСчет (включая баланс, историю операций)<br>
-        События: СчетОткрыт, ПлатежПроведен, ЛимитПревышен</p>
-    </div>
-    
-    <h3>Преимущества DDD:</h3>
-    <ul>
-        <li>Глубокая связь между бизнес-логикой и реализацией</li>
-        <li>Четкое разделение ответственности</li>
-        <li>Устойчивость к изменениям требований</li>
-        <li>Эффективная коммуникация между разработчиками и экспертами</li>
-    </ul>
-</section>
-
-        <section id="security-checklist" class="section">
-    <h2><i class="fas fa-shield-alt"></i> Чеклист: Безопасность</h2>
-    <div class="checklist-container">
-        <h3>Чеклист по обеспечению безопасности</h3>
-        <ul class="checklist">
-            <li>
-                <input type="checkbox" id="security-1">
-                <label for="security-1">Определены ли требования к аутентификации пользователей (например, многофакторная аутентификация)?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-2">
-                <label for="security-2">Проверены ли требования к авторизации (роли, доступы, принцип минимальных привилегий)?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-3">
-                <label for="security-3">Разработаны ли механизмы защиты данных в транзите (например, TLS/SSL)?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-4">
-                <label for="security-4">Обеспечена ли защита данных в состоянии покоя (шифрование базы данных, файлов)?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-5">
-                <label for="security-5">Проверены ли уязвимости ввода данных (SQL-инъекции, XSS, CSRF)?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-6">
-                <label for="security-6">Настроено ли журналирование и мониторинг событий безопасности?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-7">
-                <label for="security-7">Проведён ли анализ рисков и угроз для системы?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-8">
-                <label for="security-8">Соответствует ли система стандартам безопасности (например, OWASP Top 10, GDPR, ISO 27001)?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-9">
-                <label for="security-9">Разработан ли план реагирования на инциденты безопасности?</label>
-            </li>
-            <li>
-                <input type="checkbox" id="security-10">
-                <label for="security-10">Проверена ли защита API (например, ограничение скорости, проверка токенов)?</label>
-            </li>
-        </ul>
-    </div>
-</section>
-
-        <!-- Metrics Section -->
-<section id="metrics" class="section">
-    <h2><i class="fas fa-chart-line"></i> Ключевые метрики для аналитика</h2>
-    
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
-        <div>
-            <h3>Проектные метрики</h3>
+        <section id="ddd" class="section">
+            <h2><i class="fas fa-layer-group"></i> DDD (Domain Driven Design)</h2>
+            
+            <p>Domain Driven Design - подход к разработке сложных систем через глубокое погружение в предметную область:</p>
+            
+            <h3>Основные концепции DDD:</h3>
             <ul>
-                <li><strong>Velocity</strong> - скорость выполнения задач</li>
-                <li><strong>Lead Time</strong> - время от запроса до реализации</li>
-                <li><strong>Cycle Time</strong> - время выполнения задачи</li>
-                <li><strong>Burndown Rate</strong> - скорость закрытия задач</li>
-                <li><strong>Defect Density</strong> - плотность дефектов</li>
+                <li><strong>Домен (Domain)</strong> - предметная область системы</li>
+                <li><strong>Модель (Model)</strong> - абстракция ключевых концепций домена</li>
+                <li><strong>Ограниченный контекст (Bounded Context)</strong> - четкие границы моделей</li>
+                <li><strong>Универсальный язык (Ubiquitous Language)</strong> - единая терминология</li>
+                <li><strong>Агрегаты (Aggregates)</strong> - кластеры связанных объектов</li>
             </ul>
-        </div>
-        
-        <div>
-            <h3>Бизнес-метрики</h3>
-            <ul>
-                <li><strong>ROI</strong> - возврат инвестиций</li>
-                <li><strong>User Adoption Rate</strong> - уровень принятия пользователями</li>
-                <li><strong>Feature Usage</strong> - использование функционала</li>
-                <li><strong>CSAT</strong> - удовлетворенность пользователей</li>
-                <li><strong>Time-to-Market</strong> - время выхода на рынок</li>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="highlight-box">
-        <h3>Формулы для расчета:</h3>
-        <p><strong>Velocity</strong> = ∑ Story Points выполненных задач / Кол-во спринтов</p>
-        <p><strong>ROI</strong> = (Выгода - Затраты) / Затраты × 100</p>
-        <p><strong>CSAT</strong> = (Кол-во положительных оценок / Всего оценок) × 100%</p>
-    </div>
-</section>
-
-        <!-- Documentation Templates Section -->
-<section id="templates" class="section">
-    <h2><i class="fas fa-file-contract"></i> Шаблоны документов</h2>
-    
-    <h3>Основные артефакты с примерами:</h3>
-    
-    <div class="quick-links">
-        <a href="#" class="quick-link">Vision and Scope</a>
-        <a href="#" class="quick-link">SRS (Software Requirements Specification)</a>
-        <a href="#" class="quick-link">Use Case Specification</a>
-        <a href="#" class="quick-link">User Story Template</a>
-        <a href="#" class="quick-link">BRD (Business Requirements Document)</a>
-        <a href="#" class="quick-link">Functional Specification</a>
-    </div>
-    
-    <h3>Пример структуры SRS:</h3>
-    <div class="example">
-        <ol>
-            <li>Введение
-                <ul>
-                    <li>Цели документа</li>
-                    <li>Область применения</li>
-                    <li>Определения и сокращения</li>
-                </ul>
-            </li>
-            <li>Общее описание
-                <ul>
-                    <li>Бизнес-требования</li>
-                    <li>Пользовательские характеристики</li>
-                </ul>
-            </li>
-            <li>Функциональные требования</li>
-            <li>Нефункциональные требования</li>
-            <li>Приложения и глоссарий</li>
-        </ol>
-    </div>
-</section>
-
-        <section id="document-generator" class="section">
-    <h2><i class="fas fa-file-alt"></i> Генератор документов</h2>
-    
-    <div class="doc-generator-container">
-        <div class="doc-type-selector">
-            <div class="doc-type-card" data-type="srs">
-                <i class="fas fa-book"></i>
-                <h4>SRS Document</h4>
-                <p>Software Requirements Specification</p>
-            </div>
-            <div class="doc-type-card" data-type="user-stories">
-                <i class="fas fa-tasks"></i>
-                <h4>User Stories</h4>
-                <p>Пользовательские истории с критериями приемки</p>
-            </div>
-            <div class="doc-type-card" data-type="api-spec">
-                <i class="fas fa-code"></i>
-                <h4>API Specification</h4>
-                <p>Спецификация REST API</p>
-            </div>
-            <div class="doc-type-card" data-type="test-cases">
-                <i class="fas fa-vial"></i>
-                <h4>Test Cases</h4>
-                <p>Тестовые сценарии</p>
-            </div>
-        </div>
-        
-        <div class="doc-editor" id="docEditor" style="display: none;">
-            <div class="doc-toolbar">
-                <select id="docTemplate">
-                    <option value="basic">Базовый шаблон</option>
-                    <option value="detailed">Детализированный</option>
-                    <option value="minimal">Минималистичный</option>
-                </select>
-                <button onclick="docGenerator.generate()"><i class="fas fa-magic"></i> Сгенерировать</button>
-                <button onclick="docGenerator.download()"><i class="fas fa-download"></i> Скачать</button>
-                <button onclick="docGenerator.clear()"><i class="fas fa-times"></i> Очистить</button>
-            </div>
-            <textarea id="docContent" rows="20" placeholder="Сгенерированный документ появится здесь..."></textarea>
-        </div>
-    </div>
-</section>
-
-        <!-- Career Path Section -->
-<section id="career" class="section">
-    <h2><i class="fas fa-user-graduate"></i> Карьерный путь аналитика</h2>
-    
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-        <div class="highlight-box">
-            <h3>Junior Analyst →</h3>
-            <ul>
-                <li>Сбор требований</li>
-                <li>Документирование процессов</li>
-                <li>Поддержка тестирования</li>
-            </ul>
-        </div>
-        
-        <div class="highlight-box">
-            <h3>Middle Analyst →</h3>
-            <ul>
-                <li>Проектирование решений</li>
-                <li>Управление бэклогом</li>
-                <li>Координация команды</li>
-            </ul>
-        </div>
-        
-        <div class="highlight-box">
-            <h3>Senior Analyst →</h3>
-            <ul>
-                <li>Архитектурные решения</li>
-                <li>Стратегия продукта</li>
-                <li>Менторство</li>
-            </ul>
-        </div>
-    </div>
-    
-    <h3>Рекомендуемые сертификации:</h3>
-    <ul>
-        <li>IIBA CBAP/CCBA</li>
-        <li>IREB CPRE</li>
-        <li>PMI-PBA</li>
-        <li>AWS Certified Solutions Architect</li>
-        <li>Scrum.org PSPO</li>
-    </ul>
-</section>
-
-        <!-- Decision Tree Section -->
-<section id="decision-tree" class="section">
-    <h2><i class="fas fa-sitemap"></i> Выбор методологии</h2>
-    
-    <div style="text-align:center; padding:20px; background:#f8f9fa; border-radius:8px;">
-        <h3>Какую методологию выбрать?</h3>
-        
-        <div id="tree-container" style="margin:20px auto; max-width:600px;">
-            <div id="tree-step-1">
-                <p>Проект имеет четкие требования?</p>
-                <button onclick="showStep(2, 'yes')">Да</button>
-                <button onclick="showStep(2, 'no')">Нет</button>
-            </div>
             
-            <div id="tree-step-2" style="display:none;">
-                <p id="step2-question"></p>
-                <div id="step2-options"></div>
+            <div class="example">
+                <div class="example-header"><i class="fas fa-code"></i> Пример DDD в банковской сфере</div>
+                <p>Домен: Банковские операции<br>
+                Ограниченные контексты: Платежи, Кредитование, Счета<br>
+                Агрегаты: БанковскийСчет (включая баланс, историю операций)<br>
+                События: СчетОткрыт, ПлатежПроведен, ЛимитПревышен</p>
             </div>
-            
-            <div id="tree-result" style="display:none; margin-top:20px;">
-                <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
-                <button onclick="resetTree()">Начать заново</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-        <!-- Common Mistakes Section -->
-<section id="mistakes" class="section">
-    <h2><i class="fas fa-exclamation-triangle"></i> Типичные ошибки аналитика</h2>
-    
-    <div class="highlight-box">
-        <h3>Топ-10 ошибок:</h3>
-        <ol>
-            <li>Недостаточное вовлечение стейкхолдеров</li>
-            <li>Фокус на решениях вместо проблем</li>
-            <li>Игнорирование нефункциональных требований</li>
-            <li>Недостаточная детализация требований</li>
-            <li>Отсутствие приоритизации</li>
-            <li>Плохая трассируемость требований</li>
-            <li>Игнорирование edge cases</li>
-            <li>Переоценка технических возможностей команды</li>
-            <li>Недостаточное тестирование требований</li>
-            <li>Плохая коммуникация изменений</li>
-        </ol>
-    </div>
-    
-    <h3>Как избежать ошибок:</h3>
-    <ul>
-        <li>Проводить регулярные ревью требований</li>
-        <li>Использовать матрицу трассируемости</li>
-        <li>Внедрить практику "Трех амиго" (аналитик, разработчик, тестировщик)</li>
-        <li>Создавать прототипы для валидации</li>
-        <li>Использовать чеклисты</li>
-    </ul>
-</section>
-
-        <section id="security" class="section">
-    <h2><i class="fas fa-shield-alt"></i> Основы безопасности</h2>
-    
-    <h3>OWASP Top 10:</h3>
-    <ol>
-        <li>Инъекции (SQL, NoSQL, OS)</li>
-        <li>Некорректная аутентификация</li>
-        <li>Раскрытие чувствительных данных</li>
-        <li>XXE (XML External Entities)</li>
-        <li>Некорректный контроль доступа</li>
-    </ol>
-    
-    <div class="highlight-box">
-        <h3>Чеклист безопасности API:</h3>
-        <ul>
-            <li><input type="checkbox"> Аутентификация и авторизация</li>
-            <li><input type="checkbox"> Валидация входных данных</li>
-            <li><input type="checkbox"> Ограничение скорости запросов</li>
-            <li><input type="checkbox"> Шифрование чувствительных данных</li>
-            <li><input type="checkbox"> Регулярное обновление зависимостей</li>
-        </ul>
-    </div>
-    
-    <h3>Принципы безопасности:</h3>
-    <ul>
-        <li><strong>Принцип минимальных привилегий</strong></li>
-        <li><strong>Глубинная защита (Defense in Depth)</strong></li>
-        <li><strong>Не доверяй пользовательскому вводу</strong></li>
-        <li><strong>Регулярные аудиты безопасности</strong></li>
-    </ul>
-</section>
-
-        <section id="quick-tools" class="section">
-    <h2><i class="fas fa-bolt"></i> Быстрые инструменты</h2>
-    
-    <div class="tools-grid">
-        <div class="tool-card">
-            <h3><i class="fas fa-calculator"></i> Конвертер величин</h3>
-            <div class="converter-container">
-                <div class="converter-row">
-                    <input type="number" id="conv-input" value="1" placeholder="Введите значение">
-                    <select id="conv-from">
-                        <option value="kb">Килобайты</option>
-                        <option value="mb">Мегабайты</option>
-                        <option value="gb">Гигабайты</option>
-                        <option value="ms">Миллисекунды</option>
-                        <option value="s">Секунды</option>
-                    </select>
-                </div>
-                <div class="converter-row">
-                    <button onclick="convertValue()"><i class="fas fa-exchange-alt"></i> Конвертировать</button>
-                </div>
-                <div class="converter-row">
-                    <input type="text" id="conv-output" readonly placeholder="Результат">
-                    <select id="conv-to">
-                        <option value="kb">Килобайты</option>
-                        <option value="mb" selected>Мегабайты</option>
-                        <option value="gb">Гигабайты</option>
-                        <option value="ms">Миллисекунды</option>
-                        <option value="s">Секунды</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="tool-card">
-            <h3><i class="fas fa-stopwatch"></i> Таймер митинга</h3>
-            <div class="timer-container">
-                <div id="meeting-timer-display" class="timer-display">15:00</div>
-                <div class="timer-controls">
-                    <button onclick="startMeetingTimer(900)">15 мин</button>
-                    <button onclick="startMeetingTimer(300)">5 мин</button>
-                    <button onclick="stopMeetingTimer()">Стоп</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="tool-card">
-            <h3><i class="fas fa-sitemap"></i> Decision Tree</h3>
-            <div class="decision-tree">
-                <div id="tree-step-1" class="tree-step active">
-                    <p>Проект имеет четкие требования?</p>
-                    <button onclick="showTreeStep(2, 'yes')">Да</button>
-                    <button onclick="showTreeStep(2, 'no')">Нет</button>
-                </div>
-                
-                <div id="tree-step-2" class="tree-step">
-                    <p id="step2-question"></p>
-                    <div id="step2-options" class="tree-options"></div>
-                </div>
-                
-                <div id="tree-result" class="tree-result">
-                    <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
-                    <button onclick="resetTree()">Начать заново</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Обновленный раздел тестирования -->
-<section id="testing-system" class="section">
-    <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
-    
-    <div class="test-container">
-        <div class="test-selection">
-            <h3>Выберите раздел для тестирования:</h3>
-            <select id="test-section">
-                <option value="requirements">Требования</option>
-                <option value="api">API</option>
-                <option value="db">Базы данных</option>
-                <option value="bpmn">BPMN</option>
-                <option value="security">Безопасность</option>
-                <option value="ddd">DDD</option>
-            </select>
-            
-            <div class="test-settings">
-                <label>
-                    <input type="checkbox" id="random-order"> Случайный порядок вопросов
-                </label>
-                <label>
-                    <input type="number" id="question-count" min="1" max="20" value="5"> Количество вопросов
-                </label>
-            </div>
-            
-            <button class="primary-btn" onclick="startTest()">Начать тест</button>
-        </div>
-        
-        <div class="test-content" id="testContent">
-            <div class="test-header">
-                <div class="test-progress">
-                    Вопрос <span id="current-question">1</span> из <span id="total-questions">5</span>
-                </div>
-                <div class="test-timer">
-                    <i class="fas fa-clock"></i> <span id="test-timer">00:00</span>
-                </div>
-            </div>
-            
-            <div id="testQuestions" class="test-questions"></div>
-            
-            <div class="test-controls">
-                <button onclick="prevQuestion()" class="secondary-btn"><i class="fas fa-arrow-left"></i> Назад</button>
-                <button onclick="nextQuestion()" class="secondary-btn">Далее <i class="fas fa-arrow-right"></i></button>
-                <button onclick="submitTest()" class="primary-btn">Завершить тест</button>
-            </div>
-            
-            <div id="testResult" class="test-result"></div>
-        </div>
-    </div>
-</section>
-
-<!-- Обновленный раздел моделирования данных -->
-<section id="data-modeling" class="section">
-    <h2><i class="fas fa-project-diagram"></i> Моделирование данных</h2>
-    
-    <div class="modeling-container">
-        <div class="modeling-editor">
-            <h3>Конструктор ER-диаграмм</h3>
-            <div class="editor-toolbar">
-                <button id="addEntity"><i class="fas fa-cube"></i> Сущность</button>
-                <button id="addAttribute"><i class="fas fa-tag"></i> Атрибут</button>
-                <button id="addRelationship"><i class="fas fa-link"></i> Связь</button>
-                <button id="clearDiagram"><i class="fas fa-trash-alt"></i> Очистить</button>
-            </div>
-            <div class="canvas-container">
-                <div id="er-canvas">
-                    <div class="canvas-placeholder">
-                        <i class="fas fa-mouse-pointer"></i>
-                        <p>Используйте панель инструментов для создания диаграммы</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="modeling-output">
-            <div class="sql-generator">
-                <h3>Генератор SQL</h3>
-                <div class="sql-preview" id="sql-preview">
--- SQL-код появится здесь после создания диаграммы
-                </div>
-                <button id="generateSqlBtn" class="primary-btn">
-                    <i class="fas fa-code"></i> Сгенерировать SQL
-                </button>
-            </div>
-            
-            <div class="normalization-example">
-                <h3>Пример нормализации</h3>
-                <div class="normalization-steps">
-                    <div class="norm-step">
-                        <h4>1NF: Первая нормальная форма</h4>
-                        <p>Атомарность значений, отсутствие повторяющихся групп</p>
-                    </div>
-                    
-                    <div class="norm-step">
-                        <h4>2NF: Вторая нормальная форма</h4>
-                        <p>Отсутствие частичных зависимостей от составного ключа</p>
-                    </div>
-                    
-                    <div class="norm-step">
-                        <h4>3NF: Третья нормальная форма</h4>
-                        <p>Отсутствие транзитивных зависимостей</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-        <section id="additional-tools" class="section">
-    <h2><i class="fas fa-tools"></i> Дополнительные инструменты</h2>
-    
-    <div class="tool-card">
-        <h3>Генератор ER-диаграмм</h3>
-        <textarea id="er-input" rows="5" placeholder="Пользователь:
-  id: int PK
-  имя: string
-  email: string unique
-  
-Заказ:
-  id: int PK
-  пользователь_id: int FK
-  сумма: decimal"></textarea>
-        <button onclick="generateERDiagram()">Сгенерировать</button>
-        <div id="er-output"></div>
-    </div>
-    
-    <div class="tool-card">
-        <h3>Конструктор SQL-запросов</h3>
-        <div class="sql-builder">
-            <select id="sql-table">
-                <option>Пользователи</option>
-                <option>Заказы</option>
-            </select>
-            <div id="sql-fields">
-                <label><input type="checkbox" name="field" value="id"> ID</label>
-                <label><input type="checkbox" name="field" value="name"> Имя</label>
-            </div>
-            <button onclick="generateSQL()">Создать запрос</button>
-            <div class="code-block" id="sql-output">SELECT ...</div>
-        </div>
-    </div>
         </section>
 
-        <section id="diagram-generator" class="section">
-    <h2><i class="fas fa-diagram-project"></i> Генератор диаграмм</h2>
-    
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-        <div>
-            <h3>Конструктор BPMN</h3>
-            <div class="bpmn-toolbar">
-                <button onclick="addBPMNElement('task')"><i class="fas fa-tasks"></i> Задача</button>
-                <button onclick="addBPMNElement('gateway')"><i class="fas fa-code-branch"></i> Шлюз</button>
-                <button onclick="addBPMNElement('event')"><i class="fas fa-circle"></i> Событие</button>
-            </div>
-            <div id="bpmn-canvas" style="border:1px solid #ddd; height:300px; background:#f9f9f9; position:relative;">
-                <!-- Элементы будут добавляться сюда -->
-            </div>
-            <button onclick="exportBPMN()" style="margin-top:10px;"><i class="fas fa-download"></i> Экспорт в PNG</button>
-        </div>
-        
-        <div>
-            <h3>Примеры диаграмм из Analyst's Notes</h3>
-            <div class="diagram-examples">
-                <img src="https://raw.githubusercontent.com/BorodaOmsk/Analyst-s-Notes/main/Diagrams/e-commerce-process.png" alt="Процесс оформления заказа">
-                <img src="https://raw.githubusercontent.com/BorodaOmsk/Analyst-s-Notes/main/Diagrams/user-auth-flow.png" alt="Процесс аутентификации">
-            </div>
-            <button onclick="loadExample('ecommerce')" class="quick-link">Загрузить пример: E-commerce</button>
-            <button onclick="loadExample('auth')" class="quick-link">Загрузить пример: Аутентификация</button>
-        </div>
-    </div>
+        <!-- Databases Section -->
+        <section id="db" class="section">
+            <h2><i class="fas fa-database"></i> Базы данных</h2>
+            
+            <h3>Типы баз данных:</h3>
+            <ul>
+                <li><strong>Реляционные (SQL)</strong>: MySQL, PostgreSQL, Oracle - данные в таблицах со строгой схемой</li>
+                <li><strong>Документные (NoSQL)</strong>: MongoDB, Couchbase - хранение JSON-документов</li>
+                <li><strong>Ключ-значение</strong>: Redis, Memcached - быстрый доступ по ключу</li>
+                <li><strong>Колоночные</strong>: Cassandra, HBase - оптимизированы для аналитики</li>
+                <li><strong>Графовые</strong>: Neo4j, Amazon Neptune - хранение связей между объектами</li>
+            </ul>
+            
+            <h3>Нормализация баз данных:</h3>
+            <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                <tr>
+                    <th style="border:1px solid #ddd; padding:8px;">Нормальная форма</th>
+                    <th style="border:1px solid #ddd; padding:8px;">Требование</th>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">1NF</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Атомарность значений, отсутствие повторяющихся групп</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">2NF</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Выполнение 1NF + отсутствие частичных зависимостей</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ddd; padding:8px;">3NF</td>
+                    <td style="border:1px solid #ddd; padding:8px;">Выполнение 2NF + отсутствие транзитивных зависимостей</td>
+                </tr>
+            </table>
         </section>
-        
-        <section id="resources" class="section">
-    <h2><i class="fas fa-external-link-alt"></i> Полезные ресурсы</h2>
-    
-    <div class="resources-grid">
-        <div class="resource-category">
-            <h3>Блоги и сообщества</h3>
-            <ul>
-                <li><a href="https://habr.com/ru/articles/841646/" target="_blank">Хабр: Системный анализ</a></li>
-                <li><a href="https://medium.com/tag/system-analysis" target="_blank">Medium: System Analysis</a></li>
-                <li><a href="https://www.modernanalyst.com/" target="_blank">Modern Analyst</a></li>
-            </ul>
-        </div>
-
-        <div class="resource-category">
-            <h3>Шаблоны и примеры</h3>
-            <ul>
-                <li><a href="https://github.com/BorodaOmsk/Analyst-s-Notes/tree/main/Templates" target="_blank">Шаблоны документов</a></li>
-                <li><a href="https://github.com/BorodaOmsk/Analyst-s-Notes/tree/main/Examples" target="_blank">Примеры решений</a></li>
-                <li><a href="https://github.com/BorodaOmsk/Analyst-s-Notes/tree/main/Diagrams" target="_blank">Примеры диаграмм</a></li>
-            </ul>
-        </div>
-        
-        <div class="resource-category">
-            <h3>Курсы и обучение</h3>
-            <ul>
-                <li><a href="https://stepik.org/course/63054/" target="_blank">Интерактивный тренажер по SQL</a></li>
-                <li><a href="https://mode.com/sql-tutorial" target="_blank">Mode SQL Tutorial</a></li>
-                <li><a href="https://www.coursera.org/specializations/systems-analysis" target="_blank">Coursera: Systems Analysis</a></li>
-                <li><a href="https://www.udemy.com/topic/system-analysis/" target="_blank">Udemy: System Analysis</a></li>
-                <li><a href="https://stepik.org/course/12894/" target="_blank">Stepik: Системный анализ</a></li>
-            </ul>
-        </div>
-        
-        <div class="resource-category">
-            <h3>Инструменты</h3>
-            <ul>
-                <li><a href="https://www.draw.io/" target="_blank">Draw.io - диаграммы</a></li>
-                <li><a href="https://www.postman.com/" target="_blank">Postman - тестирование API</a></li>
-                <li><a href="https://swagger.io/" target="_blank">Swagger - документация API</a></li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-        <section id="external-integration" class="section">
-    <h2><i class="fas fa-plug"></i> Интеграция с API</h2>
-    
-    <div class="api-tester">
-        <div class="api-controls">
-            <select id="api-method">
-                <option value="GET">GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-            </select>
-            
-            <input type="text" id="api-url" placeholder="https://api.example.com/data" value="https://jsonplaceholder.typicode.com/posts">
-            
-            <button onclick="testAPI()">
-                <i class="fas fa-paper-plane"></i> Отправить
-            </button>
-        </div>
-        
-        <div class="api-response">
-            <pre id="api-response-output">Ответ появится здесь...</pre>
-        </div>
-    </div>
-    
-    <div class="highlight-box">
-        <h3><i class="fas fa-lightbulb"></i> Примеры публичных API для тестирования:</h3>
-        <ul>
-            <li><strong>JSONPlaceholder:</strong> <span class="api-url">https://jsonplaceholder.typicode.com/posts</span></li>
-            <li><strong>ReqRes:</strong> <span class="api-url">https://reqres.in/api/users</span></li>
-            <li><strong>HTTPBin:</strong> <span class="api-url">https://httpbin.org/get</span></li>
-            <li><strong>DummyJSON:</strong> <span class="api-url">https://dummyjson.com/products/1</span></li>
-        </ul>
-        
-        <div class="api-tips">
-            <p><i class="fas fa-info-circle"></i> Советы:</p>
-            <ul>
-                <li>Для POST/PUT запросов автоматически отправляется тестовое тело</li>
-                <li>Кликните на URL в примерах, чтобы вставить его в поле ввода</li>
-                <li>API могут блокировать CORS запросы - используйте расширение для браузера при проблемах</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-        <!-- Unit Converter Section -->
-<section id="unit-converter" class="section">
-    <h2><i class="fas fa-calculator"></i> Конвертер величин</h2>
-    
-    <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:15px; align-items:center;">
-        <div>
-            <input type="number" id="input-value" value="1" style="width:100%; padding:10px;">
-            <select id="input-unit" style="width:100%; padding:10px; margin-top:5px;">
-                <option value="kb">Килобайт (KB)</option>
-                <option value="mb">Мегабайт (MB)</option>
-                <option value="gb">Гигабайт (GB)</option>
-                <option value="ms">Миллисекунды (ms)</option>
-                <option value="s">Секунды (s)</option>
-            </select>
-        </div>
-        
-        <div style="text-align:center;">
-            <i class="fas fa-exchange-alt fa-2x"></i>
-            <button onclick="convertUnits()" style="margin-top:10px; padding:8px 15px;">Конвертировать</button>
-        </div>
-        
-        <div>
-            <input type="text" id="output-value" readonly style="width:100%; padding:10px; background:#f0f0f0;">
-            <select id="output-unit" style="width:100%; padding:10px; margin-top:5px;">
-                <option value="kb">Килобайт (KB)</option>
-                <option value="mb" selected>Мегабайт (MB)</option>
-                <option value="gb">Гигабайт (GB)</option>
-                <option value="ms">Миллисекунды (ms)</option>
-                <option value="s">Секунды (s)</option>
-            </select>
-        </div>
-    </div>
-</section>
-
-        <!-- Interview Checklist Section -->
-<section id="interview-checklist" class="section">
-    <h2><i class="fas fa-list-check"></i> Чеклист для проведения интервью</h2>
-    
-    <div class="highlight-box">
-        <h3>Подготовка к интервью:</h3>
-        <ul>
-            <li><input type="checkbox"> Определить цели интервью</li>
-            <li><input type="checkbox"> Выбрать участников</li>
-            <li><input type="checkbox"> Подготовить вопросы</li>
-            <li><input type="checkbox"> Запланировать время и место</li>
-            <li><input type="checkbox"> Протестировать оборудование</li>
-        </ul>
-    </div>
-    
-    <div class="highlight-box">
-        <h3>Во время интервью:</h3>
-        <ul>
-            <li><input type="checkbox"> Представиться и объяснить цель</li>
-            <li><input type="checkbox"> Задать открытые вопросы</li>
-            <li><input type="checkbox"> Активно слушать</li>
-            <li><input type="checkbox"> Уточнять непонятные моменты</li>
-            <li><input type="checkbox"> Делать заметки</li>
-        </ul>
-    </div>
-    
-    <div class="highlight-box">
-        <h3>После интервью:</h3>
-        <ul>
-            <li><input type="checkbox"> Поблагодарить участников</li>
-            <li><input type="checkbox"> Обработать записи</li>
-            <li><input type="checkbox"> Составить отчет</li>
-            <li><input type="checkbox"> Поделиться результатами</li>
-            <li><input type="checkbox"> Запланировать следующие шаги</li>
-        </ul>
-    </div>
-</section>
-
-        <!-- Templates Section -->
-<section id="email-templates" class="section">
-    <h2><i class="fas fa-envelope"></i> Шаблоны писем и сообщений</h2>
-    
-    <div class="quick-links">
-        <button onclick="showTemplate('clarification')" class="quick-link">Запрос уточнений</button>
-        <button onclick="showTemplate('meeting')" class="quick-link">Приглашение на встречу</button>
-        <button onclick="showTemplate('review')" class="quick-link">Запрос на ревью</button>
-        <button onclick="showTemplate('update')" class="quick-link">Статус по задаче</button>
-    </div>
-    
-    <div id="template-content" style="margin-top:20px; padding:20px; background:#f9f9f9; border-radius:8px; display:none;">
-        <textarea id="template-text" rows="6" style="width:100%; padding:10px;"></textarea>
-        <button onclick="copyTemplate()" style="margin-top:10px; padding:8px 15px;">
-            <i class="fas fa-copy"></i> Копировать
-        </button>
-    </div>
-</section>
-
-        <section id="analysis-patterns" class="section">
-    <h2><i class="fas fa-shapes"></i> Паттерны анализа и проектирования</h2>
-    
-    <div class="pattern-card">
-        <h3>Шаблон "Агрегатор"</h3>
-        <p><strong>Проблема:</strong> Необходимость объединения данных из нескольких источников</p>
-        <p><strong>Решение:</strong> Создание единого интерфейса для доступа к разрозненным данным</p>
-        <div class="code-block">
-// Пример реализации
-class DataAggregator {
-    constructor(sources) {
-        this.sources = sources;
-    }
-    
-    async fetchData() {
-        const results = await Promise.all(
-            this.sources.map(source => source.getData())
-        );
-        return results.flat();
-    }
-}
-        </div>
-        <p><strong>Применение:</strong> Сводные отчеты, дашборды, унифицированные API</p>
-    </div>
-    
-    <div class="pattern-card">
-        <h3>Шаблон "Валидатор"</h3>
-        <p><strong>Проблема:</strong> Обеспечение корректности входящих данных</p>
-        <p><strong>Решение:</strong> Централизованная система проверки данных</p>
-        <div class="code-block">
-// Пример реализации
-class DataValidator {
-    static validate(userInput, rules) {
-        return rules.every(rule => rule(userInput));
-    }
-}
-
-// Правила валидации
-const emailRule = input => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
-const ageRule = input => input > 0 && input < 120;
-        </div>
-        <p><strong>Применение:</strong> Формы ввода, API, импорт данных</p>
-    </div>
-    
-    <div class="pattern-card">
-        <h3>Шаблон "Состояние" для бизнес-процессов</h3>
-        <p><strong>Проблема:</strong> Управление сложными жизненными циклами объектов</p>
-        <p><strong>Решение:</strong> Реализация конечного автомата (state machine)</p>
-        <div class="example">
-            <div class="example-header"><i class="fas fa-sitemap"></i> Пример состояний заказа</div>
-            <p>Создан → Оплачен → В обработке → Отправлен → Доставлен</p>
-            <p>Возможные переходы: Оплачен → Отменен, В обработке → Возврат</p>
-        </div>
-        <p><strong>Применение:</strong> Заказы, документооборот, workflow</p>
-    </div>
-        </section>
-
-        <section id="anti-patterns" class="section">
-    <h2><i class="fas fa-exclamation-circle"></i> Антипаттерны системного анализа</h2>
-    
-    <div class="anti-pattern">
-        <h3>Золотой молоток</h3>
-        <p><strong>Описание:</strong> Использование знакомого решения для всех проблем без учета контекста</p>
-        <p><strong>Пример:</strong> Применение блокчейна для простых систем учета без реальной необходимости</p>
-        <p><strong>Решение:</strong> Выбор технологий на основе требований, а не личных предпочтений</p>
-    </div>
-    
-    <div class="anti-pattern">
-        <h3>Аналитический паралич</h3>
-        <p><strong>Описание:</strong> Бесконечный сбор требований без перехода к реализации</p>
-        <p><strong>Пример:</strong> 6 месяцев на анализ простого мобильного приложения</p>
-        <p><strong>Решение:</strong> Time-boxed анализ, итеративный подход, MVP</p>
-    </div>
-    
-    <div class="anti-pattern">
-        <h3>Сферический конь в вакууме</h3>
-        <p><strong>Описание:</strong> Проектирование идеального решения без учета реальных ограничений</p>
-        <p><strong>Пример:</strong> Требование мгновенной обработки 1 млн запросов при бюджете на 2 сервера</p>
-        <p><strong>Решение:</strong> Учет технических, финансовых и временных ограничений</p>
-    </div>
-        </section>
-
-        <section id="practical-case-studies" class="section">
-    <h2><i class="fas fa-briefcase"></i> Практические кейсы</h2>
-    
-    <div class="case-study">
-        <h3>Оптимизация процесса заказа в e-commerce</h3>
-        <p><strong>Проблема:</strong> 40% пользователей не завершали заказ на шаге оплаты</p>
-        <p><strong>Анализ:</strong> 
-            <ul>
-                <li>Таймтрекинг шагов оформления заказа</li>
-                <li>Аналитика кликов и скроллинга</li>
-                <li>Опросы пользователей</li>
-            </ul>
-        </p>
-        <p><strong>Решение:</strong>
-            <ul>
-                <li>Упрощение формы (убраны 3 необязательных поля)</li>
-                <li>Добавление экспресс-оплаты (1 клик)</li>
-                <li>Интеграция с цифровыми кошельками</li>
-            </ul>
-        </p>
-        <p><strong>Результат:</strong> Увеличение конверсии на 27%, сокращение времени оформления на 65%</p>
-    </div>
-    
-    <div class="case-study">
-        <h3>Миграция с монолита на микросервисы</h3>
-        <p><strong>Проблема:</strong> Невозможность масштабирования, частые простои</p>
-        <p><strong>Анализ:</strong> 
-            <ul>
-                <li>Выделение бизнес-доменов</li>
-                <li>Анализ связей между модулями</li>
-                <li>Определение границ сервисов</li>
-            </ul>
-        </p>
-        <p><strong>Решение:</strong>
-            <ul>
-                <li>Поэтапная миграция модулей</li>
-                <li>Внедрение API Gateway</li>
-                <li>Реализация Event-Driven Architecture</li>
-            </ul>
-        </p>
-        <p><strong>Результат:</strong> Уменьшение времени деплоя с 3 часов до 15 минут, увеличение отказоустойчивости</p>
-    </div>
-        </section>
-
-        <section id="practical-checklists" class="section">
-    <h2><i class="fas fa-tasks"></i> Практические чеклисты</h2>
-    
-    <div class="checklist">
-        <h3>Чеклист анализа нового проекта</h3>
-        <ul>
-            <li><input type="checkbox"> Определение стейкхолдеров и их интересов</li>
-            <li><input type="checkbox"> Анализ бизнес-целей и KPI</li>
-            <li><input type="checkbox"> Сбор существующей документации</li>
-            <li><input type="checkbox"> Изучение конкурентных решений</li>
-            <li><input type="checkbox"> Определение технических ограничений</li>
-            <li><input type="checkbox"> Составление глоссария терминов</li>
-            <li><input type="checkbox"> Разработка roadmap проекта</li>
-        </ul>
-    </div>
-    
-    <div class="checklist">
-        <h3>Чеклист проектирования API</h3>
-        <ul>
-            <li><input type="checkbox"> Определение ресурсов и их отношений</li>
-            <li><input type="checkbox"> Проектирование эндпоинтов (RESTful принципы)</li>
-            <li><input type="checkbox"> Определение форматов запросов/ответов</li>
-            <li><input type="checkbox"> Проектирование системы аутентификации</li>
-            <li><input type="checkbox"> Определение кодов ошибок и их семантики</li>
-            <li><input type="checkbox"> Планирование версионирования</li>
-            <li><input type="checkbox"> Документирование (OpenAPI/Swagger)</li>
-        </ul>
-    </div>
-        </section>
-
-        <section id="interactive-examples" class="section">
-    <h2><i class="fas fa-flask"></i> Интерактивные примеры</h2>
-    
-    <div class="interactive-example">
-        <h3>SQL Редактор</h3>
-        <div class="editor-container">
-            <div class="editor-header">
-                <select id="db-schema">
-                    <option value="users">Пользователи</option>
-                    <option value="orders">Заказы</option>
-                </select>
-                <button onclick="runSQL()">Выполнить</button>
-            </div>
-            <textarea id="sql-editor">SELECT * FROM users;</textarea>
-            <div class="result-container">
-                <table id="sql-result">
-                    <thead><tr><th>ID</th><th>Имя</th><th>Email</th></tr></thead>
-                    <tbody>
-                        <tr><td>1</td><td>Иван</td><td>ivan@example.com</td></tr>
-                        <tr><td>2</td><td>Мария</td><td>maria@example.com</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    
-    <div class="interactive-example">
-        <h3>Диаграмма процессов</h3>
-        <div id="bpmn-diagram"></div>
-        <div class="diagram-controls">
-            <button onclick="addTask()">Добавить задачу</button>
-            <button onclick="addGateway()">Добавить шлюз</button>
-            <button onclick="saveDiagram()">Сохранить</button>
-        </div>
-    </div>
-</section>
-
-        <section id="knowledge-base" class="section">
-    <h2><i class="fas fa-book"></i> База знаний</h2>
-    
-    <div class="notes-container">
-        <div class="notes-toolbar">
-            <input type="text" id="notes-search" placeholder="Поиск в заметках..." class="note-input">
-            <div id="notesFilters" class="notes-filters"></div>
-            <button onclick="notesSystem.showEditor()" class="quick-link">
-                <i class="fas fa-plus"></i> Новая заметка
-            </button>
-        </div>
-        
-        <div class="notes-list" id="notesList">
-            <!-- Заметки будут добавляться здесь -->
-        </div>
-    </div>
-</section>
-        
-                <!-- Обновленный блок #testing-system -->
-<section id="testing-system" class="section">
-    <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
-    
-    <div class="test-container">
-        <div class="test-selection">
-            <h3>Выберите раздел для тестирования:</h3>
-            <select id="test-section">
-                <option value="requirements">Требования</option>
-                <option value="api">API</option>
-                <option value="db">Базы данных</option>
-                <option value="bpmn">BPMN</option>
-                <option value="security">Безопасность</option>
-                <option value="ddd">DDD</option>
-            </select>
-            
-            <div class="test-settings">
-                <label>
-                    <input type="checkbox" id="random-order"> Случайный порядок вопросов
-                </label>
-                <label>
-                    <input type="number" id="question-count" min="5" max="20" value="10"> Количество вопросов
-                </label>
-            </div>
-            
-            <button onclick="startTest()">Начать тест</button>
-        </div>
-        
-        <div class="test-content" id="testContent" style="display:none;">
-            <div class="test-header">
-                <div class="test-progress">
-                    Вопрос <span id="current-question">1</span> из <span id="total-questions">10</span>
-                </div>
-                <div class="test-timer">
-                    <i class="fas fa-clock"></i> <span id="test-timer">00:00</span>
-                </div>
-            </div>
-            
-            <div id="testQuestions"></div>
-            
-            <div class="test-controls">
-                <button onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Назад</button>
-                <button onclick="nextQuestion()">Далее <i class="fas fa-arrow-right"></i></button>
-                <button onclick="submitTest()">Завершить тест</button>
-            </div>
-            
-            <div id="testResult" class="test-result"></div>
-        </div>
-    </div>
-</section>
-
-        <!-- Competency Map Section -->
-<section id="competency-map" class="section">
-    <h2><i class="fas fa-star"></i> Карта компетенций системного аналитика</h2>
-    
-    <div class="competency-intro">
-        <p>Эта карта компетенций поможет вам оценить свои навыки и определить области для развития. Отмечайте освоенные компетенции для отслеживания прогресса.</p>
-        <div class="progress-summary">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 45%;">45%</div>
-            </div>
-            <p>Освоено: <span id="skills-completed">0</span> из <span id="skills-total">0</span> компетенций</p>
-        </div>
-    </div>
-    
-    <div class="competency-categories">
-        <!-- Категория 1: Бизнес-анализ -->
-        <div class="category-card">
-            <h3><i class="fas fa-chart-line"></i> Бизнес-анализ</h3>
-            <ul class="competency-list">
-                <li>
-                    <input type="checkbox" id="comp-ba-1">
-                    <label for="comp-ba-1">Выявление и анализ требований</label>
-                    <span class="skill-level" title="Уровень владения">
-                        <i class="fas fa-circle basic" title="Базовый"></i>
-                        <i class="fas fa-circle advanced" title="Продвинутый"></i>
-                        <i class="fas fa-circle expert" title="Экспертный"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-ba-2">
-                    <label for="comp-ba-2">Анализ бизнес-процессов (BPMN)</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-ba-3">
-                    <label for="comp-ba-3">Определение KPI и метрик успеха</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-ba-4">
-                    <label for="comp-ba-4">Анализ ROI и экономической эффективности</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Категория 2: Системный анализ -->
-        <div class="category-card">
-            <h3><i class="fas fa-cogs"></i> Системный анализ</h3>
-            <ul class="competency-list">
-                <li>
-                    <input type="checkbox" id="comp-sa-1">
-                    <label for="comp-sa-1">Проектирование архитектуры решений</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-sa-2">
-                    <label for="comp-sa-2">Разработка спецификаций требований</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-sa-3">
-                    <label for="comp-sa-3">Моделирование данных (ER-диаграммы)</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-sa-4">
-                    <label for="comp-sa-4">Проектирование API (REST, GraphQL, SOAP)</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Категория 3: Технические навыки -->
-        <div class="category-card">
-            <h3><i class="fas fa-laptop-code"></i> Технические навыки</h3>
-            <ul class="competency-list">
-                <li>
-                    <input type="checkbox" id="comp-tech-1">
-                    <label for="comp-tech-1">Понимание принципов разработки ПО</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-tech-2">
-                    <label for="comp-tech-2">Работа с базами данных (SQL/NoSQL)</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-tech-3">
-                    <label for="comp-tech-3">Основы сетевых технологий</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-tech-4">
-                    <label for="comp-tech-4">Понимание CI/CD процессов</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Категория 4: Документация -->
-        <div class="category-card">
-            <h3><i class="fas fa-file-alt"></i> Документация</h3>
-            <ul class="competency-list">
-                <li>
-                    <input type="checkbox" id="comp-doc-1">
-                    <label for="comp-doc-1">Создание технических спецификаций</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-doc-2">
-                    <label for="comp-doc-2">Разработка пользовательских сценариев</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-doc-3">
-                    <label for="comp-doc-3">Создание диаграмм и схем</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-doc-4">
-                    <label for="comp-doc-4">Ведение глоссария терминов</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Категория 5: Мягкие навыки -->
-        <div class="category-card">
-            <h3><i class="fas fa-comments"></i> Мягкие навыки</h3>
-            <ul class="competency-list">
-                <li>
-                    <input type="checkbox" id="comp-soft-1">
-                    <label for="comp-soft-1">Коммуникация с заинтересованными сторонами</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-soft-2">
-                    <label for="comp-soft-2">Фасилитация встреч и воркшопов</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-soft-3">
-                    <label for="comp-soft-3">Управление конфликтами</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-soft-4">
-                    <label for="comp-soft-4">Презентация решений</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Категория 6: Управление продуктом -->
-        <div class="category-card">
-            <h3><i class="fas fa-tasks"></i> Управление продуктом</h3>
-            <ul class="competency-list">
-                <li>
-                    <input type="checkbox" id="comp-pm-1">
-                    <label for="comp-pm-1">Приоритизация требований</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-pm-2">
-                    <label for="comp-pm-2">Управление бэклогом продукта</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-pm-3">
-                    <label for="comp-pm-3">Определение MVP</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-                <li>
-                    <input type="checkbox" id="comp-pm-4">
-                    <label for="comp-pm-4">Анализ метрик продукта</label>
-                    <span class="skill-level">
-                        <i class="fas fa-circle basic"></i>
-                        <i class="fas fa-circle advanced"></i>
-                        <i class="fas fa-circle expert"></i>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <!-- Рекомендации по развитию -->
-    <div class="development-recommendations">
-        <h3><i class="fas fa-lightbulb"></i> Рекомендации по развитию</h3>
-        <div class="recommendation-card">
-            <h4>Для начинающих аналитиков</h4>
-            <ul>
-                <li>Освойте основы бизнес-анализа</li>
-                <li>Изучите техники сбора требований</li>
-                <li>Практикуйтесь в создании простых диаграмм процессов</li>
-                <li>Развивайте коммуникативные навыки</li>
-            </ul>
-        </div>
-        <div class="recommendation-card">
-            <h4>Для опытных аналитиков</h4>
-            <ul>
-                <li>Углубите знания в архитектуре систем</li>
-                <li>Освойте продвинутые техники моделирования</li>
-                <li>Изучите принципы UX/UI проектирования</li>
-                <li>Развивайте экспертизу в своей предметной области</li>
-            </ul>
-        </div>
-        <div class="recommendation-card">
-            <h4>Для ведущих аналитиков</h4>
-            <ul>
-                <li>Освойте стратегическое планирование</li>
-                <li>Развивайте навыки менторства</li>
-                <li>Изучите продвинутые методы анализа данных</li>
-                <li>Развивайте экспертизу в управлении продуктом</li>
-            </ul>
-        </div>
-    </div>
-    
-    <!-- Сохранение прогресса -->
-    <div class="save-progress">
-        <button id="saveProgressBtn"><i class="fas fa-save"></i> Сохранить прогресс</button>
-        <p>Ваш прогресс сохраняется локально в браузере</p>
-    </div>
-</section>
-
-<style>
-    .competency-intro {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 25px;
-    }
-    
-    .progress-summary {
-        margin-top: 15px;
-    }
-    
-    .progress-bar {
-        width: 100%;
-        height: 25px;
-        background: #e0e0e0;
-        border-radius: 12px;
-        overflow: hidden;
-        margin: 10px 0;
-    }
-    
-    .progress-fill {
-        height: 100%;
-        background: #4caf50;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-    }
-    
-    .competency-categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-        margin-bottom: 30px;
-    }
-    
-    .category-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 20px;
-        background: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    
-    .category-card h3 {
-        margin-top: 0;
-        color: #2c3e50;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .competency-list {
-        list-style: none;
-        padding: 0;
-        margin: 15px 0 0;
-    }
-    
-    .competency-list li {
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-    }
-    
-    .competency-list li:last-child {
-        border-bottom: none;
-    }
-    
-    .competency-list input[type="checkbox"] {
-        margin-right: 12px;
-        width: 18px;
-        height: 18px;
-    }
-    
-    .competency-list label {
-        flex-grow: 1;
-        cursor: pointer;
-    }
-    
-    .skill-level {
-        display: flex;
-        gap: 5px;
-    }
-    
-    .skill-level i {
-        font-size: 0.7em;
-        cursor: help;
-    }
-    
-    .skill-level .basic { color: #ff9800; }
-    .skill-level .advanced { color: #4caf50; }
-    .skill-level .expert { color: #2196f3; }
-    
-    .development-recommendations {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
-    }
-    
-    .recommendation-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 4px solid #3498db;
-    }
-    
-    .recommendation-card h4 {
-        margin-top: 0;
-        color: #2c3e50;
-    }
-    
-    .recommendation-card ul {
-        padding-left: 20px;
-    }
-    
-    .recommendation-card li {
-        margin-bottom: 8px;
-    }
-    
-    .save-progress {
-        text-align: center;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    
-    .save-progress button {
-        background: #3498db;
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 1em;
-        transition: background 0.3s;
-    }
-    
-    .save-progress button:hover {
-        background: #2980b9;
-    }
-    
-    .save-progress p {
-        color: #7f8c8d;
-        font-size: 0.9em;
-        margin-top: 10px;
-    }
-</style>
 
         <!-- Data Modeling Section -->
-<section id="data-modeling" class="section">
-    <h2><i class="fas fa-project-diagram"></i> Моделирование данных</h2>
-    
-    <div class="modeling-container">
-        <!-- Левая колонка - редактор -->
-        <div class="modeling-editor">
-            <h3>Конструктор ER-диаграмм</h3>
-            <div class="editor-toolbar">
-                <button id="addEntity"><i class="fas fa-cube"></i> Сущность</button>
-                <button id="addAttribute"><i class="fas fa-tag"></i> Атрибут</button>
-                <button id="addRelationship"><i class="fas fa-link"></i> Связь</button>
-                <button id="clearDiagram"><i class="fas fa-trash-alt"></i> Очистить</button>
-            </div>
-            <div class="canvas-container">
-                <div id="er-canvas"></div>
-            </div>
+        <section id="data-modeling" class="section">
+            <h2><i class="fas fa-project-diagram"></i> Моделирование данных</h2>
             
-            <div class="entity-properties" style="display:none;">
-                <h4>Свойства сущности</h4>
-                <div class="form-group">
-                    <label>Имя сущности:</label>
-                    <input type="text" id="entity-name" value="НоваяСущность">
-                </div>
-                <div class="form-group">
-                    <label>Цвет:</label>
-                    <input type="color" id="entity-color" value="#4e73df">
-                </div>
-                <button id="saveEntityProps"><i class="fas fa-save"></i> Сохранить</button>
-            </div>
-        </div>
-        
-        <!-- Правая колонка - результат -->
-        <div class="modeling-output">
-            <div class="sql-generator">
-                <h3>Генератор SQL</h3>
-                <div class="sql-preview" id="sql-preview">
-                    -- SQL-код появится здесь
-                </div>
-                <button id="generateSqlBtn"><i class="fas fa-code"></i> Сгенерировать SQL</button>
-            </div>
-            
-            <div class="normalization-example">
-                <h3>Пример нормализации</h3>
-                <div class="normalization-steps">
-                    <div class="norm-step">
-                        <h4>0NF: Денормализованная форма</h4>
-                        <table>
-                            <tr><th>OrderID</th><th>Customer</th><th>Product</th><th>Price</th></tr>
-                            <tr><td>1001</td><td>Иван</td><td>Ноутбук, Мышь</td><td>1000, 20</td></tr>
-                        </table>
+            <div class="modeling-container">
+                <div class="modeling-editor">
+                    <h3>Конструктор ER-диаграмм</h3>
+                    <div class="editor-toolbar">
+                        <button id="addEntity"><i class="fas fa-cube"></i> Сущность</button>
+                        <button id="clearDiagram"><i class="fas fa-trash-alt"></i> Очистить</button>
+                    </div>
+                    <div class="canvas-container">
+                        <div id="er-canvas">
+                            <div class="canvas-placeholder">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <p>Используйте панель инструментов для создания диаграммы</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="norm-step">
-                        <h4>1NF: Первая нормальная форма</h4>
-                        <table>
-                            <tr><th>OrderID</th><th>Customer</th><th>Product</th><th>Price</th></tr>
-                            <tr><td>1001</td><td>Иван</td><td>Ноутбук</td><td>1000</td></tr>
-                            <tr><td>1001</td><td>Иван</td><td>Мышь</td><td>20</td></tr>
-                        </table>
+                    <div class="modeling-examples">
+                        <h4>Примеры моделей:</h4>
+                        <button onclick="sqlGenerator.loadExample('ecommerce')" class="quick-link">E-commerce</button>
+                        <button onclick="sqlGenerator.loadExample('blog')" class="quick-link">Блог-платформа</button>
+                    </div>
+                </div>
+                
+                <div class="modeling-output">
+                    <div class="sql-generator">
+                        <h3>Генератор SQL</h3>
+                        <div class="sql-preview" id="sql-preview">
+-- SQL-код появится здесь после создания диаграммы
+                        </div>
+                        <button id="generateSqlBtn" class="primary-btn">
+                            <i class="fas fa-code"></i> Сгенерировать SQL
+                        </button>
                     </div>
                     
-                    <div class="norm-step">
-                        <h4>2NF: Вторая нормальная форма</h4>
-                        <div class="tables-container">
-                            <table>
-                                <tr><th>OrderID</th><th>CustomerID</th></tr>
-                                <tr><td>1001</td><td>1</td></tr>
-                            </table>
-                            <table>
-                                <tr><th>CustomerID</th><th>Name</th></tr>
-                                <tr><td>1</td><td>Иван</td></tr>
-                            </table>
+                    <div class="normalization-example">
+                        <h3>Пример нормализации</h3>
+                        <div class="normalization-steps">
+                            <div class="norm-step">
+                                <h4>1NF: Первая нормальная форма</h4>
+                                <p>Атомарность значений, отсутствие повторяющихся групп</p>
+                            </div>
+                            
+                            <div class="norm-step">
+                                <h4>2NF: Вторая нормальная форма</h4>
+                                <p>Отсутствие частичных зависимостей от составного ключа</p>
+                            </div>
+                            
+                            <div class="norm-step">
+                                <h4>3NF: Третья нормальная форма</h4>
+                                <p>Отсутствие транзитивных зависимостей</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="data-patterns">
-        <h3>Шаблоны моделей данных</h3>
-        <div class="patterns-grid">
-            <div class="pattern-card">
-                <h4><i class="fas fa-users"></i> Пользователи и роли</h4>
-                <div class="pattern-preview">
-                    <div class="entity">Пользователь</div>
-                    <div class="entity">Роль</div>
-                    <div class="relationship">M:N</div>
+        </section>
+
+        <!-- Kanban vs Scrum Section -->
+        <section id="kanban-scrum" class="section">
+            <h2><i class="fas fa-columns"></i> Kanban vs Scrum</h2>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+                <div>
+                    <h3>Scrum</h3>
+                    <ul>
+                        <li>Фиксированные итерации (спринты 1-4 недели)</li>
+                        <li>Роли: Scrum Master, Product Owner, Команда</li>
+                        <li>Артефакты: Бэклог продукта, Бэклог спринта</li>
+                        <li>Церемонии: Планирование, Дейли, Обзор, Ретроспектива</li>
+                        <li>Изменения в процессе спринта запрещены</li>
+                    </ul>
                 </div>
-                <button class="apply-pattern">Применить</button>
+                
+                <div>
+                    <h3>Kanban</h3>
+                    <ul>
+                        <li>Непрерывный поток работы</li>
+                        <li>Визуализация (Kanban-доска)</li>
+                        <li>Ограничение WIP (Work In Progress)</li>
+                        <li>Управление потоком (flow management)</li>
+                        <li>Изменения возможны в любой момент</li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="pattern-card">
-                <h4><i class="fas fa-shopping-cart"></i> Электронная коммерция</h4>
-                <div class="pattern-preview">
-                    <div class="entity">Заказ</div>
-                    <div class="entity">Товар</div>
-                    <div class="relationship">M:N</div>
-                </div>
-                <button class="apply-pattern">Применить</button>
+            <div class="highlight-box">
+                <p><strong>Когда использовать:</strong> Scrum - для проектов с относительно стабильными требованиями. Kanban - для поддержки и оперативных задач с частыми изменениями приоритетов.</p>
             </div>
-            
-            <div class="pattern-card">
-                <h4><i class="fas fa-comments"></i> Блог-платформа</h4>
-                <div class="pattern-preview">
-                    <div class="entity">Пользователь</div>
-                    <div class="entity">Пост</div>
-                    <div class="entity">Комментарий</div>
+
+            <div class="highlight-box" style="text-align:center;">
+                <h3><i class="fas fa-stopwatch"></i> Таймер для митинга</h3>
+                <div id="meeting-timer-display" class="timer-display">15:00</div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button onclick="startMeetingTimer(900)" class="quick-link">15 мин</button>
+                    <button onclick="startMeetingTimer(300)" class="quick-link">5 мин</button>
+                    <button onclick="stopMeetingTimer()" class="quick-link">Стоп</button>
                 </div>
-                <button class="apply-pattern">Применить</button>
             </div>
-        </div>
-    </div>
-    
-    <div class="db-comparison">
-        <h3>Сравнение типов баз данных</h3>
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Характеристика</th>
-                    <th>Реляционные (SQL)</th>
-                    <th>Документные (NoSQL)</th>
-                    <th>Колоночные</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Структура данных</td>
-                    <td>Таблицы со строгими схемами</td>
-                    <td>JSON-документы</td>
-                    <td>Колоночное хранение</td>
-                </tr>
-                <tr>
-                    <td>Масштабируемость</td>
-                    <td>Вертикальная</td>
-                    <td>Горизонтальная</td>
-                    <td>Горизонтальная</td>
-                </tr>
-                <tr>
-                    <td>Использование</td>
-                    <td>Транзакционные системы</td>
-                    <td>Контент-менеджмент</td>
-                    <td>Аналитика, big data</td>
-                </tr>
-                <tr>
-                    <td>Примеры</td>
-                    <td>MySQL, PostgreSQL</td>
-                    <td>MongoDB, Couchbase</td>
-                    <td>Cassandra, Bigtable</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
+        </section>
 
         <!-- CI/CD Section -->
-<section id="ci-cd" class="section">
-    <h2><i class="fas fa-sync-alt"></i> CI/CD (Непрерывная интеграция и доставка)</h2>
-    
-    <p>Автоматизация процессов разработки и развертывания:</p>
-    
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
-        <div>
-            <h3>Continuous Integration</h3>
+        <section id="ci-cd" class="section">
+            <h2><i class="fas fa-sync-alt"></i> CI/CD (Непрерывная интеграция и доставка)</h2>
+            
+            <p>Автоматизация процессов разработки и развертывания:</p>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+                <div>
+                    <h3>Continuous Integration</h3>
+                    <ul>
+                        <li>Автоматическая сборка при коммите</li>
+                        <li>Запуск тестов</li>
+                        <li>Статический анализ кода</li>
+                        <li>Раннее обнаружение ошибок</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Continuous Delivery</h3>
+                    <ul>
+                        <li>Автоматическое развертывание</li>
+                        <li>Пайплайны поставки</li>
+                        <li>Канареечные релизы</li>
+                        <li>Blue-Green деплойменты</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Популярные инструменты:</h3>
             <ul>
-                <li>Автоматическая сборка при коммите</li>
-                <li>Запуск тестов</li>
-                <li>Статический анализ кода</li>
-                <li>Раннее обнаружение ошибок</li>
+                <li>Jenkins</li>
+                <li>GitLab CI/CD</li>
+                <li>GitHub Actions</li>
+                <li>Azure DevOps</li>
             </ul>
-        </div>
-        
-        <div>
-            <h3>Continuous Delivery</h3>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security" class="section">
+            <h2><i class="fas fa-shield-alt"></i> Основы безопасности</h2>
+            
+            <h3>OWASP Top 10:</h3>
+            <ol>
+                <li>Инъекции (SQL, NoSQL, OS)</li>
+                <li>Некорректная аутентификация</li>
+                <li>Раскрытие чувствительных данных</li>
+                <li>XXE (XML External Entities)</li>
+                <li>Некорректный контроль доступа</li>
+            </ol>
+            
+            <h3>Принципы безопасности:</h3>
             <ul>
-                <li>Автоматическое развертывание</li>
-                <li>Пайплайны поставки</li>
-                <li>Канареечные релизы</li>
-                <li>Blue-Green деплойменты</li>
+                <li><strong>Принцип минимальных привилегий</strong></li>
+                <li><strong>Глубинная защита (Defense in Depth)</strong></li>
+                <li><strong>Не доверяй пользовательскому вводу</strong></li>
+                <li><strong>Регулярные аудиты безопасности</strong></li>
             </ul>
-        </div>
-    </div>
-    
-    <h3>Типичный CI/CD пайплайн:</h3>
-    <div class="example">
-        <p>1. Коммит кода → 2. Сборка → 3. Юнит-тесты → 4. Интеграционные тесты → 5. Деплой на staging → 6. Ручное тестирование → 7. Деплой на production</p>
-    </div>
-    
-    <h3>Популярные инструменты:</h3>
-    <ul>
-        <li>Jenkins</li>
-        <li>GitLab CI/CD</li>
-        <li>GitHub Actions</li>
-        <li>CircleCI</li>
-        <li>Azure DevOps</li>
-    </ul>
-</section>
+        </section>
 
-<!-- Kanban vs Scrum Section -->
-<section id="kanban-scrum" class="section">
-    <h2><i class="fas fa-columns"></i> Kanban vs Scrum</h2>
-    
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
-        <div>
-            <h3>Scrum</h3>
+        <!-- Security Checklist Section -->
+        <section id="security-checklist" class="section">
+            <h2><i class="fas fa-shield-alt"></i> Чеклист: Безопасность</h2>
+            <div class="checklist-container">
+                <h3>Чеклист по обеспечению безопасности</h3>
+                <ul class="checklist">
+                    <li>
+                        <input type="checkbox" id="security-1">
+                        <label for="security-1">Определены ли требования к аутентификации пользователей?</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="security-2">
+                        <label for="security-2">Проверены ли требования к авторизации (роли, доступы)?</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="security-3">
+                        <label for="security-3">Разработаны ли механизмы защиты данных в транзите (TLS/SSL)?</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="security-4">
+                        <label for="security-4">Обеспечена ли защита данных в состоянии покоя (шифрование)?</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="security-5">
+                        <label for="security-5">Проверены ли уязвимости ввода данных (SQL-инъекции, XSS)?</label>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Metrics Section -->
+        <section id="metrics" class="section">
+            <h2><i class="fas fa-chart-line"></i> Ключевые метрики для аналитика</h2>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+                <div>
+                    <h3>Проектные метрики</h3>
+                    <ul>
+                        <li><strong>Velocity</strong> - скорость выполнения задач</li>
+                        <li><strong>Lead Time</strong> - время от запроса до реализации</li>
+                        <li><strong>Cycle Time</strong> - время выполнения задачи</li>
+                        <li><strong>Burndown Rate</strong> - скорость закрытия задач</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Бизнес-метрики</h3>
+                    <ul>
+                        <li><strong>ROI</strong> - возврат инвестиций</li>
+                        <li><strong>User Adoption Rate</strong> - уровень принятия пользователями</li>
+                        <li><strong>Feature Usage</strong> - использование функционала</li>
+                        <li><strong>CSAT</strong> - удовлетворенность пользователей</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Mistakes Section -->
+        <section id="mistakes" class="section">
+            <h2><i class="fas fa-exclamation-triangle"></i> Типичные ошибки аналитика</h2>
+            
+            <div class="highlight-box">
+                <h3>Топ-10 ошибок:</h3>
+                <ol>
+                    <li>Недостаточное вовлечение стейкхолдеров</li>
+                    <li>Фокус на решениях вместо проблем</li>
+                    <li>Игнорирование нефункциональных требований</li>
+                    <li>Недостаточная детализация требований</li>
+                    <li>Отсутствие приоритизации</li>
+                    <li>Плохая трассируемость требований</li>
+                    <li>Игнорирование edge cases</li>
+                    <li>Переоценка технических возможностей команды</li>
+                    <li>Недостаточное тестирование требований</li>
+                    <li>Плохая коммуникация изменений</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Documentation Templates Section -->
+        <section id="templates" class="section">
+            <h2><i class="fas fa-file-contract"></i> Шаблоны документов</h2>
+            
+            <h3>Основные артефакты с примерами:</h3>
+            
+            <div class="quick-links">
+                <button onclick="docGenerator.selectType('srs')" class="quick-link">SRS Document</button>
+                <button onclick="docGenerator.selectType('user-stories')" class="quick-link">User Stories</button>
+                <button onclick="docGenerator.selectType('api-spec')" class="quick-link">API Specification</button>
+                <button onclick="docGenerator.selectType('test-cases')" class="quick-link">Test Cases</button>
+            </div>
+            
+            <div class="doc-editor" id="docEditor" style="display: none;">
+                <div class="doc-toolbar">
+                    <select id="docTemplate">
+                        <option value="basic">Базовый шаблон</option>
+                        <option value="detailed">Детализированный</option>
+                    </select>
+                    <button onclick="docGenerator.generate()"><i class="fas fa-magic"></i> Сгенерировать</button>
+                    <button onclick="docGenerator.download()"><i class="fas fa-download"></i> Скачать</button>
+                    <button onclick="docGenerator.clear()"><i class="fas fa-times"></i> Очистить</button>
+                </div>
+                <textarea id="docContent" rows="20" placeholder="Сгенерированный документ появится здесь..."></textarea>
+            </div>
+        </section>
+
+        <!-- Career Path Section -->
+        <section id="career" class="section">
+            <h2><i class="fas fa-user-graduate"></i> Карьерный путь аналитика</h2>
+            
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                <div class="highlight-box">
+                    <h3>Junior Analyst →</h3>
+                    <ul>
+                        <li>Сбор требований</li>
+                        <li>Документирование процессов</li>
+                        <li>Поддержка тестирования</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>Middle Analyst →</h3>
+                    <ul>
+                        <li>Проектирование решений</li>
+                        <li>Управление бэклогом</li>
+                        <li>Координация команды</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3>Senior Analyst →</h3>
+                    <ul>
+                        <li>Архитектурные решения</li>
+                        <li>Стратегия продукта</li>
+                        <li>Менторство</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Tools Section -->
+        <section id="quick-tools" class="section">
+            <h2><i class="fas fa-bolt"></i> Быстрые инструменты</h2>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3><i class="fas fa-calculator"></i> Конвертер величин</h3>
+                    <div class="converter-container">
+                        <div class="converter-row">
+                            <input type="number" id="conv-input" value="1" placeholder="Введите значение">
+                            <select id="conv-from">
+                                <option value="kb">Килобайты</option>
+                                <option value="mb">Мегабайты</option>
+                                <option value="gb">Гигабайты</option>
+                                <option value="ms">Миллисекунды</option>
+                                <option value="s">Секунды</option>
+                            </select>
+                        </div>
+                        <div class="converter-row">
+                            <button onclick="convertValue()"><i class="fas fa-exchange-alt"></i> Конвертировать</button>
+                        </div>
+                        <div class="converter-row">
+                            <input type="text" id="conv-output" readonly placeholder="Результат">
+                            <select id="conv-to">
+                                <option value="kb">Килобайты</option>
+                                <option value="mb" selected>Мегабайты</option>
+                                <option value="gb">Гигабайты</option>
+                                <option value="ms">Миллисекунды</option>
+                                <option value="s">Секунды</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <h3><i class="fas fa-sitemap"></i> Decision Tree</h3>
+                    <div class="decision-tree">
+                        <div id="tree-step-1" class="tree-step active">
+                            <p>Проект имеет четкие требования?</p>
+                            <button onclick="showTreeStep(2, 'yes')" class="tree-btn">Да</button>
+                            <button onclick="showTreeStep(2, 'no')" class="tree-btn">Нет</button>
+                        </div>
+                        
+                        <div id="tree-step-2" class="tree-step">
+                            <p id="step2-question"></p>
+                            <div id="step2-options" class="tree-options"></div>
+                        </div>
+                        
+                        <div id="tree-result" class="tree-result">
+                            <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
+                            <button onclick="resetTree()" class="tree-btn">Начать заново</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Decision Tree Section -->
+        <section id="decision-tree" class="section">
+            <h2><i class="fas fa-sitemap"></i> Выбор методологии</h2>
+            
+            <div style="text-align:center; padding:20px; background:#f8f9fa; border-radius:8px;">
+                <h3>Какую методологию выбрать?</h3>
+                
+                <div id="tree-container" style="margin:20px auto; max-width:600px;">
+                    <div id="tree-step-1" class="tree-step active">
+                        <p>Проект имеет четкие требования?</p>
+                        <button onclick="showTreeStep(2, 'yes')" class="tree-btn">Да</button>
+                        <button onclick="showTreeStep(2, 'no')" class="tree-btn">Нет</button>
+                    </div>
+                    
+                    <div id="tree-step-2" class="tree-step">
+                        <p id="step2-question"></p>
+                        <div id="step2-options" class="tree-options"></div>
+                    </div>
+                    
+                    <div id="tree-result" class="tree-result">
+                        <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
+                        <button onclick="resetTree()" class="tree-btn">Начать заново</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Email Templates Section -->
+        <section id="email-templates" class="section">
+            <h2><i class="fas fa-envelope"></i> Шаблоны писем и сообщений</h2>
+            
+            <div class="quick-links">
+                <button onclick="showTemplate('clarification')" class="quick-link">Запрос уточнений</button>
+                <button onclick="showTemplate('meeting')" class="quick-link">Приглашение на встречу</button>
+                <button onclick="showTemplate('review')" class="quick-link">Запрос на ревью</button>
+                <button onclick="showTemplate('update')" class="quick-link">Статус по задаче</button>
+            </div>
+            
+            <div id="template-content" style="margin-top:20px; padding:20px; background:#f9f9f9; border-radius:8px; display:none;">
+                <textarea id="template-text" rows="6" style="width:100%; padding:10px;"></textarea>
+                <button onclick="copyTemplate()" style="margin-top:10px; padding:8px 15px;">
+                    <i class="fas fa-copy"></i> Копировать
+                </button>
+            </div>
+        </section>
+
+        <!-- Swagger/OpenAPI Section -->
+        <section id="swagger" class="section">
+            <h2><i class="fas fa-file-code"></i> Swagger/OpenAPI</h2>
+            
+            <p>OpenAPI - стандарт описания REST API, Swagger - набор инструментов для работы с OpenAPI:</p>
+            
+            <h3>Преимущества использования:</h3>
             <ul>
-                <li>Фиксированные итерации (спринты 1-4 недели)</li>
-                <li>Роли: Scrum Master, Product Owner, Команда</li>
-                <li>Артефакты: Бэклог продукта, Бэклог спринта</li>
-                <li>Церемонии: Планирование, Дейли, Обзор, Ретроспектива</li>
-                <li>Изменения в процессе спринта запрещены</li>
-                <li>Скорость измеряется в story points</li>
+                <li>Автогенерация документации API</li>
+                <li>Интерактивная песочница для тестирования</li>
+                <li>Автогенерация клиентских SDK и серверных заглушек</li>
+                <li>Валидация запросов и ответов</li>
+                <li>Упрощение процесса разработки API</li>
             </ul>
-        </div>
-        
-        <div>
-            <h3>Kanban</h3>
-            <ul>
-                <li>Непрерывный поток работы</li>
-                <li>Визуализация (Kanban-доска)</li>
-                <li>Ограничение WIP (Work In Progress)</li>
-                <li>Управление потоком (flow management)</li>
-                <li>Изменения возможны в любой момент</li>
-                <li>Метрики: Cycle Time, Lead Time</li>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="highlight-box">
-        <p><strong>Когда использовать:</strong> Scrum - для проектов с относительно стабильными требованиями. Kanban - для поддержки и оперативных задач с частыми изменениями приоритетов.</p>
-    </div>
-
-    <div class="highlight-box" style="text-align:center;">
-    <h3><i class="fas fa-stopwatch"></i> Таймер для митинга</h3>
-    <div id="meeting-timer" style="font-size: 2rem; margin: 15px 0;">15:00</div>
-    <div style="display: flex; gap: 10px; justify-content: center;">
-        <button id="start-15min" class="quick-link">Старт (15 мин)</button>
-        <button id="start-5min" class="quick-link">Старт (5 мин)</button>
-        <button id="stop-timer" class="quick-link">Стоп</button>
-    </div>
-</div>
-</section>
-
-<!-- Databases Section -->
-<section id="db" class="section">
-    <h2><i class="fas fa-database"></i> Базы данных</h2>
-    
-    <h3>Типы баз данных:</h3>
-    <ul>
-        <li><strong>Реляционные (SQL)</strong>: MySQL, PostgreSQL, Oracle - данные в таблицах со строгой схемой</li>
-        <li><strong>Документные (NoSQL)</strong>: MongoDB, Couchbase - хранение JSON-документов</li>
-        <li><strong>Ключ-значение</strong>: Redis, Memcached - быстрый доступ по ключу</li>
-        <li><strong>Колоночные</strong>: Cassandra, HBase - оптимизированы для аналитики</li>
-        <li><strong>Графовые</strong>: Neo4j, Amazon Neptune - хранение связей между объектами</li>
-        <li><strong>Поисковые движки</strong>: Elasticsearch - полнотекстовый поиск</li>
-    </ul>
-    
-    <h3>Нормализация баз данных:</h3>
-    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-        <tr>
-            <th style="border:1px solid #ddd; padding:8px;">Нормальная форма</th>
-            <th style="border:1px solid #ddd; padding:8px;">Требование</th>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">1NF</td>
-            <td style="border:1px solid #ddd; padding:8px;">Атомарность значений, отсутствие повторяющихся групп</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">2NF</td>
-            <td style="border:1px solid #ddd; padding:8px;">Выполнение 1NF + отсутствие частичных зависимостей</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:8px;">3NF</td>
-            <td style="border:1px solid #ddd; padding:8px;">Выполнение 2NF + отсутствие транзитивных зависимостей</td>
-        </tr>
-    </table>
-    
-    <h3>Типы JOIN в SQL:</h3>
-    <ul>
-        <li><strong>INNER JOIN</strong> - возвращает совпадающие записи из обеих таблиц</li>
-        <li><strong>LEFT JOIN</strong> - все записи из левой таблицы + совпадения справа</li>
-        <li><strong>RIGHT JOIN</strong> - все записи из правой таблицы + совпадения слева</li>
-        <li><strong>FULL JOIN</strong> - все записи из обеих таблиц</li>
-        <li><strong>CROSS JOIN</strong> - декартово произведение (все комбинации)</li>
-    </ul>
-</section>
-
-<!-- Swagger/OpenAPI Section -->
-<section id="swagger" class="section">
-    <h2><i class="fas fa-file-code"></i> Swagger/OpenAPI</h2>
-    
-    <p>OpenAPI - стандарт описания REST API, Swagger - набор инструментов для работы с OpenAPI:</p>
-    
-    <h3>Преимущества использования:</h3>
-    <ul>
-        <li>Автогенерация документации API</li>
-        <li>Интерактивная песочница для тестирования</li>
-        <li>Автогенерация клиентских SDK и серверных заглушек</li>
-        <li>Валидация запросов и ответов</li>
-        <li>Упрощение процесса разработки API</li>
-    </ul>
-    
-    <h3>Пример описания метода в OpenAPI:</h3>
-    <div class="code-block">
+            
+            <h3>Пример описания метода в OpenAPI:</h3>
+            <div class="code-block">
 openapi: 3.0.0
 info:
   title: User API
@@ -2708,49 +1214,241 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-    </div>
-    
-    <div class="quick-links">
-        <a href="#api" class="quick-link">API</a>
-        <a href="#rest" class="quick-link">REST</a>
-        <a href="https://swagger.io/docs/" target="_blank" class="quick-link">Документация Swagger</a>
-    </div>
-</section>
-        
-        <!-- UX/UI Principles Section -->
-        <section id="ux-ui" class="section">
-            <h2><i class="fas fa-paint-brush"></i> UX/UI принципы</h2>
+            </div>
+        </section>
+
+        <!-- External Integration Section -->
+        <section id="external-integration" class="section">
+            <h2><i class="fas fa-plug"></i> Интеграция с API</h2>
             
-            <p>Основные принципы проектирования пользовательского опыта:</p>
-            
-            <ul>
-                <li><strong>Юзабилити</strong> - простота и понятность интерфейса</li>
-                <li><strong>Интуитивность</strong> - понятность без обучения</li>
-                <li><strong>Обратная связь</strong> - реакция системы на действия</li>
-                <li><strong>Адаптивность</strong> - работа на разных устройствах</li>
-                <li><strong>Минимизация ошибок</strong> - предотвращение ошибок пользователя</li>
-                <li><strong>Эстетика</strong> - приятный внешний вид</li>
-            </ul>
-            
-            <h3>Отличия UI от UX:</h3>
-            <div class="example">
-                <p><strong>UI (User Interface)</strong> - то, как выглядит и ощущается интерфейс (дизайн, цвета, шрифты)</p>
-                <p><strong>UX (User Experience)</strong> - опыт пользователя при использовании интерфейса (удобство, время отклика, ошибки)</p>
+            <div class="api-tester">
+                <div class="api-controls">
+                    <select id="api-method">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                    
+                    <input type="text" id="api-url" placeholder="https://api.example.com/data" value="https://jsonplaceholder.typicode.com/posts">
+                    
+                    <button onclick="testAPI()">
+                        <i class="fas fa-paper-plane"></i> Отправить
+                    </button>
+                </div>
+                
+                <div class="api-response">
+                    <pre id="api-response-output">Ответ появится здесь...</pre>
+                </div>
             </div>
             
-            <h3>Ресурсы:</h3>
-            <a href="https://ux.pub/printsipy-ux-ui-dizajna/" class="resource-link" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Принципы UX/UI дизайна
-            </a>
+            <div class="highlight-box">
+                <h3><i class="fas fa-lightbulb"></i> Примеры публичных API для тестирования:</h3>
+                <ul>
+                    <li><strong>JSONPlaceholder:</strong> <span class="api-url" onclick="document.getElementById('api-url').value = 'https://jsonplaceholder.typicode.com/posts'">https://jsonplaceholder.typicode.com/posts</span></li>
+                    <li><strong>ReqRes:</strong> <span class="api-url" onclick="document.getElementById('api-url').value = 'https://reqres.in/api/users'">https://reqres.in/api/users</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Interview Checklist Section -->
+        <section id="interview-checklist" class="section">
+            <h2><i class="fas fa-list-check"></i> Чеклист для проведения интервью</h2>
+            
+            <div class="highlight-box">
+                <h3>Подготовка к интервью:</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox"> Определить цели интервью</li>
+                    <li><input type="checkbox"> Выбрать участников</li>
+                    <li><input type="checkbox"> Подготовить вопросы</li>
+                    <li><input type="checkbox"> Запланировать время и место</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>Во время интервью:</h3>
+                <ul class="checklist">
+                    <li><input type="checkbox"> Представиться и объяснить цель</li>
+                    <li><input type="checkbox"> Задать открытые вопросы</li>
+                    <li><input type="checkbox"> Активно слушать</li>
+                    <li><input type="checkbox"> Уточнять непонятные моменты</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Testing System Section -->
+        <section id="testing-system" class="section">
+            <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
+            
+            <div class="test-container">
+                <div class="test-selection">
+                    <h3>Выберите раздел для тестирования:</h3>
+                    <select id="test-section">
+                        <option value="requirements">Требования</option>
+                        <option value="api">API</option>
+                        <option value="db">Базы данных</option>
+                        <option value="bpmn">BPMN</option>
+                        <option value="security">Безопасность</option>
+                        <option value="ddd">DDD</option>
+                    </select>
+                    
+                    <div class="test-settings">
+                        <label>
+                            <input type="number" id="question-count" min="1" max="10" value="5"> Количество вопросов
+                        </label>
+                    </div>
+                    
+                    <button class="primary-btn" onclick="startTest()">Начать тест</button>
+                </div>
+                
+                <div class="test-content" id="testContent" style="display:none;">
+                    <div class="test-header">
+                        <div class="test-progress">
+                            Вопрос <span id="current-question">1</span> из <span id="total-questions">5</span>
+                        </div>
+                        <div class="test-timer">
+                            <i class="fas fa-clock"></i> <span id="test-timer">00:00</span>
+                        </div>
+                    </div>
+                    
+                    <div id="testQuestions" class="test-questions"></div>
+                    
+                    <div class="test-controls">
+                        <button onclick="prevQuestion()" class="secondary-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                        <button onclick="nextQuestion()" class="secondary-btn">Далее <i class="fas fa-arrow-right"></i></button>
+                        <button onclick="submitTest()" class="primary-btn">Завершить тест</button>
+                    </div>
+                    
+                    <div id="testResult" class="test-result"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Competency Map Section -->
+        <section id="competency-map" class="section">
+            <h2><i class="fas fa-star"></i> Карта компетенций системного аналитика</h2>
+            
+            <div class="competency-intro">
+                <p>Эта карта компетенций поможет вам оценить свои навыки и определить области для развития. Отмечайте освоенные компетенции для отслеживания прогресса.</p>
+                <div class="progress-summary">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;">0%</div>
+                    </div>
+                    <p>Освоено: <span id="skills-completed">0</span> из <span id="skills-total">0</span> компетенций</p>
+                </div>
+            </div>
+            
+            <div class="competency-categories">
+                <!-- Категория 1: Бизнес-анализ -->
+                <div class="category-card">
+                    <h3><i class="fas fa-chart-line"></i> Бизнес-анализ</h3>
+                    <ul class="competency-list">
+                        <li>
+                            <input type="checkbox" id="comp-ba-1">
+                            <label for="comp-ba-1">Выявление и анализ требований</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="comp-ba-2">
+                            <label for="comp-ba-2">Анализ бизнес-процессов (BPMN)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="comp-ba-3">
+                            <label for="comp-ba-3">Определение KPI и метрик успеха</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Категория 2: Системный анализ -->
+                <div class="category-card">
+                    <h3><i class="fas fa-cogs"></i> Системный анализ</h3>
+                    <ul class="competency-list">
+                        <li>
+                            <input type="checkbox" id="comp-sa-1">
+                            <label for="comp-sa-1">Проектирование архитектуры решений</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="comp-sa-2">
+                            <label for="comp-sa-2">Разработка спецификаций требований</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="comp-sa-3">
+                            <label for="comp-sa-3">Моделирование данных (ER-диаграммы)</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="save-progress">
+                <button id="saveProgressBtn"><i class="fas fa-save"></i> Сохранить прогресс</button>
+                <p>Ваш прогресс сохраняется локально в браузере</p>
+            </div>
+        </section>
+
+        <!-- Glossary Section -->
+        <section id="glossary" class="section">
+            <h2><i class="fas fa-book"></i> Глоссарий терминов</h2>
+            
+            <div class="glossary-container">
+                <div class="glossary-category">
+                    <h3>Основные понятия системного анализа</h3>
+                    <dl>
+                        <dt>Артефакты (Artifacts)</dt>
+                        <dd>Рабочие продукты, создаваемые в процессе анализа - документы, модели, диаграммы</dd>
+                        
+                        <dt>Стейкхолдеры (Stakeholders)</dt>
+                        <dd>Лица и организации, заинтересованные в проекте и влияющие на требования</dd>
+                        
+                        <dt>Функциональные требования</dt>
+                        <dd>Что система должна делать - описание функций и возможностей системы</dd>
+                    </dl>
+                </div>
+                
+                <div class="glossary-category">
+                    <h3>Архитектура и технологии</h3>
+                    <dl>
+                        <dt>REST (Representational State Transfer)</dt>
+                        <dd>Архитектурный стиль для API, основанный на стандартных HTTP-методах</dd>
+                        
+                        <dt>SOAP (Simple Object Access Protocol)</dt>
+                        <dd>Протокол обмена структурированными XML-сообщениями для веб-сервисов</dd>
+                        
+                        <dt>GraphQL</dt>
+                        <dd>Язык запросов для API, позволяющий клиентам запрашивать только необходимые данные</dd>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="section">
+            <h2><i class="fas fa-external-link-alt"></i> Полезные ресурсы</h2>
+            
+            <div class="resources-grid">
+                <div class="resource-category">
+                    <h3>Блоги и сообщества</h3>
+                    <ul>
+                        <li><a href="https://habr.com/ru/articles/841646/" target="_blank">Хабр: Системный анализ</a></li>
+                        <li><a href="https://www.modernanalyst.com/" target="_blank">Modern Analyst</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-category">
+                    <h3>Курсы и обучение</h3>
+                    <ul>
+                        <li><a href="https://stepik.org/course/63054/" target="_blank">Интерактивный тренажер по SQL</a></li>
+                        <li><a href="https://www.coursera.org/specializations/systems-analysis" target="_blank">Coursera: Systems Analysis</a></li>
+                    </ul>
+                </div>
+                
+                <div class="resource-category">
+                    <h3>Инструменты</h3>
+                    <ul>
+                        <li><a href="https://www.draw.io/" target="_blank">Draw.io - диаграммы</a></li>
+                        <li><a href="https://www.postman.com/" target="_blank">Postman - тестирование API</a></li>
+                        <li><a href="https://swagger.io/" target="_blank">Swagger - документация API</a></li>
+                    </ul>
+                </div>
+            </div>
         </section>
     </main>
     
@@ -2780,8 +1478,6 @@ components:
                     <li><a href="#requirements"><i class="fas fa-chevron-right"></i> Виды требований</a></li>
                     <li><a href="#api"><i class="fas fa-chevron-right"></i> API и архитектура</a></li>
                     <li><a href="#db"><i class="fas fa-chevron-right"></i> Базы данных</a></li>
-                    <li><a href="#templates"><i class="fas fa-chevron-right"></i> Шаблоны документов</a></li>
-                    <li><a href="#career"><i class="fas fa-chevron-right"></i> Карьерный рост</a></li>
                 </ul>
             </div>
 
@@ -2791,9 +1487,7 @@ components:
                 <ul class="footer-links">
                     <li><a href="#glossary"><i class="fas fa-chevron-right"></i> Глоссарий терминов</a></li>
                     <li><a href="#resources"><i class="fas fa-chevron-right"></i> Полезные ссылки</a></li>
-                    <li><a href="#checklists"><i class="fas fa-chevron-right"></i> Чеклисты</a></li>
-                    <li><a href="#tools"><i class="fas fa-chevron-right"></i> Инструменты</a></li>
-                    <li><a href="#case-studies"><i class="fas fa-chevron-right"></i> Реальные кейсы</a></li>
+                    <li><a href="#testing-system"><i class="fas fa-chevron-right"></i> Проверка знаний</a></li>
                     <li><a href="#competency-map"><i class="fas fa-chevron-right"></i> Карта компетенций</a></li>
                 </ul>
             </div>
@@ -2803,7 +1497,6 @@ components:
                 <h3 class="footer-title">Свяжитесь с нами</h3>
                 <ul class="footer-contacts">
                     <li><i class="fas fa-envelope"></i> <a href="mailto:info@knowerlife.ru" target="_blank" rel="noopener noreferrer nofollow">info@knowerlife.ru</a></li>
-                    <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Аналитическая, 15</li>
                 </ul>
                 
                 <div class="social-links">
@@ -2815,77 +1508,36 @@ components:
                         <a href="https://github.com/KnowerLife" target="_blank" title="GitHub">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://vk.com/knowerlife" target="_blank" title="VK">
-                            <i class="fab fa-vk"></i>
-                        </a>
-                        <a href="https://www.youtube.com/channel/knowerlife.ru" target="_blank" title="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
                     </div>
-                </div>
-                
-                <div class="newsletter">
-                    <h4>Подписка на новости</h4>
-                    <form class="subscribe-form">
-                        <input type="email" placeholder="Ваш email" required>
-                        <button type="submit">Подписаться</button>
-                    </form>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
             <div class="footer-links-bottom">
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Условия использования</a>
                 <a href="/SA/sitemap.html"><i class="fas fa-sitemap"></i> Карта сайта</a>
             </div>
             <div class="back-to-top">
                 <a href="#"><i class="fas fa-arrow-up"></i> Наверх</a>
             </div>
         </div>
-
-        <div id="notification-container"></div>
-<!-- Модальное окно быстрых настроек -->
-<div id="quick-settings" class="modal" style="display: none;">
-    <div class="modal-content">
-        <h3>Быстрые настройки</h3>
-        <div class="setting-group">
-            <label>Размер шрифта:</label>
-            <select id="font-size">
-                <option value="14px">Маленький</option>
-                <option value="16px" selected>Средний</option>
-                <option value="18px">Большой</option>
-            </select>
-        </div>
-        <div class="setting-group">
-            <label>Межстрочный интервал:</label>
-            <select id="line-height">
-                <option value="1.4">Компактный</option>
-                <option value="1.6" selected>Стандартный</option>
-                <option value="1.8">Просторный</option>
-            </select>
-        </div>
-        <button onclick="applyQuickSettings()">Применить</button>
-    </div>
-</div>
     </footer>
 
-
-    
     <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104368407', 'ym');
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104368407', 'ym');
 
-    ym(104368407, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/104368407" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+        ym(104368407, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/104368407" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <!-- Уведомления -->
+    <div id="notification-container"></div>
 </body>
 </html>
