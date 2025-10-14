@@ -1110,7 +1110,7 @@ Accept: application/json
                 </div>
 
                 <div class="tool-card">
-                    <h3><i class="fas fa-sitemap"></i> Decision Tree</h3>
+                    <h3><i class="fas fa-sitemap"></i> Выбор методологии</h3>
                     <div class="decision-tree">
                         <div id="tree-step-1" class="tree-step active">
                             <p>Проект имеет четкие требования?</p>
@@ -1127,33 +1127,6 @@ Accept: application/json
                             <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
                             <button onclick="resetTree()" class="tree-btn">Начать заново</button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Decision Tree Section -->
-        <section id="decision-tree" class="section">
-            <h2><i class="fas fa-sitemap"></i> Выбор методологии</h2>
-            
-            <div style="text-align:center; padding:20px; background:#f8f9fa; border-radius:8px;">
-                <h3>Какую методологию выбрать?</h3>
-                
-                <div id="tree-container" style="margin:20px auto; max-width:600px;">
-                    <div id="tree-step-1" class="tree-step active">
-                        <p>Проект имеет четкие требования?</p>
-                        <button onclick="showTreeStep(2, 'yes')" class="tree-btn">Да</button>
-                        <button onclick="showTreeStep(2, 'no')" class="tree-btn">Нет</button>
-                    </div>
-                    
-                    <div id="tree-step-2" class="tree-step">
-                        <p id="step2-question"></p>
-                        <div id="step2-options" class="tree-options"></div>
-                    </div>
-                    
-                    <div id="tree-result" class="tree-result">
-                        <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
-                        <button onclick="resetTree()" class="tree-btn">Начать заново</button>
                     </div>
                 </div>
             </div>
