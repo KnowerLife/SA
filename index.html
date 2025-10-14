@@ -1240,6 +1240,182 @@
     </ul>
 </section>
 
+        <section id="quick-tools" class="section">
+    <h2><i class="fas fa-bolt"></i> Быстрые инструменты</h2>
+    
+    <div class="tools-grid">
+        <div class="tool-card">
+            <h3><i class="fas fa-calculator"></i> Конвертер величин</h3>
+            <div class="converter-container">
+                <div class="converter-row">
+                    <input type="number" id="conv-input" value="1" placeholder="Введите значение">
+                    <select id="conv-from">
+                        <option value="kb">Килобайты</option>
+                        <option value="mb">Мегабайты</option>
+                        <option value="gb">Гигабайты</option>
+                        <option value="ms">Миллисекунды</option>
+                        <option value="s">Секунды</option>
+                    </select>
+                </div>
+                <div class="converter-row">
+                    <button onclick="convertValue()"><i class="fas fa-exchange-alt"></i> Конвертировать</button>
+                </div>
+                <div class="converter-row">
+                    <input type="text" id="conv-output" readonly placeholder="Результат">
+                    <select id="conv-to">
+                        <option value="kb">Килобайты</option>
+                        <option value="mb" selected>Мегабайты</option>
+                        <option value="gb">Гигабайты</option>
+                        <option value="ms">Миллисекунды</option>
+                        <option value="s">Секунды</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card">
+            <h3><i class="fas fa-stopwatch"></i> Таймер митинга</h3>
+            <div class="timer-container">
+                <div id="meeting-timer-display" class="timer-display">15:00</div>
+                <div class="timer-controls">
+                    <button onclick="startMeetingTimer(900)">15 мин</button>
+                    <button onclick="startMeetingTimer(300)">5 мин</button>
+                    <button onclick="stopMeetingTimer()">Стоп</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-card">
+            <h3><i class="fas fa-sitemap"></i> Decision Tree</h3>
+            <div class="decision-tree">
+                <div id="tree-step-1" class="tree-step active">
+                    <p>Проект имеет четкие требования?</p>
+                    <button onclick="showTreeStep(2, 'yes')">Да</button>
+                    <button onclick="showTreeStep(2, 'no')">Нет</button>
+                </div>
+                
+                <div id="tree-step-2" class="tree-step">
+                    <p id="step2-question"></p>
+                    <div id="step2-options" class="tree-options"></div>
+                </div>
+                
+                <div id="tree-result" class="tree-result">
+                    <h3>Рекомендуемый подход: <span id="result-text"></span></h3>
+                    <button onclick="resetTree()">Начать заново</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Обновленный раздел тестирования -->
+<section id="testing-system" class="section">
+    <h2><i class="fas fa-graduation-cap"></i> Проверка знаний</h2>
+    
+    <div class="test-container">
+        <div class="test-selection">
+            <h3>Выберите раздел для тестирования:</h3>
+            <select id="test-section">
+                <option value="requirements">Требования</option>
+                <option value="api">API</option>
+                <option value="db">Базы данных</option>
+                <option value="bpmn">BPMN</option>
+                <option value="security">Безопасность</option>
+                <option value="ddd">DDD</option>
+            </select>
+            
+            <div class="test-settings">
+                <label>
+                    <input type="checkbox" id="random-order"> Случайный порядок вопросов
+                </label>
+                <label>
+                    <input type="number" id="question-count" min="1" max="20" value="5"> Количество вопросов
+                </label>
+            </div>
+            
+            <button class="primary-btn" onclick="startTest()">Начать тест</button>
+        </div>
+        
+        <div class="test-content" id="testContent">
+            <div class="test-header">
+                <div class="test-progress">
+                    Вопрос <span id="current-question">1</span> из <span id="total-questions">5</span>
+                </div>
+                <div class="test-timer">
+                    <i class="fas fa-clock"></i> <span id="test-timer">00:00</span>
+                </div>
+            </div>
+            
+            <div id="testQuestions" class="test-questions"></div>
+            
+            <div class="test-controls">
+                <button onclick="prevQuestion()" class="secondary-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button onclick="nextQuestion()" class="secondary-btn">Далее <i class="fas fa-arrow-right"></i></button>
+                <button onclick="submitTest()" class="primary-btn">Завершить тест</button>
+            </div>
+            
+            <div id="testResult" class="test-result"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Обновленный раздел моделирования данных -->
+<section id="data-modeling" class="section">
+    <h2><i class="fas fa-project-diagram"></i> Моделирование данных</h2>
+    
+    <div class="modeling-container">
+        <div class="modeling-editor">
+            <h3>Конструктор ER-диаграмм</h3>
+            <div class="editor-toolbar">
+                <button id="addEntity"><i class="fas fa-cube"></i> Сущность</button>
+                <button id="addAttribute"><i class="fas fa-tag"></i> Атрибут</button>
+                <button id="addRelationship"><i class="fas fa-link"></i> Связь</button>
+                <button id="clearDiagram"><i class="fas fa-trash-alt"></i> Очистить</button>
+            </div>
+            <div class="canvas-container">
+                <div id="er-canvas">
+                    <div class="canvas-placeholder">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <p>Используйте панель инструментов для создания диаграммы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modeling-output">
+            <div class="sql-generator">
+                <h3>Генератор SQL</h3>
+                <div class="sql-preview" id="sql-preview">
+-- SQL-код появится здесь после создания диаграммы
+                </div>
+                <button id="generateSqlBtn" class="primary-btn">
+                    <i class="fas fa-code"></i> Сгенерировать SQL
+                </button>
+            </div>
+            
+            <div class="normalization-example">
+                <h3>Пример нормализации</h3>
+                <div class="normalization-steps">
+                    <div class="norm-step">
+                        <h4>1NF: Первая нормальная форма</h4>
+                        <p>Атомарность значений, отсутствие повторяющихся групп</p>
+                    </div>
+                    
+                    <div class="norm-step">
+                        <h4>2NF: Вторая нормальная форма</h4>
+                        <p>Отсутствие частичных зависимостей от составного ключа</p>
+                    </div>
+                    
+                    <div class="norm-step">
+                        <h4>3NF: Третья нормальная форма</h4>
+                        <p>Отсутствие транзитивных зависимостей</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
         <section id="additional-tools" class="section">
     <h2><i class="fas fa-tools"></i> Дополнительные инструменты</h2>
     
