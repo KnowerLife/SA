@@ -2362,7 +2362,7 @@ main {
     height: 50px;
     border-radius: 50%;
     background: var(--primary-color);
-    color: white;
+    color: black;
     border: none;
     cursor: pointer;
     display: flex;
