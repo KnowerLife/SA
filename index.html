@@ -1421,6 +1421,224 @@ paths:
                 </div>
             </div>
         </section>
+
+        <!-- Система заметок -->
+<section id="knowledge-base" class="section">
+    <h2><i class="fas fa-sticky-note"></i> База знаний и заметки</h2>
+    
+    <div class="notes-container">
+        <div class="notes-toolbar">
+            <input type="text" id="notes-search" placeholder="Поиск в заметках..." class="note-input">
+            <div id="notesFilters" class="notes-filters"></div>
+            <button onclick="notesSystem.showEditor()" class="quick-link">
+                <i class="fas fa-plus"></i> Новая заметка
+            </button>
+        </div>
+        
+        <div id="notesList" class="notes-grid">
+            <!-- Заметки будут загружаться здесь -->
+        </div>
+    </div>
+</section>
+
+<!-- Расширенный поиск -->
+<section id="advanced-search" class="section">
+    <h2><i class="fas fa-search-plus"></i> Расширенный поиск</h2>
+    
+    <div class="advanced-search">
+        <div class="search-filters-row">
+            <div class="search-filter-group">
+                <label>Тип контента</label>
+                <select id="search-type">
+                    <option value="all">Все типы</option>
+                    <option value="theory">Теория</option>
+                    <option value="example">Примеры</option>
+                    <option value="checklist">Чеклисты</option>
+                    <option value="tool">Инструменты</option>
+                </select>
+            </div>
+            
+            <div class="search-filter-group">
+                <label>Категория</label>
+                <select id="search-category">
+                    <option value="all">Все категории</option>
+                    <option value="requirements">Требования</option>
+                    <option value="api">API</option>
+                    <option value="database">Базы данных</option>
+                    <option value="security">Безопасность</option>
+                </select>
+            </div>
+            
+            <div class="search-filter-group">
+                <label>Сложность</label>
+                <select id="search-difficulty">
+                    <option value="all">Любая</option>
+                    <option value="beginner">Начинающий</option>
+                    <option value="intermediate">Средний</option>
+                    <option value="advanced">Продвинутый</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="search-results" id="search-results">
+            <div class="search-no-results">
+                <i class="fas fa-search"></i>
+                <p>Введите поисковый запрос для отображения результатов</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Интерактивные чеклисты -->
+<section id="interactive-checklists" class="section">
+    <h2><i class="fas fa-tasks"></i> Интерактивные чеклисты</h2>
+    
+    <div class="checklist-container">
+        <h3>Чеклист анализа требований</h3>
+        
+        <div class="checklist-progress">
+            <div class="progress-header">
+                <h4>Прогресс выполнения</h4>
+                <div class="progress-stats">0/8 (0%)</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%">0%</div>
+            </div>
+        </div>
+        
+        <div class="checklist-category">Подготовка</div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="checklist-1">
+            <label for="checklist-1">Определены все стейкхолдеры проекта</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="checklist-2">
+            <label for="checklist-2">Понятны бизнес-цели и ожидаемые результаты</label>
+        </div>
+        
+        <div class="checklist-category">Сбор требований</div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="checklist-3">
+            <label for="checklist-3">Проведены интервью с ключевыми пользователями</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="checklist-4">
+            <label for="checklist-4">Документированы пользовательские истории</label>
+        </div>
+        
+        <div class="checklist-actions">
+            <button class="select-all">Выбрать все</button>
+            <button class="deselect-all">Снять все</button>
+            <button class="reset">Сбросить прогресс</button>
+        </div>
+    </div>
+</section>
+
+<!-- Инструменты моделирования данных -->
+<section id="data-modeling-tools" class="section">
+    <h2><i class="fas fa-database"></i> Инструменты моделирования данных</h2>
+    
+    <div class="modeling-container">
+        <div class="modeling-editor">
+            <h3>Конструктор ER-диаграмм</h3>
+            <div class="editor-toolbar">
+                <button id="addEntity"><i class="fas fa-cube"></i> Добавить сущность</button>
+                <button id="addRelationship"><i class="fas fa-link"></i> Создать связь</button>
+                <button id="clearDiagram"><i class="fas fa-trash-alt"></i> Очистить</button>
+            </div>
+            <div class="canvas-container">
+                <div id="er-canvas">
+                    <div class="canvas-placeholder">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <p>Используйте панель инструментов для создания диаграммы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modeling-output">
+            <div class="sql-generator">
+                <h3>Генератор SQL</h3>
+                <div class="sql-preview" id="sql-preview">
+-- SQL-код появится здесь после создания диаграммы
+                </div>
+                <button id="generateSqlBtn" class="primary-btn">
+                    <i class="fas fa-code"></i> Сгенерировать SQL
+                </button>
+            </div>
+            
+            <div class="normalization-example">
+                <h3>Пример нормализации</h3>
+                <div class="normalization-steps">
+                    <div class="norm-step">
+                        <h4>1NF: Первая нормальная форма</h4>
+                        <p>Атомарность значений, отсутствие повторяющихся групп</p>
+                    </div>
+                    
+                    <div class="norm-step">
+                        <h4>2NF: Вторая нормальная форма</h4>
+                        <p>Отсутствие частичных зависимостей от составного ключа</p>
+                    </div>
+                    
+                    <div class="norm-step">
+                        <h4>3NF: Третья нормальная форма</h4>
+                        <p>Отсутствие транзитивных зависимостей</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Генератор документов -->
+<section id="document-generator" class="section">
+    <h2><i class="fas fa-file-alt"></i> Генератор документов</h2>
+    
+    <div class="doc-generator-container">
+        <div class="doc-type-selector">
+            <div class="doc-type-card" data-type="srs">
+                <i class="fas fa-book"></i>
+                <h4>SRS Document</h4>
+                <p>Спецификация требований к программному обеспечению</p>
+            </div>
+            
+            <div class="doc-type-card" data-type="user-stories">
+                <i class="fas fa-list-alt"></i>
+                <h4>User Stories</h4>
+                <p>Пользовательские истории с критериями приемки</p>
+            </div>
+            
+            <div class="doc-type-card" data-type="api-spec">
+                <i class="fas fa-code"></i>
+                <h4>API Specification</h4>
+                <p>Спецификация REST API в OpenAPI формате</p>
+            </div>
+            
+            <div class="doc-type-card" data-type="test-cases">
+                <i class="fas fa-vial"></i>
+                <h4>Test Cases</h4>
+                <p>Тестовые сценарии и кейсы</p>
+            </div>
+        </div>
+        
+        <div class="doc-editor" id="docEditor" style="display: none;">
+            <div class="doc-toolbar">
+                <select id="docTemplate">
+                    <option value="basic">Базовый шаблон</option>
+                    <option value="detailed">Детализированный</option>
+                </select>
+                <button onclick="docGenerator.generate()"><i class="fas fa-magic"></i> Сгенерировать</button>
+                <button onclick="docGenerator.download()"><i class="fas fa-download"></i> Скачать</button>
+                <button onclick="docGenerator.clear()"><i class="fas fa-times"></i> Очистить</button>
+            </div>
+            <textarea id="docContent" rows="20" placeholder="Сгенерированный документ появится здесь..."></textarea>
+        </div>
+    </div>
+</section>
     </main>
     
     <!-- Footer -->
