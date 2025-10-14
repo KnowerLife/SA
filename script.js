@@ -2761,6 +2761,12 @@ function initQuickActions() {
             if (bookmarksSection) bookmarksSection.scrollIntoView({ behavior: 'smooth' });
         }},
         { icon: 'fas fa-expand', title: 'Режим фокусировки', action: () => activateFocusModeForCurrent() },
+        { icon: 'fas fa-arrow-up', title: 'Наверх', action: () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }},
         { icon: 'fas fa-moon', title: 'Тема', action: () => {
             const themeToggle = document.getElementById('themeToggle');
             if (themeToggle) themeToggle.click();
