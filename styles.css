@@ -2420,44 +2420,6 @@ main {
     opacity: 1;
 }
 
-#scrollToTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            border: none;
-            outline: none;
-            background-color: #555;
-            color: white;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: all 0.3s;
-            opacity: 0.7;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        #scrollToTopBtn:hover {
-            opacity: 1;
-            background-color: #333;
-        }
-
-        /* Десктопная версия */
-        #scrollToTopBtn.desktop {
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-        }
-
-        /* Мобильная версия */
-        #scrollToTopBtn.mobile {
-            width: 60px;
-            height: 60px;
-            font-size: 28px;
-            bottom: 30px;
-            right: 30px;
-        }
-
 /* Responsive Design */
 @media (max-width: 900px) {
     body {
