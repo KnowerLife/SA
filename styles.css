@@ -13,6 +13,98 @@
     --selected: #3498db;
 }
 
+/* Стили для быстрых карты сайта */
+
+.sitemap-header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--primary), var(--dark));
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .sitemap-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .sitemap-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .sitemap-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .sitemap-category {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .sitemap-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sitemap-category h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sitemap-category h2 i {
+            color: var(--primary);
+        }
+        
+        .sitemap-links {
+            list-style: none;
+        }
+        
+        .sitemap-links li {
+            margin-bottom: 12px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .sitemap-links li:hover {
+            border-left: 2px solid var(--primary);
+        }
+        
+        .sitemap-links a {
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            transition: var(--transition);
+        }
+        
+        .sitemap-links a:hover {
+            color: var(--primary);
+        }
+        
+        .sitemap-links a i {
+            font-size: 0.9rem;
+            color: var(--info);
+        }
+
 /* Стили для быстрых инструментов */
 .tools-grid {
     display: grid;
