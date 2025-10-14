@@ -1600,15 +1600,6 @@ class NotesSystem {
                 this.render();
             });
         }
-        
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-tag')) {
-                const tag = e.target.dataset.tag;
-                this.currentFilter = tag;
-                this.updateActiveFilter();
-                this.render();
-            }
-        });
     }
     
     addNote(title, content, tags = []) {
@@ -1626,20 +1617,6 @@ class NotesSystem {
         this.render();
         showNotification('Заметка добавлена', 'success');
         return newNote;
-    }
-    
-    updateNote(noteId, updates) {
-        const noteIndex = this.notes.findIndex(note => note.id === noteId);
-        if (noteIndex !== -1) {
-            this.notes[noteIndex] = {
-                ...this.notes[noteIndex],
-                ...updates,
-                updatedAt: new Date().toISOString()
-            };
-            this.save();
-            this.render();
-            showNotification('Заметка обновлена', 'success');
-        }
     }
     
     deleteNote(noteId) {
@@ -1681,12 +1658,6 @@ class NotesSystem {
             note.tags.forEach(tag => allTags.add(tag));
         });
         return Array.from(allTags);
-    }
-    
-    updateActiveFilter() {
-        document.querySelectorAll('.filter-tag').forEach(tag => {
-            tag.classList.toggle('active', tag.dataset.tag === this.currentFilter);
-        });
     }
     
     render() {
@@ -1737,7 +1708,6 @@ class NotesSystem {
                     ` : ''}
                     <div class="note-card-footer">
                         Создано: ${this.formatDate(note.createdAt)}
-                        ${note.updatedAt !== note.createdAt ? `<br>Обновлено: ${this.formatDate(note.updatedAt)}` : ''}
                     </div>
                 </div>
             `).join('');
@@ -1754,15 +1724,6 @@ class NotesSystem {
                        placeholder="Заголовок заметки" value="${note ? this.escapeHtml(note.title) : ''}">
                 <textarea class="note-input" id="noteContent" rows="6" 
                           placeholder="Содержание заметки...">${note ? this.escapeHtml(note.content) : ''}</textarea>
-                <div class="note-tags-input" id="noteTagsContainer">
-                    ${note ? note.tags.map(tag => `
-                        <span class="note-tag">
-                            ${tag}
-                            <span class="remove" onclick="notesSystem.removeTag(this)">×</span>
-                        </span>
-                    `).join('') : ''}
-                </div>
-                <input type="text" class="note-input" id="newTag" placeholder="Добавить тег (нажмите Enter)">
                 <div class="note-actions">
                     <button onclick="notesSystem.saveNote('${note ? note.id : ''}')" class="quick-link">
                         ${note ? 'Обновить' : 'Сохранить'}
@@ -1776,56 +1737,23 @@ class NotesSystem {
         
         const container = document.getElementById('notesList');
         container.innerHTML = editorHtml + container.innerHTML;
-        
-        const newTagInput = document.getElementById('newTag');
-        if (newTagInput) {
-            newTagInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    this.addTagToEditor(e.target.value);
-                    e.target.value = '';
-                }
-            });
-        }
     }
     
     hideEditor() {
         this.render();
     }
     
-    addTagToEditor(tag) {
-        tag = tag.trim();
-        if (!tag) return;
-        
-        const container = document.getElementById('noteTagsContainer');
-        if (container) {
-            const tagElement = document.createElement('span');
-            tagElement.className = 'note-tag';
-            tagElement.innerHTML = `
-                ${tag}
-                <span class="remove" onclick="notesSystem.removeTag(this)">×</span>
-            `;
-            container.appendChild(tagElement);
-        }
-    }
-    
-    removeTag(element) {
-        element.parentElement.remove();
-    }
-    
     saveNote(noteId = null) {
         const titleInput = document.getElementById('noteTitle');
         const contentInput = document.getElementById('noteContent');
-        const tagsContainer = document.getElementById('noteTagsContainer');
         
-        if (!titleInput || !contentInput || !tagsContainer) {
+        if (!titleInput || !contentInput) {
             showNotification('Ошибка: элементы формы не найдены', 'error');
             return;
         }
         
         const title = titleInput.value.trim();
         const content = contentInput.value.trim();
-        const tags = Array.from(tagsContainer.querySelectorAll('.note-tag'))
-            .map(tag => tag.textContent.replace('×', '').trim());
         
         if (!title) {
             showNotification('Введите заголовок заметки', 'warning');
@@ -1833,9 +1761,21 @@ class NotesSystem {
         }
         
         if (noteId) {
-            this.updateNote(noteId, { title, content, tags });
+            // Обновление существующей заметки
+            const noteIndex = this.notes.findIndex(note => note.id === noteId);
+            if (noteIndex !== -1) {
+                this.notes[noteIndex] = {
+                    ...this.notes[noteIndex],
+                    title,
+                    content,
+                    updatedAt: new Date().toISOString()
+                };
+                this.save();
+                this.render();
+                showNotification('Заметка обновлена', 'success');
+            }
         } else {
-            this.addNote(title, content, tags);
+            this.addNote(title, content);
         }
     }
     
@@ -1855,48 +1795,13 @@ class NotesSystem {
     
     formatContent(content) {
         if (!content) return '';
-        return content
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            .replace(/\n/g, '<br>');
+        return content.replace(/\n/g, '<br>');
     }
     
     formatDate(dateString) {
         return new Date(dateString).toLocaleString('ru-RU');
     }
 }
-
-function initNotesSystem() {
-    notesSystem = new NotesSystem();
-    
-    const notesContainer = document.getElementById('knowledge-base');
-    if (notesContainer) {
-        const existingToolbar = notesContainer.querySelector('.notes-toolbar');
-        if (!existingToolbar) {
-            const toolbar = document.createElement('div');
-            toolbar.className = 'notes-toolbar';
-            toolbar.innerHTML = `
-                <input type="text" id="notes-search" placeholder="Поиск в заметках..." class="note-input">
-                <div id="notesFilters" class="notes-filters"></div>
-                <button onclick="notesSystem.showEditor()" class="quick-link">
-                    <i class="fas fa-plus"></i> Новая заметка
-                </button>
-            `;
-            
-            const notesList = document.getElementById('notesList');
-            if (notesList) {
-                notesContainer.insertBefore(toolbar, notesList);
-            } else {
-                notesContainer.appendChild(toolbar);
-                const newNotesList = document.createElement('div');
-                newNotesList.id = 'notesList';
-                newNotesList.className = 'notes-grid';
-                notesContainer.appendChild(newNotesList);
-            }
-        }
-    }
-}
-
 // ===== БЫСТРЫЕ ИНСТРУМЕНТЫ =====
 function initQuickTools() {
     initUnitConverter();
@@ -2481,146 +2386,94 @@ function updateBookmarksCounter() {
 
 // ===== ИНТЕРАКТИВНЫЕ ЧЕКЛИСТЫ =====
 function initInteractiveChecklists() {
-    document.querySelectorAll('.checklist, .highlight-box ul').forEach(container => {
-        try {
-            enhanceChecklist(container);
-        } catch (error) {
-            console.error('Error enhancing checklist:', error, container);
-        }
-    });
-}
-
-function enhanceChecklist(container) {
-    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-    const checklistId = container.id || `checklist-${Date.now()}`;
+    const checklists = document.querySelectorAll('.checklist-container');
     
-    if (checkboxes.length === 0) return;
-    
-    const progressContainer = document.createElement('div');
-    progressContainer.className = 'checklist-progress';
-    
-    if (container.parentNode) {
-        container.parentNode.insertBefore(progressContainer, container);
-    }
-    
-    checkboxes.forEach((checkbox, index) => {
-        const listItem = checkbox.closest('li');
-        if (!listItem) return;
+    checklists.forEach(container => {
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+        const progressFill = container.querySelector('.progress-fill');
+        const progressStats = container.querySelector('.progress-stats');
         
-        const wrapper = document.createElement('div');
-        wrapper.className = 'checklist-item';
-        wrapper.innerHTML = listItem.innerHTML;
-        
-        listItem.innerHTML = '';
-        listItem.appendChild(wrapper);
-        
-        const newCheckbox = wrapper.querySelector('input[type="checkbox"]');
-        const label = wrapper.querySelector('label');
-        
-        if (label) {
-            label.setAttribute('for', newCheckbox.id);
+        function updateProgress() {
+            const total = checkboxes.length;
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const percentage = total > 0 ? Math.round((checked / total) * 100) : 0;
+            
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+                progressFill.textContent = percentage + '%';
+            }
+            
+            if (progressStats) {
+                progressStats.textContent = `${checked}/${total} (${percentage}%)`;
+            }
+            
+            // Сохраняем состояние в localStorage
+            const checklistId = container.id || 'default-checklist';
+            const state = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem(checklistId, JSON.stringify(state));
         }
         
-        const savedState = loadChecklistState(checklistId, index);
+        // Восстанавливаем состояние из localStorage
+        const checklistId = container.id || 'default-checklist';
+        const savedState = JSON.parse(localStorage.getItem(checklistId));
         if (savedState) {
-            newCheckbox.checked = true;
-            wrapper.classList.add('checked');
-        }
-        
-        newCheckbox.addEventListener('change', function() {
-            wrapper.classList.toggle('checked', this.checked);
-            saveChecklistState(checklistId, index, this.checked);
-            updateChecklistProgress(container, progressContainer, checklistId);
-        });
-    });
-    
-    const actionsContainer = document.createElement('div');
-    actionsContainer.className = 'checklist-actions';
-    actionsContainer.innerHTML = `
-        <button class="select-all">Выбрать все</button>
-        <button class="deselect-all">Снять все</button>
-        <button class="reset">Сбросить прогресс</button>
-    `;
-    
-    if (container.parentNode) {
-        if (container.nextSibling) {
-            container.parentNode.insertBefore(actionsContainer, container.nextSibling);
-        } else {
-            container.parentNode.appendChild(actionsContainer);
-        }
-    }
-    
-    actionsContainer.querySelector('.select-all').addEventListener('click', () => {
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = true;
-            checkbox.dispatchEvent(new Event('change'));
-        });
-    });
-    
-    actionsContainer.querySelector('.deselect-all').addEventListener('click', () => {
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = false;
-            checkbox.dispatchEvent(new Event('change'));
-        });
-    });
-    
-    actionsContainer.querySelector('.reset').addEventListener('click', () => {
-        if (confirm('Сбросить весь прогресс для этого чеклиста?')) {
-            resetChecklistState(checklistId);
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-                checkbox.dispatchEvent(new Event('change'));
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.checked = savedState[index] || false;
+                if (savedState[index]) {
+                    checkbox.closest('.checklist-item')?.classList.add('checked');
+                }
             });
         }
-    });
-    
-    updateChecklistProgress(container, progressContainer, checklistId);
-}
-
-function updateChecklistProgress(container, progressContainer, checklistId) {
-    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
-    const total = checkboxes.length;
-    const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
-    const progress = total > 0 ? Math.round((checked / total) * 100) : 0;
-    
-    progressContainer.innerHTML = `
-        <div class="progress-header">
-            <h4>Прогресс выполнения</h4>
-            <div class="progress-stats">${checked}/${total} (${progress}%)</div>
-        </div>
-        <div class="progress-bar" style="height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden;">
-            <div class="progress-fill" style="height: 100%; background: #4CAF50; width: ${progress}%; transition: width 0.3s ease;"></div>
-        </div>
-    `;
-}
-
-function loadChecklistState(checklistId, itemIndex) {
-    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
-    return saved[`${checklistId}-${itemIndex}`];
-}
-
-function saveChecklistState(checklistId, itemIndex, checked) {
-    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
-    const key = `${checklistId}-${itemIndex}`;
-    
-    if (checked) {
-        saved[key] = true;
-    } else {
-        delete saved[key];
-    }
-    
-    localStorage.setItem('checklists', JSON.stringify(saved));
-}
-
-function resetChecklistState(checklistId) {
-    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
-    Object.keys(saved).forEach(key => {
-        if (key.startsWith(checklistId)) {
-            delete saved[key];
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const listItem = this.closest('.checklist-item');
+                if (listItem) {
+                    listItem.classList.toggle('checked', this.checked);
+                }
+                updateProgress();
+            });
+        });
+        
+        // Обработчики для кнопок управления
+        const selectAllBtn = container.querySelector('.select-all');
+        const deselectAllBtn = container.querySelector('.deselect-all');
+        const resetBtn = container.querySelector('.reset');
+        
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                    checkbox.dispatchEvent(new Event('change'));
+                });
+            });
         }
+        
+        if (deselectAllBtn) {
+            deselectAllBtn.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.dispatchEvent(new Event('change'));
+                });
+            });
+        }
+        
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Сбросить прогресс для этого чеклиста?')) {
+                    localStorage.removeItem(checklistId);
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                        checkbox.dispatchEvent(new Event('change'));
+                    });
+                }
+            });
+        }
+        
+        updateProgress();
     });
-    localStorage.setItem('checklists', JSON.stringify(saved));
 }
+
 
 // ===== КАРТА КОМПЕТЕНЦИЙ =====
 function initCompetencyMap() {
@@ -2921,11 +2774,133 @@ class AdvancedSearch {
     }
     
     setupSearchUI() {
-        // Реализация расширенного поиска будет добавлена позже
-        console.log('Расширенный поиск инициализирован');
+        const searchInput = document.querySelector('.search-bar input');
+        const typeFilter = document.getElementById('search-type');
+        const categoryFilter = document.getElementById('search-category');
+        const difficultyFilter = document.getElementById('search-difficulty');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.performSearch(e.target.value);
+            });
+        }
+        
+        [typeFilter, categoryFilter, difficultyFilter].forEach(filter => {
+            if (filter) {
+                filter.addEventListener('change', () => {
+                    this.updateFilters();
+                    this.performSearch(searchInput?.value || '');
+                });
+            }
+        });
     }
-}
-
-function initAdvancedSearch() {
-    advancedSearch = new AdvancedSearch();
+    
+    updateFilters() {
+        this.filters = {
+            type: document.getElementById('search-type')?.value || 'all',
+            category: document.getElementById('search-category')?.value || 'all',
+            difficulty: document.getElementById('search-difficulty')?.value || 'all'
+        };
+    }
+    
+    performSearch(query) {
+        if (!query.trim()) {
+            this.clearResults();
+            return;
+        }
+        
+        const results = this.searchIndex.filter(item => {
+            // Поиск по заголовку и содержанию
+            const matchesText = item.title.toLowerCase().includes(query.toLowerCase()) ||
+                              item.content.toLowerCase().includes(query.toLowerCase());
+            
+            // Фильтрация по типу
+            const matchesType = this.filters.type === 'all' || item.type === this.filters.type;
+            
+            // Фильтрация по категории
+            const matchesCategory = this.filters.category === 'all' || item.category === this.filters.category;
+            
+            return matchesText && matchesType && matchesCategory;
+        });
+        
+        this.displayResults(results, query);
+    }
+    
+    displayResults(results, query) {
+        const resultsContainer = document.getElementById('search-results');
+        if (!resultsContainer) return;
+        
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="search-no-results">
+                    <i class="fas fa-search"></i>
+                    <p>По запросу "${query}" ничего не найдено</p>
+                    <p>Попробуйте изменить параметры поиска</p>
+                </div>
+            `;
+            return;
+        }
+        
+        resultsContainer.innerHTML = `
+            <div class="search-results-info">
+                Найдено результатов: ${results.length}
+            </div>
+            ${results.map(result => `
+                <div class="search-result-item">
+                    <h4 class="search-result-title">
+                        <a href="#${result.id}" onclick="this.closest('.search-result-item').scrollIntoView()">
+                            ${this.highlightText(result.title, query)}
+                        </a>
+                    </h4>
+                    <div class="search-result-preview">
+                        ${this.highlightText(result.content.substring(0, 200), query)}...
+                    </div>
+                    <div class="search-result-meta">
+                        <span class="search-result-type">${this.getTypeLabel(result.type)}</span>
+                        <span class="search-result-category">${this.getCategoryLabel(result.category)}</span>
+                    </div>
+                </div>
+            `).join('')}
+        `;
+    }
+    
+    highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="search-highlight">$1</span>');
+    }
+    
+    getTypeLabel(type) {
+        const labels = {
+            'theory': 'Теория',
+            'example': 'Пример',
+            'checklist': 'Чеклист',
+            'tool': 'Инструмент',
+            'code': 'Код'
+        };
+        return labels[type] || type;
+    }
+    
+    getCategoryLabel(category) {
+        const labels = {
+            'api': 'API',
+            'database': 'Базы данных',
+            'security': 'Безопасность',
+            'modeling': 'Моделирование',
+            'general': 'Общее'
+        };
+        return labels[category] || category;
+    }
+    
+    clearResults() {
+        const resultsContainer = document.getElementById('search-results');
+        if (resultsContainer) {
+            resultsContainer.innerHTML = `
+                <div class="search-no-results">
+                    <i class="fas fa-search"></i>
+                    <p>Введите поисковый запрос для отображения результатов</p>
+                </div>
+            `;
+        }
+    }
 }
