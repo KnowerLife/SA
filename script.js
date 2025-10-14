@@ -102,14 +102,13 @@ async function testAPI() {
             }
         };
         
-        // Добавляем тело для POST/PUT запросов (дополнено: добавлено поле для custom body)
+        // Добавляем тело для POST/PUT запросов
         if (method === 'POST' || method === 'PUT') {
-            const customBody = document.getElementById('api-body') ? document.getElementById('api-body').value : JSON.stringify({
+            options.body = JSON.stringify({
                 title: 'Тестовый запрос от системного аналитика',
                 body: 'Это тестовый запрос для проверки API',
                 userId: 1
             }, null, 2);
-            options.body = customBody;
         }
         
         const response = await fetch(url, options);
@@ -481,42 +480,42 @@ class AdvancedSearch {
         return 'general';
     }
     
-    setupSearchUI() {
-        const searchContainer = document.querySelector('.search-bar');
-        if (!searchContainer) return;
-        
-        // Создаем расширенный поиск
-        const advancedSearch = document.createElement('div');
-        advancedSearch.className = 'advanced-search';
-        advancedSearch.style.display = 'none';
-        advancedSearch.innerHTML = this.getSearchHTML();
-        
-        // БЕЗОПАСНАЯ вставка
-        searchContainer.appendChild(advancedSearch);
-        
-        // Обработчики событий
-        const searchInput = searchContainer.querySelector('input');
-        if (searchInput) {
-            searchInput.addEventListener('focus', () => {
-                advancedSearch.style.display = 'block';
-            });
-        }
-        
-        document.addEventListener('click', (e) => {
-            if (!searchContainer.contains(e.target)) {
-                advancedSearch.style.display = 'none';
-            }
+setupSearchUI() {
+    const searchContainer = document.querySelector('.search-bar');
+    if (!searchContainer) return;
+    
+    // Создаем расширенный поиск
+    const advancedSearch = document.createElement('div');
+    advancedSearch.className = 'advanced-search';
+    advancedSearch.style.display = 'none';
+    advancedSearch.innerHTML = this.getSearchHTML();
+    
+    // БЕЗОПАСНАЯ вставка
+    searchContainer.appendChild(advancedSearch);
+    
+    // Обработчики событий
+    const searchInput = searchContainer.querySelector('input');
+    if (searchInput) {
+        searchInput.addEventListener('focus', () => {
+            advancedSearch.style.display = 'block';
         });
-        
-        // Обработчики фильтров
-        advancedSearch.querySelectorAll('select').forEach(select => {
-            select.addEventListener('change', () => this.performSearch());
-        });
-        
-        if (searchInput) {
-            searchInput.addEventListener('input', () => this.performSearch());
-        }
     }
+    
+    document.addEventListener('click', (e) => {
+        if (!searchContainer.contains(e.target)) {
+            advancedSearch.style.display = 'none';
+        }
+    });
+    
+    // Обработчики фильтров
+    advancedSearch.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', () => this.performSearch());
+    });
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', () => this.performSearch());
+    }
+}
     
     getSearchHTML() {
         return `
@@ -557,60 +556,913 @@ class AdvancedSearch {
         this.filters.category = categoryFilter;
         
         const results = this.searchIndex.filter(item => {
-            // Фильтрация по типу и категории (исправлено truncated: полный if)
+            // Фильтрация по типу и категории
             if (typeFilter !== 'all' && item.type !== typeFilter) return false;
             if (categoryFilter !== 'all' && item.category !== categoryFilter) return false;
             
-            // Поиск по термину (дополнено: с подсветкой)
-            const matches = searchTerm ? item.title.toLowerCase().includes(searchTerm) || item.content.toLowerCase().includes(searchTerm) : true;
-            return matches;
+            // Поиск по тексту
+            if (!searchTerm) return true;
+            
+            return item.title.toLowerCase().includes(searchTerm) ||
+                   item.content.toLowerCase().includes(searchTerm);
         });
         
         this.currentResults = results;
-        this.renderResults(results, searchTerm); // Дополнено: метод для рендеринга с подсветкой
+        this.displayResults(results, searchTerm);
     }
     
-    // Дополнено: метод для рендеринга результатов с подсветкой
-    renderResults(results, term) {
+    displayResults(results, searchTerm) {
         const resultsContainer = document.getElementById('searchResults');
         if (!resultsContainer) return;
         
-        if (!results.length) {
-            resultsContainer.innerHTML = '<div class="search-no-results">Ничего не найдено</div>';
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="search-no-results">
+                    <i class="fas fa-search"></i>
+                    <p>Ничего не найдено</p>
+                    <p>Попробуйте изменить критерии поиска</p>
+                </div>
+            `;
             return;
         }
         
-        const html = results.map(item => {
-            let preview = item.content.substring(0, 200);
-            if (term) {
-                const regex = new RegExp(term, 'gi');
-                preview = preview.replace(regex, match => `<span class="search-highlight">${match}</span>`);
-            }
-            return `
-                <div class="search-result-item">
-                    <h4 class="search-result-title"><a href="#${item.id}">${item.title}</a></h4>
-                    <p class="search-result-preview">${preview}...</p>
-                    <div class="search-result-meta">Тип: ${item.type} | Категория: ${item.category}</div>
-                </div>
-            `;
-        }).join('');
+        resultsContainer.innerHTML = `
+            <div class="search-results-info">
+                Найдено: ${results.length} результатов
+            </div>
+            ${results.map(item => this.formatResultItem(item, searchTerm)).join('')}
+        `;
+    }
+    
+    formatResultItem(item, searchTerm) {
+        const preview = this.getTextPreview(item.content, searchTerm);
         
-        resultsContainer.innerHTML = html;
+        return `
+            <div class="search-result-item" data-section="${item.id}">
+                <h4 class="search-result-title">
+                    <a href="#${item.id}" onclick="advancedSearch.navigateToResult('${item.id}')">
+                        ${this.highlightText(item.title, searchTerm)}
+                    </a>
+                </h4>
+                <div class="search-result-preview">${preview}</div>
+                <div class="search-result-meta">
+                    <span class="badge">${item.type}</span>
+                    <span class="badge">${item.category}</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    getTextPreview(text, searchTerm, length = 150) {
+        if (!searchTerm) return text.substring(0, length) + '...';
+        
+        const index = text.toLowerCase().indexOf(searchTerm);
+        if (index === -1) return text.substring(0, length) + '...';
+        
+        const start = Math.max(0, index - 50);
+        const end = Math.min(text.length, index + searchTerm.length + 100);
+        let preview = text.substring(start, end);
+        
+        if (start > 0) preview = '...' + preview;
+        if (end < text.length) preview = preview + '...';
+        
+        return this.highlightText(preview, searchTerm);
+    }
+    
+    highlightText(text, searchTerm) {
+        if (!searchTerm) return text;
+        
+        const regex = new RegExp(`(${this.escapeRegex(searchTerm)})`, 'gi');
+        return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+    }
+    
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
+    navigateToResult(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            section.classList.add('highlight-animation');
+            setTimeout(() => {
+                section.classList.remove('highlight-animation');
+            }, 2000);
+        }
+        
+        // Скрываем результаты поиска
+        document.querySelector('.advanced-search').style.display = 'none';
     }
 }
 
-// Дополнено: функция для инициализации поиска
 let advancedSearch;
 
 function initAdvancedSearch() {
     advancedSearch = new AdvancedSearch();
 }
 
-// ===== ЗАКЛАДКИ ===== (существующий код сохранён, дополнено санитизацией)
+// ===== ТАЙМЕРЫ =====
 
-function toggleBookmark(sectionId) {
+let timerInterval = null;
+let testTimerInterval = null;
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function startTimer(seconds) {
+    console.log(`Запуск таймера на ${seconds} секунд`);
+    clearInterval(timerInterval);
+    let timeLeft = seconds;
+    const timerElement = document.getElementById('meeting-timer');
+
+    if (!timerElement) {
+        console.error('Элемент #meeting-timer не найден');
+        alert('Ошибка: Элемент таймера не найден в HTML');
+        return;
+    }
+
+    timerElement.textContent = formatTime(timeLeft);
+    timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerElement.textContent = '00:00';
+            alert('Время митинга истекло!');
+            return;
+        }
+
+        timeLeft--;
+        timerElement.textContent = formatTime(timeLeft);
+    }, 1000);
+}
+
+function stopTimer() {
+    console.log('Остановка таймера');
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        const timerElement = document.getElementById('meeting-timer');
+        if (timerElement) {
+            timerElement.textContent = '00:00';
+        }
+    }
+}
+
+// ===== ИНТЕРАКТИВНЫЕ ЧЕКЛИСТЫ =====
+
+function enhanceChecklist(container) {
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    const checklistId = container.id || `checklist-${Date.now()}`;
+    
+    if (checkboxes.length === 0) return;
+    
+    // Создаем контейнер для прогресса
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'checklist-progress';
+    
+    // БЕЗОПАСНАЯ вставка прогресса перед чеклистом
+    if (container.parentNode) {
+        container.parentNode.insertBefore(progressContainer, container);
+    } else {
+        console.warn('Checklist container has no parent node');
+        return;
+    }
+    
+    // Обертываем каждый пункт
+    checkboxes.forEach((checkbox, index) => {
+        const listItem = checkbox.closest('li');
+        if (!listItem) return;
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'checklist-item';
+        wrapper.innerHTML = listItem.innerHTML;
+        
+        // Заменяем содержимое li
+        listItem.innerHTML = '';
+        listItem.appendChild(wrapper);
+        
+        // Обновляем чекбокс
+        const newCheckbox = wrapper.querySelector('input[type="checkbox"]');
+        const label = wrapper.querySelector('label');
+        
+        if (label) {
+            label.setAttribute('for', newCheckbox.id);
+        }
+        
+        // Загружаем сохраненное состояние
+        const savedState = loadChecklistState(checklistId, index);
+        if (savedState) {
+            newCheckbox.checked = true;
+            wrapper.classList.add('checked');
+        }
+        
+        // Обработчик изменения
+        newCheckbox.addEventListener('change', function() {
+            wrapper.classList.toggle('checked', this.checked);
+            saveChecklistState(checklistId, index, this.checked);
+            updateChecklistProgress(container, progressContainer, checklistId);
+        });
+    });
+    
+    // Добавляем кнопки действий
+    const actionsContainer = document.createElement('div');
+    actionsContainer.className = 'checklist-actions';
+    actionsContainer.innerHTML = `
+        <button class="select-all">Выбрать все</button>
+        <button class="deselect-all">Снять все</button>
+        <button class="reset">Сбросить прогресс</button>
+    `;
+    
+    // БЕЗОПАСНАЯ вставка действий после чеклиста
+    if (container.parentNode) {
+        if (container.nextSibling) {
+            container.parentNode.insertBefore(actionsContainer, container.nextSibling);
+        } else {
+            container.parentNode.appendChild(actionsContainer);
+        }
+    }
+    
+    // Обработчики для кнопок
+    actionsContainer.querySelector('.select-all').addEventListener('click', () => {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change'));
+        });
+    });
+    
+    actionsContainer.querySelector('.deselect-all').addEventListener('click', () => {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.dispatchEvent(new Event('change'));
+        });
+    });
+    
+    actionsContainer.querySelector('.reset').addEventListener('click', () => {
+        if (confirm('Сбросить весь прогресс для этого чеклиста?')) {
+            resetChecklistState(checklistId);
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+        }
+    });
+    
+    // Инициализируем прогресс
+    updateChecklistProgress(container, progressContainer, checklistId);
+}
+
+function updateChecklistProgress(container, progressContainer, checklistId) {
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    const total = checkboxes.length;
+    const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+    const progress = total > 0 ? Math.round((checked / total) * 100) : 0;
+    
+    progressContainer.innerHTML = `
+        <div class="progress-header">
+            <h4>Прогресс выполнения</h4>
+            <div class="progress-stats">${checked}/${total} (${progress}%)</div>
+        </div>
+        <div class="progress-bar" style="height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden;">
+            <div class="progress-fill" style="height: 100%; background: #4CAF50; width: ${progress}%; transition: width 0.3s ease;"></div>
+        </div>
+    `;
+}
+
+function loadChecklistState(checklistId, itemIndex) {
+    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
+    return saved[`${checklistId}-${itemIndex}`];
+}
+
+function saveChecklistState(checklistId, itemIndex, checked) {
+    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
+    const key = `${checklistId}-${itemIndex}`;
+    
+    if (checked) {
+        saved[key] = true;
+    } else {
+        delete saved[key];
+    }
+    
+    localStorage.setItem('checklists', JSON.stringify(saved));
+}
+
+function resetChecklistState(checklistId) {
+    const saved = JSON.parse(localStorage.getItem('checklists')) || {};
+    Object.keys(saved).forEach(key => {
+        if (key.startsWith(checklistId)) {
+            delete saved[key];
+        }
+    });
+    localStorage.setItem('checklists', JSON.stringify(saved));
+}
+
+// ===== СИСТЕМА ЗАМЕТОК =====
+
+class NotesSystem {
+    constructor() {
+        this.notes = JSON.parse(localStorage.getItem('userNotes')) || [];
+        this.currentFilter = 'all';
+        this.searchTerm = '';
+        this.init();
+    }
+    
+    init() {
+        this.render();
+        this.setupEventListeners();
+    }
+    
+    setupEventListeners() {
+        // Поиск по заметкам
+        const searchInput = document.getElementById('notes-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.searchTerm = e.target.value.toLowerCase();
+                this.render();
+            });
+        }
+        
+        // Фильтры по тегам
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-tag')) {
+                const tag = e.target.dataset.tag;
+                this.currentFilter = tag;
+                this.updateActiveFilter();
+                this.render();
+            }
+        });
+    }
+    
+    addNote(title, content, tags = []) {
+        const newNote = {
+            id: 'note_' + Date.now(),
+            title: title.trim(),
+            content: content.trim(),
+            tags: tags,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+        
+        this.notes.unshift(newNote);
+        this.save();
+        this.render();
+        return newNote;
+    }
+    
+    updateNote(noteId, updates) {
+        const noteIndex = this.notes.findIndex(note => note.id === noteId);
+        if (noteIndex !== -1) {
+            this.notes[noteIndex] = {
+                ...this.notes[noteIndex],
+                ...updates,
+                updatedAt: new Date().toISOString()
+            };
+            this.save();
+            this.render();
+        }
+    }
+    
+    deleteNote(noteId) {
+        this.notes = this.notes.filter(note => note.id !== noteId);
+        this.save();
+        this.render();
+    }
+    
+    save() {
+        localStorage.setItem('userNotes', JSON.stringify(this.notes));
+    }
+    
+    getFilteredNotes() {
+        let filtered = this.notes;
+        
+        // Фильтрация по тегу
+        if (this.currentFilter !== 'all') {
+            filtered = filtered.filter(note => 
+                note.tags.includes(this.currentFilter)
+            );
+        }
+        
+        // Поиск
+        if (this.searchTerm) {
+            filtered = filtered.filter(note => 
+                note.title.toLowerCase().includes(this.searchTerm) ||
+                note.content.toLowerCase().includes(this.searchTerm) ||
+                note.tags.some(tag => tag.toLowerCase().includes(this.searchTerm))
+            );
+        }
+        
+        return filtered;
+    }
+    
+    getAllTags() {
+        const allTags = new Set();
+        this.notes.forEach(note => {
+            note.tags.forEach(tag => allTags.add(tag));
+        });
+        return Array.from(allTags);
+    }
+    
+    updateActiveFilter() {
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.classList.toggle('active', tag.dataset.tag === this.currentFilter);
+        });
+    }
+    
+    render() {
+        const container = document.getElementById('notesList');
+        if (!container) return;
+        
+        const filteredNotes = this.getFilteredNotes();
+        const allTags = this.getAllTags();
+        
+        // Рендерим фильтры
+        const filtersContainer = document.getElementById('notesFilters');
+        if (filtersContainer) {
+            filtersContainer.innerHTML = `
+                <div class="filter-tag ${this.currentFilter === 'all' ? 'active' : ''}" data-tag="all">Все</div>
+                ${allTags.map(tag => `
+                    <div class="filter-tag ${this.currentFilter === tag ? 'active' : ''}" data-tag="${tag}">${tag}</div>
+                `).join('')}
+            `;
+        }
+        
+        // Рендерим заметки
+        if (filteredNotes.length === 0) {
+            container.innerHTML = `
+                <div class="no-notes">
+                    <i class="fas fa-sticky-note"></i>
+                    <p>${this.searchTerm || this.currentFilter !== 'all' ? 'Заметки не найдены' : 'Пока нет заметок'}</p>
+                    ${!this.searchTerm && this.currentFilter === 'all' ? 
+                        '<button onclick="notesSystem.showEditor()" class="quick-link">Создать первую заметку</button>' : ''}
+                </div>
+            `;
+        } else {
+            container.innerHTML = filteredNotes.map(note => `
+                <div class="note-card" data-note-id="${note.id}">
+                    <div class="note-card-header">
+                        <h3 class="note-card-title">${this.escapeHtml(note.title)}</h3>
+                        <div class="note-card-actions">
+                            <button onclick="notesSystem.editNote('${note.id}')" title="Редактировать">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="notesSystem.deleteNote('${note.id}')" title="Удалить">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="note-card-content">${this.formatContent(note.content)}</div>
+                    ${note.tags.length > 0 ? `
+                        <div class="note-card-tags">
+                            ${note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="note-card-footer">
+                        Создано: ${this.formatDate(note.createdAt)}
+                        ${note.updatedAt !== note.createdAt ? `<br>Обновлено: ${this.formatDate(note.updatedAt)}` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+    
+    showEditor(noteId = null) {
+        const note = noteId ? this.notes.find(n => n.id === noteId) : null;
+        
+        const editorHtml = `
+            <div class="note-editor">
+                <h3>${note ? 'Редактировать заметку' : 'Новая заметка'}</h3>
+                <input type="text" class="note-input" id="noteTitle" 
+                       placeholder="Заголовок заметки" value="${note ? this.escapeHtml(note.title) : ''}">
+                <textarea class="note-input" id="noteContent" rows="6" 
+                          placeholder="Содержание заметки...">${note ? this.escapeHtml(note.content) : ''}</textarea>
+                <div class="note-tags-input" id="noteTagsContainer">
+                    ${note ? note.tags.map(tag => `
+                        <span class="note-tag">
+                            ${tag}
+                            <span class="remove" onclick="notesSystem.removeTag(this)">×</span>
+                        </span>
+                    `).join('') : ''}
+                </div>
+                <input type="text" class="note-input" id="newTag" placeholder="Добавить тег (нажмите Enter)">
+                <div class="note-actions">
+                    <button onclick="notesSystem.saveNote('${note ? note.id : ''}')" class="quick-link">
+                        ${note ? 'Обновить' : 'Сохранить'}
+                    </button>
+                    <button onclick="notesSystem.hideEditor()" class="quick-link" style="background: #6c757d;">
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        const container = document.getElementById('notesList');
+        container.innerHTML = editorHtml + container.innerHTML;
+        
+        // Обработчик добавления тегов
+        document.getElementById('newTag').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.addTagToEditor(e.target.value);
+                e.target.value = '';
+            }
+        });
+    }
+    
+    hideEditor() {
+        this.render();
+    }
+    
+    addTagToEditor(tag) {
+        tag = tag.trim();
+        if (!tag) return;
+        
+        const container = document.getElementById('noteTagsContainer');
+        const tagElement = document.createElement('span');
+        tagElement.className = 'note-tag';
+        tagElement.innerHTML = `
+            ${tag}
+            <span class="remove" onclick="notesSystem.removeTag(this)">×</span>
+        `;
+        container.appendChild(tagElement);
+    }
+    
+    removeTag(element) {
+        element.parentElement.remove();
+    }
+    
+    saveNote(noteId = null) {
+        const title = document.getElementById('noteTitle').value.trim();
+        const content = document.getElementById('noteContent').value.trim();
+        const tags = Array.from(document.getElementById('noteTagsContainer').querySelectorAll('.note-tag'))
+            .map(tag => tag.textContent.replace('×', '').trim());
+        
+        if (!title) {
+            alert('Введите заголовок заметки');
+            return;
+        }
+        
+        if (noteId) {
+            this.updateNote(noteId, { title, content, tags });
+        } else {
+            this.addNote(title, content, tags);
+        }
+    }
+    
+    editNote(noteId) {
+        this.showEditor(noteId);
+    }
+    
+    escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+    
+    formatContent(content) {
+        // Простой Markdown-like форматирование
+        return content
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n/g, '<br>');
+    }
+    
+    formatDate(dateString) {
+        return new Date(dateString).toLocaleString('ru-RU');
+    }
+}
+
+let notesSystem;
+
+function initNotesSystem() {
+    notesSystem = new NotesSystem();
+    
+    // Добавляем кнопку создания заметки в тулбар
+    const notesContainer = document.getElementById('knowledge-base');
+    if (notesContainer) {
+        const toolbar = document.createElement('div');
+        toolbar.className = 'notes-toolbar';
+        toolbar.innerHTML = `
+            <input type="text" id="notes-search" placeholder="Поиск в заметках..." class="note-input">
+            <div id="notesFilters" class="notes-filters"></div>
+            <button onclick="notesSystem.showEditor()" class="quick-link">
+                <i class="fas fa-plus"></i> Новая заметка
+            </button>
+        `;
+        
+        const existingToolbar = notesContainer.querySelector('.notes-toolbar');
+        if (existingToolbar) {
+            existingToolbar.remove();
+        }
+        
+        const notesList = document.getElementById('notesList');
+        // БЕЗОПАСНАЯ вставка тулбара
+        if (notesList && notesList.parentNode === notesContainer) {
+            notesContainer.insertBefore(toolbar, notesList);
+        } else if (notesContainer) {
+            // Если notesList не найден или не является прямым потомком, добавляем в конец
+            notesContainer.appendChild(toolbar);
+        }
+    }
+}
+
+function initInteractiveChecklists() {
+    // Обработка всех чеклистов на странице с обработкой ошибок
+    document.querySelectorAll('.checklist, .highlight-box ul').forEach(container => {
+        try {
+            enhanceChecklist(container);
+        } catch (error) {
+            console.error('Error enhancing checklist:', error, container);
+        }
+    });
+}
+
+// ===== СИСТЕМА ТЕСТИРОВАНИЯ =====
+
+const testQuestions = {
+    requirements: [
+        {
+            question: "Что такое функциональные требования?",
+            options: [
+                "Описание того, что система должна делать",
+                "Характеристики производительности системы",
+                "Требования к безопасности системы",
+                "Требования к удобству использования"
+            ],
+            answer: 0
+        },
+        {
+            question: "Что означает критерий INVEST для user stories?",
+            options: [
+                "Independent, Negotiable, Valuable, Estimable, Small, Testable",
+                "Integrated, Negotiable, Valuable, Estimable, Simple, Testable",
+                "Independent, Negotiable, Visible, Estimable, Small, Testable",
+                "Integrated, Negotiable, Visible, Estimable, Simple, Testable"
+            ],
+            answer: 0
+        }
+    ],
+    api: [
+        {
+            question: "Какой HTTP-метод используется для создания ресурса в REST API?",
+            options: ["GET", "POST", "PUT", "DELETE"],
+            answer: 1
+        },
+        {
+            question: "Что означает статус код 404?",
+            options: [
+                "Успешный запрос",
+                "Ошибка сервера",
+                "Ресурс не найден",
+                "Запрещено"
+            ],
+            answer: 2
+        }
+    ],
+    db: [
+        {
+            question: "Что такое первая нормальная форма (1NF)?",
+            options: [
+                "Отсутствие транзитивных зависимостей",
+                "Атомарность значений в столбцах",
+                "Отсутствие частичных зависимостей",
+                "Все ключи уникальны"
+            ],
+            answer: 1
+        },
+        {
+            question: "Какой тип JOIN возвращает все записи из левой таблицы?",
+            options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN"],
+            answer: 1
+        }
+    ],
+    bpmn: [
+        {
+            question: "Какой элемент BPMN обозначает точку принятия решений?",
+            options: ["Задача", "Событие", "Шлюз", "Пул"],
+            answer: 2
+        }
+    ],
+    security: [
+        {
+            question: "Что такое SQL-инъекция?",
+            options: [
+                "Метод оптимизации SQL-запросов",
+                "Уязвимость, позволяющая выполнить произвольный SQL-код",
+                "Техника соединения таблиц в SQL",
+                "Метод шифрования данных в БД"
+            ],
+            answer: 1
+        }
+    ],
+    ddd: [
+        {
+            question: "Что означает DDD в разработке ПО?",
+            options: [
+                "Data-Driven Development",
+                "Domain-Driven Design",
+                "Database Development",
+                "Dynamic Design"
+            ],
+            answer: 1
+        }
+    ]
+};
+
+let currentTest = [];
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let testStartTime;
+
+function startTest() {
+    const section = document.getElementById('test-section').value;
+    const questionCount = parseInt(document.getElementById('question-count').value) || 10;
+    const randomOrder = document.getElementById('random-order').checked;
+    
+    // Получаем вопросы для выбранного раздела
+    let questions = [...testQuestions[section]];
+    
+    if (!questions || questions.length === 0) {
+        alert('Тест для этого раздела пока недоступен');
+        return;
+    }
+    
+    // Выбираем случайные вопросы если нужно
+    if (questions.length > questionCount) {
+        if (randomOrder) {
+            questions = shuffleArray(questions).slice(0, questionCount);
+        } else {
+            questions = questions.slice(0, questionCount);
+        }
+    }
+    
+    currentTest = questions;
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length).fill(null);
+    
+    // Обновляем UI
+    document.getElementById('testContent').style.display = 'block';
+    document.getElementById('total-questions').textContent = questions.length;
+    
+    // Запускаем таймер теста
+    testStartTime = new Date();
+    startTestTimer();
+    
+    // Показываем первый вопрос
+    showQuestion(currentQuestionIndex);
+}
+
+function showQuestion(index) {
+    const question = currentTest[index];
+    const questionHtml = `
+        <div class="test-question">
+            <h4>${question.question}</h4>
+            <div class="test-options">
+                ${question.options.map((option, i) => `
+                    <div class="test-option ${userAnswers[index] === i ? 'selected' : ''}" 
+                         onclick="selectOption(${i})">
+                        ${option}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('testQuestions').innerHTML = questionHtml;
+    document.getElementById('current-question').textContent = index + 1;
+}
+
+function selectOption(optionIndex) {
+    userAnswers[currentQuestionIndex] = optionIndex;
+    showQuestion(currentQuestionIndex);
+}
+
+function nextQuestion() {
+    if (currentQuestionIndex < currentTest.length - 1) {
+        currentQuestionIndex++;
+        showQuestion(currentQuestionIndex);
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion(currentQuestionIndex);
+    }
+}
+
+function submitTest() {
+    clearInterval(testTimerInterval);
+    const endTime = new Date();
+    const timeTaken = Math.floor((endTime - testStartTime) / 1000);
+    
+    // Подсчет результатов
+    let correctCount = 0;
+    const resultsHtml = currentTest.map((question, index) => {
+        const isCorrect = userAnswers[index] === question.answer;
+        if (isCorrect) correctCount++;
+        
+        return `
+            <div class="result-item">
+                <p><strong>Вопрос ${index + 1}:</strong> ${question.question}</p>
+                <p>Ваш ответ: <span class="${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                    ${question.options[userAnswers[index]] || 'Нет ответа'}
+                </span></p>
+                ${!isCorrect ? `<p>Правильный ответ: <span class="correct-answer">${question.options[question.answer]}</span></p>` : ''}
+            </div>
+        `;
+    }).join('');
+    
+    const percentage = Math.round((correctCount / currentTest.length) * 100);
+    
+    document.getElementById('testResult').innerHTML = `
+        <div class="result-summary">
+            <h3>Результаты тестирования</h3>
+            <p>Правильных ответов: ${correctCount} из ${currentTest.length} (${percentage}%)</p>
+            <p>Затраченное время: ${formatTime(timeTaken)}</p>
+        </div>
+        <div class="result-details">
+            ${resultsHtml}
+        </div>
+        <button onclick="startTest()" style="margin-top:20px;">Пройти тест снова</button>
+    `;
+}
+
+function startTestTimer() {
+    clearInterval(testTimerInterval);
+    let seconds = 0;
+    
+    testTimerInterval = setInterval(() => {
+        seconds++;
+        document.getElementById('test-timer').textContent = formatTime(seconds);
+    }, 1000);
+}
+
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// ===== СИСТЕМА ЗАКЛАДОК =====
+
+function initBookmarksSystem() {
+    createBookmarkButtons();
+    restoreBookmarksState();
+    updateBookmarksList();
+    
+    // Добавляем глобальный обработчик для удаления закладок
+    const bookmarksList = document.getElementById('bookmarksList');
+    if (bookmarksList) {
+        bookmarksList.addEventListener('click', handleBookmarkRemove);
+    }
+}
+
+function createBookmarkButtons() {
+    document.querySelectorAll('.section').forEach(section => {
+        const id = section.id;
+        const h2 = section.querySelector('h2');
+        if (!h2) return;
+        if (h2.querySelector('.bookmark-btn')) return;
+
+        const bookmarkBtn = document.createElement('button');
+        bookmarkBtn.className = 'bookmark-btn';
+        bookmarkBtn.setAttribute('aria-label', 'Добавить в закладки');
+        bookmarkBtn.dataset.section = id;
+        bookmarkBtn.innerHTML = `
+            <i class="far fa-bookmark"></i>
+            <span class="bookmark-tooltip">Добавить в закладки</span>
+        `;
+        
+        bookmarkBtn.addEventListener('click', toggleBookmark);
+        h2.appendChild(bookmarkBtn);
+    });
+}
+
+function restoreBookmarksState() {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    bookmarks.forEach(id => {
+        const btn = document.querySelector(`.bookmark-btn[data-section="${id}"]`);
+        if (btn) {
+            btn.innerHTML = `
+                <i class="fas fa-bookmark"></i>
+                <span class="bookmark-tooltip">Удалить из закладок</span>
+            `;
+            btn.classList.add('active');
+        }
+    });
+}
+
+function toggleBookmark(event) {
+    const btn = event.currentTarget;
+    const sectionId = btn.dataset.section;
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-    const btn = document.querySelector(`.bookmark-btn[data-section="${sectionId}"]`);
 
     if (bookmarks.includes(sectionId)) {
         bookmarks = bookmarks.filter(id => id !== sectionId);
@@ -991,24 +1843,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Экспорт в PDF (дополнено: опция для всего документа)
+    // Экспорт в PDF
     if (pdfExport) {
         pdfExport.addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            const target = prompt('Экспортировать: "current" - текущую секцию, "all" - весь документ') || 'current';
-            let contentElement;
-            if (target === 'all') {
-                contentElement = document.querySelector('main');
-            } else {
-                contentElement = document.querySelector('.section:target') || document.querySelector('.section');
-            }
-            const title = contentElement.querySelector('h2').innerText;
-            const content = contentElement.innerText;
+            const section = document.querySelector('.section:target') || document.querySelector('.section');
+            const sectionTitle = section.querySelector('h2').innerText;
+            const content = section.innerText;
 
-            doc.text(`Памятка системного аналитика: ${title}`, 10, 10);
+            doc.text(`Памятка системного аналитика: ${sectionTitle}`, 10, 10);
             doc.text(content, 10, 20);
-            doc.save(`Памятка-${title.replace(/\s+/g, '_')}.pdf`);
+            doc.save(`Памятка-${sectionTitle.replace(/\s+/g, '_')}.pdf`);
         });
     }
 
@@ -1063,61 +1909,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // База синонимов (дополнено: больше терминов)
+    // База синонимов
     function getSynonyms(term) {
         const synonymsMap = {
             'api': ['интерфейс', 'протокол'],
             'база данных': ['хранилище', 'бд', 'database'],
             'требования': ['условия', 'необходимости', 'требуемое'],
-            'анализ': ['исследование', 'изучение', 'разбор'],
-            'архитектура': ['структура', 'дизайн системы'],
-            'безопасность': ['security', 'защита']
+            'анализ': ['исследование', 'изучение', 'разбор']
         };
         return synonymsMap[term] || [];
     }
 
-    // Обработчики для кнопок таймера (дополнено: полная логика таймера)
+    // Обработчики для кнопок таймера
     const start15min = document.getElementById('start-15min');
     const start5min = document.getElementById('start-5min');
     const stopTimerBtn = document.getElementById('stop-timer');
-    let timerInterval;
-
-    function startTimer(seconds) {
-        clearInterval(timerInterval);
-        const timerDisplay = document.getElementById('meeting-timer');
-        let timeLeft = seconds;
-        timerDisplay.textContent = formatTime(timeLeft);
-
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            timerDisplay.textContent = formatTime(timeLeft);
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                // Дополнено: звук по окончании
-                const audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
-                audio.play();
-                showNotification('Время митинга истекло!', 'info');
-            }
-        }, 1000);
-    }
-
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    function stopTimer() {
-        clearInterval(timerInterval);
-        document.getElementById('meeting-timer').textContent = '00:00';
-    }
 
     if (start15min) start15min.addEventListener('click', () => startTimer(900));
     if (start5min) start5min.addEventListener('click', () => startTimer(300));
     if (stopTimerBtn) stopTimerBtn.addEventListener('click', stopTimer);
 
     // Кнопка прокрутки наверх
-    const scrollButtons = document.querySelectorAll('[id^="scrollToTop"]'); // Исправлено: селектор по ^=
+    const scrollButtons = document.querySelectorAll('#scrollToTopBtn');
     
     window.onscroll = function() {
         const scrollPosition = window.scrollY || document.documentElement.scrollTop;
@@ -1142,12 +1955,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Инициализация всех систем
     initWeek1Improvements();
-    initInteractiveChecklists(); // Дополнено: вызов функции чеклистов (определена ниже)
-    initNotesSystem(); // Дополнено: вызов заметок (определена ниже)
+    initInteractiveChecklists();
+    initNotesSystem();
     initAdvancedSearch();
     initDocumentGenerator();
     initAPIExamples();
-    initBookmarksSystem(); // Дополнено: если есть, иначе пустая
+    initBookmarksSystem();
 
     // Обработка глубоких ссылок
     if (window.location.hash) {
@@ -1162,152 +1975,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Логирование для отладки
     console.log('Все системы инициализированы');
 });
-
-// Дополнено: Интерактивные чеклисты
-function initInteractiveChecklists() {
-    document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', (e) => {
-            const item = e.target.closest('.checklist-item');
-            item.classList.toggle('checked', e.target.checked);
-            updateChecklistProgress(item.closest('.checklist-container'));
-            saveChecklistState(item.closest('.checklist-container').id); // Дополнено: сохранение
-        });
-    });
-
-    // Восстановление состояния
-    document.querySelectorAll('.checklist-container').forEach(container => {
-        restoreChecklistState(container.id);
-    });
-
-    // Reset кнопки
-    document.querySelectorAll('.checklist-actions .reset').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const container = btn.closest('.checklist-container');
-            container.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            container.querySelectorAll('.checklist-item').forEach(item => item.classList.remove('checked'));
-            updateChecklistProgress(container);
-            localStorage.removeItem(`checklist-${container.id}`);
-        });
-    });
-}
-
-function updateChecklistProgress(container) {
-    const total = container.querySelectorAll('.checklist-item').length;
-    const checked = container.querySelectorAll('.checklist-item.checked').length;
-    const progress = container.querySelector('.progress-stats');
-    if (progress) progress.textContent = `${checked}/${total} завершено (${Math.round(checked / total * 100)}%)`;
-}
-
-function saveChecklistState(id) {
-    const container = document.getElementById(id);
-    const checkedItems = Array.from(container.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.dataset.id || cb.parentElement.textContent.trim());
-    localStorage.setItem(`checklist-${id}`, JSON.stringify(checkedItems));
-}
-
-function restoreChecklistState(id) {
-    const saved = JSON.parse(localStorage.getItem(`checklist-${id}`)) || [];
-    const container = document.getElementById(id);
-    container.querySelectorAll('.checklist-item').forEach(item => {
-        const label = item.querySelector('label').textContent.trim();
-        if (saved.includes(label)) {
-            item.querySelector('input').checked = true;
-            item.classList.add('checked');
-        }
-    });
-    updateChecklistProgress(container);
-}
-
-// Дополнено: Система заметок
-function initNotesSystem() {
-    const notesContainer = document.querySelector('.notes-container');
-    if (!notesContainer) return;
-
-    // Загрузка заметок из localStorage
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-    // Рендеринг
-    function renderNotes(filteredNotes = notes) {
-        const grid = notesContainer.querySelector('.notes-grid');
-        if (!grid) return;
-        grid.innerHTML = '';
-        filteredNotes.forEach(note => {
-            const card = document.createElement('div');
-            card.className = 'note-card';
-            card.innerHTML = `
-                <div class="note-card-header">
-                    <h4 class="note-card-title">${note.title}</h4>
-                    <div class="note-card-actions">
-                        <button class="edit-note">Edit</button>
-                        <button class="delete-note">Delete</button>
-                    </div>
-                </div>
-                <p class="note-card-content">${note.content}</p>
-                <div class="note-card-tags">${note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join('')}</div>
-                <div class="note-card-footer">Создано: ${new Date(note.date).toLocaleDateString()}</div>
-            `;
-            grid.appendChild(card);
-        });
-    }
-
-    // Добавление заметки
-    const addBtn = notesContainer.querySelector('.note-actions button');
-    if (addBtn) {
-        addBtn.addEventListener('click', () => {
-            const title = prompt('Заголовок заметки');
-            const content = prompt('Содержание');
-            const tags = prompt('Теги (через запятую)').split(',').map(t => t.trim());
-            if (title && content) {
-                notes.push({ title, content, tags, date: Date.now() });
-                localStorage.setItem('notes', JSON.stringify(notes));
-                renderNotes();
-            }
-        });
-    }
-
-    // Фильтры по тегам
-    const filters = notesContainer.querySelector('.notes-filters');
-    if (filters) {
-        filters.addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-tag')) {
-                const tag = e.target.textContent;
-                const filtered = notes.filter(note => note.tags.includes(tag));
-                renderNotes(filtered);
-            }
-        });
-    }
-
-    renderNotes();
-}
-
-// Дополнено: Быстрые настройки
-function applyQuickSettings() {
-    const fontSize = document.getElementById('font-size').value;
-    const lineHeight = document.getElementById('line-height').value;
-    document.body.style.fontSize = fontSize;
-    document.body.style.lineHeight = lineHeight;
-    localStorage.setItem('fontSize', fontSize);
-    localStorage.setItem('lineHeight', lineHeight);
-    document.getElementById('quick-settings').style.display = 'none';
-}
-
-// Восстановление настроек
-if (localStorage.getItem('fontSize')) {
-    document.body.style.fontSize = localStorage.getItem('fontSize');
-    document.body.style.lineHeight = localStorage.getItem('lineHeight');
-}
-
-// Дополнено: Копирование кода из code-block
-document.querySelectorAll('.code-block').forEach(block => {
-    const copyBtn = document.createElement('button');
-    copyBtn.textContent = 'Copy';
-    copyBtn.onclick = () => {
-        navigator.clipboard.writeText(block.textContent).then(() => showNotification('Код скопирован', 'success'));
-    };
-    block.appendChild(copyBtn);
-});
-
-// Дополнено: Инициализация закладок (если не было)
-function initBookmarksSystem() {
-    updateBookmarksList();
-    document.addEventListener('click', handleBookmarkRemove);
-}
