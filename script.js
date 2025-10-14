@@ -1,3 +1,957 @@
+// ===== ДОПОЛНИТЕЛЬНЫЙ ФУНКЦИОНАЛ ДЛЯ SCRIPT.JS =====
+
+// ===== РАСШИРЕННАЯ СИСТЕМА ТЕСТИРОВАНИЯ =====
+const extendedTestQuestions = {
+    requirements: [
+        {
+            question: "Что такое функциональные требования?",
+            options: [
+                "Описание того, что система должна делать",
+                "Характеристики производительности системы", 
+                "Требования к безопасности системы",
+                "Требования к удобству использования"
+            ],
+            answer: 0,
+            explanation: "Функциональные требования определяют, какие функции и возможности должна предоставлять система."
+        },
+        {
+            question: "Что означает критерий INVEST для user stories?",
+            options: [
+                "Independent, Negotiable, Valuable, Estimable, Small, Testable",
+                "Integrated, Negotiable, Valuable, Estimable, Simple, Testable",
+                "Independent, Negotiable, Visible, Estimable, Small, Testable", 
+                "Integrated, Negotiable, Visible, Estimable, Simple, Testable"
+            ],
+            answer: 0,
+            explanation: "INVEST - мнемоническое правило для создания качественных пользовательских историй."
+        },
+        {
+            question: "Какие из перечисленных являются нефункциональными требованиями?",
+            options: [
+                "Производительность, безопасность, надежность",
+                "Авторизация пользователей, создание отчетов",
+                "Обработка платежей, управление заказами",
+                "Интеграция с API, валидация данных"
+            ],
+            answer: 0,
+            explanation: "Нефункциональные требования описывают характеристики системы, а не ее функции."
+        },
+        {
+            question: "Что такое трассируемость требований?",
+            options: [
+                "Возможность отслеживать связь требований с их реализацией",
+                "Скорость обработки требований",
+                "Автоматизация сбора требований", 
+                "Визуализация требований на диаграммах"
+            ],
+            answer: 0,
+            explanation: "Трассируемость помогает отслеживать жизненный цикл требований от истоков до реализации."
+        }
+    ],
+    api: [
+        {
+            question: "Какой HTTP-метод используется для создания ресурса в REST API?",
+            options: ["GET", "POST", "PUT", "DELETE"],
+            answer: 1,
+            explanation: "POST используется для создания новых ресурсов на сервере."
+        },
+        {
+            question: "Что означает статус код 404?",
+            options: [
+                "Успешный запрос",
+                "Ошибка сервера", 
+                "Ресурс не найден",
+                "Запрещено"
+            ],
+            answer: 2,
+            explanation: "404 Not Found - запрашиваемый ресурс не существует на сервере."
+        },
+        {
+            question: "Какой формат данных наиболее распространен в REST API?",
+            options: ["XML", "JSON", "CSV", "YAML"],
+            answer: 1,
+            explanation: "JSON стал стандартом де-факто для REST API благодаря своей простоте и читаемости."
+        },
+        {
+            question: "Что такое CORS?",
+            options: [
+                "Cross-Origin Resource Sharing - механизм для запросов между разными доменами",
+                "Content Optimization and Response System - система оптимизации контента",
+                "Centralized Object Request Service - централизованный сервис объектов",
+                "Cryptographic Operation Response Standard - стандарт криптографических операций"
+            ],
+            answer: 0,
+            explanation: "CORS позволяет браузеру делать запросы к серверам с других доменов."
+        }
+    ],
+    db: [
+        {
+            question: "Что такое первая нормальная форма (1NF)?",
+            options: [
+                "Отсутствие транзитивных зависимостей",
+                "Атомарность значений в столбцах", 
+                "Отсутствие частичных зависимостей",
+                "Все ключи уникальны"
+            ],
+            answer: 1,
+            explanation: "1NF требует, чтобы все значения в столбцах были атомарными (неделимыми)."
+        },
+        {
+            question: "Какой тип JOIN возвращает все записи из левой таблицы?",
+            options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN"],
+            answer: 1,
+            explanation: "LEFT JOIN возвращает все записи из левой таблицы и совпадающие из правой."
+        },
+        {
+            question: "Что такое ACID в контексте баз данных?",
+            options: [
+                "Atomicity, Consistency, Isolation, Durability",
+                "Access, Control, Integrity, Data",
+                "Analysis, Creation, Indexing, Deletion", 
+                "Automation, Configuration, Integration, Deployment"
+            ],
+            answer: 0,
+            explanation: "ACID - набор свойств, гарантирующих надежность транзакций."
+        },
+        {
+            question: "Какое преимущество NoSQL баз данных?",
+            options: [
+                "Гибкая схема данных",
+                "Строгая типизация",
+                "Сложные JOIN-запросы",
+                "Жесткая структура таблиц"
+            ],
+            answer: 0,
+            explanation: "NoSQL базы данных предлагают гибкую схему, что удобно для быстро меняющихся требований."
+        }
+    ],
+    bpmn: [
+        {
+            question: "Какой элемент BPMN обозначает точку принятия решений?",
+            options: ["Задача", "Событие", "Шлюз", "Пул"],
+            answer: 2,
+            explanation: "Шлюзы используются для ветвления и объединения потоков в процессе."
+        },
+        {
+            question: "Что обозначает ромб в BPMN?",
+            options: [
+                "Стартовое событие",
+                "Конечное событие", 
+                "Шлюз (Gateway)",
+                "Промежуточное событие"
+            ],
+            answer: 2,
+            explanation: "Ромбовидная фигура представляет шлюзы для управления потоком процесса."
+        },
+        {
+            question: "Какой элемент используется для обозначения задержки в процессе?",
+            options: [
+                "Таймерное событие",
+                "Условное событие",
+                "Сообщение",
+                "Эскалация"
+            ],
+            answer: 0,
+            explanation: "Таймерные события используются для обозначения временных задержек в процессе."
+        }
+    ],
+    security: [
+        {
+            question: "Что такое SQL-инъекция?",
+            options: [
+                "Метод оптимизации SQL-запросов",
+                "Уязвимость, позволяющая выполнить произвольный SQL-код", 
+                "Техника соединения таблиц в SQL",
+                "Метод шифрования данных в БД"
+            ],
+            answer: 1,
+            explanation: "SQL-инъекция - это уязвимость, возникающая при неправильной обработке пользовательского ввода."
+        },
+        {
+            question: "Что такое OWASP Top 10?",
+            options: [
+                "Список 10 наиболее критичных уязвимостей веб-приложений",
+                "10 лучших практик программирования",
+                "10 инструментов для тестирования безопасности",
+                "10 стандартов шифрования данных"
+            ],
+            answer: 0,
+            explanation: "OWASP Top 10 - это стандартный документ по осведомленности о безопасности веб-приложений."
+        },
+        {
+            question: "Какой принцип безопасности означает 'никому не доверяй'?",
+            options: [
+                "Zero Trust",
+                "Defense in Depth", 
+                "Least Privilege",
+                "Security by Design"
+            ],
+            answer: 0,
+            explanation: "Zero Trust предполагает, что никому внутри или вне сети нельзя доверять по умолчанию."
+        }
+    ],
+    ddd: [
+        {
+            question: "Что означает DDD в разработке ПО?",
+            options: [
+                "Data-Driven Development",
+                "Domain-Driven Design", 
+                "Database Development",
+                "Dynamic Design"
+            ],
+            answer: 1,
+            explanation: "Domain-Driven Design - это подход к разработке сложных систем через глубокое понимание предметной области."
+        },
+        {
+            question: "Что такое 'ограниченный контекст' в DDD?",
+            options: [
+                "Четкие границы моделей в определенной части системы",
+                "Ограничение на количество сущностей в модели",
+                "Контекст выполнения программы",
+                "Ограничение на использование внешних библиотек"
+            ],
+            answer: 0,
+            explanation: "Ограниченный контекст определяет границы, в которых определенная модель применима и последовательна."
+        },
+        {
+            question: "Что такое 'универсальный язык' в DDD?",
+            options: [
+                "Единая терминология, используемая разработчиками и экспертами предметной области",
+                "Язык программирования, используемый в проекте",
+                "Международный язык для документации",
+                "Универсальный протокол обмена данными"
+            ],
+            answer: 0,
+            explanation: "Универсальный язык помогает устранить разрыв между техническими и бизнес-специалистами."
+        }
+    ]
+};
+
+// ===== РАСШИРЕННЫЙ DECISION TREE =====
+const methodologyTree = {
+    start: {
+        question: "Проект имеет четкие и стабильные требования?",
+        answers: {
+            yes: "clear_requirements",
+            no: "changing_requirements"
+        }
+    },
+    clear_requirements: {
+        question: "Требуется ли быстрый вывод продукта на рынок?",
+        answers: {
+            yes: "waterfall",
+            no: "waterfall_detailed"
+        }
+    },
+    changing_requirements: {
+        question: "Требования часто меняются в процессе разработки?",
+        answers: {
+            yes: "agile_framework",
+            no: "iterative_approach"
+        }
+    },
+    agile_framework: {
+        question: "Команда имеет опыт Agile-методологий?",
+        answers: {
+            yes: "scrum_kanban_choice",
+            no: "agile_training"
+        }
+    },
+    scrum_kanban_choice: {
+        question: "Работа состоит из отдельных итераций или непрерывного потока?",
+        answers: {
+            iterations: "scrum",
+            continuous: "kanban"
+        }
+    },
+    iterative_approach: {
+        question: "Проект требует частых релизов?",
+        answers: {
+            yes: "iterative_development",
+            no: "prototype_based"
+        }
+    }
+};
+
+const methodologyRecommendations = {
+    waterfall: {
+        name: "Водопадная модель (Waterfall)",
+        description: "Последовательный подход с четкими этапами. Подходит для проектов с фиксированными требованиями.",
+        pros: [
+            "Четкое планирование и документация",
+            "Легко управлять прогрессом",
+            "Предсказуемые сроки и бюджет"
+        ],
+        cons: [
+            "Сложно вносить изменения",
+            "Позднее тестирование",
+            "Риск несоответствия требованиям"
+        ],
+        tools: ["MS Project", "Jira", "Confluence"]
+    },
+    scrum: {
+        name: "Scrum",
+        description: "Итеративная методология с фиксированными спринтами. Идеальна для проектов с меняющимися требованиями.",
+        pros: [
+            "Гибкость к изменениям",
+            "Быстрая обратная связь",
+            "Постоянное улучшение процесса"
+        ],
+        cons: [
+            "Требует опытной команды",
+            "Нужен dedicated Scrum Master",
+            "Может быть избыточным для маленьких проектов"
+        ],
+        tools: ["Jira", "Trello", "Azure DevOps"]
+    },
+    kanban: {
+        name: "Kanban",
+        description: "Метод управления непрерывным потоком работ. Подходит для поддержки и оперативных задач.",
+        pros: [
+            "Максимальная гибкость",
+            "Визуализация потока работ",
+            "Минимальные накладные расходы"
+        ],
+        cons: [
+            "Меньше структуры",
+            "Сложнее планировать долгосрочно",
+            "Требует дисциплины команды"
+        ],
+        tools: ["Trello", "Jira", "Kanbanize"]
+    }
+};
+
+function showTreeStep(step, answer) {
+    const step1 = document.getElementById('tree-step-1');
+    const step2 = document.getElementById('tree-step-2');
+    const result = document.getElementById('tree-result');
+    
+    if (!step1 || !step2 || !result) return;
+    
+    if (step === 2) {
+        step1.classList.remove('active');
+        step2.classList.add('active');
+        
+        const question = document.getElementById('step2-question');
+        const options = document.getElementById('step2-options');
+        
+        if (question && options) {
+            if (answer === 'yes') {
+                question.textContent = 'Требуется ли быстрый вывод продукта на рынок?';
+                options.innerHTML = `
+                    <button class="tree-btn" onclick="showMethodologyResult('waterfall')">Да</button>
+                    <button class="tree-btn" onclick="showMethodologyResult('waterfall_detailed')">Нет</button>
+                `;
+            } else {
+                question.textContent = 'Требования часто меняются в процессе разработки?';
+                options.innerHTML = `
+                    <button class="tree-btn" onclick="showTreeStep(3, 'changing')">Да</button>
+                    <button class="tree-btn" onclick="showTreeStep(3, 'stable')">Нет</button>
+                `;
+            }
+        }
+    } else if (step === 3) {
+        step2.classList.remove('active');
+        const question = document.getElementById('step2-question');
+        const options = document.getElementById('step2-options');
+        
+        if (question && options) {
+            if (answer === 'changing') {
+                question.textContent = 'Команда имеет опыт Agile-методологий?';
+                options.innerHTML = `
+                    <button class="tree-btn" onclick="showTreeStep(4, 'experienced')">Да</button>
+                    <button class="tree-btn" onclick="showMethodologyResult('agile_training')">Нет</button>
+                `;
+            } else {
+                question.textContent = 'Проект требует частых релизов?';
+                options.innerHTML = `
+                    <button class="tree-btn" onclick="showMethodologyResult('iterative_development')">Да</button>
+                    <button class="tree-btn" onclick="showMethodologyResult('prototype_based')">Нет</button>
+                `;
+            }
+        }
+        step2.classList.add('active');
+    } else if (step === 4) {
+        const question = document.getElementById('step2-question');
+        const options = document.getElementById('step2-options');
+        
+        if (question && options) {
+            question.textContent = 'Работа состоит из отдельных итераций или непрерывного потока?';
+            options.innerHTML = `
+                <button class="tree-btn" onclick="showMethodologyResult('scrum')">Отдельные итерации</button>
+                <button class="tree-btn" onclick="showMethodologyResult('kanban')">Непрерывный поток</button>
+            `;
+        }
+    }
+}
+
+function showMethodologyResult(method) {
+    const step2 = document.getElementById('tree-step-2');
+    const result = document.getElementById('tree-result');
+    const resultText = document.getElementById('result-text');
+    
+    if (!step2 || !result || !resultText) return;
+    
+    step2.classList.remove('active');
+    result.classList.add('active');
+    
+    const recommendation = methodologyRecommendations[method] || {
+        name: "Гибридный подход",
+        description: "Рекомендуется комбинировать элементы разных методологий в зависимости от контекста проекта.",
+        pros: ["Адаптивность к изменениям", "Баланс между структурой и гибкостью"],
+        cons: ["Требует опытного руководителя", "Сложнее в управлении"],
+        tools: ["Jira", "Trello", "MS Project"]
+    };
+    
+    resultText.innerHTML = `
+        <div class="methodology-result">
+            <h3>${recommendation.name}</h3>
+            <p><strong>Описание:</strong> ${recommendation.description}</p>
+            
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4><i class="fas fa-check-circle"></i> Преимущества</h4>
+                    <ul>
+                        ${recommendation.pros.map(pro => `<li>${pro}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4><i class="fas fa-exclamation-circle"></i> Ограничения</h4>
+                    <ul>
+                        ${recommendation.cons.map(con => `<li>${con}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tools">
+                <h4><i class="fas fa-tools"></i> Рекомендуемые инструменты</h4>
+                <div class="tool-tags">
+                    ${recommendation.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function resetTree() {
+    const step1 = document.getElementById('tree-step-1');
+    const step2 = document.getElementById('tree-step-2');
+    const result = document.getElementById('tree-result');
+    
+    if (step1) step1.classList.add('active');
+    if (step2) step2.classList.remove('active');
+    if (result) result.classList.remove('active');
+}
+
+// ===== РАСШИРЕННЫЙ КОНВЕРТЕР ВЕЛИЧИН =====
+const unitConversions = {
+    // Данные
+    data: {
+        bits: { 
+            bits: 1, bytes: 1/8, kb: 1/8192, mb: 1/8388608, gb: 1/8589934592 
+        },
+        bytes: { 
+            bits: 8, bytes: 1, kb: 1/1024, mb: 1/1048576, gb: 1/1073741824 
+        },
+        kb: { 
+            bits: 8192, bytes: 1024, kb: 1, mb: 1/1024, gb: 1/1048576 
+        },
+        mb: { 
+            bits: 8388608, bytes: 1048576, kb: 1024, mb: 1, gb: 1/1024 
+        },
+        gb: { 
+            bits: 8589934592, bytes: 1073741824, kb: 1048576, mb: 1024, gb: 1 
+        }
+    },
+    // Время
+    time: {
+        ms: { ms: 1, s: 1/1000, min: 1/60000, h: 1/3600000 },
+        s: { ms: 1000, s: 1, min: 1/60, h: 1/3600 },
+        min: { ms: 60000, s: 60, min: 1, h: 1/60 },
+        h: { ms: 3600000, s: 3600, min: 60, h: 1 }
+    },
+    // Производительность
+    performance: {
+        req_sec: { req_sec: 1, req_min: 60, req_h: 3600 },
+        req_min: { req_sec: 1/60, req_min: 1, req_h: 60 },
+        req_h: { req_sec: 1/3600, req_min: 1/60, req_h: 1 }
+    }
+};
+
+function convertValue() {
+    const input = parseFloat(document.getElementById('conv-input').value) || 0;
+    const fromUnit = document.getElementById('conv-from').value;
+    const toUnit = document.getElementById('conv-to').value;
+    const outputElement = document.getElementById('conv-output');
+    
+    if (!outputElement) return;
+    
+    let result;
+    let category = getUnitCategory(fromUnit);
+    
+    if (category && unitConversions[category] && unitConversions[category][fromUnit] && unitConversions[category][fromUnit][toUnit]) {
+        result = input * unitConversions[category][fromUnit][toUnit];
+        outputElement.value = formatConversionResult(result, toUnit);
+    } else {
+        outputElement.value = 'Невозможно конвертировать';
+    }
+}
+
+function getUnitCategory(unit) {
+    if (['bits', 'bytes', 'kb', 'mb', 'gb'].includes(unit)) return 'data';
+    if (['ms', 's', 'min', 'h'].includes(unit)) return 'time';
+    if (['req_sec', 'req_min', 'req_h'].includes(unit)) return 'performance';
+    return null;
+}
+
+function formatConversionResult(value, unit) {
+    if (value === 0) return '0';
+    
+    // Для очень больших или очень маленьких чисел используем экспоненциальную запись
+    if (Math.abs(value) < 0.001 || Math.abs(value) > 1000000) {
+        return value.toExponential(4);
+    }
+    
+    // Округляем в зависимости от величины числа
+    if (Math.abs(value) < 1) {
+        return value.toFixed(6).replace(/\.?0+$/, '');
+    } else if (Math.abs(value) < 10) {
+        return value.toFixed(4).replace(/\.?0+$/, '');
+    } else if (Math.abs(value) < 100) {
+        return value.toFixed(2).replace(/\.?0+$/, '');
+    } else {
+        return Math.round(value).toString();
+    }
+}
+
+// ===== РАСШИРЕННЫЙ ТАЙМЕР МИТИНГА =====
+let meetingTimerInterval = null;
+let meetingTimeLeft = 0;
+
+function startMeetingTimer(seconds) {
+    stopMeetingTimer();
+    
+    const display = document.getElementById('meeting-timer-display');
+    if (!display) return;
+    
+    meetingTimeLeft = seconds;
+    
+    function updateDisplay() {
+        const minutes = Math.floor(meetingTimeLeft / 60);
+        const secs = meetingTimeLeft % 60;
+        display.textContent = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        
+        // Изменение цвета при малом времени
+        if (meetingTimeLeft <= 60) {
+            display.style.color = '#e74c3c';
+            display.classList.add('pulse');
+        } else if (meetingTimeLeft <= 180) {
+            display.style.color = '#f39c12';
+            display.classList.remove('pulse');
+        } else {
+            display.style.color = '#2ecc71';
+            display.classList.remove('pulse');
+        }
+    }
+    
+    updateDisplay();
+    
+    meetingTimerInterval = setInterval(() => {
+        meetingTimeLeft--;
+        updateDisplay();
+        
+        if (meetingTimeLeft <= 0) {
+            stopMeetingTimer();
+            display.textContent = '00:00';
+            showNotification('Время митинга истекло!', 'info');
+            playTimerSound();
+        }
+    }, 1000);
+    
+    showNotification(`Таймер запущен на ${formatTime(seconds)}`, 'success');
+}
+
+function stopMeetingTimer() {
+    if (meetingTimerInterval) {
+        clearInterval(meetingTimerInterval);
+        meetingTimerInterval = null;
+        const display = document.getElementById('meeting-timer-display');
+        if (display) {
+            display.textContent = '00:00';
+            display.style.color = '#2ecc71';
+            display.classList.remove('pulse');
+        }
+        showNotification('Таймер остановлен', 'info');
+    }
+}
+
+function playTimerSound() {
+    // Создаем простой звуковой сигнал с помощью Web Audio API
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 1);
+        
+    } catch (error) {
+        console.log('Audio context not supported:', error);
+    }
+}
+
+// ===== ГЕНЕРАТОР SQL ДЛЯ МОДЕЛИРОВАНИЯ ДАННЫХ =====
+class SQLGenerator {
+    constructor() {
+        this.entities = [];
+        this.relationships = [];
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+        this.loadExamples();
+    }
+    
+    setupEventListeners() {
+        const generateBtn = document.getElementById('generateSqlBtn');
+        if (generateBtn) {
+            generateBtn.addEventListener('click', () => this.generateSQL());
+        }
+        
+        const addEntityBtn = document.getElementById('addEntity');
+        if (addEntityBtn) {
+            addEntityBtn.addEventListener('click', () => this.addEntity());
+        }
+        
+        const clearBtn = document.getElementById('clearDiagram');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => this.clearDiagram());
+        }
+    }
+    
+    loadExamples() {
+        // Предзагружаем примеры моделей данных
+        this.exampleModels = {
+            ecommerce: {
+                name: "Электронная коммерция",
+                entities: [
+                    { name: "users", attributes: ["id", "email", "password", "created_at"] },
+                    { name: "products", attributes: ["id", "name", "price", "category_id"] },
+                    { name: "orders", attributes: ["id", "user_id", "total_amount", "status"] },
+                    { name: "order_items", attributes: ["id", "order_id", "product_id", "quantity"] }
+                ],
+                relationships: [
+                    { from: "users", to: "orders", type: "one-to-many" },
+                    { from: "orders", to: "order_items", type: "one-to-many" },
+                    { from: "products", to: "order_items", type: "one-to-many" }
+                ]
+            },
+            blog: {
+                name: "Блог-платформа", 
+                entities: [
+                    { name: "users", attributes: ["id", "username", "email", "role"] },
+                    { name: "posts", attributes: ["id", "user_id", "title", "content", "created_at"] },
+                    { name: "comments", attributes: ["id", "post_id", "user_id", "content", "created_at"] },
+                    { name: "tags", attributes: ["id", "name"] },
+                    { name: "post_tags", attributes: ["id", "post_id", "tag_id"] }
+                ],
+                relationships: [
+                    { from: "users", to: "posts", type: "one-to-many" },
+                    { from: "posts", to: "comments", type: "one-to-many" },
+                    { from: "users", to: "comments", type: "one-to-many" },
+                    { from: "posts", to: "post_tags", type: "one-to-many" },
+                    { from: "tags", to: "post_tags", type: "one-to-many" }
+                ]
+            }
+        };
+    }
+    
+    addEntity() {
+        const entityName = prompt("Введите название сущности:", "new_entity");
+        if (entityName) {
+            const entity = {
+                name: entityName.toLowerCase().replace(/\s+/g, '_'),
+                attributes: ['id', 'created_at', 'updated_at']
+            };
+            this.entities.push(entity);
+            this.updateVisualization();
+            showNotification(`Сущность "${entityName}" добавлена`, 'success');
+        }
+    }
+    
+    clearDiagram() {
+        if (confirm('Очистить всю диаграмму?')) {
+            this.entities = [];
+            this.relationships = [];
+            this.updateVisualization();
+            this.updateSQLPreview();
+            showNotification('Диаграмма очищена', 'info');
+        }
+    }
+    
+    updateVisualization() {
+        const canvas = document.getElementById('er-canvas');
+        if (!canvas) return;
+        
+        let html = '<div class="entities-container">';
+        
+        this.entities.forEach((entity, index) => {
+            html += `
+                <div class="entity" data-entity="${entity.name}">
+                    <div class="entity-header">${entity.name}</div>
+                    <div class="entity-attributes">
+                        ${entity.attributes.map(attr => `<div class="attribute">${attr}</div>`).join('')}
+                    </div>
+                    <div class="entity-actions">
+                        <button onclick="sqlGenerator.editEntity(${index})" title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="sqlGenerator.addAttribute(${index})" title="Добавить атрибут">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+        canvas.innerHTML = html;
+    }
+    
+    editEntity(index) {
+        const entity = this.entities[index];
+        const newName = prompt("Введите новое название сущности:", entity.name);
+        if (newName) {
+            entity.name = newName.toLowerCase().replace(/\s+/g, '_');
+            this.updateVisualization();
+            this.updateSQLPreview();
+        }
+    }
+    
+    addAttribute(index) {
+        const entity = this.entities[index];
+        const attributeName = prompt("Введите название атрибута:", "new_attribute");
+        if (attributeName) {
+            entity.attributes.push(attributeName.toLowerCase().replace(/\s+/g, '_'));
+            this.updateVisualization();
+            this.updateSQLPreview();
+        }
+    }
+    
+    generateSQL() {
+        if (this.entities.length === 0) {
+            showNotification('Добавьте сущности для генерации SQL', 'warning');
+            return;
+        }
+        
+        let sql = '-- SQL сгенерирован автоматически\n-- Дата: ' + new Date().toLocaleString() + '\n\n';
+        
+        // Генерируем CREATE TABLE statements
+        this.entities.forEach(entity => {
+            sql += `CREATE TABLE ${entity.name} (\n`;
+            
+            entity.attributes.forEach((attr, idx) => {
+                const isLast = idx === entity.attributes.length - 1;
+                let type = 'VARCHAR(255)';
+                
+                // Определяем тип данных на основе имени атрибута
+                if (attr === 'id') type = 'SERIAL PRIMARY KEY';
+                else if (attr.includes('_at')) type = 'TIMESTAMP';
+                else if (attr.includes('amount') || attr.includes('price') || attr.includes('quantity')) type = 'DECIMAL(10,2)';
+                else if (attr.includes('is_') || attr === 'active') type = 'BOOLEAN';
+                else if (attr.includes('email')) type = 'VARCHAR(255) UNIQUE';
+                
+                sql += `    ${attr} ${type}${isLast ? '' : ','}\n`;
+            });
+            
+            sql += ');\n\n';
+        });
+        
+        // Добавляем комментарии для отношений
+        if (this.relationships.length > 0) {
+            sql += '-- Внешние ключи и отношения\n';
+            this.relationships.forEach(rel => {
+                sql += `-- ALTER TABLE ${rel.to} ADD CONSTRAINT fk_${rel.to}_${rel.from} FOREIGN KEY (${rel.from}_id) REFERENCES ${rel.from}(id);\n`;
+            });
+            sql += '\n';
+        }
+        
+        // Добавляем примеры INSERT запросов
+        sql += '-- Примеры данных\n';
+        this.entities.forEach(entity => {
+            if (entity.name !== 'users' && !entity.name.includes('_')) {
+                sql += `-- INSERT INTO ${entity.name} (/* columns */) VALUES (/* values */);\n`;
+            }
+        });
+        
+        this.updateSQLPreview(sql);
+        showNotification('SQL код сгенерирован', 'success');
+    }
+    
+    updateSQLPreview(sql) {
+        const preview = document.getElementById('sql-preview');
+        if (preview) {
+            preview.textContent = sql || '-- SQL-код появится здесь после создания диаграммы';
+        }
+    }
+    
+    loadExample(modelName) {
+        const model = this.exampleModels[modelName];
+        if (model) {
+            this.entities = JSON.parse(JSON.stringify(model.entities)); // Deep copy
+            this.relationships = JSON.parse(JSON.stringify(model.relationships));
+            this.updateVisualization();
+            this.generateSQL();
+            showNotification(`Загружена модель: ${model.name}`, 'success');
+        }
+    }
+}
+
+let sqlGenerator;
+
+function initSQLGenerator() {
+    sqlGenerator = new SQLGenerator();
+}
+
+// ===== ДОПОЛНИТЕЛЬНЫЕ ВОПРОСЫ ДЛЯ ТЕСТИРОВАНИЯ =====
+function getRandomQuestions(section, count) {
+    const questions = extendedTestQuestions[section];
+    if (!questions) return [];
+    
+    // Перемешиваем вопросы и выбираем нужное количество
+    const shuffled = [...questions].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+// ===== ИНИЦИАЛИЗАЦИЯ ВСЕХ ДОПОЛНИТЕЛЬНЫХ СИСТЕМ =====
+function initAdditionalSystems() {
+    initSQLGenerator();
+    
+    // Добавляем обработчики для примеров моделей
+    const loadEcommerceBtn = document.createElement('button');
+    loadEcommerceBtn.textContent = 'Загрузить пример: E-commerce';
+    loadEcommerceBtn.className = 'quick-link';
+    loadEcommerceBtn.onclick = () => sqlGenerator.loadExample('ecommerce');
+    
+    const loadBlogBtn = document.createElement('button');
+    loadBlogBtn.textContent = 'Загрузить пример: Блог';
+    loadBlogBtn.className = 'quick-link';
+    loadBlogBtn.onclick = () => sqlGenerator.loadExample('blog');
+    
+    const modelingSection = document.getElementById('data-modeling');
+    if (modelingSection) {
+        const examplesDiv = document.createElement('div');
+        examplesDiv.className = 'modeling-examples';
+        examplesDiv.innerHTML = '<h4>Примеры моделей:</h4>';
+        examplesDiv.appendChild(loadEcommerceBtn);
+        examplesDiv.appendChild(loadBlogBtn);
+        
+        const editor = modelingSection.querySelector('.modeling-editor');
+        if (editor) {
+            editor.appendChild(examplesDiv);
+        }
+    }
+}
+
+// Обновляем функцию startTest для использования расширенных вопросов
+function startTest() {
+    const sectionSelect = document.getElementById('test-section');
+    const questionCountInput = document.getElementById('question-count');
+    
+    if (!sectionSelect || !questionCountInput) {
+        showNotification('Элементы тестирования не найдены', 'error');
+        return;
+    }
+    
+    const section = sectionSelect.value;
+    const questionCount = parseInt(questionCountInput.value) || 5;
+    
+    let questions = getRandomQuestions(section, questionCount);
+    if (questions.length === 0) {
+        showNotification('Тест для этого раздела пока недоступен', 'warning');
+        return;
+    }
+    
+    currentTest = questions;
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length).fill(null);
+    
+    const testContent = document.getElementById('testContent');
+    const totalQuestions = document.getElementById('total-questions');
+    
+    if (testContent && totalQuestions) {
+        testContent.style.display = 'block';
+        totalQuestions.textContent = questions.length;
+    }
+    
+    testStartTime = new Date();
+    startTestTimer();
+    showQuestion(currentQuestionIndex);
+    showNotification(`Тест начат! Вопросов: ${questions.length}`, 'success');
+}
+
+// Обновляем функцию submitTest для показа объяснений
+function submitTest() {
+    clearInterval(testTimerInterval);
+    const endTime = new Date();
+    const timeTaken = Math.floor((endTime - testStartTime) / 1000);
+    
+    let correctCount = 0;
+    const resultsHtml = currentTest.map((question, index) => {
+        const isCorrect = userAnswers[index] === question.answer;
+        if (isCorrect) correctCount++;
+        
+        return `
+            <div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
+                <p><strong>Вопрос ${index + 1}:</strong> ${question.question}</p>
+                <p>Ваш ответ: <span class="${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                    ${question.options[userAnswers[index]] || 'Нет ответа'}
+                </span></p>
+                ${!isCorrect ? `
+                    <p>Правильный ответ: <span class="correct-answer">${question.options[question.answer]}</span></p>
+                ` : ''}
+                <div class="explanation">
+                    <strong>Объяснение:</strong> ${question.explanation || 'Объяснение отсутствует.'}
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    const percentage = Math.round((correctCount / currentTest.length) * 100);
+    const testResult = document.getElementById('testResult');
+    
+    if (testResult) {
+        testResult.innerHTML = `
+            <div class="result-summary">
+                <h3>Результаты тестирования</h3>
+                <p>Правильных ответов: ${correctCount} из ${currentTest.length} (${percentage}%)</p>
+                <p>Затраченное время: ${formatTime(timeTaken)}</p>
+                <p class="result-message">${
+                    percentage >= 90 ? 'Отлично! Вы отлично разбираетесь в теме!' :
+                    percentage >= 70 ? 'Хорошо! Есть что повторить.' :
+                    percentage >= 50 ? 'Удовлетворительно. Рекомендуется повторить материал.' :
+                    'Нужно повторить материал. Рекомендуется изучить тему заново.'
+                }</p>
+            </div>
+            <div class="result-details">
+                ${resultsHtml}
+            </div>
+            <button onclick="startTest()" class="primary-btn" style="margin-top:20px;">Пройти тест снова</button>
+        `;
+    }
+    
+    showNotification(`Тест завершен! Результат: ${percentage}%`, percentage >= 70 ? 'success' : 'warning');
+}
 // ===== ИСПРАВЛЕННЫЙ И ДОПОЛНЕННЫЙ КОД =====
 
 // Глобальные переменные
@@ -24,6 +978,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Инициализация улучшений
     initWeek1Improvements();
+    
+    // Инициализируем дополнительные системы
+    initAdditionalSystems();
+
+    // Обновляем вопросы тестирования
+    Object.assign(testQuestions, extendedTestQuestions);
     
     console.log('Все системы успешно инициализированы');
 });
