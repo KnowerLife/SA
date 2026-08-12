@@ -1,373 +1,544 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Тема, доступность, PDF ---
-    const themeBtn = document.getElementById('themeToggle');
-    const accessBtn = document.getElementById('accessibilityToggle');
-    const pdfBtn = document.getElementById('pdfExportBtn');
-    if(themeBtn) themeBtn.onclick = () => document.body.classList.toggle('dark-theme');
-    if(accessBtn) accessBtn.onclick = () => document.body.classList.toggle('accessibility');
-    if(pdfBtn) pdfBtn.onclick = () => {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        let y = 20;
-        doc.setFontSize(16);
-        doc.text('Памятка системного аналитика', 10, y);
-        y += 10;
-        document.querySelectorAll('.card').forEach(card => {
-            const title = card.querySelector('h2')?.innerText || '';
-            doc.setFontSize(12);
-            doc.text(title, 10, y);
-            y += 6;
-            const text = card.innerText.slice(0, 600);
-            const lines = doc.splitTextToSize(text, 180);
-            doc.text(lines, 10, y);
-            y += lines.length * 5 + 10;
-            if(y > 270) { doc.addPage(); y = 20; }
-        });
-        doc.save('analyst_guide.pdf');
-    };
+(() => {
+  'use strict';
 
-    // --- Мобильное меню ---
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('navOverlay');
-    if(menuBtn) menuBtn.onclick = () => { sidebar.classList.toggle('active'); overlay.classList.toggle('active'); };
-    if(overlay) overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const STORAGE = {
+    theme: 'sa_theme_v2',
+    font: 'sa_font_v2',
+    bookmarks: 'sa_bookmarks_v2',
+    notes: 'sa_notes_v2',
+    competency: 'sa_competency_v2',
+    requirements: 'sa_requirements_v2',
+    security: 'sa_security_v2'
+  };
 
-    // --- Поиск ---
-    const searchInput = document.getElementById('globalSearch');
-    if(searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase().trim();
-            document.querySelectorAll('.card').forEach(card => {
-                const match = card.innerText.toLowerCase().includes(term);
-                card.style.display = match ? 'block' : 'none';
-            });
-        });
+  function safeParse(value, fallback) {
+    try {
+      const parsed = JSON.parse(value);
+      return parsed ?? fallback;
+    } catch {
+      return fallback;
     }
+  }
 
-    // --- Конвертер величин ---
-    const convInput = document.getElementById('conv-input');
-    const convFrom = document.getElementById('conv-from');
-    const convOutput = document.getElementById('conv-output');
-    const convertBtn = document.getElementById('convertBtn');
-    if(convertBtn) convertBtn.onclick = () => {
-        let val = parseFloat(convInput.value) || 0;
-        let from = convFrom.value;
-        let res = val;
-        if(from === 'kb') res = val / 1024;
-        if(from === 'gb') res = val * 1024;
-        convOutput.value = res.toFixed(2) + ' МБ';
+  function readJson(key, fallback) {
+    try { return safeParse(localStorage.getItem(key), fallback); }
+    catch { return fallback; }
+  }
+
+  function writeJson(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch { return false; }
+  }
+
+  function readText(key, fallback = '') {
+    try { return localStorage.getItem(key) || fallback; }
+    catch { return fallback; }
+  }
+
+  function writeText(key, value) {
+    try { localStorage.setItem(key, value); return true; }
+    catch { return false; }
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+  }
+
+  function normalizeIdentifier(value, fallback = 'field') {
+    const normalized = String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9_]+/g, '_')
+      .replace(/^_+|_+$/g, '')
+      .replace(/_{2,}/g, '_');
+    const safe = normalized || fallback;
+    return /^[0-9]/.test(safe) ? `_${safe}` : safe;
+  }
+
+  function showToast(message) {
+    const toast = $('#toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.hidden = false;
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => { toast.hidden = true; }, 2200);
+  }
+
+  async function copyText(text) {
+    if (!text) return false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch {}
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.append(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch {}
+    area.remove();
+    return ok;
+  }
+
+  function downloadText(filename, content) {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function initTheme() {
+    const root = document.documentElement;
+    const saved = readText(STORAGE.theme);
+    const systemDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = saved || (systemDark ? 'dark' : 'light');
+    const btn = $('#themeToggle');
+    const render = () => {
+      if (!btn) return;
+      const dark = root.dataset.theme === 'dark';
+      btn.textContent = dark ? '☀' : '☾';
+      btn.setAttribute('aria-label', dark ? 'Включить светлую тему' : 'Включить тёмную тему');
     };
+    btn?.addEventListener('click', () => {
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      writeText(STORAGE.theme, root.dataset.theme);
+      render();
+    });
+    render();
+  }
 
-    // --- Таймер митинга (один экземпляр) ---
-    let timerInterval = null;
-    const timerDisplay = document.getElementById('meetingTimerDisplay');
-    function startMeetingTimer(seconds) {
-        if(timerInterval) clearInterval(timerInterval);
-        let left = seconds;
-        const update = () => {
-            let mins = Math.floor(left / 60);
-            let secs = left % 60;
-            if(timerDisplay) timerDisplay.textContent = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-            if(left <= 0) clearInterval(timerInterval);
-            else left--;
-        };
-        update();
-        timerInterval = setInterval(update, 1000);
+  function initFontScale() {
+    const root = document.documentElement;
+    if (readText(STORAGE.font) === 'large') root.dataset.fontScale = 'large';
+    const btn = $('#accessibilityToggle');
+    const render = () => {
+      const large = root.dataset.fontScale === 'large';
+      btn?.setAttribute('aria-pressed', String(large));
+      if (btn) btn.textContent = large ? 'A' : 'A+';
+    };
+    btn?.addEventListener('click', () => {
+      if (root.dataset.fontScale === 'large') {
+        delete root.dataset.fontScale;
+        writeText(STORAGE.font, 'normal');
+      } else {
+        root.dataset.fontScale = 'large';
+        writeText(STORAGE.font, 'large');
+      }
+      render();
+    });
+    render();
+  }
+
+  function initHeader() {
+    const header = $('[data-header]');
+    const progress = $('[data-scroll-progress]');
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY || 0;
+      header?.classList.toggle('is-scrolled', y > 8);
+      const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      if (progress) progress.style.width = `${Math.min(100, y / max * 100)}%`;
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  }
+
+  function initMobileNav() {
+    const dialog = $('#mobileNav');
+    const menuBtn = $('#mobileMenuBtn');
+    const closeBtn = $('[data-close-nav]');
+    const target = $('[data-mobile-nav-links]');
+    const sourceLinks = $$('#desktopNav a');
+    if (target) {
+      target.replaceChildren(...sourceLinks.map(link => {
+        const a = document.createElement('a');
+        a.href = link.getAttribute('href');
+        a.textContent = link.textContent.trim();
+        return a;
+      }));
     }
-    document.querySelectorAll('[data-time]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            let sec = parseInt(e.target.dataset.time);
-            startMeetingTimer(sec);
+    const open = () => {
+      if (!dialog) return;
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      else dialog.setAttribute('open', '');
+      menuBtn?.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      if (!dialog) return;
+      if (typeof dialog.close === 'function') dialog.close();
+      else dialog.removeAttribute('open');
+      menuBtn?.setAttribute('aria-expanded', 'false');
+    };
+    menuBtn?.addEventListener('click', open);
+    closeBtn?.addEventListener('click', close);
+    target?.addEventListener('click', event => { if (event.target.closest('a')) close(); });
+    dialog?.addEventListener('click', event => { if (event.target === dialog) close(); });
+  }
+
+  function initPrint() {
+    $('#pdfExportBtn')?.addEventListener('click', () => window.print());
+  }
+
+  function getCards() { return $$('.searchable'); }
+
+  function initSearch() {
+    const input = $('#globalSearch');
+    const status = $('#searchStatus');
+    const empty = $('#noSearchResults');
+    const clear = $('#clearSearchBtn');
+    const cards = getCards();
+    const apply = () => {
+      const term = (input?.value || '').trim().toLocaleLowerCase('ru');
+      let shown = 0;
+      cards.forEach(card => {
+        const haystack = `${card.dataset.title || ''} ${card.dataset.search || ''} ${card.innerText}`.toLocaleLowerCase('ru');
+        const match = !term || haystack.includes(term);
+        card.hidden = !match;
+        if (match) shown++;
+      });
+      if (status) status.textContent = term ? `Найдено: ${shown} из ${cards.length}` : `Показаны все ${cards.length} разделов`;
+      if (empty) empty.hidden = shown !== 0;
+    };
+    input?.addEventListener('input', apply);
+    clear?.addEventListener('click', () => { if (input) { input.value = ''; apply(); input.focus(); } });
+    document.addEventListener('keydown', event => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      const editing = tag === 'input' || tag === 'textarea' || tag === 'select';
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault(); input?.focus(); input?.select();
+      } else if (event.key === '/' && !editing) {
+        event.preventDefault(); input?.focus();
+      } else if (event.key === 'Escape' && document.activeElement === input && input?.value) {
+        input.value = ''; apply(); input.blur();
+      }
+    });
+    apply();
+  }
+
+  function initActiveNav() {
+    if (!('IntersectionObserver' in window)) return;
+    const links = $$('#desktopNav a');
+    const byId = new Map(links.map(a => [a.getAttribute('href')?.slice(1), a]));
+    const sections = getCards();
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      links.forEach(link => link.classList.remove('is-active'));
+      byId.get(visible.target.id)?.classList.add('is-active');
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, .1, .25] });
+    sections.forEach(section => observer.observe(section));
+  }
+
+  function initBookmarks() {
+    let bookmarks = readJson(STORAGE.bookmarks, []);
+    if (!Array.isArray(bookmarks)) bookmarks = [];
+    const validIds = new Set(getCards().map(card => card.id));
+    bookmarks = bookmarks.filter(id => validIds.has(id));
+    const list = $('#bookmarksList');
+    const counter = $('#bookmarksCounter');
+
+    const titleFor = id => $(`#${CSS.escape(id)}`)?.dataset.title || id;
+    const render = () => {
+      if (counter) counter.textContent = String(bookmarks.length);
+      if (!list) return;
+      list.replaceChildren();
+      if (!bookmarks.length) {
+        const p = document.createElement('p'); p.className = 'muted'; p.textContent = 'Пока пусто'; list.append(p); return;
+      }
+      bookmarks.forEach(id => {
+        const row = document.createElement('div'); row.className = 'bookmark-row';
+        const link = document.createElement('a'); link.href = `#${id}`; link.textContent = titleFor(id);
+        const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'bookmark-remove'; remove.textContent = '×'; remove.setAttribute('aria-label', `Удалить закладку ${titleFor(id)}`);
+        remove.addEventListener('click', () => toggle(id, false));
+        row.append(link, remove); list.append(row);
+      });
+      $$('.bookmark-toggle').forEach(btn => btn.setAttribute('aria-pressed', String(bookmarks.includes(btn.dataset.bookmark))));
+    };
+    const toggle = (id, announce = true) => {
+      bookmarks = bookmarks.includes(id) ? bookmarks.filter(item => item !== id) : [...bookmarks, id];
+      writeJson(STORAGE.bookmarks, bookmarks);
+      render();
+      if (announce) showToast(bookmarks.includes(id) ? 'Добавлено в закладки' : 'Удалено из закладок');
+    };
+    getCards().forEach(card => {
+      const head = $('.card-head', card);
+      if (!head) return;
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'bookmark-toggle'; btn.dataset.bookmark = card.id; btn.textContent = '◆'; btn.title = 'Добавить в закладки'; btn.setAttribute('aria-label', `Закладка: ${card.dataset.title || card.id}`);
+      btn.addEventListener('click', () => toggle(card.id));
+      head.append(btn);
+    });
+    render();
+  }
+
+  function initTimer() {
+    let interval = null;
+    let remaining = 0;
+    const display = $('#meetingTimerDisplay');
+    const render = () => {
+      const min = Math.floor(remaining / 60).toString().padStart(2,'0');
+      const sec = (remaining % 60).toString().padStart(2,'0');
+      if (display) display.textContent = `${min}:${sec}`;
+    };
+    const stop = (reset = false) => {
+      if (interval) clearInterval(interval);
+      interval = null;
+      if (reset) { remaining = 0; render(); }
+    };
+    $$('[data-time]').forEach(btn => btn.addEventListener('click', () => {
+      stop(); remaining = Number(btn.dataset.time) || 0; render();
+      interval = setInterval(() => {
+        remaining = Math.max(0, remaining - 1); render();
+        if (remaining <= 0) { stop(); showToast('Таймер завершён'); }
+      }, 1000);
+    }));
+    $('#stopMeetingTimer')?.addEventListener('click', () => stop(true));
+  }
+
+  function initDecisionTree() {
+    const step1 = $('#tree-step1');
+    const step2 = $('#tree-step2');
+    const question = $('#step2-question');
+    const options = $('#step2-options');
+    const result = $('#tree-result');
+    const resultText = $('#result-text');
+    const resultDescription = $('#result-description');
+    const recommendations = {
+      scrum: ['Scrum', 'Подходит, когда полезны короткие итерации, цель спринта и регулярная обратная связь по продукту.'],
+      kanban: ['Kanban', 'Подходит для непрерывного потока, поддержки и работы с меняющимся входящим приоритетом.'],
+      waterfall: ['Predictive / Waterfall', 'Подходит, когда изменения дороги, этапы жестко зависят друг от друга, а требования можно стабилизировать заранее.'],
+      hybrid: ['Hybrid', 'Комбинируйте управляемые этапы для обязательных контрольных точек с итеративной delivery-моделью внутри этапов.']
+    };
+    const showResult = key => {
+      const [name, description] = recommendations[key] || recommendations.hybrid;
+      if (step2) step2.hidden = true;
+      if (result) result.hidden = false;
+      if (resultText) resultText.textContent = name;
+      if (resultDescription) resultDescription.textContent = description;
+    };
+    $$('[data-tree]').forEach(btn => btn.addEventListener('click', () => {
+      const mode = btn.dataset.tree;
+      if (step1) step1.hidden = true;
+      if (step2) step2.hidden = false;
+      if (!question || !options) return;
+      options.replaceChildren();
+      if (mode === 'iterative') {
+        question.textContent = 'Работа поступает непрерывным потоком без естественной границы спринта?';
+        [['Да','kanban'],['Нет','scrum']].forEach(([label,key]) => {
+          const b = document.createElement('button'); b.type='button'; b.className='btn btn--secondary btn--small'; b.textContent=label; b.addEventListener('click',()=>showResult(key)); options.append(b);
         });
+      } else {
+        question.textContent = 'Есть обязательные фиксированные этапы или регуляторные контрольные точки?';
+        [['Да','waterfall'],['Частично','hybrid']].forEach(([label,key]) => {
+          const b = document.createElement('button'); b.type='button'; b.className='btn btn--secondary btn--small'; b.textContent=label; b.addEventListener('click',()=>showResult(key)); options.append(b);
+        });
+      }
+    }));
+    $('#resetTreeBtn')?.addEventListener('click', () => {
+      if (step1) step1.hidden = false; if (step2) step2.hidden = true; if (result) result.hidden = true;
     });
-    const stopTimerBtn = document.getElementById('stopMeetingTimer');
-    if(stopTimerBtn) stopTimerBtn.onclick = () => { if(timerInterval) clearInterval(timerInterval); if(timerDisplay) timerDisplay.textContent = '00:00'; };
+  }
 
-    // --- Decision Tree ---
-    const step1 = document.getElementById('tree-step1');
-    const step2 = document.getElementById('tree-step2');
-    const resultDiv = document.getElementById('tree-result');
-    const step2Question = document.getElementById('step2-question');
-    const step2Options = document.getElementById('step2-options');
-    const resultSpan = document.getElementById('result-text');
-    window.treeStep = (ans) => {
-        step1.style.display = 'none';
-        step2.style.display = 'block';
-        if(ans === 'yes') {
-            step2Question.innerText = 'Требования часто меняются?';
-            step2Options.innerHTML = `<button class="btn-primary" onclick="showMethod('scrum')">Да</button><button class="btn-primary" onclick="showMethod('kanban')">Нет</button>`;
-        } else {
-            step2Question.innerText = 'Нужен быстрый выход на рынок?';
-            step2Options.innerHTML = `<button class="btn-primary" onclick="showMethod('agile')">Да</button><button class="btn-primary" onclick="showMethod('waterfall')">Нет</button>`;
-        }
-    };
-    window.showMethod = (m) => {
-        step2.style.display = 'none';
-        resultDiv.style.display = 'block';
-        const map = { scrum:'Scrum', kanban:'Kanban', agile:'Agile', waterfall:'Waterfall' };
-        resultSpan.innerText = map[m] || m;
-    };
-    document.getElementById('resetTreeBtn')?.addEventListener('click', () => {
-        step1.style.display = 'block';
-        step2.style.display = 'none';
-        resultDiv.style.display = 'none';
-    });
-    document.querySelectorAll('[data-tree]').forEach(btn => btn.addEventListener('click', (e) => treeStep(e.target.dataset.tree)));
-
-    // --- Моделирование данных (сущности + SQL) ---
+  function initDataModeler() {
     let entities = [];
-    const entitiesContainer = document.getElementById('entitiesList');
-    const sqlPreview = document.getElementById('sqlPreview');
-    function renderEntities() {
-        if(!entitiesContainer) return;
-        entitiesContainer.innerHTML = entities.map((e,i) => `<div class="entity"><strong>${escapeHtml(e.name)}</strong> (${e.attrs.join(', ')}) <button onclick="editEntity(${i})" class="btn-secondary" style="padding:0.2rem 0.5rem;">✏️</button> <button onclick="addAttr(${i})" class="btn-secondary" style="padding:0.2rem 0.5rem;">+</button></div>`).join('');
-    }
-    window.editEntity = (i) => { let n = prompt('Новое имя сущности', entities[i].name); if(n) entities[i].name = n; renderEntities(); };
-    window.addAttr = (i) => { let a = prompt('Название атрибута (например: email)'); if(a) entities[i].attrs.push(a); renderEntities(); };
-    document.getElementById('addEntityBtn')?.addEventListener('click', () => {
-        let name = prompt('Название сущности (например: users)');
-        if(name) entities.push({ name, attrs: ['id', 'created_at'] });
-        renderEntities();
-    });
-    document.getElementById('genSqlBtn')?.addEventListener('click', () => {
-        if(!entities.length) { sqlPreview.innerText = '-- Добавьте хотя бы одну сущность'; return; }
-        let sql = '';
-        entities.forEach(e => { sql += `CREATE TABLE ${e.name} (\n  ${e.attrs.map(a => `${a} VARCHAR(255)`).join(',\n  ')}\n);\n\n`; });
-        sqlPreview.innerText = sql;
-    });
-
-    // --- Тесты (банк вопросов) ---
-    const qBank = {
-        requirements: [{q:"Что такое функциональные требования?",opts:["Описание того, что система должна делать","Характеристики производительности","Требования безопасности"],ans:0},{q:"Что из перечисленного — нефункциональное требование?",opts:["Скорость ответа системы","Регистрация пользователя","Экспорт отчёта"],ans:0}],
-        api: [{q:"Какой HTTP-метод используется для получения данных в REST?",opts:["GET","POST","PUT"],ans:0},{q:"Какой статус-код означает 'ресурс не найден'?",opts:["200","404","500"],ans:1}],
-        db: [{q:"Что такое первая нормальная форма (1NF)?",opts:["Атомарность значений","Отсутствие транзитивных зависимостей","Отсутствие дубликатов"],ans:0},{q:"Какой оператор SQL используется для объединения таблиц?",opts:["JOIN","UNION","MERGE"],ans:0}],
-        bpmn: [{q:"Какой элемент BPMN обозначает точку принятия решения?",opts:["Задача","Событие","Шлюз"],ans:2}],
-        security: [{q:"Что такое SQL-инъекция?",opts:["Уязвимость, позволяющая выполнить произвольный SQL-код","Метод оптимизации запросов","Техника шифрования"],ans:0}],
-        ddd: [{q:"Что означает DDD?",opts:["Domain-Driven Design","Data-Driven Design","Dynamic Domain"],ans:0}]
-    };
-    let currentTest=[], curIdx=0, userAnswers=[];
-    const testArea = document.getElementById('testArea');
-    function renderTest() {
-        if(!currentTest.length) return;
-        let q = currentTest[curIdx];
-        let html = `<div class="card" style="padding:1rem"><p><strong>${q.q}</strong></p>`;
-        q.opts.forEach((opt,i) => { html += `<label class="checklist-item"><input type="radio" name="testOpt" value="${i}" ${userAnswers[curIdx]===i?'checked':''}> ${opt}</label>`; });
-        html += `<div class="quick-links"><button id="prevTestBtn" class="btn-secondary">← Назад</button> <button id="nextTestBtn" class="btn-secondary">Далее →</button> <button id="finishTestBtn" class="btn-primary">Завершить</button></div></div>`;
-        testArea.innerHTML = html;
-        document.querySelectorAll('input[name="testOpt"]').forEach(r => r.addEventListener('change', (e) => { userAnswers[curIdx] = parseInt(e.target.value); }));
-        document.getElementById('prevTestBtn')?.addEventListener('click', () => { if(curIdx>0) { curIdx--; renderTest(); } });
-        document.getElementById('nextTestBtn')?.addEventListener('click', () => { if(curIdx<currentTest.length-1) { curIdx++; renderTest(); } else finishTest(); });
-        document.getElementById('finishTestBtn')?.addEventListener('click', finishTest);
-    }
-    function finishTest() {
-        let correct = 0;
-        currentTest.forEach((q,i) => { if(userAnswers[i]===q.ans) correct++; });
-        let percent = Math.round(correct/currentTest.length*100);
-        testArea.innerHTML = `<div class="tip">Результат: ${correct}/${currentTest.length} (${percent}%)</div><button id="restartTestBtn" class="btn-primary">Пройти заново</button>`;
-        document.getElementById('restartTestBtn')?.addEventListener('click', () => startTest());
-    }
-    function startTest() {
-        let sec = document.getElementById('testSection').value;
-        let qs = qBank[sec];
-        if(!qs) { testArea.innerHTML = '<p>Нет вопросов для этого раздела</p>'; return; }
-        currentTest = [...qs];
-        curIdx = 0;
-        userAnswers = new Array(currentTest.length).fill(null);
-        renderTest();
-    }
-    document.getElementById('startTestBtn')?.addEventListener('click', startTest);
-
-    // --- Заметки (localStorage) ---
-    let notes = JSON.parse(localStorage.getItem('sa_notes') || '[]');
-    function renderNotes() {
-        const cont = document.getElementById('notesList');
-        if(!cont) return;
-        cont.innerHTML = notes.map(n => `<div class="tool-card"><strong>${escapeHtml(n.title)}</strong><br><small>${n.date}</small><p>${escapeHtml(n.content.substring(0,100))}</p><button onclick="deleteNote(${n.id})" class="btn-secondary">Удалить</button></div>`).join('');
-    }
-    window.deleteNote = (id) => { notes = notes.filter(n => n.id !== id); localStorage.setItem('sa_notes', JSON.stringify(notes)); renderNotes(); };
-    document.getElementById('addNoteBtn')?.addEventListener('click', () => {
-        let title = document.getElementById('noteTitle').value.trim();
-        let content = document.getElementById('noteContent').value.trim();
-        if(!title) return alert('Введите заголовок заметки');
-        notes.unshift({ id: Date.now(), title, content, date: new Date().toLocaleString() });
-        localStorage.setItem('sa_notes', JSON.stringify(notes));
-        document.getElementById('noteTitle').value = '';
-        document.getElementById('noteContent').value = '';
-        renderNotes();
-    });
-    renderNotes();
-
-    // --- Чеклист требований (интерактивный) ---
-    function updateReqChecklist() {
-        const ids = ['chStakeholders', 'chUserStories', 'chAcceptance', 'chNonFunctional', 'chTrace'];
-        let total = ids.length;
-        let checked = ids.filter(id => document.getElementById(id)?.checked).length;
-        let percent = total ? (checked/total)*100 : 0;
-        const fill = document.getElementById('reqChecklistProgress');
-        if(fill) fill.style.width = percent + '%';
-    }
-    document.querySelectorAll('#interactive-checklists input').forEach(cb => cb.addEventListener('change', updateReqChecklist));
-    document.getElementById('resetReqChecklist')?.addEventListener('click', () => {
-        ['chStakeholders', 'chUserStories', 'chAcceptance', 'chNonFunctional', 'chTrace'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).checked = false; });
-        updateReqChecklist();
-    });
-    updateReqChecklist();
-
-    // --- Чеклист безопасности ---
-    function updateSecChecklist() {
-        const ids = ['sec1','sec2','sec3','sec4','sec5','sec6'];
-        let total = ids.length;
-        let checked = ids.filter(id => document.getElementById(id)?.checked).length;
-        let percent = total ? (checked/total)*100 : 0;
-        const fill = document.getElementById('secChecklistProgress');
-        if(fill) fill.style.width = percent + '%';
-    }
-    document.querySelectorAll('#security-checklist input').forEach(cb => cb.addEventListener('change', updateSecChecklist));
-    document.getElementById('resetSecChecklist')?.addEventListener('click', () => {
-        ['sec1','sec2','sec3','sec4','sec5','sec6'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).checked = false; });
-        updateSecChecklist();
-    });
-    updateSecChecklist();
-
-    // --- Карта компетенций ---
-    function updateCompProgress() {
-        let total = document.querySelectorAll('.comp-cb').length;
-        let checked = document.querySelectorAll('.comp-cb:checked').length;
-        let percent = total ? (checked/total)*100 : 0;
-        const fill = document.getElementById('compProgressFill');
-        if(fill) fill.style.width = percent + '%';
-    }
-    document.querySelectorAll('.comp-cb').forEach(cb => cb.addEventListener('change', updateCompProgress));
-    document.getElementById('saveCompBtn')?.addEventListener('click', () => {
-        let states = Array.from(document.querySelectorAll('.comp-cb')).map(cb => cb.checked);
-        localStorage.setItem('compMap', JSON.stringify(states));
-        alert('Прогресс карты компетенций сохранён');
-    });
-    const savedComp = localStorage.getItem('compMap');
-    if(savedComp) {
-        let states = JSON.parse(savedComp);
-        document.querySelectorAll('.comp-cb').forEach((cb,i) => { if(states[i]) cb.checked = true; });
-        updateCompProgress();
-    }
-
-    // --- API тестер ---
-    document.getElementById('sendApiBtn')?.addEventListener('click', async () => {
-        const method = document.getElementById('apiMethod').value;
-        let url = document.getElementById('apiUrl').value;
-        const respDiv = document.getElementById('apiResponse');
-        respDiv.innerText = 'Отправка запроса...';
-        try {
-            let opts = { method, headers: { 'Content-Type': 'application/json' } };
-            if(method === 'POST') opts.body = JSON.stringify({ title: 'Тестовый запрос от аналитика', body: 'Пример данных', userId: 1 });
-            const res = await fetch(url, opts);
-            const data = await res.json();
-            respDiv.innerText = JSON.stringify(data, null, 2);
-        } catch(e) { respDiv.innerText = 'Ошибка: ' + e.message; }
-    });
-    document.querySelectorAll('[data-api-url]').forEach(btn => {
-        btn.addEventListener('click', () => { document.getElementById('apiUrl').value = btn.dataset.apiUrl; });
-    });
-
-    // --- Шаблоны документов ---
-    const docTemplates = {
-        srs: "1. Введение\n1.1 Назначение документа\n1.2 Область действия\n2. Общее описание\n2.1 Пользователи\n2.2 Ограничения\n3. Функциональные требования\n3.1 Сценарии использования\n4. Нефункциональные требования\n5. Приложения",
-        'user-stories': "Как [роль], я хочу [функция], чтобы [выгода]\n\nКритерии приемки:\n- Условие 1\n- Условие 2\n\nПриоритет: Must/Should/Could",
-        'api-spec': "openapi: 3.0.0\ninfo:\n  title: API документация\n  version: 1.0.0\npaths:\n  /resource:\n    get:\n      summary: Получить ресурсы\n      responses:\n        '200':\n          description: Успешный ответ",
-        'test-cases': "Название теста: Проверка входа\nПредусловие: Пользователь зарегистрирован\nШаги:\n1. Открыть страницу входа\n2. Ввести логин и пароль\n3. Нажать 'Войти'\nОжидаемый результат: Переход в личный кабинет"
-    };
-    document.querySelectorAll('[data-doc]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            let type = btn.dataset.doc;
-            let content = docTemplates[type] || '';
-            document.getElementById('docContent').value = content;
-            document.getElementById('docEditor').style.display = 'block';
+    const container = $('#entitiesList');
+    const preview = $('#sqlPreview');
+    const render = () => {
+      if (!container) return;
+      container.replaceChildren();
+      if (!entities.length) {
+        const p = document.createElement('p'); p.className='muted'; p.textContent='Сущности еще не добавлены.'; container.append(p); return;
+      }
+      entities.forEach((entity,index) => {
+        const row = document.createElement('div'); row.className='entity-row';
+        const text = document.createElement('div');
+        const strong = document.createElement('strong'); strong.textContent=entity.name;
+        const small = document.createElement('small'); small.textContent=entity.attrs.join(', ');
+        text.append(strong,small);
+        const actions = document.createElement('div'); actions.className='entity-actions';
+        const attr = document.createElement('button'); attr.type='button'; attr.textContent='+'; attr.title='Добавить атрибут';
+        attr.addEventListener('click',()=>{
+          const value = prompt('Название атрибута, например email');
+          if (!value) return;
+          const safe = normalizeIdentifier(value,'field');
+          if (!entity.attrs.includes(safe)) entity.attrs.push(safe);
+          render();
         });
-    });
-    document.getElementById('downloadDocBtn')?.addEventListener('click', () => {
-        const content = document.getElementById('docContent').value;
-        const blob = new Blob([content], {type: 'text/plain'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'document.txt';
-        a.click();
-        URL.revokeObjectURL(a.href);
-    });
-
-    // --- Генератор документов (автоматический) ---
-    document.getElementById('generateDocBtn')?.addEventListener('click', () => {
-        let type = document.getElementById('docTypeSelect').value;
-        let text = docTemplates[type] || '';
-        document.getElementById('generatedDoc').value = text;
-    });
-    document.getElementById('downloadGeneratedDoc')?.addEventListener('click', () => {
-        const content = document.getElementById('generatedDoc').value;
-        const blob = new Blob([content], {type: 'text/plain'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'generated_spec.txt';
-        a.click();
-        URL.revokeObjectURL(a.href);
-    });
-
-    // --- Шаблоны писем ---
-    const emailTemplates = {
-        clarification: "Уважаемый(ая) [Имя],\n\nУ меня возник вопрос по поводу [тема]. Не могли бы вы уточнить:\n1. [Вопрос 1]\n2. [Вопрос 2]\n\nЗаранее спасибо.\n\nС уважением,\n[Ваше имя]",
-        meeting: "Уважаемый(ая) [Имя],\n\nПриглашаю вас на встречу по [тема].\nДата/время: [дата и время]\nПовестка:\n1. [пункт 1]\n2. [пункт 2]\n\nПрошу подтвердить участие.\n\nС уважением,\n[Ваше имя]",
-        review: "Уважаемый(ая) [Имя],\n\nПрошу вас провести ревью [документа/кода] по проекту [название].\nСрок: [дата].\n\nС уважением,\n[Ваше имя]",
-        update: "Уважаемый(ая) [Имя],\n\nСтатус задачи [название]:\n- Выполнено: [что сделано]\n- В процессе: [что делается]\n- Блокеры: [если есть]\n\nС уважением,\n[Ваше имя]"
+        const rename = document.createElement('button'); rename.type='button'; rename.textContent='✎'; rename.title='Переименовать';
+        rename.addEventListener('click',()=>{
+          const value = prompt('Новое имя сущности',entity.name); if(!value)return; entity.name=normalizeIdentifier(value,'entity'); render();
+        });
+        const remove = document.createElement('button'); remove.type='button'; remove.textContent='×'; remove.title='Удалить';
+        remove.addEventListener('click',()=>{entities.splice(index,1);render();});
+        actions.append(attr,rename,remove); row.append(text,actions); container.append(row);
+      });
     };
-    document.querySelectorAll('[data-email]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            let key = btn.dataset.email;
-            document.getElementById('emailTemplateText').value = emailTemplates[key] || '';
-        });
+    $('#addEntityBtn')?.addEventListener('click',()=>{
+      const value=prompt('Название сущности, например users'); if(!value)return;
+      const name=normalizeIdentifier(value,'entity');
+      if(entities.some(e=>e.name===name)){showToast('Такая сущность уже есть');return;}
+      entities.push({name,attrs:['id','created_at']});render();
     });
-    document.getElementById('copyEmailBtn')?.addEventListener('click', () => {
-        const text = document.getElementById('emailTemplateText');
-        text.select();
-        navigator.clipboard.writeText(text.value);
-        alert('Шаблон скопирован');
+    $('#clearEntitiesBtn')?.addEventListener('click',()=>{entities=[];render();if(preview)preview.textContent='-- Добавьте хотя бы одну сущность';});
+    $('#genSqlBtn')?.addEventListener('click',()=>{
+      if(!preview)return;
+      if(!entities.length){preview.textContent='-- Добавьте хотя бы одну сущность';return;}
+      preview.textContent=entities.map(entity=>`CREATE TABLE ${entity.name} (\n  ${entity.attrs.map((attr,index)=>`${attr} ${index===0 && attr==='id'?'BIGINT PRIMARY KEY':'VARCHAR(255)'}`).join(',\n  ')}\n);`).join('\n\n');
     });
+    render();
+  }
 
-    // --- Закладки (сохранение секций) ---
-    let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-    function renderBookmarks() {
-        const container = document.getElementById('bookmarksList');
-        const counter = document.getElementById('bookmarksCounter');
-        if(!container) return;
-        if(bookmarks.length === 0) container.innerHTML = '<li>Нет закладок</li>';
-        else container.innerHTML = bookmarks.map(id => `<li><a href="#${id}" class="nav-link" style="justify-content:space-between;"><span>${id}</span><button onclick="removeBookmark('${id}')" class="btn-secondary" style="padding:0.2rem 0.5rem;">🗑️</button></a></li>`).join('');
-        if(counter) counter.innerText = bookmarks.length;
-    }
-    window.removeBookmark = (id) => { bookmarks = bookmarks.filter(b => b !== id); localStorage.setItem('bookmarks', JSON.stringify(bookmarks)); renderBookmarks(); };
-    document.querySelectorAll('.card').forEach(card => {
-        const id = card.id;
-        if(!id) return;
-        const h2 = card.querySelector('h2');
-        if(h2 && !h2.querySelector('.bookmark-icon')) {
-            const icon = document.createElement('i');
-            icon.className = 'fas fa-bookmark bookmark-icon';
-            icon.style.cursor = 'pointer';
-            icon.style.marginLeft = '0.8rem';
-            icon.style.fontSize = '1.2rem';
-            icon.onclick = () => {
-                if(bookmarks.includes(id)) bookmarks = bookmarks.filter(b => b !== id);
-                else bookmarks.push(id);
-                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-                renderBookmarks();
-            };
-            h2.appendChild(icon);
-        }
-    });
-    renderBookmarks();
+  const quizBank = {
+    requirements:[{q:'Что относится к нефункциональным требованиям?',o:['Создание заказа','Время ответа API','Редактирование профиля'],a:1},{q:'Что делает требование тестируемым?',o:['Большой объем текста','Критерии приемки','Ссылка на макет'],a:1}],
+    api:[{q:'Какой метод обычно используется для чтения ресурса?',o:['GET','POST','DELETE'],a:0},{q:'Какой код означает, что ресурс не найден?',o:['201','404','503'],a:1}],
+    db:[{q:'Что означает атомарность значений в таблице?',o:['1NF','2NF','3NF'],a:0},{q:'Какой оператор связывает строки нескольких таблиц?',o:['JOIN','ORDER BY','TRUNCATE'],a:0}],
+    bpmn:[{q:'Какой элемент BPMN используется для ветвления?',o:['Task','Gateway','Pool'],a:1},{q:'Что обычно разделяет ответственность участников?',o:['Lane','Timer','Message'],a:0}],
+    security:[{q:'Что должно быть описано для авторизации?',o:['Только пароль','Роли и права','Только HTTPS'],a:1},{q:'Что помогает анализировать угрозы?',o:['STRIDE','CRUD','INVEST'],a:0}],
+    ddd:[{q:'Что задает границу применимости модели?',o:['Bounded Context','HTTP endpoint','Sprint Goal'],a:0},{q:'Что такое Ubiquitous Language?',o:['Единый язык домена','Язык SQL','Язык интерфейса'],a:0}]
+  };
 
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m){
-            if(m === '&') return '&amp;';
-            if(m === '<') return '&lt;';
-            if(m === '>') return '&gt;';
-            return m;
-        });
-    }
-});
+  function initQuiz() {
+    const area=$('#testArea'); const select=$('#testSection'); let questions=[]; let index=0; let answers=[];
+    const render=()=>{
+      if(!area||!questions.length)return;
+      const q=questions[index]; area.replaceChildren();
+      const card=document.createElement('div'); card.className='test-card';
+      const meta=document.createElement('div'); meta.className='test-meta'; const progress=document.createElement('span'); progress.textContent=`Вопрос ${index+1}/${questions.length}`; const topic=document.createElement('span'); topic.textContent=select?.selectedOptions?.[0]?.textContent||''; meta.append(progress,topic);
+      const title=document.createElement('h3'); title.textContent=q.q;
+      const options=document.createElement('div'); options.className='test-options';
+      q.o.forEach((text,i)=>{const label=document.createElement('label');label.className='checklist-item';const radio=document.createElement('input');radio.type='radio';radio.name='quizOption';radio.value=String(i);radio.checked=answers[index]===i;radio.addEventListener('change',()=>{answers[index]=i;});label.append(radio,document.createTextNode(text));options.append(label);});
+      const actions=document.createElement('div');actions.className='button-row';
+      const prev=document.createElement('button');prev.type='button';prev.className='btn btn--secondary btn--small';prev.textContent='← Назад';prev.disabled=index===0;prev.addEventListener('click',()=>{index--;render();});
+      const next=document.createElement('button');next.type='button';next.className='btn btn--primary btn--small';next.textContent=index===questions.length-1?'Завершить':'Далее →';next.addEventListener('click',()=>{if(index<questions.length-1){index++;render();}else finish();});
+      actions.append(prev,next);card.append(meta,title,options,actions);area.append(card);
+    };
+    const finish=()=>{if(!area)return;const correct=questions.reduce((sum,q,i)=>sum+(answers[i]===q.a?1:0),0);const percent=Math.round(correct/questions.length*100);area.replaceChildren();const result=document.createElement('div');result.className='decision-result';const label=document.createElement('span');label.textContent='Результат';const score=document.createElement('strong');score.textContent=`${correct}/${questions.length} · ${percent}%`;const text=document.createElement('p');text.textContent=percent>=80?'Хороший результат. Можно переходить к следующему разделу.':'Есть смысл повторить теорию и пройти тест еще раз.';const restart=document.createElement('button');restart.type='button';restart.className='btn btn--secondary btn--small';restart.textContent='Пройти заново';restart.addEventListener('click',start);result.append(label,score,text,restart);area.append(result);};
+    const start=()=>{questions=[...(quizBank[select?.value]||[])];index=0;answers=new Array(questions.length).fill(null);render();};
+    $('#startTestBtn')?.addEventListener('click',start);
+  }
+
+  const docTemplates = {
+    srs:'1. Введение\n1.1 Цель документа\n1.2 Область решения\n1.3 Термины\n\n2. Контекст\n2.1 Пользователи и роли\n2.2 Ограничения\n\n3. Функциональные требования\nFR-001 ...\n\n4. Нефункциональные требования\nNFR-001 ...\n\n5. Интеграции и данные\n\n6. Критерии приемки\n\n7. Открытые вопросы',
+    'user-stories':'Как [роль], я хочу [возможность], чтобы [ценность].\n\nAcceptance Criteria\nGiven ...\nWhen ...\nThen ...\n\nОшибочные сценарии:\n- ...\n\nПриоритет: Must / Should / Could',
+    'api-spec':'openapi: 3.0.3\ninfo:\n  title: Example API\n  version: 1.0.0\npaths:\n  /resource/{id}:\n    get:\n      summary: Get resource\n      parameters:\n        - in: path\n          name: id\n          required: true\n          schema:\n            type: string\n      responses:\n        \'200\':\n          description: Success\n        \'404\':\n          description: Not found',
+    'test-cases':'Название: Успешный сценарий\nПредусловия:\n- ...\n\nШаги:\n1. ...\n2. ...\n\nОжидаемый результат:\n- ...\n\nПостусловия:\n- ...'
+  };
+
+  function initDocuments() {
+    $$('[data-doc]').forEach(btn=>btn.addEventListener('click',()=>{const content=docTemplates[btn.dataset.doc]||'';const textarea=$('#docContent');if(textarea)textarea.value=content;const editor=$('#docEditor');if(editor)editor.hidden=false;}));
+    $('#downloadDocBtn')?.addEventListener('click',()=>downloadText('sa-template.txt',$('#docContent')?.value||''));
+    $('#generateDocBtn')?.addEventListener('click',()=>{const type=$('#docTypeSelect')?.value;const out=$('#generatedDoc');if(out)out.value=docTemplates[type]||'';});
+    $('#downloadGeneratedDoc')?.addEventListener('click',()=>downloadText('sa-generated-document.txt',$('#generatedDoc')?.value||''));
+  }
+
+  const messageTemplates = {
+    clarification:'Коллеги, добрый день.\n\nНужно уточнить несколько моментов по [задаче]:\n1. [вопрос]\n2. [вопрос]\n\nЭто необходимо, чтобы зафиксировать [решение / критерий / ограничение].\nСпасибо.',
+    meeting:'Коллеги, предлагаю встречу по теме [тема].\n\nЦель: [какое решение нужно получить].\nВходные материалы: [ссылка].\nПовестка:\n1. ...\n2. ...\n\nОжидаемый результат встречи: [решение / список вопросов].',
+    review:'Коллеги, прошу провести ревью [документа / схемы / API-контракта].\n\nЧто важно проверить:\n- полнота сценариев;\n- ошибки и ограничения;\n- согласованность с текущей системой.\n\nКомментарии прошу оставить до [дата].',
+    update:'Статус по [задаче]\n\nГотово:\n- ...\n\nВ работе:\n- ...\n\nОткрытые вопросы / блокеры:\n- ...\n\nСледующий шаг:\n- ...'
+  };
+
+  function initMessages() {
+    $$('[data-email]').forEach(btn=>btn.addEventListener('click',()=>{const area=$('#emailTemplateText');if(area)area.value=messageTemplates[btn.dataset.email]||'';}));
+    $('#copyEmailBtn')?.addEventListener('click',async()=>showToast(await copyText($('#emailTemplateText')?.value||'')?'Скопировано':'Не удалось скопировать'));
+  }
+
+  function initConverter() {
+    const factors={kb:1,mb:1024,gb:1024*1024};
+    const run=()=>{const value=Number($('#conv-input')?.value);const from=$('#conv-from')?.value;const to=$('#conv-to')?.value;const out=$('#conv-output');if(!out)return;if(!Number.isFinite(value)){out.value='Введите число';return;}const result=value*factors[from]/factors[to];out.value=`${Number(result.toFixed(6))} ${to.toUpperCase()}`;};
+    $('#convertBtn')?.addEventListener('click',run);['#conv-input','#conv-from','#conv-to'].forEach(selector=>$(selector)?.addEventListener('change',run));run();
+  }
+
+  function initApiTester() {
+    $('#sendApiBtn')?.addEventListener('click',async()=>{
+      const method=$('#apiMethod')?.value||'GET';const url=$('#apiUrl')?.value?.trim();const out=$('#apiResponse');const status=$('#apiStatus');if(!out||!url)return;
+      let parsed;try{parsed=new URL(url);}catch{out.textContent='Ошибка: некорректный URL';return;}if(!/^https?:$/.test(parsed.protocol)){out.textContent='Ошибка: поддерживаются только http/https URL';return;}
+      out.textContent='Отправка запроса…';if(status)status.textContent='Loading…';
+      const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),10000);
+      try{
+        const options={method,signal:controller.signal,headers:{Accept:'application/json,text/plain;q=0.9,*/*;q=0.8'}};
+        if(method==='POST'){options.headers['Content-Type']='application/json';options.body=JSON.stringify({title:'Test request from SA Guide',body:'Browser demo',userId:1});}
+        const response=await fetch(url,options);clearTimeout(timeout);
+        const contentType=response.headers.get('content-type')||'';const raw=await response.text();let body=raw;
+        if(contentType.includes('application/json')){try{body=JSON.stringify(JSON.parse(raw),null,2);}catch{}}
+        out.textContent=body||'(пустой ответ)';if(status)status.textContent=`${response.status} ${response.statusText||''}`.trim();
+      }catch(error){clearTimeout(timeout);const message=error?.name==='AbortError'?'таймаут 10 секунд':(error?.message||'неизвестная ошибка');out.textContent=`Ошибка запроса: ${message}\n\nВозможная причина — CORS-политика целевого API или отсутствие сети.`;if(status)status.textContent='Request failed';}
+    });
+    $$('[data-api-url]').forEach(btn=>btn.addEventListener('click',()=>{const input=$('#apiUrl');if(input)input.value=btn.dataset.apiUrl||'';}));
+  }
+
+  function initNotes() {
+    let notes=readJson(STORAGE.notes,[]);if(!Array.isArray(notes))notes=[];
+    const list=$('#notesList');
+    const render=()=>{if(!list)return;list.replaceChildren();if(!notes.length){const p=document.createElement('p');p.className='muted';p.textContent='Заметок пока нет.';list.append(p);return;}notes.forEach(note=>{const card=document.createElement('article');card.className='note-card';const head=document.createElement('div');head.className='note-card-head';const title=document.createElement('strong');title.textContent=note.title;const del=document.createElement('button');del.type='button';del.className='note-delete';del.textContent='Удалить';del.addEventListener('click',()=>{notes=notes.filter(item=>item.id!==note.id);writeJson(STORAGE.notes,notes);render();});head.append(title,del);const time=document.createElement('time');time.dateTime=note.iso||'';time.textContent=note.date||'';const body=document.createElement('p');body.textContent=note.content;card.append(head,time,body);list.append(card);});};
+    $('#addNoteBtn')?.addEventListener('click',()=>{const title=$('#noteTitle')?.value.trim();const content=$('#noteContent')?.value.trim();if(!title){showToast('Введите заголовок');$('#noteTitle')?.focus();return;}const now=new Date();notes.unshift({id:Date.now(),title,content,date:now.toLocaleString('ru-RU'),iso:now.toISOString()});notes=notes.slice(0,50);writeJson(STORAGE.notes,notes);if($('#noteTitle'))$('#noteTitle').value='';if($('#noteContent'))$('#noteContent').value='';render();showToast('Заметка сохранена локально');});render();
+  }
+
+  function initPersistentChecklist(ids,key,fillSelector,percentSelector,resetSelector) {
+    if (!ids.some(id => $(`#${id}`))) return;
+    const saved=readJson(key,{});ids.forEach(id=>{const input=$(`#${id}`);if(input&&saved[id])input.checked=true;});
+    const update=()=>{const state={};let checked=0;ids.forEach(id=>{const input=$(`#${id}`);state[id]=Boolean(input?.checked);if(state[id])checked++;});writeJson(key,state);const percent=Math.round(checked/ids.length*100);const fill=$(fillSelector);if(fill)fill.style.width=`${percent}%`;const label=$(percentSelector);if(label)label.textContent=`${percent}%`;};
+    ids.forEach(id=>$(`#${id}`)?.addEventListener('change',update));$(resetSelector)?.addEventListener('click',()=>{ids.forEach(id=>{const input=$(`#${id}`);if(input)input.checked=false;});update();});update();
+  }
+
+  function initCompetency() {
+    const ids=$$('.comp-cb').map(cb=>cb.id);const saved=readJson(STORAGE.competency,{});ids.forEach(id=>{const cb=$(`#${id}`);if(cb&&saved[id])cb.checked=true;});
+    const update=()=>{const checked=ids.filter(id=>$(`#${id}`)?.checked).length;const percent=Math.round(checked/ids.length*100);const fill=$('#compProgressFill');if(fill)fill.style.width=`${percent}%`;const label=$('#compProgressPercent');if(label)label.textContent=`${percent}%`;};
+    ids.forEach(id=>$(`#${id}`)?.addEventListener('change',update));
+    $('#saveCompBtn')?.addEventListener('click',()=>{const state=Object.fromEntries(ids.map(id=>[id,Boolean($(`#${id}`)?.checked)]));writeJson(STORAGE.competency,state);showToast('Прогресс сохранён');});
+    $('#resetCompBtn')?.addEventListener('click',()=>{ids.forEach(id=>{const cb=$(`#${id}`);if(cb)cb.checked=false;});writeJson(STORAGE.competency,{});update();});update();
+  }
+
+  function initCopyButtons() {
+    $$('[data-copy-target]').forEach(btn=>btn.addEventListener('click',async()=>{const target=$(`#${CSS.escape(btn.dataset.copyTarget)}`);const text='value' in (target||{})?target.value:target?.textContent||'';showToast(await copyText(text)?'Скопировано':'Не удалось скопировать');}));
+  }
+
+  function initFooter() { const y=$('#currentYear'); if(y)y.textContent=String(new Date().getFullYear()); }
+
+  function initServiceWorkerCleanup() {
+    // Earlier versions did not use a service worker. If a stale experimental one
+    // ever existed on this GitHub Pages scope, keep the page predictable by not
+    // registering a new worker here.
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    initTheme();
+    initFontScale();
+    initHeader();
+    initMobileNav();
+    initPrint();
+    initSearch();
+    initActiveNav();
+    initBookmarks();
+    initTimer();
+    initDecisionTree();
+    initDataModeler();
+    initQuiz();
+    initDocuments();
+    initMessages();
+    initConverter();
+    initApiTester();
+    initNotes();
+    initPersistentChecklist(['sec1','sec2','sec3','sec4','sec5','sec6'],STORAGE.security,'#secChecklistProgress','#secChecklistPercent','#resetSecChecklist');
+    initPersistentChecklist(['chStakeholders','chUserStories','chAcceptance','chNonFunctional','chTrace'],STORAGE.requirements,'#reqChecklistProgress','#reqChecklistPercent','#resetReqChecklist');
+    initCompetency();
+    initCopyButtons();
+    initFooter();
+    initServiceWorkerCleanup();
+  });
+})();

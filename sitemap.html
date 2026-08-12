@@ -1,100 +1,23 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карта сайта — Памятка системного аналитика</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            padding: 2rem;
-        }
-        .sitemap-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .sitemap-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .sitemap-header h1 {
-            font-size: 2rem;
-            color: #3b82f6;
-        }
-        .sitemap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .sitemap-category {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-left: 4px solid #3b82f6;
-        }
-        .sitemap-category h2 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: #2563eb;
-        }
-        .sitemap-category ul {
-            list-style: none;
-        }
-        .sitemap-category li {
-            margin-bottom: 0.5rem;
-        }
-        .sitemap-category a {
-            text-decoration: none;
-            color: #475569;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.3rem 0;
-        }
-        .sitemap-category a:hover {
-            color: #3b82f6;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 0.5rem 1rem;
-            background: #3b82f6;
-            color: white;
-            border-radius: 40px;
-            text-decoration: none;
-        }
-        @media (max-width: 700px) {
-            body { padding: 1rem; }
-        }
-    </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Карта SA Guide | KnowerLife</title><meta name="description" content="Карта разделов интерактивной памятки системного аналитика SA Guide."><meta name="robots" content="index,follow"><meta name="theme-color" content="#6757f5"><link rel="canonical" href="https://knowerlife.github.io/SA/sitemap.html"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="sitemap-container">
-    <div class="sitemap-header">
-        <h1><i class="fas fa-sitemap"></i> Карта сайта</h1>
-        <p>Все разделы памятки системного аналитика</p>
-    </div>
-    <div class="sitemap-grid">
-        <div class="sitemap-category"><h2>Основы анализа</h2><ul><li><a href="index.html#task-process"><i class="fas fa-tasks"></i>Что делать при получении задачи</a></li><li><a href="index.html#artifacts"><i class="fas fa-archive"></i>Артефакты</a></li><li><a href="index.html#requirements"><i class="fas fa-clipboard-list"></i>Виды требований</a></li><li><a href="index.html#stakeholders"><i class="fas fa-users"></i>Стейкхолдеры</a></li><li><a href="index.html#ux-ui"><i class="fas fa-paint-brush"></i>UX/UI принципы</a></li></ul></div>
-        <div class="sitemap-category"><h2>Техники и методы</h2><ul><li><a href="index.html#info-gathering"><i class="fas fa-search"></i>Методы сбора информации</a></li><li><a href="index.html#use-cases"><i class="fas fa-sitemap"></i>Use cases</a></li><li><a href="index.html#user-stories"><i class="fas fa-book-open"></i>User stories</a></li><li><a href="index.html#bpmn"><i class="fas fa-project-diagram"></i>BPMN</a></li><li><a href="index.html#estimation"><i class="fas fa-calculator"></i>Техники оценки задач</a></li></ul></div>
-        <div class="sitemap-category"><h2>Архитектура</h2><ul><li><a href="index.html#api"><i class="fas fa-code"></i>API</a></li><li><a href="index.html#rest"><i class="fas fa-exchange-alt"></i>REST</a></li><li><a href="index.html#soap"><i class="fas fa-exchange-alt"></i>SOAP</a></li><li><a href="index.html#graphql"><i class="fas fa-network-wired"></i>GraphQL</a></li><li><a href="index.html#microservices"><i class="fas fa-cubes"></i>Микросервисы</a></li><li><a href="index.html#ddd"><i class="fas fa-layer-group"></i>DDD</a></li></ul></div>
-        <div class="sitemap-category"><h2>Данные и хранение</h2><ul><li><a href="index.html#db"><i class="fas fa-database"></i>Базы данных</a></li><li><a href="index.html#data-modeling"><i class="fas fa-project-diagram"></i>Моделирование данных + SQL</a></li></ul></div>
-        <div class="sitemap-category"><h2>Процессы и методологии</h2><ul><li><a href="index.html#kanban-scrum"><i class="fas fa-columns"></i>Kanban vs Scrum</a></li><li><a href="index.html#ci-cd"><i class="fas fa-sync-alt"></i>CI/CD</a></li><li><a href="index.html#decision-tree"><i class="fas fa-sitemap"></i>Decision Tree</a></li></ul></div>
-        <div class="sitemap-category"><h2>Безопасность</h2><ul><li><a href="index.html#security"><i class="fas fa-shield-alt"></i>Основы безопасности</a></li><li><a href="index.html#security-checklist"><i class="fas fa-list-check"></i>Чеклист безопасности</a></li></ul></div>
-        <div class="sitemap-category"><h2>Аналитика и качество</h2><ul><li><a href="index.html#metrics"><i class="fas fa-chart-line"></i>Метрики</a></li><li><a href="index.html#mistakes"><i class="fas fa-exclamation-triangle"></i>Ошибки аналитика</a></li></ul></div>
-        <div class="sitemap-category"><h2>Документация</h2><ul><li><a href="index.html#templates"><i class="fas fa-file-contract"></i>Шаблоны документов</a></li><li><a href="index.html#document-generator"><i class="fas fa-file-alt"></i>Генератор документов</a></li><li><a href="index.html#email-templates"><i class="fas fa-envelope"></i>Шаблоны писем</a></li><li><a href="index.html#swagger"><i class="fas fa-file-code"></i>Swagger/OpenAPI</a></li></ul></div>
-        <div class="sitemap-category"><h2>Карьера и развитие</h2><ul><li><a href="index.html#career"><i class="fas fa-user-graduate"></i>Карьерный путь</a></li><li><a href="index.html#competency-map"><i class="fas fa-star"></i>Карта компетенций</a></li><li><a href="index.html#testing-system"><i class="fas fa-graduation-cap"></i>Проверка знаний</a></li></ul></div>
-        <div class="sitemap-category"><h2>Инструменты и ресурсы</h2><ul><li><a href="index.html#quick-tools"><i class="fas fa-bolt"></i>Быстрые инструменты</a></li><li><a href="index.html#external-integration"><i class="fas fa-plug"></i>API тестер</a></li><li><a href="index.html#knowledge-base"><i class="fas fa-sticky-note"></i>Заметки</a></li><li><a href="index.html#interactive-checklists"><i class="fas fa-tasks"></i>Чеклисты</a></li><li><a href="index.html#glossary"><i class="fas fa-book"></i>Глоссарий</a></li><li><a href="index.html#resources"><i class="fas fa-external-link-alt"></i>Полезные ресурсы</a></li></ul></div>
-    </div>
-    <div style="text-align: center; margin-top: 2rem;">
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Вернуться на главную</a>
-    </div>
-</div>
-</body>
-</html>
+<header class="site-header"><div class="container navbar"><a class="brand" href="index.html"><span class="brand-name">&lt;KnowerLife /&gt;</span><span class="brand-product">SA Guide</span></a><div class="nav-actions"><a class="btn btn--secondary btn--small" href="index.html">← В справочник</a></div></div></header>
+<main><section class="hero"><div class="container"><p class="eyebrow">Навигация</p><h1>Карта <span class="gradient-text">SA Guide</span></h1><p class="lead">Все основные темы и интерактивные блоки справочника в одном месте.</p></div></section>
+<section class="section"><div class="container resource-grid">
+<a href="index.html#task-process"><strong>Основы анализа</strong><span>задача, артефакты, требования, стейкхолдеры, UX/UI</span><i>→</i></a>
+<a href="index.html#info-gathering"><strong>Техники и методы</strong><span>discovery, Use Cases, User Stories, BPMN, оценка</span><i>→</i></a>
+<a href="index.html#api"><strong>Архитектура</strong><span>API, REST, SOAP, GraphQL, микросервисы, DDD</span><i>→</i></a>
+<a href="index.html#db"><strong>Данные</strong><span>базы данных, нормализация, моделирование и SQL</span><i>→</i></a>
+<a href="index.html#kanban-scrum"><strong>Delivery</strong><span>Scrum, Kanban, CI/CD, decision tree</span><i>→</i></a>
+<a href="index.html#security"><strong>Безопасность и качество</strong><span>security requirements, checklist, метрики, ошибки</span><i>→</i></a>
+<a href="index.html#templates"><strong>Документация</strong><span>SRS, User Story, API Spec, OpenAPI, сообщения</span><i>→</i></a>
+<a href="index.html#career"><strong>Карьера</strong><span>уровни, карта компетенций и тесты</span><i>→</i></a>
+<a href="index.html#tools-zone"><strong>Browser tools</strong><span>конвертер, API tester, заметки и чеклисты</span><i>→</i></a>
+<a href="index.html#glossary"><strong>Глоссарий и ресурсы</strong><span>термины, стандарты и полезные инструменты</span><i>→</i></a>
+</div></section></main>
+<footer class="site-footer"><div class="container footer-bottom"><span>© 2026 KnowerLife</span><a href="https://github.com/KnowerLife/SA" target="_blank" rel="noopener">GitHub ↗</a></div></footer>
+<script src="script.js" defer></script>
+</body></html>

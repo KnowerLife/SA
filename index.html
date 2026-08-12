@@ -1,278 +1,389 @@
-<!DOCTYPE html>
-<html lang="ru" prefix="og: http://ogp.me/ns#">
+<!doctype html>
+<html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Полное руководство для системных аналитиков: требования, архитектура, базы данных, безопасность, документация, карьерный рост и инструменты. Памятка с практическими примерами и шаблонами.">
-    <meta name="keywords" content="системный аналитик, требования, SRS, BPMN, UML, REST API, GraphQL, микросервисы, базы данных, SQL, документация, карьера, чеклисты">
-    <meta name="author" content="KNOWER LIFE">
-    <meta name="copyright" content="© 2025 Памятка Системного Аналитика">
-    <meta property="og:title" content="Памятка Системного Аналитика - Essential Guide">
-    <meta property="og:description" content="Полное руководство для системных аналитиков с практическими примерами, шаблонами и инструментами">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://knowerlife.github.io/SA/">
-    <meta property="og:image" content="https://knowerlife.github.io/SA/images/og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://knowerlife.github.io/SA/">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📊%3C/text%3E%3C/svg%3E">
-    <title>Памятка Системного Аналитика - Essential Guide</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Памятка Системного Аналитика",
-      "description": "Полное руководство для системных аналитиков с практическими примерами, шаблонами и инструментами",
-      "url": "https://knowerlife.github.io/SA/",
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Главная",
-          "item": "https://knowerlife.github.io/SA/"
-        }]
-      },
-      "mainEntity": [{
-        "@type": "Article",
-        "name": "Что делать при получении задачи системным аналитиком",
-        "articleBody": "Когда системный аналитик получает задачу, рекомендуется следовать алгоритму: определение требований, исследование и анализ, моделирование и проектирование, разработка требований, взаимодействие с командой, контроль и мониторинг."
-      }]
-    }
-    </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SA Guide — памятка системного аналитика | KnowerLife</title>
+  <meta name="description" content="Интерактивная база знаний системного аналитика: требования, API, BPMN, базы данных, безопасность, документация, чеклисты, тесты и browser-инструменты.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+  <meta name="author" content="KnowerLife">
+  <meta name="theme-color" content="#6757f5">
+  <link rel="canonical" href="https://knowerlife.github.io/SA/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KnowerLife">
+  <meta property="og:title" content="SA Guide — памятка системного аналитика">
+  <meta property="og:description" content="Рабочая база знаний системного аналитика: от требований и API до чеклистов, тестов и локальных инструментов.">
+  <meta property="og:url" content="https://knowerlife.github.io/SA/">
+  <meta property="og:image" content="https://knowerlife.github.io/SA/assets/og-sa.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SA Guide — памятка системного аналитика">
+  <meta name="twitter:description" content="Интерактивная база знаний и набор инструментов для системного аналитика.">
+  <meta name="twitter:image" content="https://knowerlife.github.io/SA/assets/og-sa.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"WebSite","@id":"https://knowerlife.github.io/SA/#website","url":"https://knowerlife.github.io/SA/","name":"SA Guide — KnowerLife","inLanguage":"ru"},
+      {"@type":"TechArticle","@id":"https://knowerlife.github.io/SA/#guide","url":"https://knowerlife.github.io/SA/","headline":"Памятка системного аналитика — Essential Guide","description":"Интерактивная база знаний системного аналитика: требования, архитектура, данные, безопасность и практические инструменты.","author":{"@type":"Organization","name":"KnowerLife","url":"https://knowerlife.ru/"},"isPartOf":{"@id":"https://knowerlife.github.io/SA/#website"},"inLanguage":"ru"}
+    ]
+  }
+  </script>
 </head>
 <body>
-    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
-    <div class="overlay" id="navOverlay"></div>
-
-    <div class="app-container">
-        <!-- Боковая навигация (полное меню без дублей) -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header"><i class="fas fa-brain"></i><span>Памятка системного аналитика - SA Guide</span></div>
-            <div class="nav-section"><h3>📌 Закладки <span id="bookmarksCounter" class="bookmarks-counter">0</span></h3><ul id="bookmarksList" class="bookmark-list"><li>—</li></ul></div>
-            <div class="nav-section"><h3>Основы анализа</h3><ul><li><a href="#task-process" class="nav-link"><i class="fas fa-tasks"></i>Что делать при получении задачи</a></li><li><a href="#artifacts" class="nav-link"><i class="fas fa-archive"></i>Артефакты</a></li><li><a href="#requirements" class="nav-link"><i class="fas fa-clipboard-list"></i>Виды требований</a></li><li><a href="#stakeholders" class="nav-link"><i class="fas fa-users"></i>Стейкхолдеры</a></li><li><a href="#ux-ui" class="nav-link"><i class="fas fa-paint-brush"></i>UX/UI принципы</a></li></ul></div>
-            <div class="nav-section"><h3>Техники и методы</h3><ul><li><a href="#info-gathering" class="nav-link"><i class="fas fa-search"></i>Методы сбора информации</a></li><li><a href="#use-cases" class="nav-link"><i class="fas fa-sitemap"></i>Use cases</a></li><li><a href="#user-stories" class="nav-link"><i class="fas fa-book-open"></i>User stories</a></li><li><a href="#bpmn" class="nav-link"><i class="fas fa-project-diagram"></i>BPMN</a></li><li><a href="#estimation" class="nav-link"><i class="fas fa-calculator"></i>Техники оценки задач</a></li></ul></div>
-            <div class="nav-section"><h3>Архитектура</h3><ul><li><a href="#api" class="nav-link"><i class="fas fa-code"></i>API</a></li><li><a href="#rest" class="nav-link"><i class="fas fa-exchange-alt"></i>REST</a></li><li><a href="#soap" class="nav-link"><i class="fas fa-exchange-alt"></i>SOAP</a></li><li><a href="#graphql" class="nav-link"><i class="fas fa-network-wired"></i>GraphQL</a></li><li><a href="#microservices" class="nav-link"><i class="fas fa-cubes"></i>Микросервисы</a></li><li><a href="#ddd" class="nav-link"><i class="fas fa-layer-group"></i>DDD</a></li></ul></div>
-            <div class="nav-section"><h3>Данные и хранение</h3><ul><li><a href="#db" class="nav-link"><i class="fas fa-database"></i>Базы данных</a></li><li><a href="#data-modeling" class="nav-link"><i class="fas fa-project-diagram"></i>Моделирование данных + SQL</a></li></ul></div>
-            <div class="nav-section"><h3>Процессы и методологии</h3><ul><li><a href="#kanban-scrum" class="nav-link"><i class="fas fa-columns"></i>Kanban vs Scrum</a></li><li><a href="#ci-cd" class="nav-link"><i class="fas fa-sync-alt"></i>CI/CD</a></li><li><a href="#decision-tree" class="nav-link"><i class="fas fa-sitemap"></i>Decision Tree (выбор методологии)</a></li></ul></div>
-            <div class="nav-section"><h3>Безопасность</h3><ul><li><a href="#security" class="nav-link"><i class="fas fa-shield-alt"></i>Основы безопасности</a></li><li><a href="#security-checklist" class="nav-link"><i class="fas fa-list-check"></i>Чеклист безопасности</a></li></ul></div>
-            <div class="nav-section"><h3>Аналитика и качество</h3><ul><li><a href="#metrics" class="nav-link"><i class="fas fa-chart-line"></i>Метрики</a></li><li><a href="#mistakes" class="nav-link"><i class="fas fa-exclamation-triangle"></i>Ошибки аналитика</a></li></ul></div>
-            <div class="nav-section"><h3>Документация</h3><ul><li><a href="#templates" class="nav-link"><i class="fas fa-file-contract"></i>Шаблоны документов</a></li><li><a href="#document-generator" class="nav-link"><i class="fas fa-file-alt"></i>Генератор документов</a></li><li><a href="#email-templates" class="nav-link"><i class="fas fa-envelope"></i>Шаблоны писем</a></li><li><a href="#swagger" class="nav-link"><i class="fas fa-file-code"></i>Swagger/OpenAPI</a></li></ul></div>
-            <div class="nav-section"><h3>Карьера и развитие</h3><ul><li><a href="#career" class="nav-link"><i class="fas fa-user-graduate"></i>Карьерный путь</a></li><li><a href="#competency-map" class="nav-link"><i class="fas fa-star"></i>Карта компетенций</a></li><li><a href="#testing-system" class="nav-link"><i class="fas fa-graduation-cap"></i>Проверка знаний</a></li></ul></div>
-            <div class="nav-section"><h3>Инструменты и ресурсы</h3><ul><li><a href="#quick-tools" class="nav-link"><i class="fas fa-bolt"></i>Быстрые инструменты</a></li><li><a href="#external-integration" class="nav-link"><i class="fas fa-plug"></i>API тестер</a></li><li><a href="#knowledge-base" class="nav-link"><i class="fas fa-sticky-note"></i>Заметки</a></li><li><a href="#interactive-checklists" class="nav-link"><i class="fas fa-tasks"></i>Интерактивные чеклисты</a></li><li><a href="#glossary" class="nav-link"><i class="fas fa-book"></i>Глоссарий</a></li><li><a href="#resources" class="nav-link"><i class="fas fa-external-link-alt"></i>Полезные ресурсы</a></li></ul></div>
-        </aside>
-
-        <!-- Основной контент: все секции с полным описанием -->
-        <main>
-            <header class="main-header">
-                <div class="header-controls">
-                    <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="globalSearch" placeholder="Поиск по всем разделам..."></div>
-                    <button id="accessibilityToggle" class="icon-btn" title="Версия для слабовидящих"><i class="fas fa-eye"></i></button>
-                    <button id="themeToggle" class="icon-btn" title="Тёмная тема"><i class="fas fa-moon"></i></button>
-                    <button id="pdfExportBtn" class="icon-btn" title="Экспорт в PDF"><i class="fas fa-file-pdf"></i></button>
-                </div>
-            </header>
-
-            <!-- 1. Задача -->
-            <section id="task-process" class="card">
-                <h2><i class="fas fa-tasks"></i> Что делать при получении задачи</h2>
-                <p>Когда системный аналитик получает задачу, рекомендуется следовать этому алгоритму:</p>
-                <ol>
-                    <li><strong>Определение требований</strong> – анализ бизнес-процессов, пользовательских сценариев.</li>
-                    <li><strong>Исследование и анализ</strong> – изучение документации, интервью с пользователями.</li>
-                    <li><strong>Моделирование и проектирование</strong> – создание моделей данных, диаграмм (BPMN, UML).</li>
-                    <li><strong>Разработка требований</strong> – технические спецификации, документация (SRS).</li>
-                    <li><strong>Взаимодействие с командой</strong> – согласование требований с разработчиками и тестировщиками.</li>
-                    <li><strong>Контроль и мониторинг</strong> – отслеживание реализации проекта, управление изменениями.</li>
-                </ol>
-                <div class="tip">💡 <strong>Профессиональный совет:</strong> Всегда начинайте с понимания бизнес-целей задачи. Задавайте вопросы «Зачем?» и «Какую проблему решает?» прежде чем переходить к техническим деталям.</div>
-                <div class="example-block"><strong>Ключевые компетенции системного аналитика:</strong> бизнес-анализ, системный анализ, работа с данными, UX/UI, технические знания, коммуникация.</div>
-                <h3>Приоритизация задач</h3>
-                <div class="example-block">
-                    <strong>Матрица Value vs Effort (Ценность vs Сложность)</strong><br>
-                    ▢ Высокая ценность + Низкая сложность → делаем в первую очередь.<br>
-                    ▢ Высокая ценность + Высокая сложность → планируем на следующий этап.<br>
-                    ▢ Низкая ценность + Низкая сложность → можно сделать, если есть время.<br>
-                    ▢ Низкая ценность + Высокая сложность → избегаем.
-                </div>
-            </section>
-
-            <section id="artifacts" class="card"><h2><i class="fas fa-archive"></i> Артефакты в системном анализе</h2><p>Артефакты – это документы, модели и информация, создаваемые в процессе анализа системы:</p><ul><li>Требования (функциональные и нефункциональные)</li><li>Диаграммы (BPMN, UML, последовательности, ER-диаграммы)</li><li>Пользовательские истории (User Stories)</li><li>Сценарии использования (Use Cases)</li><li>Прототипы интерфейсов (макеты, wireframes)</li><li>Глоссарий терминов</li><li>Отчёты об анализе, спецификации API (OpenAPI)</li><li>Тест-кейсы и чеклисты</li></ul><div class="quick-links"><a href="#requirements" class="quick-link">Подробнее о требованиях</a><a href="#use-cases" class="quick-link">Use Cases</a><a href="#user-stories" class="quick-link">User Stories</a></div></section>
-
-            <section id="requirements" class="card"><h2><i class="fas fa-clipboard-list"></i> Виды требований</h2>
-                <h3>Функциональные требования</h3><p>Определяют, что система должна делать:</p><ul><li>Основные функции (регистрация, авторизация, поиск, отчётность)</li><li>Бизнес-процессы и сценарии использования</li><li>Требования к обработке данных (ввод, валидация, расчёты)</li><li>Взаимодействие с другими системами (интеграции, API)</li></ul><div class="example-block">Пример: «Система должна позволять пользователям регистрироваться и входить с использованием учётных записей в социальных сетях»</div>
-                <h3>Нефункциональные требования</h3><p>Определяют характеристики системы:</p><ul><li>Производительность (скорость обработки запросов, время отклика)</li><li>Масштабируемость (способность выдерживать рост нагрузки)</li><li>Надежность (доступность, отказоустойчивость)</li><li>Безопасность (аутентификация, авторизация, защита данных)</li><li>Удобство использования (юзабилити, accessibility)</li></ul><div class="example-block">Пример: «Система должна обеспечивать скорость обработки запросов не менее 1000 запросов в секунду при нормальной нагрузке»</div>
-                <h3>Критерии качественных требований (SMART)</h3><ul><li><strong>Релевантность</strong> – связано с бизнес-целью.</li><li><strong>Четкость</strong> – однозначная формулировка.</li><li><strong>Измеримость</strong> – возможность оценить выполнение.</li><li><strong>Выполнимость</strong> – реалистичность в рамках бюджета и технологий.</li><li><strong>Приоритетность</strong> – важность для проекта.</li><li><strong>Атомарность</strong> – неделимость (одно требование – одна функция).</li><li><strong>Тестируемость</strong> – наличие критериев приёмки.</li></ul>
-                <div class="tip"><strong>Чеклист для проверки требований:</strong><ul><li><input type="checkbox"> Все требования измеримы?</li><li><input type="checkbox"> Есть критерии приёмки?</li><li><input type="checkbox"> Учтены все сценарии использования (включая альтернативные и ошибочные)?</li><li><input type="checkbox"> Соответствуют бизнес-целям?</li><li><input type="checkbox"> Нет противоречий с другими требованиями?</li></ul></div>
-            </section>
-
-            <section id="stakeholders" class="card"><h2><i class="fas fa-users"></i> Стейкхолдеры</h2><p>Стейкхолдеры – лица или организации, которые имеют интерес в проекте и могут повлиять на его успех:</p><ul><li><strong>Заказчики</strong> – определяют бизнес-требования и финансируют проект.</li><li><strong>Пользователи</strong> – непосредственно работают с системой (конечные пользователи, администраторы).</li><li><strong>Разработчики</strong> – реализуют техническое решение.</li><li><strong>Тестировщики</strong> – обеспечивают качество продукта.</li><li><strong>Руководство</strong> – отвечает за стратегические решения.</li><li><strong>Технические эксперты</strong> – предоставляют предметную экспертизу (DevOps, DBA, security).</li></ul><h3>Как взаимодействовать со стейкхолдерами:</h3><ol><li><strong>Идентификация</strong> – составьте полный список всех заинтересованных сторон.</li><li><strong>Анализ влияния</strong> – оцените уровень влияния и интереса (матрица влияния/заинтересованности).</li><li><strong>План коммуникации</strong> – определите частоту и формат взаимодействия (ежедневные дейли, еженедельные обзоры, демо).</li><li><strong>Управление ожиданиями</strong> – чётко формулируйте что возможно, а что нет.</li><li><strong>Обратная связь</strong> – регулярно собирайте и анализируйте мнения.</li></ol><div class="tip">Совет: Используйте матрицу «влияние – интерес», чтобы приоритизировать работу со стейкхолдерами.</div></section>
-
-            <section id="ux-ui" class="card"><h2><i class="fas fa-paint-brush"></i> UX/UI принципы</h2><p>Основные принципы проектирования пользовательского опыта:</p><ul><li><strong>Юзабилити</strong> – простота и понятность интерфейса.</li><li><strong>Интуитивность</strong> – пользователь понимает, как действовать, без обучения.</li><li><strong>Обратная связь</strong> – реакция системы на действия (уведомления, анимации, сообщения об ошибках).</li><li><strong>Адаптивность</strong> – корректная работа на разных устройствах (десктоп, планшет, мобильный).</li><li><strong>Минимизация ошибок</strong> – предотвращение ошибок пользователя (валидация, подтверждения).</li><li><strong>Эстетика</strong> – приятный внешний вид, соответствующая цветовая гамма, типографика.</li></ul><div class="example-block"><strong>Отличия UI от UX:</strong><br>UI (User Interface) – то, как выглядит интерфейс (кнопки, шрифты, цвета).<br>UX (User Experience) – как пользователь взаимодействует с системой, насколько это удобно и эффективно.</div></section>
-
-            <section id="info-gathering" class="card"><h2><i class="fas fa-search"></i> Методы сбора информации</h2><p>Эффективные методы сбора информации для системного аналитика:</p><ol><li><strong>Опрос</strong> – интервью, анкеты, телефонные опросы.</li><li><strong>Наблюдение</strong> – прямое или косвенное изучение процессов (shadowing).</li><li><strong>Эксперимент</strong> – тестирование гипотез в контролируемых условиях (A/B тесты).</li><li><strong>Анализ документов</strong> – изучение существующей документации (регламенты, инструкции, старые ТЗ).</li><li><strong>Фокус-группы</strong> – обсуждение темы с группой представителей пользователей.</li><li><strong>Глубинное интервью</strong> – детальное изучение мнений респондентов один на один.</li><li><strong>Вторичный анализ данных</strong> – использование существующих данных (логи, метрики, отчёты).</li></ol><div class="tip">Совет: Комбинируйте несколько методов для получения более полной картины. Начните с анализа документов, затем проведите интервью с ключевыми стейкхолдерами и дополните наблюдением.</div></section>
-
-            <section id="use-cases" class="card"><h2><i class="fas fa-sitemap"></i> Use Cases (сценарии использования)</h2><p>Use case – описание последовательности действий, которые система выполняет в ответ на запрос пользователя. Содержит:</p><ul><li><strong>Актор</strong> – кто инициирует сценарий (пользователь, внешняя система).</li><li><strong>Предусловия</strong> – что должно быть истинно до начала сценария.</li><li><strong>Основной поток</strong> – успешный сценарий шаг за шагом.</li><li><strong>Альтернативные потоки</strong> – варианты развития событий (например, отмена, ошибка).</li><li><strong>Постусловия</strong> – состояние системы после завершения.</li></ul><div class="example-block"><strong>Пример: Заказ такси</strong><br><strong>Актор:</strong> Пассажир.<br><strong>Предусловие:</strong> Пользователь авторизован в приложении.<br><strong>Основной сценарий:</strong> 1. Ввод адреса подачи и назначения. 2. Отображение доступных тарифов. 3. Выбор тарифа. 4. Подтверждение заказа. 5. Отображение информации о водителе.<br><strong>Альтернатива:</strong> Если нет свободных машин – показать сообщение и предложить повторить позже.<br><strong>Постусловие:</strong> Создан заказ, водитель назначен.</div></section>
-
-            <section id="user-stories" class="card"><h2><i class="fas fa-book-open"></i> User stories (пользовательские истории)</h2><div class="example-block"><strong>Формат user story:</strong> «Как [роль пользователя], я хочу [функция], чтобы [получить пользу/решить проблему]»</div><h3>Критерии хорошей user story (INVEST):</h3><ul><li><strong>Independent</strong> – независимая от других историй (можно реализовать отдельно).</li><li><strong>Negotiable</strong> – подлежит обсуждению и уточнению, не жёсткая спецификация.</li><li><strong>Valuable</strong> – предоставляет ценность для пользователя или бизнеса.</li><li><strong>Estimable</strong> – может быть оценена по сложности (story points).</li><li><strong>Small</strong> – достаточно мала для реализации за один спринт (обычно 1–3 дня).</li><li><strong>Testable</strong> – имеет чёткие критерии приёмки.</li></ul><div class="example-block"><strong>Примеры:</strong><br>«Как покупатель, я хочу фильтровать товары по цене, чтобы быстрее находить подходящие варианты».<br>«Как менеджер, я хочу экспортировать отчёт в Excel, чтобы анализировать данные в удобном формате».</div><div class="tip">К каждой user story обязательно пишите критерии приёмки (Acceptance Criteria) в формате Given-When-Then.</div></section>
-
-            <section id="bpmn" class="card"><h2><i class="fas fa-project-diagram"></i> BPMN (Business Process Model and Notation)</h2><p>Стандарт нотации для моделирования бизнес-процессов. Основные элементы:</p><ul><li><strong>Задачи (Task)</strong> – прямоугольник с закруглёнными углами, обозначает единицу работы.</li><li><strong>События (Event)</strong> – круг, обозначает что-то, что происходит (начало, конец, таймер, сообщение).</li><li><strong>Шлюзы (Gateway)</strong> – ромб, точка принятия решений и ветвления потока (исключающее «или», параллельное «и»).</li><li><strong>Потоки (Sequence Flow)</strong> – стрелки, показывающие порядок выполнения.</li><li><strong>Пулы и дорожки (Pools & Lanes)</strong> – разделение ответственности между участниками.</li></ul><div class="tip"><strong>Преимущества BPMN:</strong> стандартизация нотации (понятна бизнесу и ИТ), наглядное представление процессов, возможность исполнимых моделей (BPMN 2.0), интеграция с системами управления процессами (BPMS).</div></section>
-
-            <section id="estimation" class="card"><h2><i class="fas fa-calculator"></i> Техники оценки задач</h2><p>Для оценки трудоёмкости задач используются:</p><ul><li><strong>Planning Poker</strong> – команда оценивает задачи с помощью карточек (числа Фибоначчи: 1, 2, 3, 5, 8, 13, 21). Обсуждение до консенсуса.</li><li><strong>T-Shirt Sizing</strong> – быстрая оценка по размерам одежды (XS, S, M, L, XL). Используется на ранних этапах.</li><li><strong>Affinity Estimation</strong> – группировка задач по размеру относительно друг друга.</li><li><strong>Three‑point estimation</strong> – оптимистичная, пессимистичная и наиболее вероятная оценка (PERT).</li></ul><h3>Факторы, влияющие на оценку:</h3><div class="quick-links"><span class="quick-link">Сложность логики</span><span class="quick-link">Объём данных</span><span class="quick-link">Неопределённость требований</span><span class="quick-link">Зависимости от других задач</span><span class="quick-link">Необходимость интеграции</span></div></section>
-
-            <!-- Архитектура -->
-            <section id="api" class="card"><h2><i class="fas fa-code"></i> API (Application Programming Interface)</h2><p>API – набор правил и протоколов для взаимодействия между программными компонентами. Типы API:</p><ul><li><strong>Web API</strong> – доступ через сеть (обычно HTTP).</li><li><strong>Библиотечное API</strong> – набор функций/классов внутри приложения.</li><li><strong>Операционной системы API</strong> – для взаимодействия с ОС (Win32, POSIX).</li></ul><div class="code-block">// Пример REST API запроса<br>GET /api/books?author=J.K.%20Rowling HTTP/1.1<br>Host: example.com<br>Accept: application/json</div><p>Популярные методы HTTP в REST: <strong>GET</strong> (чтение), <strong>POST</strong> (создание), <strong>PUT</strong> (полное обновление), <strong>PATCH</strong> (частичное обновление), <strong>DELETE</strong> (удаление).</p></section>
-
-            <section id="rest" class="card"><h2><i class="fas fa-exchange-alt"></i> REST (Representational State Transfer)</h2><p>REST – архитектурный стиль для распределённых систем, основанный на 6 принципах:</p><ol><li><strong>Единообразие интерфейса</strong> – стандартные методы и форматы (JSON/XML).</li><li><strong>Отсутствие состояния (Stateless)</strong> – каждый запрос содержит всю необходимую информацию, сессии не хранятся на сервере.</li><li><strong>Кэширование</strong> – явное указание возможности кэширования ответов.</li><li><strong>Клиент-сервер</strong> – разделение ответственности (UI отделён от обработки данных).</li><li><strong>Многоуровневая система</strong> – допускаются промежуточные прокси, шлюзы.</li><li><strong>Код по требованию (опционально)</strong> – возможность загрузки скриптов на клиент.</li></ol><h3>Статус коды REST:</h3><ul><li><strong>2xx (Успех)</strong>: 200 OK, 201 Created, 204 No Content.</li><li><strong>3xx (Перенаправление)</strong>: 301 Moved Permanently, 304 Not Modified.</li><li><strong>4xx (Ошибка клиента)</strong>: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found.</li><li><strong>5xx (Ошибка сервера)</strong>: 500 Internal Server Error, 503 Service Unavailable.</li></ul></section>
-
-            <section id="soap" class="card"><h2><i class="fas fa-exchange-alt"></i> SOAP (Simple Object Access Protocol)</h2><p>SOAP – протокол обмена структурированными сообщениями на основе XML. Основные характеристики:</p><ul><li>Строгая типизация – описание интерфейса в WSDL (Web Services Description Language).</li><li>Встроенная безопасность – WS-Security (стандарт для шифрования и подписей).</li><li>Поддержка транзакций – WS-AtomicTransaction.</li><li>Работа поверх HTTP, SMTP, JMS и других протоколов.</li></ul><div class="simple-table"><table><tr><th>Характеристика</th><th>SOAP</th><th>REST</th></tr><tr><td>Формат данных</td><td>XML</td><td>JSON, XML, текст</td></tr><tr><td>Протокол</td><td>HTTP, SMTP, TCP</td><td>HTTP</td></tr><tr><td>Безопасность</td><td>WS-Security (стандарт)</td><td>HTTPS + JWT/OAuth</td></tr><tr><td>Производительность</td><td>Ниже (тяжёлый XML)</td><td>Выше (лёгкий JSON)</td></tr></table></div><div class="tip">Когда использовать SOAP: в корпоративных системах с высокими требованиями к безопасности (банки, госсектор), при интеграции с устаревшими системами (SAP, Oracle), когда нужны встроенные транзакции и надёжность.</div></section>
-
-            <section id="graphql" class="card"><h2><i class="fas fa-network-wired"></i> GraphQL</h2><p>GraphQL – язык запросов и среда выполнения для API, разработанный Facebook. Клиент сам определяет структуру ответа, получая ровно те данные, которые нужны.</p><h3>Основные концепции:</h3><ul><li><strong>Схема (Schema)</strong> – строго типизированное описание доступных типов, запросов и мутаций.</li><li><strong>Запросы (Queries)</strong> – получение данных (аналог GET).</li><li><strong>Мутации (Mutations)</strong> – изменение данных (аналог POST/PUT/DELETE).</li><li><strong>Подписки (Subscriptions)</strong> – получение обновлений в реальном времени через WebSockets.</li></ul><div class="code-block">// Пример GraphQL запроса<br>{<br>  user(id: "789") {<br>    name<br>    email<br>    posts(limit: 5) {<br>      title<br>      createdAt<br>    }<br>  }<br>}</div><p><strong>Преимущества:</strong> точная выборка данных (нет over-fetching / under-fetching), единая конечная точка, строгая типизация, авто-документация (через introspection).</p></section>
-
-            <section id="microservices" class="card"><h2><i class="fas fa-cubes"></i> Микросервисная архитектура</h2><p>Микросервисы – подход, при котором приложение разбивается на небольшие, независимо развёртываемые сервисы, каждый со своей базой данных и бизнес-логикой.</p><h3>Преимущества микросервисов:</h3><ul><li>Независимое масштабирование – можно увеличивать ресурсы только для нагруженных сервисов.</li><li>Изоляция ошибок – падение одного сервиса не останавливает всё приложение.</li><li>Свобода выбора технологий – каждый сервис можно писать на своём языке/фреймворке.</li><li>Упрощение развёртывания – небольшие изменения требуют передеплоя только одного сервиса.</li></ul><h3>Когда переходить на микросервисы:</h3><ul><li>Проект вырос до размеров, когда монолит тормозит разработку.</li><li>Нужно масштабировать разные части системы по-разному.</li><li>Команда достаточно большая, чтобы разделить ответственность.</li><li>Готовность к дополнительной сложности (сетевые задержки, управление транзакциями, наблюдаемость).</li></ul><div class="tip">Микросервисы – не серебряная пуля. Для небольших проектов или стартапов монолит часто эффективнее.</div></section>
-
-            <section id="ddd" class="card"><h2><i class="fas fa-layer-group"></i> DDD (Domain-Driven Design)</h2><p>Domain-Driven Design – подход к разработке сложных систем через глубокое погружение в предметную область. Основные понятия:</p><ul><li><strong>Домен (Domain)</strong> – область знаний, в которой работает система (например, банковское дело, логистика).</li><li><strong>Модель (Model)</strong> – абстракция, отражающая ключевые аспекты домена.</li><li><strong>Ограниченный контекст (Bounded Context)</strong> – границы, внутри которых модель имеет смысл (например, «Платежи» и «Кредитование» – разные контексты).</li><li><strong>Универсальный язык (Ubiquitous Language)</strong> – единая терминология, которую используют и разработчики, и эксперты домена.</li><li><strong>Агрегаты (Aggregates)</strong> – кластеры связанных объектов (например, Заказ + Позиции заказа), с корневым объектом для контроля целостности.</li><li><strong>События (Domain Events)</strong> – уведомления о произошедшем факте в домене (например, «ПлатежПроведен»).</li></ul><div class="example-block"><strong>Пример DDD в интернет-магазине:</strong><br>Домен: Электронная коммерция.<br>Ограниченные контексты: Каталог товаров, Корзина, Заказы, Доставка, Платежи.<br>Агрегат: Заказ (содержит позиции, статус, адрес доставки).<br>События: «ЗаказОформлен», «ТоварДобавленВКорзину», «ПлатежУспешен».</div></section>
-
-            <!-- Данные -->
-            <section id="db" class="card"><h2><i class="fas fa-database"></i> Базы данных</h2><p>Типы баз данных и их применение:</p><ul><li><strong>Реляционные (SQL)</strong>: PostgreSQL, MySQL, Oracle – строгая схема, ACID, подходят для транзакционных систем.</li><li><strong>Документные (NoSQL)</strong>: MongoDB, CouchDB – хранение JSON-документов, гибкая схема, хороши для контента и логов.</li><li><strong>Ключ-значение</strong>: Redis, Memcached – сверхбыстрый доступ, используется для кэшей и сессий.</li><li><strong>Колоночные</strong>: Cassandra, HBase – оптимизированы для аналитики и временных рядов.</li><li><strong>Графовые</strong>: Neo4j, Amazon Neptune – для данных со сложными связями (соцсети, рекомендации).</li></ul><h3>Нормализация баз данных (нормальные формы):</h3><ul><li><strong>1NF</strong> – атомарность значений, отсутствие повторяющихся групп.</li><li><strong>2NF</strong> – выполнение 1NF + отсутствие частичных зависимостей от составного ключа.</li><li><strong>3NF</strong> – выполнение 2NF + отсутствие транзитивных зависимостей (неключевые поля не зависят от других неключевых).</li><li>Денормализация иногда применяется для повышения производительности чтения.</li></ul></section>
-
-            <section id="data-modeling" class="card"><h2><i class="fas fa-project-diagram"></i> Моделирование данных + SQL генератор</h2><div class="modeling-grid"><div><button id="addEntityBtn" class="btn-primary">+ Добавить сущность</button><button id="genSqlBtn" class="btn-secondary">Сгенерировать SQL</button><div id="entitiesList" class="entities-list"></div><p class="tip">Сущности: нажмите ✏️, чтобы редактировать, ➕ – добавить атрибут.</p></div><div><h3>SQL-код (CREATE TABLE)</h3><pre id="sqlPreview" class="sql-preview">-- Добавьте сущности и нажмите "Сгенерировать SQL"</pre></div></div></section>
-
-            <!-- Процессы и методологии -->
-            <section id="kanban-scrum" class="card"><h2><i class="fas fa-columns"></i> Kanban vs Scrum</h2><div class="two-columns"><div><h3>Scrum</h3><ul><li>Фиксированные итерации (спринты 1-4 недели)</li><li>Роли: Scrum Master, Product Owner, Команда</li><li>Артефакты: Бэклог продукта, Бэклог спринта, Инкремент</li><li>Церемонии: Планирование, Daily Scrum, Обзор спринта, Ретроспектива</li><li>Изменения в процессе спринта запрещены</li></ul></div><div><h3>Kanban</h3><ul><li>Непрерывный поток работы</li><li>Визуализация (Kanban-доска с колонками)</li><li>Ограничение WIP (Work In Progress)</li><li>Управление потоком (lead time, cycle time)</li><li>Изменения возможны в любой момент</li></ul></div></div><div class="tip">Когда использовать: Scrum – для проектов с относительно стабильными требованиями и приоритетами. Kanban – для поддержки, оперативных задач и проектов с частыми изменениями приоритетов.</div><div class="quick-links"><span class="quick-link">Таймер митинга:</span><button data-time="900" class="btn-secondary">15 мин</button><button data-time="300" class="btn-secondary">5 мин</button><span id="meetingTimerDisplay" class="timer-display" style="display:inline-block; width:auto; padding:0.3rem 0.6rem;">00:00</span><button id="stopMeetingTimer" class="btn-secondary">Стоп</button></div></section>
-
-            <section id="ci-cd" class="card"><h2><i class="fas fa-sync-alt"></i> CI/CD (Непрерывная интеграция и доставка)</h2><p><strong>Continuous Integration (CI)</strong> – практика автоматической сборки и тестирования при каждом коммите в репозиторий. Включает: запуск юнит-тестов, статический анализ кода, проверку стиля.</p><p><strong>Continuous Delivery (CD)</strong> – автоматическое развёртывание на тестовых и продуктивных окружениях после успешной CI. Включает: пайплайны, канареечные релизы, blue-green деплойменты.</p><h3>Популярные инструменты CI/CD:</h3><ul><li>Jenkins (настраиваемый, много плагинов)</li><li>GitLab CI/CD (встроен в GitLab)</li><li>GitHub Actions (интеграция с GitHub)</li><li>Azure DevOps (полный набор для ALM)</li><li>TeamCity, Bamboo, CircleCI</li></ul><div class="tip">Для аналитика важно понимать, как устроен пайплайн: какие проверки проходят код и конфигурации, как происходит деплой на стенды (dev, test, staging, prod).</div></section>
-
-            <section id="decision-tree" class="card"><h2><i class="fas fa-sitemap"></i> Decision Tree: выбор методологии разработки</h2><div id="tree-step1"><p>Проект имеет чёткие и стабильные требования?</p><button data-tree="yes" class="btn-primary">Да</button><button data-tree="no" class="btn-primary">Нет</button></div><div id="tree-step2" style="display:none"><p id="step2-question"></p><div id="step2-options"></div></div><div id="tree-result" style="display:none"><h3>Рекомендация: <span id="result-text"></span></h3><button id="resetTreeBtn" class="btn-secondary">Начать заново</button></div></section>
-
-            <!-- Безопасность -->
-            <section id="security" class="card"><h2><i class="fas fa-shield-alt"></i> Основы безопасности</h2><p><strong>OWASP Top 10</strong> – список 10 наиболее критичных уязвимостей веб-приложений (актуальная версия):</p><ol><li>Инъекции (SQL, NoSQL, OS command)</li><li>Некорректная аутентификация</li><li>Раскрытие чувствительных данных</li><li>XXE (XML External Entities)</li><li>Некорректный контроль доступа</li><li>Небезопасная конфигурация</li><li>Cross-Site Scripting (XSS)</li><li>Небезопасная десериализация</li><li>Использование компонентов с известными уязвимостями</li><li>Недостаточное логирование и мониторинг</li></ol><h3>Принципы безопасной разработки:</h3><ul><li><strong>Принцип минимальных привилегий</strong> – предоставлять доступ только к необходимым ресурсам.</li><li><strong>Глубинная защита (Defense in Depth)</strong> – несколько уровней защиты (firewall, WAF, шифрование).</li><li><strong>Никогда не доверяй пользовательскому вводу</strong> – валидация и санитизация.</li><li><strong>Безопасность по умолчанию</strong> – secure defaults (например, HTTPS, HTTP-only cookies).</li><li><strong>Регулярные аудиты безопасности</strong> – SAST, DAST, пентесты.</li></ul></section>
-
-            <section id="security-checklist" class="card"><h2><i class="fas fa-list-check"></i> Чеклист безопасности для аналитика</h2><ul><li><input type="checkbox" id="sec1"> Определены ли требования к аутентификации (способы входа, сложность пароля, MFA)?</li><li><input type="checkbox" id="sec2"> Разработана ли модель авторизации (роли, права доступа, разделение данных)?</li><li><input type="checkbox" id="sec3"> Требуется ли шифрование данных при передаче (TLS) и при хранении (шифрование БД)?</li><li><input type="checkbox" id="sec4"> Проведён ли анализ угроз (например, STRIDE) для критичных операций?</li><li><input type="checkbox" id="sec5"> Учтены ли механизмы защиты от инъекций (параметризованные запросы, ORM)?</li><li><input type="checkbox" id="sec6"> Предусмотрено ли логирование действий пользователей и администраторов?</li></ul><div class="progress-bar"><div id="secChecklistProgress" class="progress-fill" style="width:0%"></div></div><button id="resetSecChecklist" class="btn-secondary">Сбросить</button></section>
-
-            <!-- Метрики и ошибки -->
-            <section id="metrics" class="card"><h2><i class="fas fa-chart-line"></i> Ключевые метрики для аналитика</h2><div class="two-columns"><div><h3>Проектные метрики</h3><ul><li><strong>Velocity</strong> – скорость команды в story points за спринт.</li><li><strong>Lead Time</strong> – время от запроса изменения до его реализации.</li><li><strong>Cycle Time</strong> – время активной работы над задачей.</li><li><strong>Burndown Chart</strong> – график оставшейся работы.</li></ul></div><div><h3>Бизнес-метрики</h3><ul><li><strong>ROI</strong> – возврат инвестиций.</li><li><strong>User Adoption Rate</strong> – процент целевых пользователей, использующих систему.</li><li><strong>Feature Usage</strong> – как часто используются конкретные функции.</li><li><strong>CSAT / NPS</strong> – удовлетворённость пользователей.</li></ul></div></div><div class="tip">Аналитик должен предлагать измеримые KPI для каждой функциональности, чтобы после релиза оценить успех.</div></section>
-
-            <section id="mistakes" class="card"><h2><i class="fas fa-exclamation-triangle"></i> Типичные ошибки аналитика и как их избежать</h2><ol><li><strong>Недостаточное вовлечение стейкхолдеров</strong> → регулярно проводите демо и уточнения.</li><li><strong>Фокус на решениях, а не на проблемах</strong> → всегда начинайте с «почему?».</li><li><strong>Игнорирование нефункциональных требований</strong> → закладывайте их в определение готовности (DoD).</li><li><strong>Недостаточная детализация требований</strong> → используйте INVEST, пишите критерии приёмки.</li><li><strong>Отсутствие приоритизации</strong> → применяйте MoSCoW (Must, Should, Could, Won't).</li><li><strong>Плохая трассируемость требований</strong> → ведите матрицу трассировки (матрица покрытия).</li><li><strong>Игнорирование edge cases</strong> → всегда спрашивайте «а что если…» для каждого сценария.</li><li><strong>Переоценка технических возможностей команды</strong> → обсуждайте технические риски с командой до оценки.</li><li><strong>Недостаточное тестирование требований</strong> → привлекайте тестировщиков к ревью требований.</li><li><strong>Плохая коммуникация изменений</strong> → все изменения требований – через трекер задач с уведомлением команды.</li></ol></section>
-
-            <!-- Документация и шаблоны -->
-            <section id="templates" class="card"><h2><i class="fas fa-file-contract"></i> Шаблоны документов</h2><div class="quick-links"><button class="quick-link" data-doc="srs">SRS (Software Requirements Specification)</button><button class="quick-link" data-doc="user-stories">User Stories с критериями</button><button class="quick-link" data-doc="api-spec">API Specification (OpenAPI)</button><button class="quick-link" data-doc="test-cases">Test Cases</button></div><div id="docEditor" style="display:none; margin-top:1rem;"><textarea id="docContent" rows="12" style="width:100%; border-radius:12px; padding:0.5rem;"></textarea><button id="downloadDocBtn" class="btn-primary">Скачать .txt</button></div></section>
-
-            <section id="document-generator" class="card"><h2><i class="fas fa-file-alt"></i> Генератор документов (автоматический)</h2><select id="docTypeSelect"><option value="srs">Спецификация требований (SRS)</option><option value="user-stories">Пользовательские истории</option><option value="api-spec">Спецификация API</option></select><button id="generateDocBtn" class="btn-primary">Сгенерировать</button><textarea id="generatedDoc" rows="10" style="width:100%; margin-top:0.5rem; border-radius:12px;"></textarea><button id="downloadGeneratedDoc" class="btn-secondary">Скачать</button></section>
-
-            <section id="email-templates" class="card"><h2><i class="fas fa-envelope"></i> Шаблоны писем и сообщений</h2><div class="quick-links"><button data-email="clarification">Запрос уточнений</button><button data-email="meeting">Приглашение на встречу</button><button data-email="review">Запрос на ревью</button><button data-email="update">Статус по задаче</button></div><textarea id="emailTemplateText" rows="6" style="width:100%; border-radius:12px;"></textarea><button id="copyEmailBtn" class="btn-secondary">Копировать в буфер</button></section>
-
-            <section id="swagger" class="card"><h2><i class="fas fa-file-code"></i> Swagger/OpenAPI</h2><p>OpenAPI – спецификация для описания REST API. Swagger – набор инструментов для работы с OpenAPI (Swagger UI, Swagger Editor, Swagger Codegen).</p><h3>Преимущества использования OpenAPI:</h3><ul><li>Автоматическая генерация интерактивной документации (Swagger UI).</li><li>Генерация клиентских SDK и серверных заглушек на разных языках.</li><li>Валидация запросов и ответов.</li><li>Упрощение коммуникации между командами.</li></ul><div class="code-block">openapi: 3.0.0<br>info:<br>  title: User API<br>  version: 1.0.0<br>paths:<br>  /users:<br>    get:<br>      summary: Get all users<br>      responses:<br>        '200':<br>          description: OK</div></section>
-
-            <!-- Карьера и развитие -->
-            <section id="career" class="card"><h2><i class="fas fa-user-graduate"></i> Карьерный путь аналитика</h2><div class="steps-flow"><div><strong>Junior Analyst</strong> – сбор требований, документирование, поддержка тестирования.</div><div><strong>Middle Analyst</strong> – проектирование решений, управление бэклогом, координация команды.</div><div><strong>Senior Analyst</strong> – архитектурные решения, стратегия продукта, менторство.</div><div><strong>Lead / Principal Analyst</strong> – управление аналитической практикой, развитие методологии.</div></div><p>Необходимые навыки для роста: технические (SQL, API, BPMN, UML), коммуникативные (переговоры, фасилитация), продуктовое мышление, знание предметной области.</p><div class="tip">Совет: заведите карту компетенций (раздел ниже) и раз в полгода оценивайте свой прогресс.</div></section>
-
-            <section id="competency-map" class="card"><h2><i class="fas fa-star"></i> Карта компетенций системного аналитика</h2><p>Отмечайте освоенные навыки, чтобы видеть свой прогресс. Прогресс сохраняется в браузере.</p><div class="progress-bar"><div id="compProgressFill" class="progress-fill" style="width:0%"></div></div><div class="checklist-container"><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp1"> Выявление и анализ требований</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp2"> Моделирование бизнес-процессов (BPMN)</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp3"> Проектирование API (REST, OpenAPI)</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp4"> SQL и моделирование данных</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp5"> Основы безопасности (OWASP)</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp6"> User Stories и Use Cases</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp7"> Управление требованиями (трассировка, приоритизация)</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp8"> Коммуникация и фасилитация встреч</label></div><button id="saveCompBtn" class="btn-primary">Сохранить прогресс</button></section>
-
-            <section id="testing-system" class="card"><h2><i class="fas fa-graduation-cap"></i> Проверка знаний (тесты)</h2><select id="testSection"><option value="requirements">Требования</option><option value="api">API и REST</option><option value="db">Базы данных</option><option value="bpmn">BPMN</option><option value="security">Безопасность</option><option value="ddd">DDD</option></select><button id="startTestBtn" class="btn-primary">Начать тест</button><div id="testArea" class="test-area"></div></section>
-
-            <!-- Инструменты и ресурсы -->
-            <section id="quick-tools" class="card"><h2><i class="fas fa-bolt"></i> Быстрые инструменты</h2><div class="tools-grid"><div class="tool-card"><h3>Конвертер величин (данные)</h3><input type="number" id="conv-input" value="1"><select id="conv-from"><option value="kb">Килобайты (KB)</option><option value="mb" selected>Мегабайты (MB)</option><option value="gb">Гигабайты (GB)</option></select><button id="convertBtn" class="btn-primary">→</button><input id="conv-output" readonly></div></div></section>
-
-            <section id="external-integration" class="card"><h2><i class="fas fa-plug"></i> API тестер (интеграция)</h2><div class="api-tester"><div class="api-controls"><select id="apiMethod"><option>GET</option><option>POST</option></select><input type="text" id="apiUrl" value="https://jsonplaceholder.typicode.com/posts"><button id="sendApiBtn" class="btn-primary">Отправить запрос</button></div><pre id="apiResponse" class="api-response">Ответ появится здесь...</pre><div class="tip">Примеры публичных API для тестирования: <button class="quick-link" data-api-url="https://jsonplaceholder.typicode.com/posts">JSONPlaceholder</button> <button class="quick-link" data-api-url="https://reqres.in/api/users">ReqRes</button></div></div></section>
-
-            <section id="knowledge-base" class="card"><h2><i class="fas fa-sticky-note"></i> База знаний: заметки аналитика</h2><div><input type="text" id="noteTitle" placeholder="Заголовок заметки" style="width:100%; margin-bottom:0.5rem;"><textarea id="noteContent" rows="3" placeholder="Содержание заметки..." style="width:100%; margin-bottom:0.5rem;"></textarea><button id="addNoteBtn" class="btn-primary">➕ Добавить заметку</button></div><div id="notesList" class="notes-grid"></div><div class="tip">Заметки сохраняются в localStorage вашего браузера.</div></section>
-
-            <section id="interactive-checklists" class="card"><h2><i class="fas fa-tasks"></i> Интерактивные чеклисты</h2><h3>Чеклист анализа требований</h3><div class="checklist-container"><label class="checklist-item"><input type="checkbox" id="chStakeholders"> Все стейкхолдеры идентифицированы и проинтервьюированы</label><label class="checklist-item"><input type="checkbox" id="chUserStories"> Пользовательские истории написаны и согласованы</label><label class="checklist-item"><input type="checkbox" id="chAcceptance"> Критерии приемки определены для каждой истории</label><label class="checklist-item"><input type="checkbox" id="chNonFunctional"> Нефункциональные требования задокументированы</label><label class="checklist-item"><input type="checkbox" id="chTrace"> Матрица трассировки требований создана</label></div><div class="progress-bar"><div id="reqChecklistProgress" class="progress-fill"></div></div><button id="resetReqChecklist" class="btn-secondary">Сбросить</button></section>
-
-            <section id="glossary" class="card"><h2><i class="fas fa-book"></i> Глоссарий терминов</h2><dl><dt><strong>Артефакт</strong></dt><dd>Рабочий продукт, создаваемый в процессе анализа (документ, модель, диаграмма).</dd><dt><strong>Стейкхолдер</strong></dt><dd>Заинтересованное лицо или организация, влияющая на требования.</dd><dt><strong>Функциональное требование</strong></dt><dd>Описание того, что система должна делать.</dd><dt><strong>Нефункциональное требование</strong></dt><dd>Критерий качества системы (производительность, безопасность и др.).</dd><dt><strong>Use Case</strong></dt><dd>Сценарий взаимодействия пользователя с системой.</dd><dt><strong>User Story</strong></dt><dd>Краткое описание функциональности с точки зрения пользователя.</dd><dt><strong>BPMN</strong></dt><dd>Business Process Model and Notation – нотация моделирования процессов.</dd><dt><strong>REST</strong></dt><dd>Representational State Transfer – архитектурный стиль для API.</dd><dt><strong>SOAP</strong></dt><dd>Simple Object Access Protocol – протокол обмена XML-сообщениями.</dd><dt><strong>GraphQL</strong></dt><dd>Язык запросов для API, позволяющий клиенту запрашивать только нужные данные.</dd><dt><strong>DDD</strong></dt><dd>Domain-Driven Design – подход, фокусирующийся на предметной области.</dd><dt><strong>CI/CD</strong></dt><dd>Continuous Integration / Continuous Delivery – практики автоматизации сборки и развёртывания.</dd></dl></section>
-
-            <section id="resources" class="card"><h2><i class="fas fa-external-link-alt"></i> Полезные ресурсы</h2><div class="two-columns"><div><h3>Блоги и сообщества</h3><ul><li><a href="https://habr.com/ru/articles/841646/" target="_blank">Хабр: Системный анализ</a></li><li><a href="https://www.modernanalyst.com/" target="_blank">Modern Analyst</a></li><li><a href="https://www.ba-times.com/" target="_blank">Business Analysis Times</a></li></ul></div><div><h3>Курсы и обучение</h3><ul><li><a href="https://stepik.org/course/63054/" target="_blank">Интерактивный тренажёр по SQL</a></li><li><a href="https://www.coursera.org/specializations/systems-analysis" target="_blank">Coursera: Systems Analysis</a></li><li><a href="https://www.udemy.com/course/business-analysis-fundamentals/" target="_blank">Udemy: Business Analysis Fundamentals</a></li></ul></div><div><h3>Инструменты</h3><ul><li><a href="https://www.draw.io/" target="_blank">Draw.io – диаграммы</a></li><li><a href="https://www.postman.com/" target="_blank">Postman – тестирование API</a></li><li><a href="https://swagger.io/" target="_blank">Swagger – документация API</a></li><li><a href="https://jira.atlassian.com/" target="_blank">Jira – управление требованиями</a></li></ul></div></div></section>
-        </main>
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+<header class="site-header" data-header>
+  <div class="container navbar">
+    <a class="brand" href="#top" aria-label="SA Guide — главная">
+      <span class="brand-name" aria-hidden="true">&lt;KnowerLife /&gt;</span>
+      <span class="brand-product">SA Guide</span>
+    </a>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#guide">База знаний</a>
+      <a href="#tools-zone">Инструменты</a>
+      <a href="#career">Карьера</a>
+      <a href="#resources">Ресурсы</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-button" type="button" id="accessibilityToggle" aria-label="Увеличить шрифт" title="Размер текста">A+</button>
+      <button class="icon-button" type="button" id="themeToggle" aria-label="Переключить тему" title="Переключить тему">☾</button>
+      <button class="icon-button" type="button" id="pdfExportBtn" aria-label="Печать или сохранить в PDF" title="Печать / PDF">⎙</button>
+      <button class="menu-button" type="button" id="mobileMenuBtn" aria-controls="mobileNav" aria-expanded="false" aria-label="Открыть навигацию">☰</button>
     </div>
+  </div>
+</header>
 
-    <!-- ========== НОВЫЙ ФУТЕР ========== -->
-<footer class="main-footer">
-    <div class="footer-container">
-        <div class="footer-col">
-            <div class="footer-logo">
-                <i class="fas fa-brain"></i>
-                <span>Памятка системного аналитика - SA Guide</span>
-            </div>
-            <p class="footer-description">
-                Полное руководство для системных аналитиков: требования, архитектура, безопасность, документация,
-                карьерный рост, интерактивные инструменты и чеклисты.
-            </p>
-            <div class="footer-copyright">
-                © 2026 Памятка системного аналитика - SA Guide
-            </div>
-        </div>
-        <div class="footer-col">
-            <h3>Навигация</h3>
-            <ul>
-                <li><a href="#task-process">Что делать при получении задачи</a></li>
-                <li><a href="#requirements">Виды требований</a></li>
-                <li><a href="#api">API и архитектура</a></li>
-                <li><a href="#db">Базы данных</a></li>
-                <li><a href="#templates">Шаблоны документов</a></li>
-                <li><a href="#career">Карьерный рост</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h3>Ресурсы</h3>
-            <ul>
-                <li><a href="#glossary">Глоссарий терминов</a></li>
-                <li><a href="#resources">Полезные ссылки</a></li>
-                <li><a href="#interactive-checklists">Чеклисты</a></li>
-                <li><a href="#quick-tools">Быстрые инструменты</a></li>
-                <li><a href="#competency-map">Карта компетенций</a></li>
-                <li><a href="sitemap.html">Карта сайта</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h3>Свяжитесь с нами</h3>
-            <ul class="footer-contacts">
-                <li><i class="fas fa-envelope"></i> <a href="mailto:info@knowerlife.ru">info@knowerlife.ru</a></li>
-                <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Аналитическая, 15</li>
-            </ul>
-            <div class="social-links">
-                <h4>Подпишитесь на обновления</h4>
-                <div class="social-icons">
-                    <a href="https://t.me/knowerlife" target="_blank"><i class="fab fa-telegram"></i></a>
-                    <a href="https://github.com/KnowerLife" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://vk.com/knowerlife" target="_blank"><i class="fab fa-vk"></i></a>
-                    <a href="https://www.youtube.com/channel/knowerlife.ru" target="_blank"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="newsletter">
-                <h4>Подписка на новости</h4>
-                <form class="subscribe-form" id="subscribeForm">
-                    <input type="email" placeholder="Ваш email" required>
-                    <button type="submit">Подписаться</button>
-                </form>
-            </div>
-        </div>
+<dialog id="mobileNav" class="mobile-nav-dialog" aria-label="Навигация по справочнику">
+  <div class="mobile-nav-head"><strong>SA Guide</strong><button type="button" class="icon-button" data-close-nav aria-label="Закрыть">×</button></div>
+  <nav class="mobile-nav-links" data-mobile-nav-links></nav>
+</dialog>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="container hero-shell">
+    <div class="hero-copy reveal">
+      <div class="availability"><span class="status-dot"></span><span>Knowledge base · browser tools · offline-friendly</span></div>
+      <p class="eyebrow">System Analysis / Essential Guide</p>
+      <h1>Рабочая база знаний <span class="gradient-text">системного аналитика</span></h1>
+      <p class="lead">Требования, BPMN, API, интеграции, данные, безопасность, документация и практические инструменты — в одном интерактивном справочнике.</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="#guide">Открыть базу знаний <span aria-hidden="true">↓</span></a>
+        <a class="btn btn--secondary" href="#tools-zone">Перейти к инструментам</a>
+      </div>
+      <ul class="hero-capabilities" aria-label="Основные направления">
+        <li><span>01</span>Requirements</li>
+        <li><span>02</span>Architecture</li>
+        <li><span>03</span>Delivery</li>
+      </ul>
     </div>
-    <div class="footer-bottom">
-        <div class="footer-links-bottom">
-            <a href="#">Политика конфиденциальности</a>
-            <a href="#">Условия использования</a>
-            <a href="sitemap.html"><i class="fas fa-sitemap"></i> Карта сайта</a>
-        </div>
-        <div class="back-to-top">
-            <a href="#"><i class="fas fa-arrow-up"></i> Наверх</a>
-        </div>
-    </div>
+    <aside class="system-map reveal" aria-label="Карта знаний системного аналитика">
+      <div class="system-map__bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><code>sa.guide.map</code><span class="system-live"><i></i> ready</span></div>
+      <div class="system-map__canvas">
+        <svg class="system-map__links" viewBox="0 0 600 430" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M88 95 C170 95 185 200 280 205"></path>
+          <path d="M88 330 C170 330 188 235 280 225"></path>
+          <path d="M342 214 C430 214 438 90 515 90"></path>
+          <path d="M342 214 C430 214 438 214 515 214"></path>
+          <path d="M342 214 C430 214 438 338 515 338"></path>
+        </svg>
+        <div class="map-node map-node--business"><span class="map-node__icon">R</span><strong>Requirements</strong><small>goals · actors</small></div>
+        <div class="map-node map-node--users"><span class="map-node__icon">P</span><strong>Processes</strong><small>BPMN · flows</small></div>
+        <div class="map-core"><span>SA</span><strong>System analysis</strong><small>problem → solution</small></div>
+        <div class="map-node map-node--api"><span class="map-node__icon">API</span><strong>Contracts</strong><small>REST · events</small></div>
+        <div class="map-node map-node--data"><span class="map-node__icon">DB</span><strong>Data</strong><small>models · SQL</small></div>
+        <div class="map-node map-node--delivery"><span class="map-node__icon">✓</span><strong>Delivery</strong><small>acceptance · QA</small></div>
+      </div>
+      <div class="system-map__footer"><span><i class="status-dot"></i> 38 topics indexed</span><span>v2.0</span></div>
+    </aside>
+  </div>
+  <div class="container hero-stats reveal" aria-label="Содержание справочника">
+    <div class="hero-stat"><strong>38</strong><span>тематических разделов</span></div>
+    <div class="hero-stat"><strong>10+</strong><span>интерактивных сценариев</span></div>
+    <div class="hero-stat"><strong>6</strong><span>направлений тестирования</span></div>
+    <div class="hero-stat"><strong>100%</strong><span>локальная работа заметок</span></div>
+  </div>
+</section>
+
+<section class="section guide-section" id="guide">
+  <div class="container section-heading reveal">
+    <div><p class="eyebrow">База знаний</p><h2>От бизнес-задачи до проверяемого решения</h2></div>
+    <p class="lead">Справочник организован по рабочему маршруту аналитика. Поиск фильтрует весь материал, а закладки сохраняются только в вашем браузере.</p>
+  </div>
+
+  <div class="container guide-layout">
+    <aside class="guide-rail" id="sidebar">
+      <div class="rail-search">
+        <label for="globalSearch">Поиск по справочнику</label>
+        <div class="search-control"><span aria-hidden="true">⌕</span><input id="globalSearch" type="search" placeholder="Например: REST, BPMN, SRS" autocomplete="off"><kbd>⌘K</kbd></div>
+        <p class="search-status" id="searchStatus" aria-live="polite">Показаны все разделы</p>
+      </div>
+      <div class="rail-block bookmarks-block">
+        <div class="rail-title"><strong>Закладки</strong><span id="bookmarksCounter">0</span></div>
+        <div id="bookmarksList" class="bookmarks-list"><p class="muted">Пока пусто</p></div>
+      </div>
+      <nav class="rail-nav" id="desktopNav" aria-label="Разделы справочника">
+        <details open><summary>Основы анализа</summary><a href="#task-process">Получение задачи</a><a href="#artifacts">Артефакты</a><a href="#requirements">Требования</a><a href="#stakeholders">Стейкхолдеры</a><a href="#ux-ui">UX/UI</a></details>
+        <details><summary>Техники и методы</summary><a href="#info-gathering">Сбор информации</a><a href="#use-cases">Use Cases</a><a href="#user-stories">User Stories</a><a href="#bpmn">BPMN</a><a href="#estimation">Оценка задач</a></details>
+        <details><summary>Архитектура</summary><a href="#api">API</a><a href="#rest">REST</a><a href="#soap">SOAP</a><a href="#graphql">GraphQL</a><a href="#microservices">Микросервисы</a><a href="#ddd">DDD</a></details>
+        <details><summary>Данные и delivery</summary><a href="#db">Базы данных</a><a href="#data-modeling">Моделирование + SQL</a><a href="#kanban-scrum">Kanban vs Scrum</a><a href="#ci-cd">CI/CD</a><a href="#decision-tree">Decision Tree</a></details>
+        <details><summary>Качество и безопасность</summary><a href="#security">Безопасность</a><a href="#security-checklist">Security checklist</a><a href="#metrics">Метрики</a><a href="#mistakes">Ошибки аналитика</a></details>
+        <details><summary>Документация</summary><a href="#templates">Шаблоны</a><a href="#document-generator">Генератор</a><a href="#email-templates">Письма</a><a href="#swagger">OpenAPI</a></details>
+        <details><summary>Развитие и инструменты</summary><a href="#career">Карьера</a><a href="#competency-map">Компетенции</a><a href="#testing-system">Тесты</a><a href="#tools-zone">Browser tools</a><a href="#glossary">Глоссарий</a><a href="#resources">Ресурсы</a></details>
+      </nav>
+    </aside>
+
+    <article class="guide-content" id="guideContent">
+      <div id="noSearchResults" class="empty-state" hidden><strong>Ничего не найдено</strong><p>Попробуйте изменить запрос или используйте термин из навигации.</p><button class="btn btn--secondary btn--small" type="button" id="clearSearchBtn">Сбросить поиск</button></div>
+
+      <section id="task-process" class="knowledge-card searchable" data-title="Что делать при получении задачи" data-search="задача алгоритм бизнес цель анализ исследование моделирование требования команда контроль">
+        <div class="card-head"><div><p class="section-code">01 / START</p><h2>Что делать при получении задачи</h2></div></div>
+        <p>Начинайте не с решения, а с контекста: какую проблему решаем, кто получает ценность, какие ограничения уже известны и как будет измеряться результат.</p>
+        <ol class="step-list"><li><strong>Зафиксировать бизнес-цель.</strong><span>Понять проблему, ожидаемый эффект и критерии успеха.</span></li><li><strong>Собрать контекст.</strong><span>Документация, интервью, текущий процесс, ограничения.</span></li><li><strong>Смоделировать сценарии.</strong><span>Happy path, альтернативы, ошибки и исключения.</span></li><li><strong>Спроектировать поведение системы.</strong><span>Данные, интеграции, роли, правила и NFR.</span></li><li><strong>Согласовать требования.</strong><span>Разработка, QA, бизнес и владельцы смежных систем.</span></li><li><strong>Сопроводить реализацию.</strong><span>Change-анализ, ответы команде, приемка и актуализация.</span></li></ol>
+        <div class="note note--accent"><strong>Рабочий вопрос</strong><p>«Что изменится для бизнеса или пользователя, если мы реализуем эту задачу?»</p></div>
+        <div class="value-grid"><div><span>High value</span><strong>Low effort</strong><small>делать в первую очередь</small></div><div><span>High value</span><strong>High effort</strong><small>планировать и декомпозировать</small></div><div><span>Low value</span><strong>Low effort</strong><small>брать при наличии ресурса</small></div><div><span>Low value</span><strong>High effort</strong><small>пересмотреть необходимость</small></div></div>
+      </section>
+
+      <section id="artifacts" class="knowledge-card searchable" data-title="Артефакты системного анализа" data-search="артефакты требования bpmn uml sequence er user story use case прототип glossary openapi test case">
+        <div class="card-head"><div><p class="section-code">02 / OUTPUT</p><h2>Артефакты системного анализа</h2></div></div>
+        <p>Артефакт нужен не ради документа, а чтобы убрать неоднозначность между участниками проекта.</p>
+        <div class="artifact-grid"><div><strong>Requirements</strong><span>FR, NFR, acceptance criteria</span></div><div><strong>Process models</strong><span>BPMN, activity, state</span></div><div><strong>Interaction</strong><span>sequence, API contracts, events</span></div><div><strong>Data</strong><span>ER, logical model, dictionaries</span></div><div><strong>UX</strong><span>wireframes, states, validation</span></div><div><strong>Quality</strong><span>traceability, test cases, checklists</span></div></div>
+      </section>
+
+      <section id="requirements" class="knowledge-card searchable" data-title="Виды требований" data-search="функциональные нефункциональные требования smart критерии приемки acceptance nfr performance security availability">
+        <div class="card-head"><div><p class="section-code">03 / REQUIREMENTS</p><h2>Виды требований</h2></div></div>
+        <div class="two-columns"><div><h3>Функциональные</h3><p>Что система должна делать: сценарии, расчеты, валидация, CRUD, интеграции и бизнес-правила.</p><div class="code-card">Система должна позволять пользователю выгружать отчет в CSV с учетом выбранных фильтров.</div></div><div><h3>Нефункциональные</h3><p>Как система должна работать: производительность, доступность, безопасность, масштабируемость, наблюдаемость.</p><div class="code-card">95% запросов поиска должны завершаться не более чем за 800 мс при штатной нагрузке.</div></div></div>
+        <h3>Качественное требование</h3><ul class="check-list"><li>однозначно и атомарно;</li><li>связано с бизнес-целью;</li><li>реализуемо и приоритизировано;</li><li>имеет измеримые критерии приемки;</li><li>не противоречит другим требованиям;</li><li>учитывает ошибочные и альтернативные сценарии.</li></ul>
+      </section>
+
+      <section id="stakeholders" class="knowledge-card searchable" data-title="Стейкхолдеры" data-search="стейкхолдеры stakeholders заказчик пользователь разработчик тестировщик руководство влияние интерес коммуникация">
+        <div class="card-head"><div><p class="section-code">04 / PEOPLE</p><h2>Стейкхолдеры</h2></div></div>
+        <p>Определите, кто принимает решения, кто пользуется системой, кто реализует изменения и кто владеет зависимостями.</p>
+        <div class="compact-grid"><div><strong>Business</strong><p>заказчик, product owner, руководство</p></div><div><strong>Users</strong><p>конечные пользователи и администраторы</p></div><div><strong>Delivery</strong><p>разработчики, QA, DevOps</p></div><div><strong>Experts</strong><p>архитекторы, DBA, security, владельцы интеграций</p></div></div>
+        <div class="note"><strong>Практика</strong><p>Используйте матрицу «влияние × интерес» и заранее определяйте формат коммуникации для каждой группы.</p></div>
+      </section>
+
+      <section id="ux-ui" class="knowledge-card searchable" data-title="UX/UI принципы" data-search="ux ui usability accessibility interface feedback validation adaptive states ошибки интерфейс">
+        <div class="card-head"><div><p class="section-code">05 / EXPERIENCE</p><h2>UX/UI принципы для аналитика</h2></div></div>
+        <div class="artifact-grid"><div><strong>Понятность</strong><span>действие и результат читаются без инструкции</span></div><div><strong>Feedback</strong><span>loading, success, empty и error states</span></div><div><strong>Prevention</strong><span>валидация предотвращает ошибки до отправки</span></div><div><strong>Accessibility</strong><span>клавиатура, фокус, контраст и touch targets</span></div><div><strong>Consistency</strong><span>одинаковые паттерны ведут себя одинаково</span></div><div><strong>Responsive</strong><span>сценарий не ломается на мобильном</span></div></div>
+      </section>
+
+      <section id="info-gathering" class="knowledge-card searchable" data-title="Методы сбора информации" data-search="интервью наблюдение shadowing документы workshop фокус группа опрос лог анализ данные сбор информации">
+        <div class="card-head"><div><p class="section-code">06 / DISCOVERY</p><h2>Методы сбора информации</h2></div></div>
+        <div class="method-list"><div><strong>Анализ документов</strong><span>регламенты, старые ТЗ, инструкции, схемы</span></div><div><strong>Интервью</strong><span>экспертные знания и реальные проблемы</span></div><div><strong>Наблюдение</strong><span>как процесс выполняется фактически</span></div><div><strong>Workshop</strong><span>синхронизация нескольких ролей за одну сессию</span></div><div><strong>Данные и логи</strong><span>проверка гипотез на фактическом поведении системы</span></div></div>
+      </section>
+
+      <section id="use-cases" class="knowledge-card searchable" data-title="Use Cases" data-search="use case сценарий актор предусловия основной поток альтернативный постусловия">
+        <div class="card-head"><div><p class="section-code">07 / SCENARIO</p><h2>Use Cases</h2></div></div>
+        <p>Use Case полезен, когда важна последовательность взаимодействия и варианты поведения системы.</p>
+        <div class="schema-list"><div><span>Actor</span><strong>Кто инициирует сценарий</strong></div><div><span>Preconditions</span><strong>Что должно быть истинно до старта</strong></div><div><span>Main flow</span><strong>Успешная последовательность шагов</strong></div><div><span>Alternatives</span><strong>Ошибки и варианты</strong></div><div><span>Postconditions</span><strong>Состояние системы после завершения</strong></div></div>
+        <div class="note"><strong>Мини-пример</strong><p>Пользователь оформляет заказ → система валидирует корзину → резервирует остатки → создаёт заказ → запускает оплату. Если остаток изменился, система возвращает конфликт и предлагает обновить корзину.</p></div>
+      </section>
+
+      <section id="user-stories" class="knowledge-card searchable" data-title="User Stories" data-search="user story invest acceptance criteria given when then пользовательская история">
+        <div class="card-head"><div><p class="section-code">08 / STORY</p><h2>User Stories</h2></div></div>
+        <div class="code-card code-card--large">Как [роль], я хочу [возможность], чтобы [ценность].</div>
+        <p><strong>INVEST:</strong> Independent · Negotiable · Valuable · Estimable · Small · Testable.</p>
+        <div class="code-card">Given пользователь авторизован<br>When он подтверждает заказ<br>Then система создаёт заказ и показывает его номер</div>
+      </section>
+
+      <section id="bpmn" class="knowledge-card searchable" data-title="BPMN" data-search="bpmn task event gateway pool lane sequence flow процесс шлюз событие задача дорожки">
+        <div class="card-head"><div><p class="section-code">09 / PROCESS</p><h2>BPMN</h2></div></div>
+        <div class="bpmn-demo" aria-label="Упрощенная BPMN-схема"><div class="bpmn-event">●</div><span>→</span><div class="bpmn-task">Проверить заказ</div><span>→</span><div class="bpmn-gateway">◇</div><span>→</span><div class="bpmn-task">Создать заказ</div><span>→</span><div class="bpmn-event">◎</div></div>
+        <ul class="check-list"><li><strong>Task</strong> — единица работы;</li><li><strong>Event</strong> — начало, конец, таймер, сообщение;</li><li><strong>Gateway</strong> — ветвление и синхронизация;</li><li><strong>Sequence Flow</strong> — порядок выполнения;</li><li><strong>Pool / Lane</strong> — участники и ответственность.</li></ul>
+      </section>
+
+      <section id="estimation" class="knowledge-card searchable" data-title="Техники оценки задач" data-search="planning poker tshirt sizing affinity pert estimation story points оценка задач">
+        <div class="card-head"><div><p class="section-code">10 / ESTIMATE</p><h2>Техники оценки задач</h2></div></div>
+        <div class="compact-grid"><div><strong>Planning Poker</strong><p>командная относительная оценка story points</p></div><div><strong>T-Shirt Sizing</strong><p>быстрая грубая оценка XS → XL</p></div><div><strong>Affinity</strong><p>группировка задач относительно друг друга</p></div><div><strong>Three-point</strong><p>optimistic / likely / pessimistic</p></div></div>
+      </section>
+
+      <section id="api" class="knowledge-card searchable" data-title="API" data-search="api endpoint get post put patch delete contract http request response integration">
+        <div class="card-head"><div><p class="section-code">11 / CONTRACT</p><h2>API как контракт</h2></div></div>
+        <p>Для аналитика API — это формализованный контракт между потребителем и поставщиком данных.</p>
+        <div class="code-card code-card--dark"><span class="code-line code-line--muted">GET /api/orders/123</span><br><span class="code-line code-line--ok">200 OK</span><br>{<br>&nbsp;&nbsp;"id": 123,<br>&nbsp;&nbsp;"status": "paid"<br>}</div>
+        <div class="artifact-grid"><div><strong>Request</strong><span>method, path, query, headers, body</span></div><div><strong>Response</strong><span>status, headers, schema</span></div><div><strong>Errors</strong><span>codes, message, details, retryability</span></div><div><strong>Rules</strong><span>auth, idempotency, limits, versioning</span></div></div>
+      </section>
+
+      <section id="rest" class="knowledge-card searchable" data-title="REST" data-search="rest stateless cache client server http status 200 201 400 401 403 404 500">
+        <div class="card-head"><div><p class="section-code">12 / REST</p><h2>REST</h2></div></div>
+        <p>REST опирается на ресурсы, единообразный интерфейс и отсутствие серверного состояния сессии между запросами.</p>
+        <div class="status-grid"><div><span>2xx</span><strong>Success</strong><small>200, 201, 204</small></div><div><span>3xx</span><strong>Redirect</strong><small>301, 304</small></div><div><span>4xx</span><strong>Client error</strong><small>400, 401, 403, 404</small></div><div><span>5xx</span><strong>Server error</strong><small>500, 502, 503</small></div></div>
+      </section>
+
+      <section id="soap" class="knowledge-card searchable" data-title="SOAP" data-search="soap wsdl xml ws-security transaction enterprise integration">
+        <div class="card-head"><div><p class="section-code">13 / SOAP</p><h2>SOAP</h2></div></div>
+        <p>SOAP использует XML-сообщения и формальный контракт WSDL. Чаще встречается в enterprise-интеграциях с требованиями к WS-* стандартам.</p>
+        <div class="table-wrap"><table><thead><tr><th>Критерий</th><th>SOAP</th><th>REST</th></tr></thead><tbody><tr><td>Контракт</td><td>WSDL</td><td>OpenAPI / договоренность</td></tr><tr><td>Формат</td><td>XML</td><td>JSON, XML и др.</td></tr><tr><td>Transport</td><td>HTTP, SMTP и др.</td><td>обычно HTTP</td></tr><tr><td>Enterprise security</td><td>WS-Security</td><td>TLS + OAuth/JWT</td></tr></tbody></table></div>
+      </section>
+
+      <section id="graphql" class="knowledge-card searchable" data-title="GraphQL" data-search="graphql query mutation subscription schema resolver api">
+        <div class="card-head"><div><p class="section-code">14 / GRAPH</p><h2>GraphQL</h2></div></div>
+        <p>Клиент описывает требуемую структуру ответа. Схема строго типизирована и служит контрактом.</p>
+        <div class="code-card code-card--dark">query {<br>&nbsp;&nbsp;user(id: "789") {<br>&nbsp;&nbsp;&nbsp;&nbsp;name<br>&nbsp;&nbsp;&nbsp;&nbsp;posts(limit: 5) { title }<br>&nbsp;&nbsp;}<br>}</div>
+      </section>
+
+      <section id="microservices" class="knowledge-card searchable" data-title="Микросервисная архитектура" data-search="microservices микросервисы monolith сервисы distributed consistency observability">
+        <div class="card-head"><div><p class="section-code">15 / SERVICES</p><h2>Микросервисная архитектура</h2></div></div>
+        <div class="two-columns"><div><h3>Что дает</h3><ul><li>независимое масштабирование;</li><li>изолированные релизы;</li><li>явные границы ответственности;</li><li>технологическая автономность.</li></ul></div><div><h3>Что усложняет</h3><ul><li>сетевые ошибки и задержки;</li><li>распределенные транзакции;</li><li>наблюдаемость и трассировку;</li><li>совместимость контрактов.</li></ul></div></div>
+        <div class="note note--warning"><strong>Не цель сама по себе</strong><p>Для небольшого продукта модульный монолит часто проще и дешевле эксплуатации.</p></div>
+      </section>
+
+      <section id="ddd" class="knowledge-card searchable" data-title="Domain-Driven Design" data-search="ddd domain driven design bounded context ubiquitous language aggregate domain event домен контекст агрегат">
+        <div class="card-head"><div><p class="section-code">16 / DOMAIN</p><h2>Domain-Driven Design</h2></div></div>
+        <div class="schema-list"><div><span>Domain</span><strong>предметная область</strong></div><div><span>Bounded Context</span><strong>граница модели и языка</strong></div><div><span>Ubiquitous Language</span><strong>единая терминология бизнеса и ИТ</strong></div><div><span>Aggregate</span><strong>граница целостности связанных объектов</strong></div><div><span>Domain Event</span><strong>значимый факт, произошедший в домене</strong></div></div>
+      </section>
+
+      <section id="db" class="knowledge-card searchable" data-title="Базы данных" data-search="database db sql nosql postgresql mysql mongodb redis cassandra neo4j normalization 1nf 2nf 3nf">
+        <div class="card-head"><div><p class="section-code">17 / DATA</p><h2>Базы данных</h2></div></div>
+        <div class="artifact-grid"><div><strong>Relational</strong><span>PostgreSQL, MySQL · ACID</span></div><div><strong>Document</strong><span>MongoDB · flexible schema</span></div><div><strong>Key-value</strong><span>Redis · cache and sessions</span></div><div><strong>Column</strong><span>Cassandra · high write scale</span></div><div><strong>Graph</strong><span>Neo4j · connected data</span></div><div><strong>Search</strong><span>Elasticsearch · full-text</span></div></div>
+        <div class="note"><strong>Нормализация</strong><p>1NF — атомарность; 2NF — отсутствие частичных зависимостей; 3NF — отсутствие транзитивных зависимостей. Денормализация применяется осознанно ради чтения и производительности.</p></div>
+      </section>
+
+      <section id="data-modeling" class="knowledge-card searchable interactive-card" data-title="Моделирование данных и SQL" data-search="data modeling entity attribute sql create table модель данных сущность атрибут генератор">
+        <div class="card-head"><div><p class="section-code">18 / MODEL</p><h2>Моделирование данных + SQL</h2></div></div>
+        <p>Создайте несколько сущностей, добавьте атрибуты и получите безопасно нормализованный черновик `CREATE TABLE`.</p>
+        <div class="modeling-grid"><div><div class="button-row"><button id="addEntityBtn" class="btn btn--primary btn--small" type="button">+ Сущность</button><button id="genSqlBtn" class="btn btn--secondary btn--small" type="button">Сгенерировать SQL</button><button id="clearEntitiesBtn" class="btn btn--ghost btn--small" type="button">Очистить</button></div><div id="entitiesList" class="entities-list" aria-live="polite"></div></div><div><div class="result-head"><strong>SQL preview</strong><button class="text-button" type="button" data-copy-target="sqlPreview">Копировать</button></div><pre id="sqlPreview" class="code-output">-- Добавьте хотя бы одну сущность</pre></div></div>
+      </section>
+
+      <section id="kanban-scrum" class="knowledge-card searchable" data-title="Kanban vs Scrum" data-search="scrum kanban sprint wip lead time cycle time agile methodology timer meeting">
+        <div class="card-head"><div><p class="section-code">19 / FLOW</p><h2>Kanban vs Scrum</h2></div></div>
+        <div class="two-columns"><div><h3>Scrum</h3><ul><li>фиксированные спринты;</li><li>цель спринта и backlog;</li><li>роли и регулярные события;</li><li>изменения контролируются внутри итерации.</li></ul></div><div><h3>Kanban</h3><ul><li>непрерывный поток;</li><li>WIP limits;</li><li>управление lead/cycle time;</li><li>приоритет можно менять по мере освобождения capacity.</li></ul></div></div>
+        <div class="meeting-timer"><div><span>Meeting timer</span><strong id="meetingTimerDisplay">00:00</strong></div><div class="button-row"><button class="btn btn--secondary btn--small" data-time="900" type="button">15 мин</button><button class="btn btn--secondary btn--small" data-time="300" type="button">5 мин</button><button class="btn btn--ghost btn--small" id="stopMeetingTimer" type="button">Стоп</button></div></div>
+      </section>
+
+      <section id="ci-cd" class="knowledge-card searchable" data-title="CI/CD" data-search="ci cd continuous integration delivery deployment pipeline github actions jenkins gitlab">
+        <div class="card-head"><div><p class="section-code">20 / DELIVERY</p><h2>CI/CD</h2></div></div>
+        <div class="delivery-flow"><span>Commit</span><i>→</i><span>Build</span><i>→</i><span>Test</span><i>→</i><span>Deploy</span><i>→</i><span>Observe</span></div>
+        <p>Аналитику важно понимать среды, quality gates, конфигурации, миграции, feature flags и обратимость релиза — это влияет на требования и критерии приемки.</p>
+      </section>
+
+      <section id="decision-tree" class="knowledge-card searchable interactive-card" data-title="Decision Tree — выбор процесса" data-search="decision tree scrum kanban waterfall agile methodology выбор процесса">
+        <div class="card-head"><div><p class="section-code">21 / DECIDE</p><h2>Decision Tree: какой процесс подойдет</h2></div></div>
+        <div class="decision-panel" id="tree-step1"><p>Можно ли планировать работу короткими итерациями с регулярной обратной связью?</p><div class="button-row"><button class="btn btn--primary btn--small" data-tree="iterative" type="button">Да</button><button class="btn btn--secondary btn--small" data-tree="predictive" type="button">Нет</button></div></div>
+        <div class="decision-panel" id="tree-step2" hidden><p id="step2-question"></p><div id="step2-options" class="button-row"></div></div>
+        <div class="decision-result" id="tree-result" hidden><span>Рекомендация</span><strong id="result-text"></strong><p id="result-description"></p><button id="resetTreeBtn" class="btn btn--secondary btn--small" type="button">Начать заново</button></div>
+      </section>
+
+      <section id="security" class="knowledge-card searchable" data-title="Безопасность" data-search="security owasp authentication authorization access control encryption tls logging threat stride xss sql injection">
+        <div class="card-head"><div><p class="section-code">22 / SECURITY</p><h2>Безопасность в требованиях</h2></div></div>
+        <p>Не ограничивайтесь фразой «система должна быть безопасной». Требования должны описывать конкретное поведение и контроль.</p>
+        <div class="artifact-grid"><div><strong>Identity</strong><span>auth, MFA, password policy</span></div><div><strong>Access</strong><span>roles, permissions, ownership</span></div><div><strong>Data</strong><span>TLS, encryption at rest, masking</span></div><div><strong>Input</strong><span>validation, limits, sanitization</span></div><div><strong>Audit</strong><span>who, what, when, result</span></div><div><strong>Threats</strong><span>STRIDE, abuse cases, OWASP</span></div></div>
+      </section>
+
+      <section id="security-checklist" class="knowledge-card searchable interactive-card" data-title="Security checklist" data-search="security checklist auth authorization encryption stride injection logging">
+        <div class="card-head"><div><p class="section-code">23 / CHECK</p><h2>Security checklist</h2></div></div>
+        <div class="checklist-container" data-checklist="security"><label class="checklist-item"><input type="checkbox" id="sec1">Определены способы аутентификации и MFA</label><label class="checklist-item"><input type="checkbox" id="sec2">Есть модель ролей и прав доступа</label><label class="checklist-item"><input type="checkbox" id="sec3">Описано шифрование в transit и at rest</label><label class="checklist-item"><input type="checkbox" id="sec4">Проведен threat modeling критичных операций</label><label class="checklist-item"><input type="checkbox" id="sec5">Учтена защита от инъекций и опасного ввода</label><label class="checklist-item"><input type="checkbox" id="sec6">Определен состав audit logging</label></div>
+        <div class="progress-line"><span>Прогресс</span><strong id="secChecklistPercent">0%</strong></div><div class="progress-bar"><div id="secChecklistProgress" class="progress-fill"></div></div><button id="resetSecChecklist" class="btn btn--secondary btn--small" type="button">Сбросить</button>
+      </section>
+
+      <section id="metrics" class="knowledge-card searchable" data-title="Метрики" data-search="metrics velocity lead time cycle time roi adoption feature usage csat nps observability">
+        <div class="card-head"><div><p class="section-code">24 / MEASURE</p><h2>Метрики продукта и процесса</h2></div></div>
+        <div class="metric-cards"><div><strong>Lead Time</strong><span>от запроса до поставки</span></div><div><strong>Cycle Time</strong><span>время активной работы</span></div><div><strong>Adoption</strong><span>доля пользователей функции</span></div><div><strong>CSAT / NPS</strong><span>удовлетворенность и лояльность</span></div></div>
+        <div class="note"><strong>Правило</strong><p>Для значимой функции заранее определите, каким сигналом после релиза вы проверите, что проблема действительно решена.</p></div>
+      </section>
+
+      <section id="mistakes" class="knowledge-card searchable" data-title="Типичные ошибки аналитика" data-search="ошибки аналитика stakeholder nfr edge case traceability коммуникация изменения review">
+        <div class="card-head"><div><p class="section-code">25 / ANTI-PATTERNS</p><h2>Типичные ошибки аналитика</h2></div></div>
+        <ol class="risk-list"><li><strong>Сразу проектировать решение</strong><span>Сначала сформулируйте проблему и ценность.</span></li><li><strong>Игнорировать NFR</strong><span>Производительность, безопасность и наблюдаемость должны быть частью требований.</span></li><li><strong>Описывать только happy path</strong><span>Добавляйте ошибки, повторы, таймауты и edge cases.</span></li><li><strong>Терять трассируемость</strong><span>Связывайте цель → сценарий → требование → тест.</span></li><li><strong>Менять требования молча</strong><span>Изменение должно иметь автора, причину, влияние и историю.</span></li></ol>
+      </section>
+
+      <section id="templates" class="knowledge-card searchable interactive-card" data-title="Шаблоны документов" data-search="templates srs user story openapi test cases документы шаблоны скачать">
+        <div class="card-head"><div><p class="section-code">26 / TEMPLATE</p><h2>Шаблоны документов</h2></div></div>
+        <div class="template-tabs"><button class="chip" type="button" data-doc="srs">SRS</button><button class="chip" type="button" data-doc="user-stories">User Story</button><button class="chip" type="button" data-doc="api-spec">API Spec</button><button class="chip" type="button" data-doc="test-cases">Test Case</button></div>
+        <div id="docEditor" class="editor-panel" hidden><textarea id="docContent" rows="12" aria-label="Содержимое шаблона"></textarea><div class="button-row"><button id="downloadDocBtn" class="btn btn--primary btn--small" type="button">Скачать .txt</button><button class="btn btn--secondary btn--small" type="button" data-copy-target="docContent">Копировать</button></div></div>
+      </section>
+
+      <section id="document-generator" class="knowledge-card searchable interactive-card" data-title="Генератор документов" data-search="document generator srs api specification user stories генерировать документ">
+        <div class="card-head"><div><p class="section-code">27 / GENERATE</p><h2>Генератор документов</h2></div></div>
+        <div class="form-grid"><label>Тип документа<select id="docTypeSelect"><option value="srs">SRS</option><option value="user-stories">User Stories</option><option value="api-spec">API Specification</option></select></label><button id="generateDocBtn" class="btn btn--primary" type="button">Сгенерировать</button></div>
+        <textarea id="generatedDoc" rows="10" aria-label="Сгенерированный документ" placeholder="Здесь появится шаблон"></textarea><div class="button-row"><button id="downloadGeneratedDoc" class="btn btn--secondary btn--small" type="button">Скачать</button><button class="btn btn--ghost btn--small" type="button" data-copy-target="generatedDoc">Копировать</button></div>
+      </section>
+
+      <section id="email-templates" class="knowledge-card searchable interactive-card" data-title="Шаблоны сообщений" data-search="email template письмо уточнение meeting review status communication сообщение">
+        <div class="card-head"><div><p class="section-code">28 / COMMUNICATE</p><h2>Шаблоны сообщений</h2></div></div>
+        <div class="template-tabs"><button class="chip" data-email="clarification" type="button">Уточнение</button><button class="chip" data-email="meeting" type="button">Встреча</button><button class="chip" data-email="review" type="button">Ревью</button><button class="chip" data-email="update" type="button">Статус</button></div>
+        <textarea id="emailTemplateText" rows="7" aria-label="Шаблон сообщения" placeholder="Выберите шаблон выше"></textarea><button id="copyEmailBtn" class="btn btn--secondary btn--small" type="button">Копировать</button>
+      </section>
+
+      <section id="swagger" class="knowledge-card searchable" data-title="Swagger и OpenAPI" data-search="swagger openapi schema api documentation yaml contract">
+        <div class="card-head"><div><p class="section-code">29 / OPENAPI</p><h2>Swagger / OpenAPI</h2></div></div>
+        <p>OpenAPI описывает операции, параметры, схемы, ответы и ошибки REST API в машиночитаемом виде.</p>
+        <div class="code-card code-card--dark">openapi: 3.0.3<br>paths:<br>&nbsp;&nbsp;/orders/{id}:<br>&nbsp;&nbsp;&nbsp;&nbsp;get:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;responses:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'200':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description: Order found</div>
+      </section>
+
+      <section id="career" class="knowledge-card searchable" data-title="Карьерный путь аналитика" data-search="career junior middle senior lead principal analyst skills карьера системный аналитик">
+        <div class="card-head"><div><p class="section-code">30 / GROW</p><h2>Карьерный путь аналитика</h2></div></div>
+        <div class="career-flow"><div><span>01</span><strong>Junior</strong><p>сбор и документирование требований</p></div><div><span>02</span><strong>Middle</strong><p>самостоятельное проектирование решений</p></div><div><span>03</span><strong>Senior</strong><p>архитектурные компромиссы и сложные контуры</p></div><div><span>04</span><strong>Lead / Principal</strong><p>практика анализа, стандарты и менторство</p></div></div>
+      </section>
+
+      <section id="competency-map" class="knowledge-card searchable interactive-card" data-title="Карта компетенций" data-search="competency map skills bpmn api sql security user stories communication progress компетенции навыки">
+        <div class="card-head"><div><p class="section-code">31 / SKILLS</p><h2>Карта компетенций</h2></div></div>
+        <p>Отметьте освоенные навыки. Состояние хранится только в `localStorage` этого браузера.</p>
+        <div class="checklist-container" id="competencyChecklist"><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp1">Выявление и анализ требований</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp2">BPMN и моделирование процессов</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp3">REST / OpenAPI</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp4">SQL и модели данных</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp5">Security requirements</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp6">User Stories / Use Cases</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp7">Traceability и change analysis</label><label class="checklist-item"><input type="checkbox" class="comp-cb" id="comp8">Фасилитация и коммуникация</label></div>
+        <div class="progress-line"><span>Освоено</span><strong id="compProgressPercent">0%</strong></div><div class="progress-bar"><div id="compProgressFill" class="progress-fill"></div></div><div class="button-row"><button id="saveCompBtn" class="btn btn--primary btn--small" type="button">Сохранить</button><button id="resetCompBtn" class="btn btn--secondary btn--small" type="button">Сбросить</button></div>
+      </section>
+
+      <section id="testing-system" class="knowledge-card searchable interactive-card" data-title="Проверка знаний" data-search="quiz test requirements api db bpmn security ddd тест проверка знаний">
+        <div class="card-head"><div><p class="section-code">32 / QUIZ</p><h2>Проверка знаний</h2></div></div>
+        <div class="form-grid"><label>Раздел<select id="testSection"><option value="requirements">Требования</option><option value="api">API и REST</option><option value="db">Базы данных</option><option value="bpmn">BPMN</option><option value="security">Безопасность</option><option value="ddd">DDD</option></select></label><button id="startTestBtn" class="btn btn--primary" type="button">Начать тест</button></div>
+        <div id="testArea" class="test-area" aria-live="polite"></div>
+      </section>
+
+      <div id="tools-zone" class="section-anchor" aria-hidden="true"></div>
+      <section id="quick-tools" class="knowledge-card searchable interactive-card" data-title="Быстрые инструменты" data-search="converter kb mb gb data units tools конвертер килобайт мегабайт гигабайт">
+        <div class="card-head"><div><p class="section-code">33 / TOOLS</p><h2>Быстрые инструменты</h2></div></div>
+        <div class="tool-workspace"><label>Значение<input type="number" id="conv-input" value="1" step="any"></label><label>Из<select id="conv-from"><option value="kb">KB</option><option value="mb" selected>MB</option><option value="gb">GB</option></select></label><label>В<select id="conv-to"><option value="kb">KB</option><option value="mb" selected>MB</option><option value="gb">GB</option></select></label><button id="convertBtn" class="btn btn--primary" type="button">Конвертировать</button><label class="tool-result">Результат<input id="conv-output" readonly value="1 MB"></label></div>
+      </section>
+
+      <section id="external-integration" class="knowledge-card searchable interactive-card" data-title="API тестер" data-search="api tester fetch get post json cors request response integration browser">
+        <div class="card-head"><div><p class="section-code">34 / REQUEST</p><h2>API tester</h2></div></div>
+        <p>Тестер выполняет запрос из браузера. Целевой API должен разрешать CORS. Секретные токены сюда вводить не следует.</p>
+        <div class="api-controls"><label>Method<select id="apiMethod"><option>GET</option><option>POST</option></select></label><label class="api-url-field">URL<input type="url" id="apiUrl" value="https://jsonplaceholder.typicode.com/posts/1"></label><button id="sendApiBtn" class="btn btn--primary" type="button">Отправить</button></div>
+        <div class="template-tabs"><button class="chip" type="button" data-api-url="https://jsonplaceholder.typicode.com/posts/1">JSONPlaceholder GET</button><button class="chip" type="button" data-api-url="https://jsonplaceholder.typicode.com/posts">JSONPlaceholder POST</button></div>
+        <div class="result-head"><strong id="apiStatus">Response</strong><button class="text-button" type="button" data-copy-target="apiResponse">Копировать</button></div><pre id="apiResponse" class="code-output">Ответ появится здесь…</pre>
+      </section>
+
+      <section id="knowledge-base" class="knowledge-card searchable interactive-card" data-title="Заметки аналитика" data-search="notes localstorage база знаний заметки аналитика">
+        <div class="card-head"><div><p class="section-code">35 / NOTES</p><h2>Заметки аналитика</h2></div></div>
+        <p>Заметки не уходят на сервер и сохраняются только в браузере.</p>
+        <div class="notes-form"><input type="text" id="noteTitle" maxlength="80" placeholder="Заголовок"><textarea id="noteContent" rows="4" maxlength="4000" placeholder="Содержание заметки"></textarea><button id="addNoteBtn" class="btn btn--primary" type="button">Добавить заметку</button></div>
+        <div id="notesList" class="notes-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="interactive-checklists" class="knowledge-card searchable interactive-card" data-title="Чеклист анализа требований" data-search="requirements checklist stakeholder user stories acceptance nfr traceability чеклист требования">
+        <div class="card-head"><div><p class="section-code">36 / READY</p><h2>Чеклист анализа требований</h2></div></div>
+        <div class="checklist-container" data-checklist="requirements"><label class="checklist-item"><input type="checkbox" id="chStakeholders">Стейкхолдеры идентифицированы</label><label class="checklist-item"><input type="checkbox" id="chUserStories">Сценарии или User Stories согласованы</label><label class="checklist-item"><input type="checkbox" id="chAcceptance">Есть критерии приемки</label><label class="checklist-item"><input type="checkbox" id="chNonFunctional">NFR задокументированы</label><label class="checklist-item"><input type="checkbox" id="chTrace">Есть трассировка цели и требований</label></div>
+        <div class="progress-line"><span>Готовность</span><strong id="reqChecklistPercent">0%</strong></div><div class="progress-bar"><div id="reqChecklistProgress" class="progress-fill"></div></div><button id="resetReqChecklist" class="btn btn--secondary btn--small" type="button">Сбросить</button>
+      </section>
+
+      <section id="glossary" class="knowledge-card searchable" data-title="Глоссарий" data-search="glossary артефакт stakeholder use case user story bpmn rest soap graphql ddd cicd glossary термины">
+        <div class="card-head"><div><p class="section-code">37 / GLOSSARY</p><h2>Глоссарий</h2></div></div>
+        <dl class="glossary-grid"><div><dt>Артефакт</dt><dd>Рабочий продукт анализа: документ, модель, схема, контракт.</dd></div><div><dt>Стейкхолдер</dt><dd>Заинтересованная сторона, влияющая на решение или испытывающая его влияние.</dd></div><div><dt>Use Case</dt><dd>Сценарий взаимодействия актора с системой.</dd></div><div><dt>User Story</dt><dd>Короткое описание ценности с точки зрения роли.</dd></div><div><dt>BPMN</dt><dd>Нотация моделирования бизнес-процессов.</dd></div><div><dt>REST</dt><dd>Архитектурный стиль для сетевых API.</dd></div><div><dt>DDD</dt><dd>Проектирование вокруг предметной области и ее языка.</dd></div><div><dt>CI/CD</dt><dd>Автоматизация интеграции, проверок и поставки изменений.</dd></div></dl>
+      </section>
+
+      <section id="resources" class="knowledge-card searchable" data-title="Полезные ресурсы" data-search="resources habr modern analyst sql drawio postman swagger github knowerlife ресурсы обучение">
+        <div class="card-head"><div><p class="section-code">38 / LINKS</p><h2>Полезные ресурсы</h2></div></div>
+        <div class="resource-grid"><a href="https://www.omg.org/bpmn/" target="_blank" rel="noopener"><strong>OMG BPMN</strong><span>официальная спецификация BPMN</span><i>↗</i></a><a href="https://spec.openapis.org/oas/latest.html" target="_blank" rel="noopener"><strong>OpenAPI Specification</strong><span>контракт REST API</span><i>↗</i></a><a href="https://developer.mozilla.org/" target="_blank" rel="noopener"><strong>MDN Web Docs</strong><span>HTTP, Web API и browser platform</span><i>↗</i></a><a href="https://www.postman.com/" target="_blank" rel="noopener"><strong>Postman</strong><span>API development workspace</span><i>↗</i></a><a href="https://app.diagrams.net/" target="_blank" rel="noopener"><strong>diagrams.net</strong><span>диаграммы и модели</span><i>↗</i></a><a href="https://github.com/KnowerLife" target="_blank" rel="noopener"><strong>KnowerLife on GitHub</strong><span>open-source проекты</span><i>↗</i></a></div>
+      </section>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div><a class="brand footer-brand" href="#top"><span class="brand-name">&lt;KnowerLife /&gt;</span><span class="brand-product">SA Guide</span></a><p class="muted">Интерактивная памятка системного аналитика. Без регистрации и собственного backend.</p></div>
+    <nav aria-label="Дополнительные ссылки" class="footer-links"><a href="sitemap.html">Карта сайта</a><a href="https://knowerlife.ru/" target="_blank" rel="noopener">Портфолио</a><a href="https://github.com/KnowerLife/SA" target="_blank" rel="noopener">GitHub</a><a href="https://t.me/knowerlife" target="_blank" rel="noopener">Telegram</a><a href="mailto:info@knowerlife.ru">Email</a></nav>
+  </div>
+  <div class="container footer-bottom"><span>© <span id="currentYear"></span> KnowerLife</span><span>MIT License</span></div>
 </footer>
 
-<script src="script.js"></script>
-<script>
-    // Обработчик подписки (демо)
-    document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Спасибо за подписку! (демо-режим)');
-        this.reset();
-    });
-</script>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+<script src="script.js" defer></script>
 </body>
 </html>
