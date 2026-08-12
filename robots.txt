@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /SA/
+Sitemap: https://knowerlife.github.io/SA/sitemap.xml

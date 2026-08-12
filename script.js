@@ -10,7 +10,11 @@
     notes: 'sa_notes_v2',
     competency: 'sa_competency_v2',
     requirements: 'sa_requirements_v2',
-    security: 'sa_security_v2'
+    security: 'sa_security_v2',
+    lastSection: 'sa_last_section_v3',
+    risks: 'sa_risks_v3',
+    traceability: 'sa_traceability_v3',
+    decisions: 'sa_decisions_v3'
   };
 
   function safeParse(value, fallback) {
@@ -202,19 +206,32 @@
     const empty = $('#noSearchResults');
     const clear = $('#clearSearchBtn');
     const cards = getCards();
+    let activeCategory = 'all';
     const apply = () => {
       const term = (input?.value || '').trim().toLocaleLowerCase('ru');
       let shown = 0;
       cards.forEach(card => {
         const haystack = `${card.dataset.title || ''} ${card.dataset.search || ''} ${card.innerText}`.toLocaleLowerCase('ru');
-        const match = !term || haystack.includes(term);
+        const textMatch = !term || haystack.includes(term);
+        const categoryMatch = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const match = textMatch && categoryMatch;
         card.hidden = !match;
         if (match) shown++;
       });
-      if (status) status.textContent = term ? `Найдено: ${shown} из ${cards.length}` : `Показаны все ${cards.length} разделов`;
+      const categoryLabel = activeCategory === 'all' ? '' : ` · ${activeCategory}`;
+      if (status) status.textContent = (term || activeCategory !== 'all') ? `Найдено: ${shown} из ${cards.length}${categoryLabel}` : `Показаны все ${cards.length} разделов`;
       if (empty) empty.hidden = shown !== 0;
     };
     input?.addEventListener('input', apply);
+    $$('[data-category-filter]').forEach(btn => btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.categoryFilter || 'all';
+      $$('[data-category-filter]').forEach(item => {
+        const pressed = item === btn;
+        item.classList.toggle('is-active', pressed);
+        item.setAttribute('aria-pressed', String(pressed));
+      });
+      apply();
+    }));
     clear?.addEventListener('click', () => { if (input) { input.value = ''; apply(); input.focus(); } });
     document.addEventListener('keydown', event => {
       const tag = document.activeElement?.tagName?.toLowerCase();
@@ -508,13 +525,183 @@
     $$('[data-copy-target]').forEach(btn=>btn.addEventListener('click',async()=>{const target=$(`#${CSS.escape(btn.dataset.copyTarget)}`);const text='value' in (target||{})?target.value:target?.textContent||'';showToast(await copyText(text)?'Скопировано':'Не удалось скопировать');}));
   }
 
-  function initFooter() { const y=$('#currentYear'); if(y)y.textContent=String(new Date().getFullYear()); }
 
-  function initServiceWorkerCleanup() {
-    // Earlier versions did not use a service worker. If a stale experimental one
-    // ever existed on this GitHub Pages scope, keep the page predictable by not
-    // registering a new worker here.
+  function initSectionUtilities() {
+    const continueBlock = $('#continueBlock');
+    const continueLink = $('#continueLink');
+    const continueLabel = $('#continueLabel');
+    const cards = getCards();
+    const setContinue = id => {
+      const card = id ? $(`#${CSS.escape(id)}`) : null;
+      if (!card || !continueBlock || !continueLink || !continueLabel) return;
+      continueLink.href = `#${id}`;
+      continueLabel.textContent = card.dataset.title || id;
+      continueBlock.hidden = false;
+    };
+    const saved = readText(STORAGE.lastSection);
+    if (saved) setContinue(saved);
+
+    cards.forEach(card => {
+      const head = $('.card-head', card);
+      if (!head || head.querySelector('.deep-link-copy')) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'deep-link-copy';
+      button.textContent = '↗';
+      button.title = 'Копировать ссылку на раздел';
+      button.setAttribute('aria-label', `Копировать ссылку: ${card.dataset.title || card.id}`);
+      button.addEventListener('click', async () => {
+        const url = `${location.origin}${location.pathname}#${card.id}`;
+        showToast(await copyText(url) ? 'Ссылка скопирована' : 'Не удалось скопировать ссылку');
+      });
+      head.append(button);
+    });
+
+    if ('IntersectionObserver' in window) {
+      let lastWrite = '';
+      const observer = new IntersectionObserver(entries => {
+        const current = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
+        if (!current || current.intersectionRatio < 0.28) return;
+        const id = current.target.id;
+        if (!id || id === lastWrite) return;
+        lastWrite = id;
+        writeText(STORAGE.lastSection, id);
+        setContinue(id);
+      }, { rootMargin: '-15% 0px -55% 0px', threshold: [0.28,0.5,0.75] });
+      cards.forEach(card => observer.observe(card));
+    }
   }
+
+  function initRequirementChecker() {
+    const input = $('#requirementInput');
+    const scoreBox = $('#requirementScore');
+    const findings = $('#requirementFindings');
+    const weakWords = ['быстро','удобно','просто','примерно','около','оптимально','корректно','по возможности','при необходимости','достаточно','минимально','максимально','современный','эффективно'];
+    const renderFinding = (text, type='warn') => {
+      if (!findings) return;
+      const li = document.createElement('li'); li.className = `finding finding--${type}`; li.textContent = text; findings.append(li);
+    };
+    const analyze = () => {
+      const text = input?.value.trim() || '';
+      if (!scoreBox || !findings) return;
+      findings.replaceChildren();
+      if (!text) { scoreBox.querySelector('strong').textContent='—'; scoreBox.querySelector('span').textContent='Введите формулировку требования'; return; }
+      let score = 100;
+      const lower = text.toLocaleLowerCase('ru');
+      const foundWeak = weakWords.filter(word => lower.includes(word));
+      if (text.length < 30) { score -= 15; renderFinding('Формулировка слишком короткая: вероятно, не хватает условия, объекта или результата.'); }
+      if (!/(система|сервис|пользователь|клиент|оператор|api|приложение|модуль)/i.test(text)) { score -= 8; renderFinding('Неочевиден субъект требования — кто именно должен выполнить действие.'); }
+      if (!/(долж|необходимо|требуется|shall|must)/i.test(text)) { score -= 8; renderFinding('Нет явной обязательности: полезно использовать «должна/должен» или эквивалент.'); }
+      if (foundWeak.length) { score -= Math.min(24, foundWeak.length*8); renderFinding(`Найдены неоднозначные слова: ${foundWeak.join(', ')}.`); }
+      if (/и.+и/i.test(text) && text.length > 120) { score -= 10; renderFinding('Возможно, в одном требовании объединено несколько независимых условий — проверьте атомарность.'); }
+      if (!/(\d|ms|мс|сек|мин|rps|%|не более|не менее|ровно|статус|код|given|when|then)/i.test(text)) { score -= 10; renderFinding('Не виден измеримый критерий или наблюдаемый результат. Добавьте acceptance criteria.', 'info'); }
+      if (!/[.!?]$/.test(text)) { score -= 3; renderFinding('Добавьте завершенную пунктуацию — это мелочь, но помогает качеству документации.', 'info'); }
+      score = Math.max(0, score);
+      scoreBox.querySelector('strong').textContent = `${score}/100`;
+      scoreBox.querySelector('span').textContent = score >= 85 ? 'Формулировка выглядит достаточно конкретной' : score >= 65 ? 'Нужны уточнения перед согласованием' : 'Высокий риск неоднозначного понимания';
+      if (!findings.children.length) renderFinding('Явных эвристических проблем не найдено. Все равно проверьте контекст, исключения и критерии приемки.', 'ok');
+    };
+    $('#analyzeRequirementBtn')?.addEventListener('click', analyze);
+    $('#clearRequirementBtn')?.addEventListener('click', () => { if(input)input.value=''; if(findings)findings.replaceChildren(); if(scoreBox){scoreBox.querySelector('strong').textContent='—';scoreBox.querySelector('span').textContent='Добавьте требование для проверки';}});
+  }
+
+  function initAcceptanceBuilder() {
+    const build = () => {
+      const given = $('#acGiven')?.value.trim() || '...';
+      const when = $('#acWhen')?.value.trim() || '...';
+      const then = $('#acThen')?.value.trim() || '...';
+      const out = $('#acceptanceOutput');
+      if (out) out.textContent = `Scenario: [название]\nGiven ${given}\nWhen ${when}\nThen ${then}`;
+    };
+    $('#buildAcceptanceBtn')?.addEventListener('click', build);
+  }
+
+  function formatDuration(totalMinutes) {
+    const minutes = Math.max(0, totalMinutes);
+    const days = Math.floor(minutes / 1440);
+    const hours = Math.floor((minutes % 1440) / 60);
+    const mins = Math.floor(minutes % 60);
+    const secs = Math.round((minutes - Math.floor(minutes)) * 60);
+    return [days ? `${days} д` : '', hours ? `${hours} ч` : '', mins ? `${mins} мин` : '', secs ? `${secs} сек` : ''].filter(Boolean).join(' ') || '0 сек';
+  }
+
+  function initSlaCalculator() {
+    const run = () => {
+      const availability = Number($('#slaPercent')?.value);
+      const days = Number($('#slaPeriod')?.value || 30);
+      const out = $('#slaResult');
+      if (!out) return;
+      if (!Number.isFinite(availability) || availability < 0 || availability > 100) { out.textContent='Введите значение от 0 до 100%'; return; }
+      const downtime = days * 24 * 60 * (1 - availability / 100);
+      out.replaceChildren();
+      const strong=document.createElement('strong');strong.textContent=`${availability}%`;
+      const span=document.createElement('span');span.textContent=`Допустимый простой за ${days} дней: ${formatDuration(downtime)}`;
+      out.append(strong,span);
+    };
+    $('#calcSlaBtn')?.addEventListener('click',run); $('#slaPercent')?.addEventListener('input',run); $('#slaPeriod')?.addEventListener('change',run); run();
+  }
+
+  function initPertCalculator() {
+    const run=()=>{
+      const o=Number($('#pertO')?.value),m=Number($('#pertM')?.value),p=Number($('#pertP')?.value),out=$('#pertResult');if(!out)return;
+      if (![o,m,p].every(Number.isFinite) || o<0 || m<0 || p<0 || o>m || m>p) { out.textContent='Ожидается O ≤ M ≤ P и неотрицательные значения.'; return; }
+      const expected=(o+4*m+p)/6;const sigma=(p-o)/6;
+      out.replaceChildren();const strong=document.createElement('strong');strong.textContent=`PERT ≈ ${Number(expected.toFixed(2))}`;const span=document.createElement('span');span.textContent=`σ ≈ ${Number(sigma.toFixed(2))}; диапазон ~95%: ${Number(Math.max(0,expected-2*sigma).toFixed(2))}–${Number((expected+2*sigma).toFixed(2))}`;out.append(strong,span);
+    };
+    $('#calcPertBtn')?.addEventListener('click',run);['#pertO','#pertM','#pertP'].forEach(sel=>$(sel)?.addEventListener('input',run));run();
+  }
+
+  const HTTP_STATUSES = [
+    [200,'OK','Успешное чтение или обработка'],[201,'Created','Ресурс создан'],[202,'Accepted','Запрос принят в асинхронную обработку'],[204,'No Content','Успех без тела ответа'],
+    [304,'Not Modified','Используйте закэшированную версию'],[400,'Bad Request','Некорректный запрос'],[401,'Unauthorized','Требуется аутентификация'],[403,'Forbidden','Аутентификация есть, доступа нет'],[404,'Not Found','Ресурс не найден'],[409,'Conflict','Конфликт состояния/версии'],[412,'Precondition Failed','Не выполнено условие запроса'],[415,'Unsupported Media Type','Неподдерживаемый Content-Type'],[422,'Unprocessable Content','Синтаксис валиден, бизнес-валидация не пройдена'],[429,'Too Many Requests','Превышен rate limit'],
+    [500,'Internal Server Error','Необработанная ошибка сервера'],[502,'Bad Gateway','Ошибка upstream'],[503,'Service Unavailable','Сервис временно недоступен'],[504,'Gateway Timeout','Upstream не ответил вовремя']
+  ];
+
+  function initHttpReference() {
+    const input=$('#httpSearch'), list=$('#httpStatusList');
+    const render=()=>{if(!list)return;const term=(input?.value||'').trim().toLowerCase();list.replaceChildren();HTTP_STATUSES.filter(([code,name,desc])=>!term||`${code} ${name} ${desc}`.toLowerCase().includes(term)).forEach(([code,name,desc])=>{const row=document.createElement('div');row.className='http-status-row';const c=document.createElement('code');c.textContent=String(code);const body=document.createElement('div');const st=document.createElement('strong');st.textContent=name;const sp=document.createElement('span');sp.textContent=desc;body.append(st,sp);row.append(c,body);list.append(row);});if(!list.children.length){const p=document.createElement('p');p.className='muted';p.textContent='Совпадений нет.';list.append(p);}};
+    input?.addEventListener('input',render);render();
+  }
+
+  function initRiskMatrix() {
+    let risks=readJson(STORAGE.risks,[]);if(!Array.isArray(risks))risks=[];const list=$('#riskList');
+    const render=()=>{if(!list)return;list.replaceChildren();if(!risks.length){const p=document.createElement('p');p.className='muted';p.textContent='Риски еще не добавлены.';list.append(p);return;}risks.sort((a,b)=>b.score-a.score).forEach(risk=>{const row=document.createElement('div');row.className='risk-row';const score=document.createElement('span');score.className=`risk-score risk-score--${risk.score>15?'critical':risk.score>10?'high':risk.score>5?'medium':'low'}`;score.textContent=String(risk.score);const body=document.createElement('div');const title=document.createElement('strong');title.textContent=risk.title;const meta=document.createElement('small');meta.textContent=`P${risk.p} × I${risk.i}`;body.append(title,meta);const del=document.createElement('button');del.type='button';del.className='note-delete';del.textContent='Удалить';del.addEventListener('click',()=>{risks=risks.filter(r=>r.id!==risk.id);writeJson(STORAGE.risks,risks);render();});row.append(score,body,del);list.append(row);});};
+    $('#addRiskBtn')?.addEventListener('click',()=>{const title=$('#riskTitle')?.value.trim();const p=Number($('#riskProbability')?.value),i=Number($('#riskImpact')?.value);if(!title){showToast('Опишите риск');return;}if(![p,i].every(v=>Number.isInteger(v)&&v>=1&&v<=5)){showToast('Вероятность и влияние — от 1 до 5');return;}risks.push({id:Date.now(),title,p,i,score:p*i});writeJson(STORAGE.risks,risks);if($('#riskTitle'))$('#riskTitle').value='';render();});render();
+  }
+
+  function csvCell(value) { const text=String(value??''); return /[",\n]/.test(text)?`"${text.replace(/"/g,'""')}"`:text; }
+  function initTraceabilityTool() {
+    let rows=readJson(STORAGE.traceability,[]);if(!Array.isArray(rows))rows=[];const body=$('#traceTableBody');
+    const render=()=>{if(!body)return;body.replaceChildren();rows.forEach(row=>{const tr=document.createElement('tr');[row.goal,row.requirement,row.acceptance].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td);});const actions=document.createElement('td');const del=document.createElement('button');del.type='button';del.className='table-delete';del.textContent='×';del.setAttribute('aria-label','Удалить строку');del.addEventListener('click',()=>{rows=rows.filter(r=>r.id!==row.id);writeJson(STORAGE.traceability,rows);render();});actions.append(del);tr.append(actions);body.append(tr);});};
+    $('#addTraceRowBtn')?.addEventListener('click',()=>{const goal=$('#traceGoal')?.value.trim(),requirement=$('#traceRequirement')?.value.trim(),acceptance=$('#traceAcceptance')?.value.trim();if(!requirement){showToast('Укажите requirement');return;}rows.push({id:Date.now(),goal,requirement,acceptance});writeJson(STORAGE.traceability,rows);['#traceGoal','#traceRequirement','#traceAcceptance'].forEach(sel=>{if($(sel))$(sel).value='';});render();});
+    $('#clearTraceBtn')?.addEventListener('click',()=>{rows=[];writeJson(STORAGE.traceability,rows);render();});
+    $('#exportTraceCsvBtn')?.addEventListener('click',()=>{const csv=['Goal,Requirement,Acceptance/Test',...rows.map(r=>[r.goal,r.requirement,r.acceptance].map(csvCell).join(','))].join('\n');downloadText('traceability-matrix.csv',csv);});render();
+  }
+
+  function initDecisionLog() {
+    let decisions=readJson(STORAGE.decisions,[]);if(!Array.isArray(decisions))decisions=[];const list=$('#decisionList');
+    const render=()=>{if(!list)return;list.replaceChildren();if(!decisions.length){const p=document.createElement('p');p.className='muted';p.textContent='Локальных решений пока нет.';list.append(p);return;}decisions.forEach((d,index)=>{const card=document.createElement('article');card.className='decision-entry';const head=document.createElement('div');head.className='decision-entry-head';const title=document.createElement('strong');title.textContent=`ADR-${String(index+1).padStart(3,'0')} · ${d.title}`;const status=document.createElement('span');status.textContent=d.status;head.append(title,status);const context=document.createElement('p');context.textContent=d.context||'Контекст не указан';const consequences=document.createElement('small');consequences.textContent=`Последствия: ${d.consequences||'—'}`;const del=document.createElement('button');del.type='button';del.className='note-delete';del.textContent='Удалить';del.addEventListener('click',()=>{decisions=decisions.filter(item=>item.id!==d.id);writeJson(STORAGE.decisions,decisions);render();});card.append(head,context,consequences,del);list.append(card);});};
+    $('#saveDecisionBtn')?.addEventListener('click',()=>{const title=$('#decisionTitle')?.value.trim();if(!title){showToast('Укажите решение');return;}decisions.push({id:Date.now(),title,status:$('#decisionStatus')?.value||'Accepted',context:$('#decisionContext')?.value.trim()||'',consequences:$('#decisionConsequences')?.value.trim()||'',date:new Date().toISOString()});writeJson(STORAGE.decisions,decisions);['#decisionTitle','#decisionContext','#decisionConsequences'].forEach(sel=>{if($(sel))$(sel).value='';});render();showToast('Решение сохранено локально');});
+    $('#exportDecisionsBtn')?.addEventListener('click',()=>{const md=decisions.map((d,i)=>`# ADR-${String(i+1).padStart(3,'0')}: ${d.title}\n\nStatus: ${d.status}\nDate: ${d.date||''}\n\n## Context\n${d.context||'—'}\n\n## Consequences\n${d.consequences||'—'}\n`).join('\n---\n\n');downloadText('architecture-decisions.md',md);});render();
+  }
+
+  function initGlossaryFilter() {
+    const input=$('#glossarySearch');const items=$$('#glossary .glossary-grid > div');input?.addEventListener('input',()=>{const term=input.value.trim().toLowerCase();items.forEach(item=>item.hidden=Boolean(term&&!item.innerText.toLowerCase().includes(term)));});
+  }
+
+  function initBackToTop() {
+    const btn=$('#backToTopBtn');if(!btn)return;let ticking=false;const update=()=>{btn.hidden=window.scrollY<900;ticking=false;};window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}}, {passive:true});btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));update();
+  }
+
+  function initPwaInstall() {
+    let promptEvent=null;const btn=$('#installAppBtn');
+    window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;if(btn)btn.hidden=false;});
+    btn?.addEventListener('click',async()=>{if(!promptEvent)return;promptEvent.prompt();try{await promptEvent.userChoice;}catch{}promptEvent=null;btn.hidden=true;});
+    window.addEventListener('appinstalled',()=>{if(btn)btn.hidden=true;showToast('SA Guide установлен');});
+    if('serviceWorker' in navigator && location.protocol !== 'file:') window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}),{once:true});
+  }
+
+  function initFooter() { const y=$('#currentYear'); if(y)y.textContent=String(new Date().getFullYear()); }
 
   document.addEventListener('DOMContentLoaded',()=>{
     initTheme();
@@ -525,6 +712,7 @@
     initSearch();
     initActiveNav();
     initBookmarks();
+    initSectionUtilities();
     initTimer();
     initDecisionTree();
     initDataModeler();
@@ -533,12 +721,22 @@
     initMessages();
     initConverter();
     initApiTester();
+    initRequirementChecker();
+    initAcceptanceBuilder();
+    initSlaCalculator();
+    initPertCalculator();
+    initHttpReference();
+    initRiskMatrix();
+    initTraceabilityTool();
+    initDecisionLog();
+    initGlossaryFilter();
+    initBackToTop();
+    initPwaInstall();
     initNotes();
     initPersistentChecklist(['sec1','sec2','sec3','sec4','sec5','sec6'],STORAGE.security,'#secChecklistProgress','#secChecklistPercent','#resetSecChecklist');
     initPersistentChecklist(['chStakeholders','chUserStories','chAcceptance','chNonFunctional','chTrace'],STORAGE.requirements,'#reqChecklistProgress','#reqChecklistPercent','#resetReqChecklist');
     initCompetency();
     initCopyButtons();
     initFooter();
-    initServiceWorkerCleanup();
   });
 })();

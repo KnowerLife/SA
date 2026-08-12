@@ -1,0 +1,23 @@
+{
+  "id": "./",
+  "name": "SA Guide — системный аналитик | KnowerLife",
+  "short_name": "SA Guide",
+  "description": "Интерактивная база знаний и рабочие browser-инструменты системного аналитика.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c0e16",
+  "theme_color": "#6757f5",
+  "icons": [
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"assets/icon-maskable-192.png","sizes":"192x192","type":"image/png","purpose":"maskable"},
+    {"src":"assets/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ],
+  "shortcuts": [
+    {"name":"База знаний","short_name":"Knowledge","url":"./#guide","icons":[{"src":"assets/icon-192.png","sizes":"192x192"}]},
+    {"name":"Analyst Workbench","short_name":"Workbench","url":"./#tools-zone","icons":[{"src":"assets/icon-192.png","sizes":"192x192"}]},
+    {"name":"API и интеграции","short_name":"API","url":"./#api","icons":[{"src":"assets/icon-192.png","sizes":"192x192"}]}
+  ]
+}
