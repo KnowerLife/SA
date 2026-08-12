@@ -1,110 +1,610 @@
-# Памятка Системного Аналитика — Essential Guide
+# SA Guide — System Analyst Essential Guide
 
-Комплексный веб-справочник для системных аналитиков, содержащий все необходимые инструменты, методики и знания для эффективной работы. Проект представляет собой интерактивное руководство с практическими примерами, шаблонами, чеклистами и встроенными утилитами для ежедневных задач.
+[![Demo](https://img.shields.io/badge/demo-SA%20Guide-6757f5?style=for-the-badge&logo=google-chrome&logoColor=white)](https://knowerlife.github.io/SA/)
+[![KnowerLife](https://img.shields.io/badge/KnowerLife-main%20site-0c0e16?style=for-the-badge)](https://knowerlife.ru/)
+[![PWA](https://img.shields.io/badge/PWA-installable-5cc8ff?style=for-the-badge&logo=pwa&logoColor=0c0e16)](https://knowerlife.github.io/SA/)
+[![Vanilla JS](https://img.shields.io/badge/JavaScript-Vanilla-f7df1e?style=for-the-badge&logo=javascript&logoColor=111)](https://github.com/KnowerLife/SA)
+[![License MIT](https://img.shields.io/badge/license-MIT-b5adff?style=for-the-badge)](LICENSE)
 
----
+<p align="center">
+  <a href="https://knowerlife.github.io/SA/">
+    <img src="assets/og-sa.png" alt="SA Guide — интерактивная база знаний системного аналитика от KnowerLife" width="100%">
+  </a>
+</p>
 
-## 🚀 Ключевые возможности
+**SA Guide** — интерактивная база знаний и рабочая среда системного аналитика от **KnowerLife**.
 
-- **Полноценная база знаний** по системному анализу: требования, архитектура, данные, безопасность, документация, карьера.
-- **Интерактивные инструменты** прямо в браузере:
-  - Конвертер единиц измерения (КБ, МБ, ГБ)
-  - Таймер встреч (15/5 минут с остановкой)
-  - Decision Tree для выбора методологии разработки (Scrum, Kanban, Agile, Waterfall)
-  - Визуальный конструктор ER-диаграмм с генерацией SQL-кода
-  - Тестирование знаний по разделам: требования, API, БД, BPMN, безопасность, DDD
-  - API-тестер (GET/POST запросы к публичным API)
-  - Заметки аналитика с сохранением в localStorage
-  - Интерактивные чеклисты с отслеживанием прогресса
-  - Карта компетенций для самооценки навыков
-  - Генератор документов (SRS, User Stories, API Spec)
-  - Шаблоны писем (уточнения, приглашения, ревью, статус)
-- **Современный адаптивный интерфейс**:
-  - Тёмная и светлая темы
-  - Версия для слабовидящих (увеличенный шрифт, контрастность)
-  - Мобильная версия с выдвижным меню
-- **Поиск по всем материалам** – мгновенная фильтрация разделов
-- **Закладки** – сохранение важных разделов в боковом меню
-- **Экспорт в PDF** – выгрузка всего справочника в файл
-- **Карта сайта** (sitemap.html) для удобной навигации
+Проект объединяет системный анализ, требования, процессы, API и интеграции, моделирование данных, безопасность, delivery, observability, документацию, карьерное развитие и набор локальных browser-инструментов для ежедневной работы аналитика.
+
+🌐 **SA Guide:** https://knowerlife.github.io/SA/  
+🌐 **KnowerLife:** https://knowerlife.ru/
 
 ---
 
-## 📂 Структура проекта
+## О проекте
 
+SA Guide построен вокруг полного жизненного цикла аналитической задачи:
+
+```text
+DISCOVERY
+   ↓
+BUSINESS GOAL
+   ↓
+REQUIREMENTS
+   ↓
+PROCESS / DOMAIN
+   ↓
+API / EVENTS / DATA
+   ↓
+SECURITY / NFR
+   ↓
+IMPLEMENTATION
+   ↓
+TESTING
+   ↓
+RELEASE
+   ↓
+OBSERVABILITY
 ```
-/
-├── index.html          # Главная страница со всем содержимым и футером
-├── sitemap.html        # Карта сайта со ссылками на все разделы
-├── styles.css          # Единый файл стилей (адаптив, темы, футер)
-├── script.js           # Вся клиентская логика (инструменты, тесты, заметки)
-└── README.md           # Этот файл
+
+Это не только справочник с теорией. На одной странице объединены:
+
+- структурированная база знаний;
+- практические примеры;
+- шаблоны аналитических артефактов;
+- интерактивные чеклисты;
+- калькуляторы;
+- тестирование знаний;
+- локальные заметки;
+- risk management;
+- traceability;
+- архитектурные решения;
+- API testing;
+- PWA и offline-режим.
+
+---
+
+## 64 раздела знаний и инструментов
+
+В SA Guide собраны основные области, с которыми системный аналитик сталкивается на реальных проектах.
+
+### Discovery и требования
+
+- Discovery;
+- Problem Statement;
+- бизнес-цели;
+- Impact Mapping;
+- Story Mapping;
+- сбор и анализ требований;
+- виды требований;
+- функциональные требования;
+- нефункциональные требования;
+- жизненный цикл требования;
+- baseline;
+- Change Request;
+- Impact Analysis;
+- управление scope;
+- приоритизация;
+- MoSCoW;
+- SMART;
+- INVEST;
+- Acceptance Criteria;
+- Given / When / Then;
+- трассировка требований.
+
+### Процессы и моделирование
+
+- BPMN;
+- Use Cases;
+- User Stories;
+- UML;
+- Sequence Diagram;
+- State Diagram;
+- Component Diagram;
+- Deployment Diagram;
+- C4 Context;
+- C4 Container;
+- DMN;
+- decision tables;
+- stakeholder analysis;
+- Value vs Effort;
+- Scrum;
+- Kanban;
+- Agile;
+- Waterfall;
+- CI/CD.
+
+### API и архитектура
+
+- API fundamentals;
+- REST;
+- SOAP;
+- GraphQL;
+- OpenAPI;
+- resource design;
+- HTTP methods;
+- status codes;
+- pagination;
+- filtering;
+- sorting;
+- versioning;
+- rate limits;
+- request ID;
+- correlation ID;
+- архитектурные компромиссы;
+- ADR;
+- Domain-Driven Design;
+- microservices.
+
+### Интеграции и messaging
+
+- synchronous integration;
+- asynchronous integration;
+- request / response;
+- events;
+- webhooks;
+- polling;
+- batch;
+- SFTP;
+- CDC;
+- Kafka;
+- RabbitMQ;
+- topic;
+- partition;
+- consumer group;
+- ordering;
+- retention;
+- replay;
+- DLQ;
+- poison messages.
+
+### Надёжность интеграций
+
+- timeout;
+- retry;
+- exponential backoff;
+- jitter;
+- idempotency;
+- Circuit Breaker;
+- Transactional Outbox;
+- Saga;
+- Dead Letter Queue;
+- reconciliation.
+
+### Данные
+
+- relational databases;
+- document databases;
+- key-value;
+- column-oriented databases;
+- graph databases;
+- search storage;
+- ER-моделирование;
+- SQL;
+- нормализация;
+- ACID;
+- isolation levels;
+- optimistic locking;
+- pessimistic locking;
+- strong consistency;
+- eventual consistency;
+- caching;
+- TTL;
+- invalidation;
+- cache-aside.
+
+### Безопасность
+
+- authentication;
+- authorization;
+- OAuth 2;
+- OpenID Connect;
+- JWT;
+- access token;
+- refresh token;
+- RBAC;
+- ABAC;
+- scopes;
+- MFA;
+- Threat Modeling;
+- STRIDE;
+- OWASP Top 10;
+- требования к логированию и аудиту.
+
+### Delivery и эксплуатация
+
+- unit testing;
+- integration testing;
+- contract testing;
+- E2E testing;
+- performance testing;
+- acceptance testing;
+- backward compatibility;
+- migration;
+- rollback;
+- feature flags;
+- runbook;
+- ownership;
+- Logs;
+- Metrics;
+- Traces;
+- Alerts;
+- SLO;
+- observability.
+
+---
+
+## Analyst Workbench
+
+Отдельная часть SA Guide — интерактивная рабочая зона аналитика.
+
+### Requirement Quality Checker
+
+Проверяет формулировку требования на:
+
+- неоднозначность;
+- отсутствие измеримости;
+- отсутствие субъекта;
+- атомарность;
+- тестируемость;
+- наличие явной обязательности;
+- признаки слабой формулировки.
+
+Результат сопровождается score и конкретными замечаниями.
+
+### Acceptance Criteria Builder
+
+Позволяет быстро собрать сценарий:
+
+```gherkin
+Scenario: Подтверждение оплаты
+
+Given заказ ожидает оплату
+When пользователь подтверждает оплату
+Then заказ переходит в статус paid
+```
+
+### SLA Calculator
+
+Рассчитывает допустимый простой для заданного уровня доступности.
+
+Пример:
+
+```text
+99.9% / 30 дней
+→ 43 мин 12 сек допустимого простоя
+```
+
+### PERT Calculator
+
+Работает с тремя оценками:
+
+```text
+Optimistic
+Most likely
+Pessimistic
+```
+
+и рассчитывает ожидаемую оценку и стандартное отклонение.
+
+### HTTP Status Reference
+
+Интерактивный справочник HTTP-кодов с поиском по:
+
+- номеру;
+- названию;
+- назначению;
+- типовым сценариям использования.
+
+### Risk Matrix
+
+Позволяет вести риски и рассчитывает:
+
+```text
+Risk Score = Probability × Impact
+```
+
+Риски автоматически сортируются по уровню критичности.
+
+### Traceability Matrix
+
+Связывает:
+
+```text
+Business Goal
+→ Requirement
+→ Acceptance / Test
+```
+
+Поддерживает локальное хранение и экспорт CSV.
+
+### ADR / Decision Log
+
+Рабочий журнал архитектурных решений:
+
+- Decision;
+- Status;
+- Context;
+- Consequences.
+
+Поддерживает экспорт в Markdown.
+
+---
+
+## Дополнительные инструменты
+
+SA Guide также включает:
+
+- API Tester;
+- SQL modeler;
+- генератор `CREATE TABLE`;
+- конвертер объёма данных;
+- meeting timer;
+- Decision Tree выбора процесса;
+- тестирование знаний;
+- локальные заметки;
+- requirements checklist;
+- security checklist;
+- competency map;
+- генератор SRS;
+- User Story template;
+- API Specification template;
+- Test Case template;
+- шаблоны рабочих сообщений;
+- печать / сохранение в PDF средствами браузера.
+
+---
+
+## Навигация и UX
+
+Большой объём информации организован так, чтобы SA Guide оставался рабочим инструментом, а не превращался в длинную энциклопедию.
+
+### Быстрые маршруты
+
+**Начинаю с задачи**
+
+```text
+Discovery → Requirements → Acceptance
+```
+
+**Проектирую интеграцию**
+
+```text
+API → Events → Reliability
+```
+
+**Проектирую данные**
+
+```text
+Model → Consistency → Cache
+```
+
+**Готовлю delivery**
+
+```text
+Security → Tests → Observability
+```
+
+### Возможности интерфейса
+
+- полнотекстовый поиск;
+- `Ctrl/⌘ + K` для перехода к поиску;
+- `/` для быстрого поиска;
+- категории разделов;
+- локальные закладки;
+- сохранение последнего прочитанного места;
+- deep-link на каждый раздел;
+- active section tracking;
+- светлая и тёмная темы;
+- увеличенный режим текста;
+- mobile navigation через native `dialog`;
+- адаптивная верстка;
+- поддержка `prefers-reduced-motion`;
+- крупные touch targets.
+
+---
+
+## PWA и offline
+
+SA Guide является устанавливаемым Progressive Web App.
+
+PWA включает:
+
+- Web App Manifest;
+- Service Worker;
+- standalone-режим;
+- offline fallback;
+- app shell cache;
+- runtime cache;
+- отдельные `any` и `maskable` PWA-иконки;
+- shortcuts к базе знаний, Workbench и API-разделу.
+
+После первого посещения основные материалы могут оставаться доступными при нестабильном соединении.
+
+---
+
+## Приватность
+
+Большая часть интерактивных данных обрабатывается только локально в браузере.
+
+В `localStorage` могут сохраняться:
+
+- тема;
+- размер текста;
+- закладки;
+- последнее место;
+- заметки;
+- чеклисты;
+- карта компетенций;
+- Risk Matrix;
+- Traceability Matrix;
+- ADR.
+
+SA Guide не требует собственного backend для этих функций.
+
+> Для production-токенов, паролей, персональных данных и другой чувствительной информации следует использовать специализированные защищённые инструменты и корпоративные политики безопасности.
+
+---
+
+## Безопасность клиентского кода
+
+В проекте исключены небезопасные или хрупкие способы динамической работы с DOM:
+
+```text
+eval()
+document.write()
+inline onclick
+innerHTML assignment
+```
+
+Пользовательский контент выводится через DOM API и `textContent`.
+
+Чтение JSON из `localStorage` выполняется через безопасный parser, поэтому повреждённое локальное состояние не должно блокировать загрузку интерфейса.
+
+---
+
+## Технологии
+
+### Frontend
+
+- Semantic HTML5;
+- modern CSS;
+- CSS Grid;
+- Flexbox;
+- CSS Custom Properties;
+- responsive layout;
+- Vanilla JavaScript;
+- DOM API;
+- Fetch API;
+- AbortController;
+- Clipboard API;
+- Blob / URL API;
+- Local Storage;
+- Intersection Observer.
+
+### PWA
+
+- Web App Manifest;
+- Service Worker;
+- Cache Storage API;
+- offline fallback.
+
+### Hosting
+
+- GitHub Pages;
+- HTTPS;
+- статическая архитектура без обязательного backend.
+
+### Design system
+
+SA Guide использует визуальную систему **KnowerLife**:
+
+- `#6757f5` — основной violet;
+- cyan accents;
+- светлая и тёмная темы;
+- системный sans-serif stack;
+- моноширинная типографика для технических элементов;
+- карточки, схемы и рабочие панели в общей стилистике KnowerLife.
+
+---
+
+## Структура проекта
+
+```text
+SA/
+├── index.html
+├── styles.css
+├── script.js
+├── sitemap.html
+├── sitemap.xml
+├── robots.txt
+├── manifest.webmanifest
+├── service-worker.js
+├── offline.html
+├── assets/
+│   ├── favicon.svg
+│   ├── icon-180.png
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   ├── icon-maskable-192.png
+│   ├── icon-maskable-512.png
+│   └── og-sa.png
+├── scripts/
+│   └── check_site.py
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## 🧠 Основные разделы справочника
+## Quality
 
-| Раздел | Содержание |
-|--------|-------------|
-| **Основы анализа** | Алгоритм работы над задачей, артефакты, функциональные и нефункциональные требования, стейкхолдеры, UX/UI принципы |
-| **Техники и методы** | Методы сбора информации, Use Cases, User Stories (INVEST), BPMN, техники оценки (Planning Poker, T‑Shirt Sizing) |
-| **Архитектура** | API, REST, SOAP, GraphQL, микросервисы, Domain-Driven Design (DDD) с примерами |
-| **Данные** | Типы баз данных, нормализация (1NF, 2NF, 3NF), интерактивное моделирование данных и генератор SQL |
-| **Процессы и методологии** | Сравнение Kanban и Scrum, CI/CD (инструменты, принципы), Decision Tree для выбора подхода |
-| **Безопасность** | OWASP Top 10, принципы безопасной разработки, интерактивный чеклист безопасности |
-| **Аналитика и качество** | Ключевые метрики (Velocity, Lead Time, ROI, CSAT), типичные ошибки аналитика |
-| **Документация** | Шаблоны SRS, User Stories, API Specification, генератор документов, шаблоны писем, Swagger/OpenAPI |
-| **Карьера** | Карьерный путь (Junior → Middle → Senior → Lead), карта компетенций с сохранением прогресса, тесты для самопроверки |
-| **Инструменты и ресурсы** | Быстрые инструменты, API-тестер, заметки, интерактивные чеклисты, глоссарий, полезные ссылки |
+SA Guide проверяется на уровне структуры и интерактивности.
 
----
+Контролируется:
 
-## 🛠️ Используемые технологии
+- уникальность HTML ID;
+- наличие внутренних anchor targets;
+- соответствие JS controls DOM-элементам;
+- доступные имена form controls;
+- отсутствие небезопасных JS-конструкций;
+- наличие PWA-ресурсов;
+- корректность manifest;
+- JavaScript syntax;
+- локальные asset references;
+- мобильное горизонтальное переполнение.
 
-- **HTML5** – семантическая разметка, микроформаты (Schema.org)
-- **CSS3** – Grid, Flexbox, CSS-переменные, адаптивность (mobile-first)
-- **JavaScript (ES6+)** – вся интерактивность, работа с localStorage, динамическое создание элементов
-- **Библиотеки**:
-  - [jsPDF](https://parall.ax/products/jspdf) – экспорт страницы в PDF
-  - [html2canvas](https://html2canvas.hertzen.com/) – рендеринг для PDF (опционально)
-  - [Font Awesome 6](https://fontawesome.com/) – иконки
-- **Шрифты** – Google Fonts (Inter)
+Для актуальной версии проведён browser smoke на:
 
----
+```text
+1440 × 1000
+768 × 1024
+390 × 844
+```
 
-## 🚀 Быстрый старт
+Проверялись:
 
-1. **Склонируйте репозиторий**:
-   ```bash
-   git clone https://github.com/KnowerLife/SA.git
-   ```
-2. **Откройте файл `index.html`** в любом современном браузере (Chrome, Firefox, Edge, Safari).
-3. **Используйте навигацию** – левое меню, поиск в шапке, закладки.
-4. **Работайте с интерактивными блоками** – добавляйте сущности, генерируйте SQL, проходите тесты, сохраняйте заметки.
-5. **Смените тему** – кнопки в правом верхнем углу.
-6. **Экспортируйте справочник в PDF** – кнопка с иконкой файла.
+- поиск;
+- фильтры;
+- мобильное меню;
+- Requirement Checker;
+- SLA Calculator;
+- PERT Calculator;
+- Risk Matrix;
+- Traceability Matrix.
 
----
+Результат:
 
-## 🌐 Демо
-
-Проект опубликован на GitHub Pages:  
-👉 [https://knowerlife.github.io/SA/](https://knowerlife.github.io/SA/)
+```text
+horizontal overflow = 0
+console errors = 0
+page errors = 0
+```
 
 ---
 
-## 📝 Лицензия
+## Экосистема KnowerLife
 
-Проект распространяется под лицензией **MIT**. Подробнее – в файле [LICENSE](LICENSE).
+SA Guide является частью проектов **KnowerLife**.
+
+- 🌐 [KnowerLife](https://knowerlife.ru/)
+- 🧠 [SA Guide](https://knowerlife.github.io/SA/)
+- 🛠️ [Browser Tools](https://knowerlife.ru/tools/)
+- 🐙 [GitHub](https://github.com/KnowerLife)
+- ✈️ [Telegram](https://t.me/knowerlife)
+- 📘 [VK](https://vk.com/knowerlife)
+- 📧 [info@knowerlife.ru](mailto:info@knowerlife.ru)
 
 ---
 
-## 📬 Контакты и обратная связь
+## Лицензия
 
-- GitHub: [KnowerLife](https://github.com/KnowerLife)
-- Email: [info@knowerlife.ru](mailto:info@knowerlife.ru)
+Проект распространяется по лицензии **MIT**.  
+Подробнее — в файле [LICENSE](LICENSE).
 
 ---
 
-**KNOWERLIFE Essential Guide** – ваш надёжный помощник в повседневной работе системного аналитика. Всегда под рукой, всегда актуально.
+<p align="center">
+  <strong>&lt;KnowerLife /&gt;</strong><br>
+  System analysis · API · Integrations · Digital products
+</p>
